@@ -99,7 +99,9 @@ Using phylogeny as a statistical fix}
 The aims of this problem set are to learn how to use R to answer phylogenetic 
 comparative questions without panicking! I am assuming that people have little or no
 experience with R so more experienced users may want to skip quickly through the first 
-few sections. By the end of this problem set you should be able to:
+few sections. 
+
+By the end of this problem set you should be able to:
 
 \begin{enumerate}
 \item Read your data and phylogeny into R
@@ -163,8 +165,8 @@ On my Mac the path is:
 \texttt{\textasciitilde{}/Desktop/RAnalyses2014}
 \end{snugshade}
 
-It's a bit trickier to find the path on a Mac, and note that the tilde
-\textasciitilde{} is a shorthand for /Users/Natalie. Ask if you need help.
+It's a bit trickier to find the path on a Mac, so ask if you need help. Note that the tilde
+\textasciitilde{} is a shorthand for /Users/Natalie. 
 
 \subsection{Using a text editor}
 
@@ -195,9 +197,9 @@ comment.
 
 \subsection{Installing extra packages in R}\label{installing-packages}
 
-To run comparative analyses (or any specialised analysis) in R, you need to 
+To run comparative analyses (or any specialized analysis) in R, you need to 
 download one or more additional packages from the basic R installation. 
-For this problems set you will need to install the following packages: 
+For this problem set you will need to install the following packages: 
 \texttt{ape}, \texttt{picante} and \texttt{caper}. 
 To install the package \texttt{ape}:
 
@@ -242,7 +244,8 @@ You will need to replace MYPATH with the name of the path to the folder containi
 
 \begin{snugshade}
 \begin{Highlighting}[]
-\NormalTok{primatedata <-}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\StringTok{"MYPATH/Primatedata.txt"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }\DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{primatedata <-}\StringTok{ }\KeywordTok{read.table}\NormalTok{(}\StringTok{"MYPATH/Primatedata.txt"}\NormalTok{, }\DataTypeTok{sep =} \StringTok{"}\CharTok{\textbackslash{}t}\StringTok{"}\NormalTok{, }
+                          \DataTypeTok{header =} \OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{snugshade}
 
@@ -332,7 +335,7 @@ This gives you the names of the columns.
 \end{Highlighting}
 \end{snugshade}
 
-This will print out the whole of the data!
+This will print out all of the data!
 
 \subsection{Reading and displaying your phylogeny in R}
 
@@ -395,7 +398,7 @@ function of \texttt{ape}:
 \end{Highlighting}
 \end{snugshade}
 
-Note that the tree is too large to read. You can make the node labels smaller, but that doesn’t help much here:
+Note that the tree has too many species for us to read the species names. You can make the tip labels smaller, but that doesn’t help much here:
 
 \begin{snugshade}
 \begin{Highlighting}[]
@@ -403,7 +406,7 @@ Note that the tree is too large to read. You can make the node labels smaller, b
 \end{Highlighting}
 \end{snugshade}
 
-Alternatively you can zoom into different sections of the tree which you’re interested in:
+Alternatively you can zoom into different sections of the tree that you’re interested in:
 
 \begin{snugshade}
 \begin{Highlighting}[]
@@ -620,12 +623,12 @@ Before we use phylogenetic comparative methods, we will quickly do an ordinary l
 \end{Highlighting}
 \end{snugshade}
 
-OK let's do a linear regression:
+OK let's do a linear regression of log gestation length against log adult body mass:
 
 \begin{snugshade}
 \begin{Highlighting}[]
 \NormalTok{model.ols <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\KeywordTok{log}\NormalTok{(GestationLen_d) ~}\StringTok{ }\KeywordTok{log}\NormalTok{(AdultBodyMass_g), }
-      \DataTypeTok{data =} \NormalTok{primatedata)}
+                \DataTypeTok{data =} \NormalTok{primatedata)}
 
 \KeywordTok{summary}\NormalTok{(model.ols)}
 \end{Highlighting}
@@ -685,12 +688,12 @@ We can look at the phylogenetic pseudoreplication problem on the graph by lookin
 \end{snugshade}
 
 \newpage
-\subsection{Phylogenetic generalised least squares models (PGLS)}
+\subsection{Phylogenetic generalized least squares models (PGLS)}
 Phylogenetic generalized least squares (PGLS) models offer some important advantages over independent contrasts. The model of trait evolution can be more flexible i.e., it can depart from a strict Brownian motion process ($\lambda$ or K = 1). Different scaling parameters ($\lambda$, $\kappa$, and $\delta$) can be incorporated in the analysis, which can significantly improve the fit of the data to the model and thus also improve the estimation of the trait correlation. Another advantage of PGLS is that the intercept of the regression is not forced to be zero.
 
-To perform PGLS models in R \texttt{caper} requires you to first combine the phylogeny and data into one object using the function \texttt{comparative.data}. 
+To perform PGLS models in R, \texttt{caper} requires you to first combine the phylogeny and data into one object using the function \texttt{comparative.data}. 
 
-Note that \texttt{vcv = TRUE} stores a variance covariance matrix of your tree (you will need this for the \texttt{pgls} function). \texttt{na.omit = FALSE} stops the function from removing species without data for certain variables. \texttt{warn.dropped = TRUE} will tell you if any species are not in the tree and the data and are therefore dropped from the comparative data object. Here we will be dropping the 149 species from the tree that we don't have any data for, but we won't drop any species from the data.
+Note that \texttt{vcv = TRUE} stores a variance covariance matrix of your tree (you will need this for the \texttt{pgls} function). \texttt{na.omit = FALSE} stops the function from removing species without data for all variables. \texttt{warn.dropped = TRUE} will tell you if any species are not in both the tree and the data and are therefore dropped from the comparative data object. Here we will be dropping the 149 species from the tree that we don't have any data for, but we won't drop any species from the data.
 
 \begin{snugshade}
 \begin{Highlighting}[]
@@ -767,7 +770,7 @@ The output should look like this:
 ## F-statistic: 28.5 on 1 and 75 DF,  p-value: 9.48e-07
 \end{verbatim}
 
-As well as the standard regression outputs, the output includes the estimated ML value of lambda (0.892) and p values from likelihood ratio tests showing whether the ML lambda is significantly different from 0 or 1. Kappa and delta are also tree transformations which can improve the fit of the data to the tree. It is also possible to use \texttt{pgls} to optimise kappa or delta (using delta = "ML" or kappa = "ML" instead of lambda = "ML" in the code above). We will not cover this today but please ask if you want to know more. Note that optimising more than one of these parameters at the same time is not advisable because it would be impossible to interpret the results!
+As well as the standard regression outputs, the output includes the estimated ML value of $\lambda$ (0.892) and p values from likelihood ratio tests showing whether the ML $\lambda$ is significantly different from 0 or 1. $\kappa$ and $\delta$ are also tree transformations which can improve the fit of the data to the tree. It is also possible to use \texttt{pgls} to optimise $\kappa$ or $\delta$  (using kappa = "ML" or delta = "ML" instead of lambda = "ML" in the code above). We will not cover this today. Note that optimizing more than one of these parameters at the same time is not advisable because it would be impossible to interpret the results!
 
 We can also plot the results as follows:
 
@@ -788,7 +791,7 @@ We can also plot the results as follows:
 
 \newpage
 \begin{framed}
-Sometimes you will find that \texttt{pgls} will not work and you get an \texttt{optim error}. This is much more common when using a Mac. To fix it all you need to do is change the bounds (upper and lower values) on the parameter being optimised, in this case lambda. Just change the lower bound of lambda to something a little bigger than 1e-6 until it works. For example:
+Sometimes you will find that \texttt{pgls} will not work and you get an \texttt{optim error}. This is much more common when using a Mac. To fix it all you need to do is change the bounds (upper and lower values) on the parameter being optimized, in this case lambda. Just change the lower bound of lambda to something a little bigger than 1e-6 until it works. For example:
 
 \begin{snugshade}
 \begin{Highlighting}[]
@@ -833,7 +836,7 @@ This graph shows the likelihood profile of $\lambda$ in our model. Ideally you w
 \begin{framed}
 \textbf{Big problems with small datasets}\\
 
-You will often find strange $\lambda$ profiles when you don't have a lot of species in your data, because $\lambda$ (and Blomberg's K - see below) has no power to detect phylogenetic signal for less than 20-30 data points (see Freckleton \textit{et al}. 2002 Am Nat). This means that using PGLS on small datasets is tricky - you almost always get ML $\lambda$ of zero but the $\lambda$ profile will show a pretty flat likelihood surface. Unfortunately people often forget to look at the $\lambda$ profile so erroneously conclude that there is no phylogenetic autocorrelation in their data.
+You will often find strange $\lambda$ profiles when you don't have a lot of species in your data, because $\lambda$ (and Blomberg's K - see below) has very low power to detect phylogenetic signal for less than 20-30 data points (see Freckleton \textit{et al}. 2002 Am Nat). This means that using PGLS on small datasets is tricky - you almost always get ML $\lambda$ of zero but the $\lambda$ profile will show a pretty flat likelihood surface. Unfortunately people often forget to look at the $\lambda$ profile so erroneously conclude that there is no phylogenetic autocorrelation in their data.
 
 Generally I'd say don't use small datasets, however, this seems unavoidable in many areas of anthropology. Therefore my advice is to (only in this situation!) ignore one of Freckleton's deadly sins (2009, JEB) and report the results from an OLS model (equivalent of PGLS with lambda = 0) and also report the results from a PGLS model with lambda set to 1 (equivalent to independent contrasts). This problem comes up every year at AnthroTree and consensus among the PCM community (well Rob Freckleton, Charlie Nunn and others!) is that this is best solution at present, if collecting more data is really not an option!
 
@@ -870,16 +873,16 @@ You should always check model diagnostic plots whenever you fit a model in R to 
 \newpage
 Without going into the statistical details, what you are looking for in these plots is:
 \begin{enumerate}
-\item No studentized model residuals > $\pm$ 3. 
+\item In plot one you shouldn't see any data with a studentized residual > $\pm$ 3. 
 Any species with such large residuals should be removed as these outliers may overly influence the results of the regression (see Jones and Purvis 1997). Often these are the result of measurement error associated with species pairs joined by very short branches. You should generally report results with and without outliers unless the results remain qualitatively the same.
-\item The points of the Q-Q plot should approximately form a straight line (rather than a banana shape).
+\item The points of the Q-Q plot (plot 2) should approximately fall on the line.
 \item Plots 3 and 4 should show a fairly random scattering of points. You want to avoid any clear patterns.
 \end{enumerate}
 
-It takes practice to know what is ``good'', ``bad'' and ``acceptable'' with these plots. I would say the plots above are fine, but there appear to be a couple of outliers that should be removed, or at least checked for errors. 
+It takes practice to know what is ``good'', ``bad'' and ``acceptable'' with these plots. I would say the plots above are fine, but there appear to be a couple of data points with studentized residuals > $\pm$ 3 in plot 1 that should be removed, or at least checked for errors. 
 
 \subsection{Estimating phylogenetic signal for one variable: $\lambda$}
-Phylogenetic signal is merely the pattern where close relatives have more similar trait values than more distant relatives. Often people will mention that they corrected for phylogeny because of the phylogenetic signal in their variables. However, we \texttt{do not} correct for phylogeny because our variables show phylogenetic signal. We correct for phylogeny because the \texttt{residuals} from our models show phylogenetic signal – see Revell 2010 Methods in Ecology and Evolution. $\lambda$ shown in PGLS models below is the $\lambda$ for the model residuals \textbf{not} the individual variables. Also see Kamilar and Cooper 2013 Phil Trans B.
+Phylogenetic signal is merely the pattern where close relatives have more similar trait values than more distant relatives. Often people will mention that they corrected for phylogeny because of the phylogenetic signal in their variables. However, we \textbf{do not} correct for phylogeny because our variables show phylogenetic signal. We correct for phylogeny because the \textbf{residuals} from our models show phylogenetic signal – see Revell 2010 Methods in Ecology and Evolution. $\lambda$ shown in PGLS models above is the $\lambda$ for the model residuals \textbf{not} the individual variables. Also see Kamilar and Cooper 2013 Phil Trans B.
 
 Sometimes however, you might be interested in the phylogenetic signal of just one trait. $\lambda$ is really easy to estimate using \texttt{caper}. To do this for log GestationLen\_d:
 
@@ -950,18 +953,15 @@ We can then calculate K for log gestation length:
 ##   [2] "Cercopithecus_cephus_cephus"                  
 ##   [3] "Cercopithecus_cephus_ngottoensis"             
 ##   [4] "Cercopithecus_diana"
-\end{verbatim}
-
 etc.
 
-Note that we are using the original data and tree here, not the pruned down versions, so lots of tips are being dropped.
-
-\begin{verbatim}
 ##        [,1]
 ## [1,] 0.7758
 \end{verbatim}
 
-Note that \texttt{Kcalc} (and \texttt{phylosignal}) require the trait data to be in the same order as the tree tip labels. \texttt{lngest[primatetree\$tip.label]} selects gestation lengths from the species in the same order as they are in the tree (square brackets \texttt{[ ]} are used in R to subset data).
+Note that we are using the original data and tree here, not the pruned down versions, so lots of tips are being dropped.
+
+\texttt{Kcalc} (and \texttt{phylosignal}) require the trait data to be in the same order as the tree tip labels. \texttt{lngest[primatetree\$tip.label]} selects gestation lengths from the species in the same order as they are in the tree (square brackets \texttt{[ ]} are used in R to subset data).
 
 K for log gestation length is 0.7758. As with $\lambda$ above, we’re interested in whether the value of K is significantly different from what we’d expect by chance. We can do this using the function \texttt{phylosignal}.This function randomly assigns the trait values to the species and then calculates K. This is repeated 1000 times (if \texttt{reps = 1000}) and the observed value of K is then compared to the randomized values to determine its significance.
 
@@ -982,7 +982,7 @@ After the warnings about which tips have been dropped, the output looks like thi
 
 In this case the observed K is significantly higher than the random values of K (Z = -2.281, p < 0.001, mean of the random values = 0.012). 
 
-\textbf{Note this is a randomization test so your answer will not be identical to mine.}
+\textbf{Note this is a randomization test so your output here will not be identical to mine.}
 
 %\newpage
 \section{Practice exercises}
