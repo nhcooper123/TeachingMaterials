@@ -433,7 +433,8 @@ You can also remove species from the tree very easily using the \texttt{ape} fun
 
 \begin{snugshade}
 \begin{Highlighting}[]
-\NormalTok{primatetree2 <-}\StringTok{ }\KeywordTok{drop.tip}\NormalTok{(primatetree, }\StringTok{"Aotus_azarae_infulatus"}\NormalTok{)}
+\NormalTok{primatetree2 <-}\StringTok{ }\KeywordTok{drop.tip}\NormalTok{(primatetree, } \StringTok{"Aotus_azarae_infulatus"}\NormalTok{)}\\
+
 \KeywordTok{str}\NormalTok{(primatetree2)}
 \end{Highlighting}
 \end{snugshade}
@@ -461,6 +462,7 @@ Note that although you can use \texttt{plot} to plot the phylogeny, you need to 
 \begin{snugshade}
 \begin{Highlighting}[]
 \KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{))}
+
 \KeywordTok{plot}\NormalTok{(primatetree, }\DataTypeTok{type =} \StringTok{"fan"}\NormalTok{, }\DataTypeTok{edge.color =} \StringTok{"deeppink"}\NormalTok{, }\DataTypeTok{tip.color =} 
       \StringTok{"green"}\NormalTok{, }\DataTypeTok{cex =} \FloatTok{0.5}\NormalTok{)}
 \end{Highlighting}
@@ -471,6 +473,7 @@ You can also add a timescale to your tree:
 \begin{snugshade}
 \begin{Highlighting}[]
 \KeywordTok{plot}\NormalTok{(primatetree)}
+
 \KeywordTok{axisPhylo}\NormalTok{()}
 \end{Highlighting}
 \end{snugshade}
@@ -498,6 +501,7 @@ Most functions also require the tree to be rooted, i.e., to have one taxon desig
 \begin{snugshade}
 \begin{Highlighting}[]
 \NormalTok{primatetree.reroot <-}\StringTok{ }\KeywordTok{root}\NormalTok{(primatetree, }\StringTok{"Saimiri_sciureus"}\NormalTok{)  }
+
 \KeywordTok{plot}\NormalTok{(primatetree.reroot)}
 \end{Highlighting}
 \end{snugshade}
@@ -537,7 +541,7 @@ These are easy to identify using \texttt{setdiff}:
 
 \begin{snugshade}
 \begin{Highlighting}[]
-\KeywordTok{setdiff}\NormalTok{(primatetree$tip.label, primatedata$Binomial)}
+\KeywordTok{setdiff}\NormalTok{(primatetree\$tip.label, primatedata\$Binomial)}
 \end{Highlighting}
 \end{snugshade}
 
@@ -546,16 +550,15 @@ These are easy to identify using \texttt{setdiff}:
 ##   [2] "Cercopithecus_cephus_cephus"                  
 ##   [3] "Cercopithecus_cephus_ngottoensis"             
 ##   [4] "Cercopithecus_diana" 
-\end{verbatim}
-
 etc.
+\end{verbatim}
 
 \texttt{setdiff} tells you what is found in the first list, but not in the second. Here, it has listed the species that are found in the tree but \textbf{not} in the data. We can then use \texttt{setdiff} with \texttt{drop.tip} to prune the tree to just the species we have data for. 
 
 \begin{snugshade}
 \begin{Highlighting}[]
-\NormalTok{primatetree2 <-}\StringTok{ }\KeywordTok{drop.tip}\NormalTok{(primatetree, }
-      \KeywordTok{setdiff}\NormalTok{(primatetree\$tip.label, primatedata\$Binomial))}
+\NormalTok{primatetree2 <-}\StringTok{ }\KeywordTok{drop.tip}\NormalTok{(primatetree, }\KeywordTok{setdiff}\NormalTok{(primatetree\$tip.label, }
+                          \NormalTok{primatedata\$Binomial))}
 \end{Highlighting}
 \end{snugshade}
 
@@ -579,6 +582,7 @@ In this case we don't have any species in the tree missing from the data. Howeve
 \begin{snugshade}
 \begin{Highlighting}[]
 \NormalTok{matches <-}\StringTok{ }\KeywordTok{match}\NormalTok{(primatedata\$Binomial, primatetree2\$tip.label, }\DataTypeTok{nomatch =} \DecValTok{0}\NormalTok{)}
+
 \NormalTok{primatedata2 <-}\StringTok{ }\KeywordTok{subset}\NormalTok{(primatedata, matches !=}\StringTok{ }\DecValTok{0}\NormalTok{)}
 \end{Highlighting}
 \end{snugshade}
@@ -590,6 +594,7 @@ Always check this has worked as expected by checking the data and the phylogeny.
 \begin{snugshade}
 \begin{Highlighting}[]
 \KeywordTok{str}\NormalTok{(primatedata2)}
+
 \KeywordTok{str}\NormalTok{(primatetree2)}
 \end{Highlighting}
 \end{snugshade}
@@ -602,10 +607,15 @@ Before we use phylogenetic comparative methods, we will quickly do an ordinary l
 \begin{snugshade}
 \begin{Highlighting}[]
 \KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{))}
-\KeywordTok{hist}\NormalTok{(primatedata\$AdultBodyMass_g), }\DataTypeTok{col =} \KeywordTok{rainbow}\NormalTok{(}\DecValTok{8}\NormalTok{))}
-\KeywordTok{hist}\NormalTok{(primatedata\$GestationLen_d), }\DataTypeTok{col =} \KeywordTok{rainbow}\NormalTok{(}\DecValTok{8}\NormalTok{))}
+
+\KeywordTok{hist}\NormalTok{(primatedata\$AdultBodyMass_g, }\DataTypeTok{col =} \KeywordTok{rainbow}\NormalTok{(}\DecValTok{8}\NormalTok{))}
+
+\KeywordTok{hist}\NormalTok{(primatedata\$GestationLen_d, }\DataTypeTok{col =} \KeywordTok{rainbow}\NormalTok{(}\DecValTok{8}\NormalTok{))}
+
 \KeywordTok{hist}\NormalTok{(}\KeywordTok{log}\NormalTok{(primatedata\$AdultBodyMass_g), }\DataTypeTok{col =} \KeywordTok{rainbow}\NormalTok{(}\DecValTok{8}\NormalTok{))}
+
 \KeywordTok{hist}\NormalTok{(}\KeywordTok{log}\NormalTok{(primatedata\$GestationLen_d), }\DataTypeTok{col =} \KeywordTok{rainbow}\NormalTok{(}\DecValTok{8}\NormalTok{))}
+
 \KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{))}
 \end{Highlighting}
 \end{snugshade}
@@ -616,10 +626,12 @@ OK let's do a linear regression:
 \begin{Highlighting}[]
 \NormalTok{model.ols <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(}\KeywordTok{log}\NormalTok{(GestationLen_d) ~}\StringTok{ }\KeywordTok{log}\NormalTok{(AdultBodyMass_g), }
       \DataTypeTok{data =} \NormalTok{primatedata)}
+
 \KeywordTok{summary}\NormalTok{(model.ols)}
 \end{Highlighting}
 \end{snugshade}
 
+\newpage
 The output should look like this: 
 
 \begin{verbatim}
@@ -643,21 +655,24 @@ The output should look like this:
 ## F-statistic:   73 on 1 and 75 DF,  p-value: 1.1e-12
 \end{verbatim}
 
-The slope is positive (0.1204 ± 0.0141), and very significant (note that R can’t give values lower than <2e-16 which is why it shows up so often). We can also plot the regression line on a scatter plot:
+The slope is positive (0.1204 ± 0.0141), and very significant (note that R can’t give values lower than <2e-16 which is why it shows up so often). 
+
+We can also plot the regression line on a scatter plot:
 
 \begin{snugshade}
 \begin{Highlighting}[]
 \KeywordTok{plot}\NormalTok{(}\KeywordTok{log}\NormalTok{(GestationLen_d) ~}\StringTok{ }\KeywordTok{log}\NormalTok{(AdultBodyMass_g), }\DataTypeTok{data =} \NormalTok{primatedata)}
+
 \KeywordTok{abline}\NormalTok{(model.ols)}
 \end{Highlighting}
 \end{snugshade}
 
-\begin{figure}[H]
-\centering
-\includegraphics[width = 30cm, height = 10cm, keepaspectratio=true]{OLSplot.pdf}
-\caption{Plot of OLS regression model}
-\label{figure}
-\end{figure}
+%\begin{figure}[H]
+%\centering
+%\includegraphics[width = 30cm, height = 10cm, keepaspectratio=true]{OLSplot.pdf}
+%\caption{Plot of OLS regression model}
+%\label{figure}
+%\end{figure}
  
 We can look at the phylogenetic pseudoreplication problem on the graph by looking at just one family.
 
@@ -669,10 +684,13 @@ We can look at the phylogenetic pseudoreplication problem on the graph by lookin
 \end{Highlighting}
 \end{snugshade}
 
+\newpage
 \subsection{Phylogenetic generalised least squares models (PGLS)}
 Phylogenetic generalized least squares (PGLS) models offer some important advantages over independent contrasts. The model of trait evolution can be more flexible i.e., it can depart from a strict Brownian motion process ($\lambda$ or K = 1). Different scaling parameters ($\lambda$, $\kappa$, and $\delta$) can be incorporated in the analysis, which can significantly improve the fit of the data to the model and thus also improve the estimation of the trait correlation. Another advantage of PGLS is that the intercept of the regression is not forced to be zero.
 
-To perform PGLS models in R \texttt{caper} requires you to first combine the phylogeny and data into one object:
+To perform PGLS models in R \texttt{caper} requires you to first combine the phylogeny and data into one object using the function \texttt{comparative.data}. 
+
+Note that \texttt{vcv = TRUE} stores a variance covariance matrix of your tree (you will need this for the \texttt{pgls} function). \texttt{na.omit = FALSE} stops the function from removing species without data for certain variables. \texttt{warn.dropped = TRUE} will tell you if any species are not in the tree and the data and are therefore dropped from the comparative data object. Here we will be dropping the 149 species from the tree that we don't have any data for, but we won't drop any species from the data.
 
 \begin{snugshade}
 \begin{Highlighting}[]
@@ -682,12 +700,21 @@ To perform PGLS models in R \texttt{caper} requires you to first combine the phy
 \end{Highlighting}
 \end{snugshade}
 
-\texttt{vcv = TRUE} stores a variance covariance matrix of your tree. You will need this for the \texttt{pgls} function. \texttt{na.omit = FALSE} stops the function from removing species without data for certain variables. \texttt{warn.dropped = TRUE} will tell you if any species are not in the tree and the data and are therefore dropped from the comparative data object. Note that here we will be dropping the 149 species from the tree that we don't have any data for, but we won't drop any species from the data. You can view the dropped species using:
+This will give a warning telling you that some species have been dropped.
+
+\begin{verbatim}
+##  Warning message:
+##  In comparative.data(phy = primatetree, data = primatedata, :
+##    Data dropped in compiling comparative data object
+\end{verbatim}
+
+You can view the dropped species using:
 
 \begin{snugshade}
 \begin{Highlighting}[]
 \NormalTok{primate\$dropped\$tips}
-\NormalTok{primate$dropped$unmatched.rows}
+
+\NormalTok{primate\$dropped\$unmatched.rows}
 \end{Highlighting}
 \end{snugshade}
 
@@ -695,17 +722,18 @@ To perform PGLS models in R \texttt{caper} requires you to first combine the phy
 Always make sure you check the list of dropped species is what you expected, it often reveals typos in your species names, or mismatches in taxonomies used etc.
 \end{framed}
 
+\newpage
 The function for PGLS analyses in \texttt{caper} is \texttt{pgls}. To fit a model which uses the maximum likelihood estimate of $\lambda$ we use the following code:
 
 \begin{snugshade}
 \begin{Highlighting}[]
 \NormalTok{model.pgls <-}\StringTok{ }\KeywordTok{pgls}\NormalTok{(}\KeywordTok{log}\NormalTok{(GestationLen_d) ~}\StringTok{ }\KeywordTok{log}\NormalTok{(AdultBodyMass_g), }
                    \DataTypeTok{data =} \NormalTok{primate, }\DataTypeTok{lambda =} \StringTok{"ML"}\NormalTok{)}
+
 \KeywordTok{summary}\NormalTok{(model.pgls)}
 \end{Highlighting}
 \end{snugshade}
 
-\newpage
 The output should look like this:
 
 \begin{verbatim}
@@ -741,12 +769,12 @@ The output should look like this:
 
 As well as the standard regression outputs, the output includes the estimated ML value of lambda (0.892) and p values from likelihood ratio tests showing whether the ML lambda is significantly different from 0 or 1. Kappa and delta are also tree transformations which can improve the fit of the data to the tree. It is also possible to use \texttt{pgls} to optimise kappa or delta (using delta = "ML" or kappa = "ML" instead of lambda = "ML" in the code above). We will not cover this today but please ask if you want to know more. Note that optimising more than one of these parameters at the same time is not advisable because it would be impossible to interpret the results!
 
-\newpage
 We can also plot the results as follows:
 
 \begin{snugshade}
 \begin{Highlighting}[]
 \KeywordTok{plot}\NormalTok{(}\KeywordTok{log}\NormalTok{(GestationLen_d) ~}\StringTok{ }\KeywordTok{log}\NormalTok{(AdultBodyMass_g), }\DataTypeTok{data =} \NormalTok{primate\$data)}
+
 \KeywordTok{abline}\NormalTok{(model.pgls)}
 \end{Highlighting}
 \end{snugshade}
@@ -758,6 +786,7 @@ We can also plot the results as follows:
 \label{figure}
 \end{figure}
 
+\newpage
 \begin{framed}
 Sometimes you will find that \texttt{pgls} will not work and you get an \texttt{optim error}. This is much more common when using a Mac. To fix it all you need to do is change the bounds (upper and lower values) on the parameter being optimised, in this case lambda. Just change the lower bound of lambda to something a little bigger than 1e-6 until it works. For example:
 
@@ -777,13 +806,14 @@ You can look at the likelihood profiles for branch length transformations in PGL
 \begin{snugshade}
 \begin{Highlighting}[]
 \NormalTok{lambda.profile <-}\StringTok{ }\KeywordTok{pgls.profile}\NormalTok{(model.pgls, }\StringTok{"lambda"}\NormalTok{)}
+
 \KeywordTok{plot}\NormalTok{(lambda.profile)}
 \end{Highlighting}
 \end{snugshade}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width = 30cm, height = 10cm, keepaspectratio=true]{lambdaplot.pdf}
+\includegraphics[width = 30cm, height = 9.5cm, keepaspectratio=true]{lambdaplot.pdf}
 \caption{$\lambda$ profile for PGLS model}
 \label{figure}
 \end{figure}
@@ -817,6 +847,7 @@ To set $\lambda$ to 1 you just replace "ML" with 1:
 \end{snugshade}
 \end{framed}
 
+\newpage
 \subsection{Model diagnostics for PGLS models}
 
 You should always check model diagnostic plots whenever you fit a model in R to check that your data meet the assumptions of the model. The method for this in PGLS is the same for OLS, independent contrasts and PGLS models (though the graphs are slightly different). To get model diagnostic plots for PGLS:
@@ -824,17 +855,19 @@ You should always check model diagnostic plots whenever you fit a model in R to 
 \begin{snugshade}
 \begin{Highlighting}[]
 \KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{))}
+
 \KeywordTok{plot}\NormalTok{(model.pgls)}
 \end{Highlighting}
 \end{snugshade}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width = 40cm, height = 12cm, keepaspectratio=true]{Diagnosticplot.pdf}
+\includegraphics[width = 40cm, height = 14cm, keepaspectratio=true]{Diagnosticplot.pdf}
 \caption{Model diagnostic plots for PGLS model}
 \label{figure}
 \end{figure}
 
+\newpage
 Without going into the statistical details, what you are looking for in these plots is:
 \begin{enumerate}
 \item No studentized model residuals > $\pm$ 3. 
@@ -853,12 +886,13 @@ Sometimes however, you might be interested in the phylogenetic signal of just on
 \begin{snugshade}
 \begin{Highlighting}[]
 \NormalTok{est.lambda <-}\StringTok{ }\KeywordTok{pgls}\NormalTok{(}\KeywordTok{log}\NormalTok{(GestationLen_d) ~}\StringTok{ }\DecValTok{1}\NormalTok{, }\DataTypeTok{data =} \NormalTok{primate, }\DataTypeTok{lambda =} \StringTok{"ML"}\NormalTok{)}
+
 \KeywordTok{summary}\NormalTok{(est.lambda)}
 \end{Highlighting}
 \end{snugshade}
 
+\newpage
 \begin{verbatim}
-## 
 ## Call:
 ## pgls(formula = log(GestationLen_d) ~ 1, data = primate, lambda = "ML")
 ## 
@@ -895,6 +929,7 @@ To estimate Blomberg’s K we use the \texttt{Kcalc} function in \texttt{picante
 \begin{snugshade}
 \begin{Highlighting}[]
 \NormalTok{lngest <-}\StringTok{ }\KeywordTok{log}\NormalTok{(primatedata\$GestationLen_d)}
+
 \KeywordTok{names}\NormalTok{(lngest) <-}\StringTok{ }\NormalTok{primatedata\$Binomial}
 \end{Highlighting}
 \end{snugshade}
