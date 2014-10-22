@@ -128,7 +128,7 @@ The handout assumes that people have little or no experience with R so
 more experienced users may want to skip quickly through the first 
 few sections. \textbf{To get the analyses from section 3 onwards to work you 
 will need to have completed sections 1.1, 1.3, 1.4, 2.1 (reading in data only), 
-2.2 (reading in phylogeny only) and 2.3.} Other sections are included to show 
+2.2 (reading in phylogeny only), 2.3 and 2.4.1.} Other sections are included to show 
 you some of the other things R can do and to help you with problems you are 
 likely to encounter when using your own data. 
 \end{framed}
@@ -217,7 +217,7 @@ To install the package \texttt{ape}:
 \end{Highlighting}
 \end{snugshade}
 
-Now install \texttt{geiger} and \texttt{OUwie}.
+You will be asked to select a CRAN mirror for the session - just choose one that is geographically close to you. Now install \texttt{geiger} and \texttt{OUwie}.
 
 \subsection{Loading packages in R}
 
@@ -651,80 +651,63 @@ As an example, let’s look at the evolution of log(body size) in Primates. We�
 \end{Highlighting}
 \end{snugshade}
 
-\subsection{Fitting Brownian motion (BM) models}
+\subsection{Model descriptions}
+\subsubsection{The Brownian motion (BM model)}
 
-\subsubsection{Model description}
-
-In the Brownian motion model (Felsenstein 1973), a trait X evolves at random at a rate %𝜎:
-%dX(t)=σdW(t)            eqn (1)
-where W(t) is a white noise function and is a random variate drawn from a normal distribution with mean 0 and variance %𝜎2. 
-This model assumes that there is no overall drift in the direction of evolution (hence the expectation of W(t) is zero) and that the rate of evolution is constant. The model has two parameters, %𝜎 
-and the state of the root at time zero, X(0). The Brownian model predicts after a time T the variance in trait value Xi for species i is:
-%var(X_i )=σ^2 T                     eqn (2)
-and the covariance in traits for species i and j is:
-%cov(X_i,X_j )=σ^2 t_ij                           eqn (3)
-where tij is the shared evolutionary pathway for species i and j, i.e. the time at which they last shared a common ancestor.  
+In the Brownian motion model (Felsenstein 1973), a trait X evolves at random at a rate $\sigma$
+\begin{equation}
+dX(t) = \sigma dW(t)
+\end{equation}
+where $W(t)$ is a white noise function and is a random variate drawn from a normal distribution with mean $0$ and variance $\sigma^2$. This model assumes that there is no overall drift in the direction of evolution (hence the expectation of $W(t)$ is zero) and that the rate of evolution is constant. The model has two parameters, $\sigma^2$ and the state of the root at time zero, $X(0)$. The Brownian model predicts after a time $T$ the variance in trait value $X_i$ for species $i$ is:
+\begin{equation}
+var(X_i) = \sigma^2 T
+\end{equation}
+and the covariance in traits for species $i$ and $j$ is:
+\begin{equation}
+cov(X_i,X_j) = \sigma^2 t_{ij}
+\end{equation}
+where $t_{ij}$ is the shared evolutionary pathway for species $i$ and $j$, i.e. the time at which they last shared a common ancestor.  
 
 Put in more simple terms, the Brownian motion model assumes the correlation structure among trait values is proportional to the extent of shared ancestry for pairs of species. This means that close relatives will be more similar in their trait values than more distant relatives. It also means that variance in the trait will increase (linearly) with time. 
-
-\subsubsection{Model parameters}
 
 \texttt{fitContinuous} estimates sigma squared, the Brownian rate parameter. This can be used as a proxy for the rate of evolution.\\
 
 Default bounds on the Brownian rate parameter are sigsq=c(min=0,max=Inf). 
 
-\subsubsection{Fitting the model using fitContinuous}
+\subsubsection{The Ornstein-Uhlenbeck (OU) model}
+The Ornstein-Uhlenbeck (OU) model (Hansen 1997, Butler and King 2004) describes a mean-reverting process and has the following form, adding an extra term to the Brownian model:
+\begin{equation}
+dX(t) = -\alpha(X(t) - \mu) + \sigma dW(t)
+\end{equation}
+The parameter $\mu$ is a long-term mean, and it is assumed that species evolve around this value. $\alpha$ is the strength of evolutionary force that returns traits back towards the mean if they evolve away. The OU model was introduced to population genetics by Lande (1976) to model stabilizing selection in which the mean was recast as a fitness optimum on an adaptive landscape. The process operating in comparative data is analogous, although clearly is not stabilizing selection (despite being sometimes referred to as such). This model has two parameters in addition to those of the Brownian model, $\alpha$ and $\mu$.\\
 
-fitContinuous(phy, dat, SE = 0, 
-    model = c("BM","OU","EB","trend","lambda","kappa","delta","drift","white"),
-    bounds= list(), control = list(method = c("subplex","L-BFGS-B"),
-    niter = 100, FAIL = 1e+200, hessian = FALSE, CI = 0.95), ...)
-
-
-\subsection{The Ornstein-Uhlenbeck (OU) model}
-\subsubsection{The model}
-
-The Ornstein-Uhlenbeck (OU) model (Hansen 1997, Butler and King 2004)describes a mean-reverting process and has the following form, adding an extra term to the Brownian model:
-%    dX(t) = -α(X(t)-μ)+σdW(t)                          eqn (4)
-The parameter %𝜇
-is a long-term mean, and it is assumed that species evolve around this value. %𝛼 
-is the strength of evolutionary force that returns traits back towards the mean if they evolve away. The OU model was introduced to population genetics by Lande (1976) to model stabilizing selection in which the mean was recast as a fitness optimum on an adaptive landscape. The process operating in comparative data is analogous, although clearly is not stabilizing selection (despite being sometimes referred to as such). This model has two parameters in addition to those of the Brownian model, %α and μ.
-The OU model predicts that after a time T for a species i, the variance in trait value Xi is:
-%var(X_i )=1-e^(-2αT)                   eqn (5)
-And for a pair of species i and j, the covariance in traits is:
-%cov(X_i,X_j )=e^(-2α(T-t_ij ) ) (1-e^(-2αt_ij ) )                eqn (6)
+The OU model predicts that after a time $T$ for a species $i$, the variance in trait value $X_i$ is:
+\begin{equation}
+var(X_i) = 1 - e^{(-2\alpha T)}
+\end{equation}
+And for a pair of species $i$ and $j$, the covariance in traits is:
+\begin{equation}
+cov(X_i,X_j ) = e^{(-2\alpha (T-t_{ij} ))} (1 - e^{(-2\alpha t_{ij})})
+\end{equation}
 
 Put more simply, the Ornstein-Uhlenbeck model, fits a random walk with a central tendency with an attraction strength proportional to the parameter alpha. 
 
-Note that if %α
-is close to zero then evolution is approximately Brownian.
-
-\subsubsection{Model parameters}
+Note that if $\alpha$ is close to zero then evolution is approximately Brownian.
 
 \texttt{fitContinuous} estimates sigma squared, the Brownian rate parameter and alpha, the attraction strength or ``rubber band'' parameter.\\
 
 Default bounds on the Brownian rate parameter are sigsq=c(min=0,max=Inf). Default bounds on alpha = c(min = 0, max = 150)
 
-
-\subsubsection{Fitting the model using fitContinuous}
-
-fitContinuous(phy, dat, SE = 0, 
-    model = c("BM","OU","EB","trend","lambda","kappa","delta","drift","white"),
-    bounds= list(), control = list(method = c("subplex","L-BFGS-B"),
-    niter = 100, FAIL = 1e+200, hessian = FALSE, CI = 0.95), ...)
-
-\subsection{The Early Burst (EB) model}
-\subsubsection{The model}
+\subsubsection{The Early Burst (EB) model}
 
 EB is the Early-burst model (Harmon et al. 2010) and also called the ACDC model (accelerating-decelerating; Blomberg et al. 2003). Set by the a rate parameter, EB fits a model where the rate of evolution increases or decreases exponentially through time, under the model r(t) = r(0) * exp(a * t), where r(0) is the initial rate, a is the rate change parameter, and t is time. The maximum bound is set to -0.000001, representing a decelerating rate of evolution. The minimum bound is set to log(10\^-5)\/depth of the tree.
-
-\subsubsection{Model parameters}
-
 \texttt{fitContinuous} estimates sigma squared, the Brownian rate parameter and a, the rate change parameter. 
 
 Default bounds on the Brownian rate parameter are sigsq=c(min=0,max=Inf). Default bounds on a are -0.000001 for the maximum bound and log(10\^-5)\/depth of the tree for the minimum bound.
 
-\subsubsection{Fitting the model using fitContinuous}
+lnl = log likelihood, aic = AIC, aicc = AIC corrected for sample size, k = number of parameters in the model, beta = the Brownian rate parameter/variance, alpha (OU only) = strength of the constraint drawing traits towards the optimum, a (EB only) = early burst parameter . 
+
+\subsection{Fitting the models using fitContinuous}
 
 fitContinuous(phy, dat, SE = 0, 
     model = c("BM","OU","EB","trend","lambda","kappa","delta","drift","white"),
@@ -732,10 +715,38 @@ fitContinuous(phy, dat, SE = 0,
     niter = 100, FAIL = 1e+200, hessian = FALSE, CI = 0.95), ...)
 
 
-lnl = log likelihood, aic = AIC, aicc = AIC corrected for sample size, k = number of parameters in the model, beta = the Brownian rate parameter/variance, alpha (OU only) = strength of the constraint drawing traits towards the optimum, a (EB only) = early burst parameter . 
+
+BM <-  fitContinuous(primatetree, log(primatedata[,4]), model = c("BM"))
 
 
-  
+SE = NA, control = list(niter=50), ncores = 2)
+
+
+tmp=treedata(geo$phy, geo$dat)
+Warning message:
+In treedata(geo$phy, geo$dat) :
+  The following tips were not found in 'data' and were dropped from 'phy':
+  olivacea
+%phy=tmp$phy
+%dat=tmp$data
+>  
+STORE RESULTS 
+> brownFit <-  fitContinuous(phy, dat[,"wingL"], SE=NA, control=list(niter=50), ncores=2)
+
+
+lik 
+is the function used to compute the model likelihood. The returned function (lik) takes arguments that are necessary for the given model. For instance, if estimating a Brownian-motion model with unknown standard error, the arguments (pars) to the lik function would be sigsq and SE. By default, the function evaluates the likelihood of the model by assuming the maximum likelihood root state. This behavior can be changed in the call to lik with lik(pars, root=ROOT.GIVEN) where pars includes a value for the root state (z0). See Examples for a demonstration. The tree and data are stored internally within the lik function, which permits those elements to be efficiently reused when computing the likelihood under different parameter values
+
+bnd 
+is a matrix of the used bounds for the relevant parameters estimated in the model. Warnings will be issued if any parameter estimates occur at the supplied (or default) parameter bounds
+
+res 
+is a matrix of results from optimization. Rownames of the res matrix are the optimization methods (see optim and subplex). The columns in the res matrix are the estimated parameter values, the estimated model likelihood, and an indication of optimization convergence. Values of convergence not equal to zero are not to be trusted
+
+opt 
+is a list of the primary results: estimates of the parameters, the maximum-likelihood estimate (lnL) of the model, the optimization method used to compute the MLE, the number of model parameters (k, including one parameter for the root state), the AIC (aic), sample-size corrected AIC (aicc). The number of observations for AIC computation is taken to be the number of trait values observed. If the Hessian is used, confidence intervals on the parameter estimates (CI) and the Hessian matrix (hessian) are also returned
+
+
 \subsection{Problems with convergence and bounds}
 
 Above we have mentioned the default bounds on each parameter. Sometimes these need to be changed because the model will not converge. This happens when the likelihood surface has long flat ridges that cause the likelihood search to get ``stuck'' (this is particularly common under the OU model). You can change bounds with the \texttt{bounds} argument in \texttt{fitContinuous}. Several bounds can be given at a time (e.g., bounds=list(sigsq=c(0,0.1),alpha=c(0,1)) would constrain the sigma squared and alpha parameters.
@@ -747,6 +758,11 @@ Above we have mentioned the default bounds on each parameter. Sometimes these ne
 We can use the geiger function fitContinuous to fit the models and can then compare them using AIC (Akaike Information Criterion). You just need to change the model to either “BM” for Brownian motion or “OU” for OU and “EB” for early burst. This is the same function we used to estimate lambda in problem set 1. 
 
 For primate body mass evolution, the model with the smallest AIC is the early burst model, which suggests that an early burst model fits better than either the Brownian motion or OU models. Note that alpha for the OU model is almost zero, and an OU model with an alpha of zero is the same as the Brownian motion model. So we have no evidence for primate body size evolving towards an optimum value.
+
+\section{Ouwie for doing more exciting things!}
+
+Graham's bit
+
 
 
 \end{document}
