@@ -654,7 +654,7 @@ As an example, let’s look at the evolution of log(body size) in Primates. We�
 \subsection{Model descriptions}
 \subsubsection{The Brownian motion (BM model)}
 
-In the Brownian motion model (Felsenstein 1973), a trait X evolves at random at a rate $\sigma$
+In the Brownian motion model (Felsenstein 1973), a trait X evolves at random at a rate $\sigma$:
 \begin{equation}
 dX(t) = \sigma dW(t)
 \end{equation}
@@ -668,14 +668,13 @@ cov(X_i,X_j) = \sigma^2 t_{ij}
 \end{equation}
 where $t_{ij}$ is the shared evolutionary pathway for species $i$ and $j$, i.e. the time at which they last shared a common ancestor.  
 
-Put in more simple terms, the Brownian motion model assumes the correlation structure among trait values is proportional to the extent of shared ancestry for pairs of species. This means that close relatives will be more similar in their trait values than more distant relatives. It also means that variance in the trait will increase (linearly) with time. 
+% Edit the simple bits
+More simply, the Brownian motion model is a random walk model. It assumes the correlation structure among trait values is proportional to the extent of shared ancestry for pairs of species. This means that close relatives will be more similar in their trait values than more distant relatives. It also means that variance in the trait will increase (linearly) with time. 
 
-\texttt{fitContinuous} estimates sigma squared, the Brownian rate parameter. This can be used as a proxy for the rate of evolution.\\
-
-Default bounds on the Brownian rate parameter are sigsq=c(min=0,max=Inf). 
+\texttt{fitContinuous} estimates the Brownian rate parameter, $\sigma^2$, and the state of the root at time zero, $X(0)$. Note that $\sigma^2$ can be used as a proxy for the rate of trait evolution (Cooper \& Purvis 2010, Cooper \textit{et al.} 2011)
 
 \subsubsection{The Ornstein-Uhlenbeck (OU) model}
-The Ornstein-Uhlenbeck (OU) model (Hansen 1997, Butler and King 2004) describes a mean-reverting process and has the following form, adding an extra term to the Brownian model:
+The Ornstein-Uhlenbeck (OU) model (Hansen 1997, Butler \& King 2004) describes a mean-reverting process and has the following form, adding an extra term to the Brownian model:
 \begin{equation}
 dX(t) = -\alpha(X(t) - \mu) + \sigma dW(t)
 \end{equation}
@@ -690,76 +689,261 @@ And for a pair of species $i$ and $j$, the covariance in traits is:
 cov(X_i,X_j ) = e^{(-2\alpha (T-t_{ij} ))} (1 - e^{(-2\alpha t_{ij})})
 \end{equation}
 
-Put more simply, the Ornstein-Uhlenbeck model, fits a random walk with a central tendency with an attraction strength proportional to the parameter alpha. 
+%More simply, the Ornstein-Uhlenbeck model fits a random walk with a central tendency with an attraction strength proportional to the parameter $\alpha$. 
 
-Note that if $\alpha$ is close to zero then evolution is approximately Brownian.
-
-\texttt{fitContinuous} estimates sigma squared, the Brownian rate parameter and alpha, the attraction strength or ``rubber band'' parameter.\\
-
-Default bounds on the Brownian rate parameter are sigsq=c(min=0,max=Inf). Default bounds on alpha = c(min = 0, max = 150)
+\texttt{fitContinuous} estimates the Brownian rate parameter, $\sigma^2$, the state of the root at time zero, $X(0)$, and the attraction strength or ``rubber band'' parameter, $\alpha$. It does not estimate $\mu$ but in this implementation of the OU model $\mu$ is equivalent to $X(0)$. Note that if $\alpha$ is close to zero then evolution is approximately Brownian.
 
 \subsubsection{The Early Burst (EB) model}
 
-EB is the Early-burst model (Harmon et al. 2010) and also called the ACDC model (accelerating-decelerating; Blomberg et al. 2003). Set by the a rate parameter, EB fits a model where the rate of evolution increases or decreases exponentially through time, under the model r(t) = r(0) * exp(a * t), where r(0) is the initial rate, a is the rate change parameter, and t is time. The maximum bound is set to -0.000001, representing a decelerating rate of evolution. The minimum bound is set to log(10\^-5)\/depth of the tree.
-\texttt{fitContinuous} estimates sigma squared, the Brownian rate parameter and a, the rate change parameter. 
+%EB is the Early-burst model (Harmon et al. 2010) and also called the ACDC model (accelerating-decelerating; Blomberg et al. 2003). Set by the a rate parameter, EB fits a model where the rate of evolution increases or decreases exponentially through time, under the model r(t) = r(0) * exp(a * t), where r(0) is the initial rate, a is the rate change parameter, and t is time. The maximum bound is set to -0.000001, representing a decelerating rate of evolution. The minimum bound is set to log(10\^-5)\/depth of the tree.
 
-Default bounds on the Brownian rate parameter are sigsq=c(min=0,max=Inf). Default bounds on a are -0.000001 for the maximum bound and log(10\^-5)\/depth of the tree for the minimum bound.
-
-lnl = log likelihood, aic = AIC, aicc = AIC corrected for sample size, k = number of parameters in the model, beta = the Brownian rate parameter/variance, alpha (OU only) = strength of the constraint drawing traits towards the optimum, a (EB only) = early burst parameter . 
+\texttt{fitContinuous} estimates the Brownian rate parameter, $\sigma^2$, the state of the root at time zero, $X(0)$, and the rate of change parameter, $r$. Note that if $r$ is close to zero then evolution is approximately Brownian.
 
 \subsection{Fitting the models using fitContinuous}
 
-fitContinuous(phy, dat, SE = 0, 
-    model = c("BM","OU","EB","trend","lambda","kappa","delta","drift","white"),
-    bounds= list(), control = list(method = c("subplex","L-BFGS-B"),
-    niter = 100, FAIL = 1e+200, hessian = FALSE, CI = 0.95), ...)
+Before we can fit the models we need to get the tree and data into a format that \texttt{geiger} can deal with. All \texttt{geiger} functions require that species names are the row names of the data. This is really easy to fix:
 
+\begin{snugshade}
+\begin{Highlighting}[]
+\KeywordTok{row.names}\NormalTok{(primatedata) <-}\StringTok{ }\NormalTok{primatedata\$Binomial}
+\end{Highlighting}
+\end{snugshade}
 
+Next, for some weird reason the function below don't work if you input a dataset with variables that are characters i.e. words or letters. Our taxonomic variables \texttt{Order}, \texttt{Family} and \texttt{Binomial} are characters so we need to exclude them from the data. We will do this by making a new dataset called \texttt{primatedata2}.
 
-BM <-  fitContinuous(primatetree, log(primatedata[,4]), model = c("BM"))
+\begin{snugshade}
+\begin{Highlighting}[]
+\NormalTok{primatedata2 <-}\StringTok{ }\NormalTok{(primatedata[,} \DecValTok{4:8}\NormalTok{])}
+\end{Highlighting}
+\end{snugshade}
 
+Here the \texttt{[]} tells R we want to subset the dataset. R data frames are always described by \texttt[X,Y] where X is rows and Y is columns. So \texttt{[1, 1]} will select the entry in the first column and the first row of the data frame. \texttt{[, 4:8]} selects all rows but only columns 4 to 8. These are the columns containing our numeric variables.
 
-SE = NA, control = list(niter=50), ncores = 2)
+The \texttt{fitContinuous} function also requires that the species in the phylogeny match those in the dataset. To do this we use the \texttt{geiger} function \texttt{treedata}:
 
+\begin{snugshade}
+\begin{Highlighting}[]
+\NormalTok{match.species <-}\StringTok{ }\KeywordTok{treedata}\NormalTok{(}\DataTypeTok{phy = }\NormalTok{primatetree,} \DataTypeTok{dat = }\NormalTok{primatedata2)}
+\end{Highlighting}
+\end{snugshade}
 
-tmp=treedata(geo$phy, geo$dat)
-Warning message:
-In treedata(geo$phy, geo$dat) :
-  The following tips were not found in 'data' and were dropped from 'phy':
-  olivacea
-%phy=tmp$phy
-%dat=tmp$data
->  
-STORE RESULTS 
-> brownFit <-  fitContinuous(phy, dat[,"wingL"], SE=NA, control=list(niter=50), ncores=2)
+This produces the following warning message telling us the species that were not found in both the data and the tree and have been dropped.
+\begin{verbatim}
+## Warning: The following tips were not found in 'data' and were dropped from 'phy':
+##  Allenopithecus_nigroviridis
+##  Allocebus_trichotis
+##  Alouatta_caraya
+##  Alouatta_sara
+etc.
+\end{verbatim}
 
+\begin{framed}
+Note that if you have even slightly misspelled a species name in the tree or the data it will automatically be dropped from the analyses. It is therefore \textbf{very important} to check this list before running an analysis.
+\end{framed}
 
-lik 
-is the function used to compute the model likelihood. The returned function (lik) takes arguments that are necessary for the given model. For instance, if estimating a Brownian-motion model with unknown standard error, the arguments (pars) to the lik function would be sigsq and SE. By default, the function evaluates the likelihood of the model by assuming the maximum likelihood root state. This behavior can be changed in the call to lik with lik(pars, root=ROOT.GIVEN) where pars includes a value for the root state (z0). See Examples for a demonstration. The tree and data are stored internally within the lik function, which permits those elements to be efficiently reused when computing the likelihood under different parameter values
+Next we use the output from the \texttt{treedata} function to get a dataset and phylogeny with perfectly matching names:
 
-bnd 
-is a matrix of the used bounds for the relevant parameters estimated in the model. Warnings will be issued if any parameter estimates occur at the supplied (or default) parameter bounds
+\begin{snugshade}
+\begin{Highlighting}[]
+\NormalTok{mytree <-}\StringTok{ }\NormalTok{match.species\$phy}
+\NormalTok{mydata <-}\StringTok{ }\NormalTok{match.species\$data}
+\end{Highlighting}
+\end{snugshade}
 
-res 
-is a matrix of results from optimization. Rownames of the res matrix are the optimization methods (see optim and subplex). The columns in the res matrix are the estimated parameter values, the estimated model likelihood, and an indication of optimization convergence. Values of convergence not equal to zero are not to be trusted
+We are now ready to fit our models of evolution. First we will fit a Brownian motion (BM) model to log(body mass):
 
-opt 
-is a list of the primary results: estimates of the parameters, the maximum-likelihood estimate (lnL) of the model, the optimization method used to compute the MLE, the number of model parameters (k, including one parameter for the root state), the AIC (aic), sample-size corrected AIC (aicc). The number of observations for AIC computation is taken to be the number of trait values observed. If the Hessian is used, confidence intervals on the parameter estimates (CI) and the Hessian matrix (hessian) are also returned
+\begin{snugshade}
+\begin{Highlighting}[]
+\NormalTok{BM <-}\StringTok{ }\KeywordTok{fitContinuous}\NormalTok{(\DataTypeTok{phy = }mytree, \DataTypeTok{dat = }log(mydata[,"AdultBodyMass_g"]),} 
+                    \DataTypeTok{model = }\KeywordTok{c}\NormalTok{(}\StringTok{"}\CharTok{BM}\StringTok{"}\NormalTok{))}
+\end{Highlighting}
+\end{snugshade}
 
+To look at the output type:
 
-\subsection{Problems with convergence and bounds}
+\begin{snugshade}
+\begin{Highlighting}[]
+\NormalTok{BM}
+\end{Highlighting}
+\end{snugshade}
 
-Above we have mentioned the default bounds on each parameter. Sometimes these need to be changed because the model will not converge. This happens when the likelihood surface has long flat ridges that cause the likelihood search to get ``stuck'' (this is particularly common under the OU model). You can change bounds with the \texttt{bounds} argument in \texttt{fitContinuous}. Several bounds can be given at a time (e.g., bounds=list(sigsq=c(0,0.1),alpha=c(0,1)) would constrain the sigma squared and alpha parameters.
+The output should look like this:
 
-%An example.
+\begin{verbatim}
+## GEIGER-fitted comparative model of continuous data
+##  fitted 'BM' model parameters:
+##  sigsq = 0.028655
+##  z0 = 6.773956
+## 
+##  model summary:
+##  log-likelihood = -78.096042
+##  AIC = 160.192084
+##  AICc = 160.354246
+##  free parameters = 2
+## 
+## Convergence diagnostics:
+##  optimization iterations = 100
+##  failed iterations = 0
+##  frequency of best fit = 1.00
+## 
+##  object summary:
+##  'lik' -- likelihood function
+##  'bnd' -- bounds for likelihood search
+##  'res' -- optimization iteration summary
+##  'opt' -- maximum likelihood parameter estimates
+\end{verbatim}
+
+The maximum likelihood estimates (lnL) of the model parameters are found near the top of the output. In a Brownian motion (BM) model we estimate the Brownian rate parameter, $\sigma^2$ or \texttt{sigsq} in the output above, which is $0.028655$ and the value of the trait at the root of the tree, $X_0$ or \texttt{z$0$} in the output above, which is $6.773956$.
+
+Other useful things in the output are the maximum-likelihood estimate (lnL) of the model (\texttt{log-likelihood}), the Akaike Information Criterion (\texttt{AIC}), sample-size corrected AIC (\texttt{AICc}) and the number of model parameters (\texttt{free parameters})also known as k in the literature. We will return to the AIC values below.
+
+To fit an Ornstein-Uhlenbeck model to log(body mass) we only need to change the model in the formula we used above:
+
+\begin{snugshade}
+\begin{Highlighting}[]
+\NormalTok{OU <-}\StringTok{ }\KeywordTok{fitContinuous}\NormalTok{(\DataTypeTok{phy = }mytree, \DataTypeTok{dat = }log(mydata[,"AdultBodyMass_g"]),} 
+                    \DataTypeTok{model = }\KeywordTok{c}\NormalTok{(}\StringTok{"}\CharTok{OU}\StringTok{"}\NormalTok{))}
+\end{Highlighting}
+\end{snugshade}
+
+To look at the output type:
+
+\begin{snugshade}
+\begin{Highlighting}[]
+\NormalTok{OU}
+\end{Highlighting}
+\end{snugshade}
+
+The output should look like this:
+
+\begin{verbatim}
+## GEIGER-fitted comparative model of continuous data
+##  fitted 'OU' model parameters:
+##  alpha = 0.000000
+##  sigsq = 0.028655
+##  z0 = 6.773956
+## 
+##  model summary:
+##  log-likelihood = -78.096042
+##  AIC = 162.192084
+##  AICc = 162.520851
+##  free parameters = 3
+## 
+## Convergence diagnostics:
+##  optimization iterations = 100
+##  failed iterations = 0
+##  frequency of best fit = 0.54
+## 
+##  object summary:
+##  'lik' -- likelihood function
+##  'bnd' -- bounds for likelihood search
+##  'res' -- optimization iteration summary
+##  'opt' -- maximum likelihood parameter estimates
+\end{verbatim}
+
+As above, the maximum likelihood estimates (lnL) of the model parameters are found near the top of the output. In an Ornstein-Uhlenbeck (OU) model we estimate the Brownian rate parameter, $\sigma^2$ or \texttt{sigsq} in the output above, the value of the trait at the root of the tree, $X_0$ or \texttt{z$0$} in the output above, and the blah blah parameter, $\alpha$ or \texttt{alpha} in the output above. As $alpha = 0$ here, the model is identical to the Brownian motion model.
+
+Finally, to fit an Early Burst (EB) model to log(body mass):
+
+\begin{snugshade}
+\begin{Highlighting}[]
+\NormalTok{EB <-}\StringTok{ }\KeywordTok{fitContinuous}\NormalTok{(\DataTypeTok{phy = }mytree, \DataTypeTok{dat = }log(mydata[,"AdultBodyMass_g"]),} 
+                    \DataTypeTok{model = }\KeywordTok{c}\NormalTok{(}\StringTok{"}\CharTok{EB}\StringTok{"}\NormalTok{))}
+\end{Highlighting}
+\end{snugshade}
+
+To look at the output type:
+
+\begin{snugshade}
+\begin{Highlighting}[]
+\NormalTok{EB}
+\end{Highlighting}
+\end{snugshade}
+
+The output should look like this:
+
+\begin{verbatim}
+## GEIGER-fitted comparative model of continuous data
+##  fitted 'EB' model parameters:
+##  a = -0.037692
+##  sigsq = 0.276300
+##  z0 = 6.695068
+## 
+##  model summary:
+##  log-likelihood = -75.428628
+##  AIC = 156.857257
+##  AICc = 157.186024
+##  free parameters = 3
+## 
+## Convergence diagnostics:
+##  optimization iterations = 100
+##  failed iterations = 0
+##  frequency of best fit = 0.20
+## 
+##  object summary:
+##  'lik' -- likelihood function
+##  'bnd' -- bounds for likelihood search
+##  'res' -- optimization iteration summary
+##  'opt' -- maximum likelihood parameter estimates
+\end{verbatim}
+
+As above, the maximum likelihood estimates (lnL) of the model parameters are found near the top of the output. In an Early Burst (EB) model we estimate the Brownian rate parameter, $\sigma^2$ or \texttt{sigsq} in the output above, the value of the trait at the root of the tree, $X_0$ or \texttt{z$0$} in the output above, and the rate of change parameter, $r$ or \texttt{a} in the output above. Here $r = -0.0377$ indicating that the rate of log(body mass) evolution in Primates has decreased through time.
 
 \subsection{Comparing among models}
 
-We can use the geiger function fitContinuous to fit the models and can then compare them using AIC (Akaike Information Criterion). You just need to change the model to either “BM” for Brownian motion or “OU” for OU and “EB” for early burst. This is the same function we used to estimate lambda in problem set 1. 
+Often we want to know which of the models fits our variable best. We can use \texttt{fitContinuous} to fit the models we are interested in and can then compare them using AIC. We can extract the AICs from the models we fitted above as follows:
 
-For primate body mass evolution, the model with the smallest AIC is the early burst model, which suggests that an early burst model fits better than either the Brownian motion or OU models. Note that alpha for the OU model is almost zero, and an OU model with an alpha of zero is the same as the Brownian motion model. So we have no evidence for primate body size evolving towards an optimum value.
+\begin{snugshade}
+\begin{Highlighting}[]
+\NormalTok{BM\$opt\$aic}
+\end{Highlighting}
+\end{snugshade}
+\begin{verbatim}
+##  160.1921
+\end{verbatim}
+\begin{snugshade}
+\begin{Highlighting}[]
+\NormalTok{OU\$opt\$aic}
+\end{Highlighting}
+\end{snugshade}
+\begin{verbatim}
+##  162.1921
+\end{verbatim}
+\begin{snugshade}
+\begin{Highlighting}[]
+\NormalTok{EB\$opt\$aic}
+\end{Highlighting}
+\end{snugshade}
+\begin{verbatim}
+##  156.857257
+\end{verbatim}
 
-\section{Ouwie for doing more exciting things!}
+The ``best'' model is the one with the smallest AIC, in this case the Early Burst model. There is much debate about how big of a difference in AIC values can be classed as substantial improvement to a model fit (it ranges from 2-10 AIC units). Generally we use 4 units, so EB probably doesn't fit substantially better than BM (160.1921 - 156.857257 = 3.334843). 
+
+\subsection{Problems with convergence and bounds}
+
+Above we have mentioned the default bounds on each parameter. Sometimes these need to be changed because the model will not converge. This happens when the likelihood surface has long flat ridges that cause the likelihood search to get ``stuck'' (this is particularly common under the OU model). You can change bounds with the \texttt{bounds} argument in \texttt{fitContinuous}. Several bounds can be given at a time e.g. \texttt{bounds=list(sigsq=c(0,0.1),alpha=c(0,1))} would constrain both the $\sigma^2$ and $\alpha$ parameters.
+
+For example, if an OU model keeps getting stuck you could try changing the lower bound on $\alpha$:
+
+\begin{snugshade}
+\begin{Highlighting}[]
+\NormalTok{OU <-}\StringTok{ }\KeywordTok{fitContinuous}\NormalTok{(\DataTypeTok{phy = }mytree, \DataTypeTok{dat = }log(mydata[,"AdultBodyMass_g"]),} 
+                    \DataTypeTok{model = }\KeywordTok{c}\NormalTok{(}\StringTok{"}\CharTok{OU}\StringTok{"}\NormalTok{), }\DataTypeTok{bounds = }\KeywordTok{list}\NormalTok{(}\DataTypeTok{alpha = }\KeywordTok{c}\NormalTok{(}\DecValTok{0.01}\NormalTok{, }\DecValTok{1}\NormalTok{)))}
+
+\end{Highlighting}
+\end{snugshade}
+
+This example gives the following warning message because $\alpha$ is zero, when we make the lower bound larger the method ends up giving us this value instead because it's as close to zero as we are allowing the model to go.
+
+\begin{verbatim}
+##  Warning message:
+##  In fitContinuous(phy = mytree, dat = log(mydata[, "AdultBodyMass_g"]),  :
+##    Parameter estimates appear at bounds:
+##    alpha
+\end{verbatim}
+
+\section{OUwie for doing more exciting things!}
 
 Graham's bit
 

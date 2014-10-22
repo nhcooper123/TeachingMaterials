@@ -92,160 +92,41 @@ primatedata$Binomial <- gsub(" ", "_", primatedata$Binomial)
 
 ```{r}
 row.names(primatedata) <- primatedata$Binomial
-
-```{r}
-par(mfrow = c(2, 2))
-```
-
-```{r, eval = FALSE}
-hist(primatedata$AdultBodyMass_g)
-hist(primatedata$GestationLen_d)
-```
-
-```{r, eval = FALSE}
-hist(log(primatedata$AdultBodyMass_g))
-hist(log(primatedata$GestationLen_d))
 ```
 
 ```{r}
-hist(log(primatedata$GestationLen_d), col = rainbow(8))
+primatedata2 <- primatedata[, 4:8]
 ```
 
 ```{r}
-par(mfrow = c(1, 1))
+match.species <- treedata(primatetree, primatedata2)
 ```
 
 ```{r}
-model.ols <- lm(log(GestationLen_d) ~ log(AdultBodyMass_g), 
-                data = primatedata)
-summary(model.ols)
-```
-
-
-```{r, eval = FALSE}
-plot(log(GestationLen_d) ~ log(AdultBodyMass_g), data = primatedata)
-abline(model.ols)
-```
-
-```{r, eval = FALSE}
-points(log(GestationLen_d[Family == "Cercopithecidae"]) ~ 
-       log(AdultBodyMass_g[Family == "Cercopithecidae"]), 
-       data = primatedata, col= "blue",  pch = 16)
+mytree <- match.species$phy
+mydata <- match.species$data
 ```
 
 ```{r}
-primate <- comparative.data(phy = primatetree, data = primatedata, 
-                            names.col = Binomial, vcv = TRUE, 
-                            na.omit = FALSE, warn.dropped = TRUE)
-```
-```{r}
-primate$dropped$tips
-primate$dropped$unmatched.rows
+BM <- fitContinuous(mytree, log(mydata[,"AdultBodyMass_g"]), model = c("BM"))
 ```
 
 ```{r}
-model.pgls <- pgls(log(GestationLen_d) ~ log(AdultBodyMass_g), 
-                   data = primate, lambda='ML')
-summary(model.pgls)
-```
-
-```{r, eval = FALSE}
-plot(log(GestationLen_d) ~ log(AdultBodyMass_g), data = primate$data)
-abline(model.pgls)
+BM
 ```
 
 ```{r}
-model.pgls2 <- pgls(log(GestationLen_d) ~ log(AdultBodyMass_g), 
-                    data = primate, lambda='ML', 
-                    bounds = list(lambda = c(1e-6, 1)))
-summary(model.pgls2)
-```
-
-```{r, eval = FALSE}
-lambda.profile <- pgls.profile(model.pgls, 'lambda')
-plot(lambda.profile)
+OU <- fitContinuous(mytree, log(mydata[,"AdultBodyMass_g"]), model = c("OU"))
 ```
 
 ```{r}
-pgls.confint(model.pgls, 'lambda')
+OU
 ```
 
 ```{r}
-est.lambda <- pgls(log(GestationLen_d) ~ 1, data = primate, lambda = 'ML')
-summary(est.lambda)
-```
-
-```{r, eval = FALSE}
-par(mfrow = c(2, 2))
-plot(model.pgls)
+EB <- fitContinuous(mytree, log(mydata[,"AdultBodyMass_g"]), model = c("EB"))
 ```
 
 ```{r}
-pgls.residuals <- residuals(model.pgls, phylo = TRUE)
-```
-
-```{r}
-std.residuals <- pgls.residuals/sqrt(var(pgls.residuals))[1]
-```
-
-```{r}
-rownames(std.residuals) <- rownames(model.pgls$residuals)
-```
-
-```{r}
-rownames(std.residuals)[(abs(std.residuals) > 3)]
-```
-
-```{r}
-primate.no.outliers <- primate[-which(abs(std.residuals) > 3), ]
-```
-
-```{r}
-model.pgls.no.outliers <- pgls(log(GestationLen_d) ~ log(AdultBodyMass_g), 
-                               data = primate.no.outliers, lambda='ML')
-summary(model.pgls.no.outliers)
-```
-
-```{r, eval = FALSE}
-par(mfrow = c(2, 2))
-plot(model.pgls.no.outliers)
-```
-
-
-
-
-```{r}
-lngest <- log(primatedata$GestationLen_d)
-names(lngest) <- primatedata$Binomial
-```
-
-```{r}
-Kcalc(lngest[primatetree$tip.label], primatetree)
-```
-
-```{r}
-phylosignal(lngest[primatetree$tip.label], primatetree, reps = 1000)
-```
-
-```{r}
-setdiff(primatetree$tip.label, primatedata$Binomial)
-```
-
-```{r}
-primatetree2 <-drop.tip(primatetree, setdiff(primatetree$tip.label, 
-                        primatedata$Binomial))
-```
-
-```{r}
-setdiff(primatedata$Binomial, primatetree$tip.label)
-```
-
-```{r}
-matches <- match(primatedata$Binomial, primatetree2$tip.label, nomatch = 0)
-primatedata2 <-subset(primatedata, matches != 0)
-```
-
-```{r}
-str(primatedata2)
-str(primatetree2)
+EB
 ```
