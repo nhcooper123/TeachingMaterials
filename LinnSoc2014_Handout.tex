@@ -654,50 +654,63 @@ As an example, letâ€™s look at the evolution of log(body size) in Primates. Weâ€
 \subsection{Model descriptions}
 \subsubsection{The Brownian motion (BM model)}
 
-In the Brownian motion model (Felsenstein 1973), a trait X evolves at random at a rate $\sigma$:
+The Brownian motion model (Edwards \& Cavalli-Sforza 1964, Felsenstein 1973) is assumed to be the underlying mode of evolution in the majority of phylogenetic comparative methods (though this is assumption is rarely tested; Freckleton \& Harvey 2006). In the model, a trait X evolves at random at a rate $\sigma$:
 \begin{equation}
 dX(t) = \sigma dW(t)
 \end{equation}
-where $W(t)$ is a white noise function and is a random variate drawn from a normal distribution with mean $0$ and variance $\sigma^2$. This model assumes that there is no overall drift in the direction of evolution (hence the expectation of $W(t)$ is zero) and that the rate of evolution is constant. The model has two parameters, $\sigma^2$ and the state of the root at time zero, $X(0)$. The Brownian model predicts after a time $T$ the variance in trait value $X_i$ for species $i$ is:
-\begin{equation}
-var(X_i) = \sigma^2 T
-\end{equation}
-and the covariance in traits for species $i$ and $j$ is:
-\begin{equation}
-cov(X_i,X_j) = \sigma^2 t_{ij}
-\end{equation}
-where $t_{ij}$ is the shared evolutionary pathway for species $i$ and $j$, i.e. the time at which they last shared a common ancestor.  
+where $W(t)$ is a white noise function and is a random variate drawn from a normal distribution with mean $0$ and variance $\sigma^2$. This model assumes that there is no overall drift in the direction of evolution (hence the expectation of $W(t)$ is zero) and that the rate of evolution is constant. Because the direction of change in trait values at each step is random, Brownian motion is often described as a ``random walk''.
 
-% Edit the simple bits
-More simply, the Brownian motion model is a random walk model. It assumes the correlation structure among trait values is proportional to the extent of shared ancestry for pairs of species. This means that close relatives will be more similar in their trait values than more distant relatives. It also means that variance in the trait will increase (linearly) with time. 
+%The Brownian model predicts after a time $T$ the variance in trait value $X_i$ for species $i$ is:
+%\begin{equation}
+%var(X_i) = \sigma^2 T
+%\end{equation}
+%and the covariance in traits for species $i$ and $j$ is:
+%\begin{equation}
+%cov(X_i,X_j) = \sigma^2 t_{ij}
+%\end{equation}
+%where $t_{ij}$ is the shared evolutionary pathway for species $i$ and $j$, i.e. the time at which they last shared a common ancestor.  
 
-\texttt{fitContinuous} estimates the Brownian rate parameter, $\sigma^2$, and the state of the root at time zero, $X(0)$. Note that $\sigma^2$ can be used as a proxy for the rate of trait evolution (Cooper \& Purvis 2010, Cooper \textit{et al.} 2011)
+The model assumes the correlation structure among trait values is proportional to the extent of shared ancestry for pairs of species. This means that close relatives will be more similar in their trait values than more distant relatives. It also means that variance in the trait will increase (linearly) in proportion to time. 
+
+The model has two parameters, the Brownian rate parameter, $\sigma^2$ and the state of the root at time zero, $X(0)$. \texttt{fitContinuous} estimates $\sigma^2$ and $X(0)$. Note that $\sigma^2$ can be used as a measure of the rate of trait evolution (Cooper \& Purvis 2010, Cooper \textit{et al.} 2011). 
 
 \subsubsection{The Ornstein-Uhlenbeck (OU) model}
-The Ornstein-Uhlenbeck (OU) model (Hansen 1997, Butler \& King 2004) describes a mean-reverting process and has the following form, adding an extra term to the Brownian model:
+The Ornstein-Uhlenbeck (OU) model (Hansen 1997, Butler \& King 2004) is a random walk where trait values are pulled back towards some ``optimal'' value with an attraction strength proportional to the parameter $\alpha$. The model has the following form:
 \begin{equation}
 dX(t) = -\alpha(X(t) - \mu) + \sigma dW(t)
 \end{equation}
-The parameter $\mu$ is a long-term mean, and it is assumed that species evolve around this value. $\alpha$ is the strength of evolutionary force that returns traits back towards the mean if they evolve away. The OU model was introduced to population genetics by Lande (1976) to model stabilizing selection in which the mean was recast as a fitness optimum on an adaptive landscape. The process operating in comparative data is analogous, although clearly is not stabilizing selection (despite being sometimes referred to as such). This model has two parameters in addition to those of the Brownian model, $\alpha$ and $\mu$.\\
+Note that this model has two parameters in addition to those of the Brownian model, $\alpha$ and $\mu$. The parameter $\mu$ is a long-term mean, and it is assumed that species evolve around this value. $\alpha$ is the strength of evolutionary force that returns traits back towards the long-term mean if they evolve away from it. $\alpha$ is sometimes referred to as the ``rubber band'' parameter because of the way it forces traits back towards $\mu$.
 
-The OU model predicts that after a time $T$ for a species $i$, the variance in trait value $X_i$ is:
-\begin{equation}
-var(X_i) = 1 - e^{(-2\alpha T)}
-\end{equation}
-And for a pair of species $i$ and $j$, the covariance in traits is:
-\begin{equation}
-cov(X_i,X_j ) = e^{(-2\alpha (T-t_{ij} ))} (1 - e^{(-2\alpha t_{ij})})
-\end{equation}
+The OU model was introduced to population genetics by Lande (1976) to model stabilizing selection in which the mean was recast as a fitness optimum on an adaptive landscape. The process operating in comparative data is analogous, although clearly is not stabilizing selection (despite being sometimes referred to as such). 
+
+%The OU model predicts that after a time $T$ for a species $i$, the variance in trait value $X_i$ is:
+%\begin{equation}
+%var(X_i) = 1 - e^{(-2\alpha T)}
+%\end{equation}
+%And for a pair of species $i$ and $j$, the covariance in traits is:
+%\begin{equation}
+%cov(X_i,X_j ) = e^{(-2\alpha (T-t_{ij} ))} (1 - e^{(-2\alpha t_{ij})})
+%\end{equation}
 
 %More simply, the Ornstein-Uhlenbeck model fits a random walk with a central tendency with an attraction strength proportional to the parameter $\alpha$. 
 
-\texttt{fitContinuous} estimates the Brownian rate parameter, $\sigma^2$, the state of the root at time zero, $X(0)$, and the attraction strength or ``rubber band'' parameter, $\alpha$. It does not estimate $\mu$ but in this implementation of the OU model $\mu$ is equivalent to $X(0)$. Note that if $\alpha$ is close to zero then evolution is approximately Brownian.
+The model assumes the correlation structure among trait values is proportional to the extent of shared ancestry for pairs of species. This means that close relatives will be more similar in their trait values than more distant relatives. It also means that variance in the trait will increase (linearly) in proportion to time. 
+
+The model has two parameters, the Brownian rate parameter, $\sigma^2$ and the state of the root at time zero, $X(0)$. \texttt{fitContinuous} estimates $\sigma^2$ and $X(0)$. Note that $\sigma^2$ can be used as a measure of the rate of trait evolution (Cooper \& Purvis 2010, Cooper \textit{et al.} 2011). 
+
+The model has four parameters, the Brownian rate parameter, $\sigma^2$, the state of the root at time zero, $X(0)$, the attraction strength or ``rubber band'' parameter, $\alpha$, and the long-term mean, $\mu$. \texttt{fitContinuous} estimates $\sigma^2$, $X(0)$, and $\alpha$. It does not estimate $\mu$ but in this implementation of the model, $\mu$ is equivalent to $X(0)$. Note that if $\alpha$ is close to zero then evolution is approximately Brownian.
 
 \subsubsection{The Early Burst (EB) model}
 
-%EB is the Early-burst model (Harmon et al. 2010) and also called the ACDC model (accelerating-decelerating; Blomberg et al. 2003). Set by the a rate parameter, EB fits a model where the rate of evolution increases or decreases exponentially through time, under the model r(t) = r(0) * exp(a * t), where r(0) is the initial rate, a is the rate change parameter, and t is time. The maximum bound is set to -0.000001, representing a decelerating rate of evolution. The minimum bound is set to log(10\^-5)\/depth of the tree.
+The Early Burst (EB) model (Harmon et al. 2010, also called the ACDC model; Blomberg et al. 2003) is a Brownian motion/random walk model where the rate of evolution decreases exponentially through time under the model:
+\begin{equation}
+r(t) = \sigma^2e(at)
+\end{equation}
+Where $r(t)$ is the rate of evolution at time $t$, $\sigma^2$ is the initial value of the Brownian rate parameter, i.e. the initial rate of evolution, $a$ is the rate change parameter, and $t$ is time. The value of $a$ is always less than or equal to 0. When $a$ is negative, rates of evolution decrease through time.
 
-\texttt{fitContinuous} estimates the Brownian rate parameter, $\sigma^2$, the state of the root at time zero, $X(0)$, and the rate of change parameter, $r$. Note that if $r$ is close to zero then evolution is approximately Brownian.
+The model fits traits where diversification occurs most rapidly early in a lineage and slows as the lineage approaches the present, so that subclades tend to retain their differences through time. This is consistent with a clade radiating adaptively into a fixed set of niches and has been used as evidence of niche-filling modes of evolution (Harmon et al 2010, Cooper \& Purvis 2010).
+
+The model has three parameters, the Brownian rate parameter, $\sigma^2$, the state of the root at time zero, $X(0)$, and the rate of change parameter, $a$. \texttt{fitContinuous} estimates $\sigma^2$, $X(0)$ and $a$. Note that if $a$ is close to zero then evolution is approximately Brownian.
 
 \subsection{Fitting the models using fitContinuous}
 
@@ -713,7 +726,7 @@ Next, for some weird reason the function below don't work if you input a dataset
 
 \begin{snugshade}
 \begin{Highlighting}[]
-\NormalTok{primatedata2 <-}\StringTok{ }\NormalTok{(primatedata[,} \DecValTok{4:8}\NormalTok{])}
+\NormalTok{primatedatasubset <-}\StringTok{ }\NormalTok{(primatedata[,} \DecValTok{4:8}\NormalTok{])}
 \end{Highlighting}
 \end{snugshade}
 
@@ -723,7 +736,7 @@ The \texttt{fitContinuous} function also requires that the species in the phylog
 
 \begin{snugshade}
 \begin{Highlighting}[]
-\NormalTok{match.species <-}\StringTok{ }\KeywordTok{treedata}\NormalTok{(}\DataTypeTok{phy = }\NormalTok{primatetree,} \DataTypeTok{dat = }\NormalTok{primatedata2)}
+\NormalTok{match.species <-}\StringTok{ }\KeywordTok{treedata}\NormalTok{(}\DataTypeTok{phy = }\NormalTok{primatetree,} \DataTypeTok{dat = }\NormalTok{primatedatasubset)}
 \end{Highlighting}
 \end{snugshade}
 
@@ -887,9 +900,9 @@ The output should look like this:
 ##  'opt' -- maximum likelihood parameter estimates
 \end{verbatim}
 
-As above, the maximum likelihood estimates (lnL) of the model parameters are found near the top of the output. In an Early Burst (EB) model we estimate the Brownian rate parameter, $\sigma^2$ or \texttt{sigsq} in the output above, the value of the trait at the root of the tree, $X_0$ or \texttt{z$0$} in the output above, and the rate of change parameter, $r$ or \texttt{a} in the output above. Here $r = -0.0377$ indicating that the rate of log(body mass) evolution in Primates has decreased through time.
+As above, the maximum likelihood estimates (lnL) of the model parameters are found near the top of the output. In an Early Burst (EB) model we estimate the Brownian rate parameter, $\sigma^2$ or \texttt{sigsq} in the output above, the value of the trait at the root of the tree, $X_0$ or \texttt{$z0$} in the output above, and the rate of change parameter, $a$. Here $a = -0.0377$ indicating that the rate of log(body mass) evolution in Primates has decreased through time.
 
-\subsection{Comparing among models}
+\subsection{Comparing models}
 
 Often we want to know which of the models fits our variable best. We can use \texttt{fitContinuous} to fit the models we are interested in and can then compare them using AIC. We can extract the AICs from the models we fitted above as follows:
 
@@ -918,7 +931,7 @@ Often we want to know which of the models fits our variable best. We can use \te
 ##  156.857257
 \end{verbatim}
 
-The ``best'' model is the one with the smallest AIC, in this case the Early Burst model. There is much debate about how big of a difference in AIC values can be classed as substantial improvement to a model fit (it ranges from 2-10 AIC units). Generally we use 4 units, so EB probably doesn't fit substantially better than BM (160.1921 - 156.857257 = 3.334843). 
+The ``best'' model is the one with the smallest AIC, in this case the Early Burst model. There is much debate about how big of a difference in AIC values can be classed as substantial improvement to a model fit (it ranges from 2-10 AIC units). Generally we use 4 units, so EB probably doesn't fit substantially better than BM ($160.1921 - 156.857257 = 3.334843$). 
 
 \subsection{Problems with convergence and bounds}
 
@@ -934,7 +947,7 @@ For example, if an OU model keeps getting stuck you could try changing the lower
 \end{Highlighting}
 \end{snugshade}
 
-This example gives the following warning message because $\alpha$ is zero, when we make the lower bound larger the method ends up giving us this value instead because it's as close to zero as we are allowing the model to go.
+This example gives the following warning message because $\alpha$ is zero, so when we make the lower bound larger the method ends up giving us this value instead because it's as close to zero as we are allowing the model to go.
 
 \begin{verbatim}
 ##  Warning message:
