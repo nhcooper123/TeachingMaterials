@@ -702,9 +702,7 @@ The Early Burst (EB) model (Harmon et al. 2010, also called the ACDC model; Blom
 \begin{equation}
 r(t) = \sigma^2e(at)
 \end{equation}
-Where $r(t)$ is the rate of evolution at time $t$, $\sigma^2$ is the initial value of the Brownian rate parameter, i.e. the initial rate of evolution, $a$ is the rate change parameter, and $t$ is time. The value of $a$ is generally less than or equal to 0 (note that you can force a to be greater than zero by changing the bounds (see \subsection{Problems with convergence and bounds} , however, this will only . When $a$ is negative, rates of evolution decrease through time.
-
-a > 0 is non-identifiable for extant only data (see Slater et al. 2012)
+Where $r(t)$ is the rate of evolution at time $t$, $\sigma^2$ is the initial value of the Brownian rate parameter, i.e. the initial rate of evolution, $a$ is the rate change parameter, and $t$ is time. The value of $a$ is generally less than or equal to 0 (note that you can force a to be greater than zero by changing the bounds - see section \ref{bounds} - however, this will only work if you have fossil species in your data; Slater \textit{et al.} 2012). When $a$ is negative, rates of evolution decrease through time.
 
 The model fits traits where diversification occurs most rapidly early in a lineage and slows as the lineage approaches the present, so that subclades tend to retain their differences through time. This is consistent with a clade radiating adaptively into a fixed set of niches and has been used as evidence of niche-filling modes of evolution (Harmon et al 2010, Cooper \& Purvis 2010).
 
@@ -932,6 +930,7 @@ Often we want to know which of the models fits our variable best. We can use \te
 The ``best'' model is the one with the smallest AIC, in this case the Early Burst model. There is much debate about how big of a difference in AIC values can be classed as substantial improvement to a model fit (it ranges from 2-10 AIC units). Generally we use 4 units, so EB probably doesn't fit substantially better than BM ($160.1921 - 156.857257 = 3.334843$). 
 
 \subsection{Problems with convergence and bounds}
+\label{bounds}
 
 Above we have mentioned the default bounds on each parameter. Sometimes these need to be changed because the model will not converge. This happens when the likelihood surface has long flat ridges that cause the likelihood search to get ``stuck'' (this is particularly common under the OU model). You can change bounds with the \texttt{bounds} argument in \texttt{fitContinuous}. Several bounds can be given at a time e.g. \texttt{bounds=list(sigsq=c(0,0.1),alpha=c(0,1))} would constrain both the $\sigma^2$ and $\alpha$ parameters.
 
