@@ -654,7 +654,7 @@ As an example, letâ€™s look at the evolution of log(body size) in Primates. Weâ€
 \subsection{Model descriptions}
 \subsubsection{The Brownian motion (BM model)}
 
-The Brownian motion model (Edwards \& Cavalli-Sforza 1964, Felsenstein 1973) is assumed to be the underlying mode of evolution in the majority of phylogenetic comparative methods (though this is assumption is rarely tested; Freckleton \& Harvey 2006). In the model, a trait X evolves at random at a rate $\sigma$:
+The Brownian motion model (Edwards \& Cavalli-Sforza 1964, Felsenstein 1973) is assumed to be the underlying mode of evolution in the majority of phylogenetic comparative methods (though this assumption is rarely tested; Freckleton \& Harvey 2006). In the model, a trait X evolves at random at a rate $\sigma$:
 \begin{equation}
 dX(t) = \sigma dW(t)
 \end{equation}
@@ -694,10 +694,6 @@ The OU model was introduced to population genetics by Lande (1976) to model stab
 
 %More simply, the Ornstein-Uhlenbeck model fits a random walk with a central tendency with an attraction strength proportional to the parameter $\alpha$. 
 
-The model assumes the correlation structure among trait values is proportional to the extent of shared ancestry for pairs of species. This means that close relatives will be more similar in their trait values than more distant relatives. It also means that variance in the trait will increase (linearly) in proportion to time. 
-
-The model has two parameters, the Brownian rate parameter, $\sigma^2$ and the state of the root at time zero, $X(0)$. \texttt{fitContinuous} estimates $\sigma^2$ and $X(0)$. Note that $\sigma^2$ can be used as a measure of the rate of trait evolution (Cooper \& Purvis 2010, Cooper \textit{et al.} 2011). 
-
 The model has four parameters, the Brownian rate parameter, $\sigma^2$, the state of the root at time zero, $X(0)$, the attraction strength or ``rubber band'' parameter, $\alpha$, and the long-term mean, $\mu$. \texttt{fitContinuous} estimates $\sigma^2$, $X(0)$, and $\alpha$. It does not estimate $\mu$ but in this implementation of the model, $\mu$ is equivalent to $X(0)$. Note that if $\alpha$ is close to zero then evolution is approximately Brownian.
 
 \subsubsection{The Early Burst (EB) model}
@@ -706,7 +702,9 @@ The Early Burst (EB) model (Harmon et al. 2010, also called the ACDC model; Blom
 \begin{equation}
 r(t) = \sigma^2e(at)
 \end{equation}
-Where $r(t)$ is the rate of evolution at time $t$, $\sigma^2$ is the initial value of the Brownian rate parameter, i.e. the initial rate of evolution, $a$ is the rate change parameter, and $t$ is time. The value of $a$ is always less than or equal to 0. When $a$ is negative, rates of evolution decrease through time.
+Where $r(t)$ is the rate of evolution at time $t$, $\sigma^2$ is the initial value of the Brownian rate parameter, i.e. the initial rate of evolution, $a$ is the rate change parameter, and $t$ is time. The value of $a$ is generally less than or equal to 0 (note that you can force a to be greater than zero by changing the bounds (see \subsection{Problems with convergence and bounds} , however, this will only . When $a$ is negative, rates of evolution decrease through time.
+
+a > 0 is non-identifiable for extant only data (see Slater et al. 2012)
 
 The model fits traits where diversification occurs most rapidly early in a lineage and slows as the lineage approaches the present, so that subclades tend to retain their differences through time. This is consistent with a clade radiating adaptively into a fixed set of niches and has been used as evidence of niche-filling modes of evolution (Harmon et al 2010, Cooper \& Purvis 2010).
 
