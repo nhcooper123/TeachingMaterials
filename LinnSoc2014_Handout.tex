@@ -1,4 +1,5 @@
 \documentclass[11pt]{article}
+\usepackage[round]{natbib}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
@@ -107,10 +108,7 @@ comparative questions. By the end of this problem set you should be able to:
 \end{enumerate}
 
 We will be using the evolution of primate life-history variables as an
-example. These data come from the PanTHERIA database (Jones \textit{et
-al}. 2009) and 10kTrees (Arnold \textit{et al}. 2010). Note that this is
-an old version of 10kTrees, so if you want to use it in your research
-please download the newest version.
+example. These data come from the PanTHERIA database \citep{jones2009pantheria} and 10kTrees \citep{arnold201010ktrees}. Note that this is an old version of 10kTrees, so if you want to use it in your research please download the newest version.
 
 Throughout, R code will be in shaded boxes:
 
@@ -126,9 +124,9 @@ R output will be preceded by \texttt{\#\#} and important comments will be in box
 
 The handout assumes that people have little or no experience with R so 
 more experienced users may want to skip quickly through the first 
-few sections. \textbf{To get the analyses from section 3 onwards to work you 
-will need to have completed sections 1.1, 1.3, 1.4, 2.1 (reading in data only), 
-2.2 (reading in phylogeny only), 2.3 and 2.4.1.} Other sections are included to show 
+few sections. \textbf{To get the analyses from section \ref{models} onwards to work you 
+will need to have completed sections \ref{download}, \ref{install}, \ref{loading}, \ref{reading} (reading in data only), 
+\ref{tree} (reading in phylogeny only), \ref{binary} and \ref{spaces}}. Other sections are included to show 
 you some of the other things R can do and to help you with problems you are 
 likely to encounter when using your own data. 
 \end{framed}
@@ -144,7 +142,7 @@ workshop will be full of different ways to do things.
 \end{framed}
 
 \subsection{Downloading the data and finding the path of your folder}
-
+\label{download}
 First you need to download all the files for this problem set into a
 folder somewhere on your computer, let's call it ``RAnalyses2014'' and
 pop it on the Desktop. We will use this folder throughout the problem
@@ -204,7 +202,7 @@ comment.
 \end{snugshade}
 
 \subsection{Installing packages in R}\label{installing-packages}
-
+\label{install}
 To run comparative analyses (or any specialized analysis) in R, you need to 
 download one or more additional packages from the basic R installation. 
 For this problem set you will need to install the following packages: 
@@ -220,7 +218,7 @@ To install the package \texttt{ape}:
 You will be asked to select a CRAN mirror for the session - just choose one that is geographically close to you. Now install \texttt{geiger} and \texttt{OUwie}.
 
 \subsection{Loading packages in R}
-
+\label{loading}
 You've installed the packages but they don't automatically get loaded
 into your R session. Instead you need to tell R to load them \textbf{every
 time} you start a new R session and want to use functions from these
@@ -259,7 +257,7 @@ Make sure to include version numbers in your citations for reproducibility purpo
 
 \section{Reading your data and phylogeny into R}
 \subsection{Reading data into R}
-
+\label{reading}
 Next we need to load the data we are going to use for the analysis. R
 can read files in lots of formats, including comma-delimited and
 tab-delimited files. Excel (and many other applications) can output
@@ -369,7 +367,7 @@ This gives you the names of the columns.
 This will print out all of the data!
 
 \subsection{Reading and displaying your phylogeny in R}
-
+\label{tree}
 To load a tree you need either the function \texttt{read.tree} or \texttt{read.nexus}.
 \texttt{read.tree} can deal with a number of different types of data (including
 DNA) whereas \texttt{read.nexus} reads NEXUS files. We will use a NEXUS file of
@@ -515,7 +513,7 @@ You can also add a timescale to your tree:
 For many more options for tree plotting check out Liam Revell's \texttt{phytools} package.
 
 \subsection{Making your phylogeny binary and rooting your phylogeny in R}
-
+\label{binary}
 Most R functions require your tree to be dichotomous, i.e. to have no polytomies. To check whether your tree is dichotomous use \texttt{is.binary.tree}. If this is FALSE, use \texttt{multi2di} to make the tree dichotomous. This function works by randomly resolving polytomies with zero-length branches.
 
 \begin{snugshade}
@@ -547,6 +545,7 @@ Most functions also require the tree to be rooted, i.e., to have one taxon desig
 \subsection{Matching species names in your data and phylogeny in R}
 
 \subsubsection{Species names with spaces} 
+\label{spaces}
 Species names in the tree cannot contain spaces so they are generally written as Genus\_species (the gap between the genus name and species name replaced by \_). If the species names in the data are written as Genus species with a space, then you will have to replace the spaces with \_ so that they match up with the species names in the tree. You can do this as follows:
 
 \begin{snugshade}
@@ -638,7 +637,7 @@ Always check this has worked as expected by checking the data and the phylogeny.
 \end{snugshade}
 
 \section{Fitting simple models of evolution to continuous data}
-
+\label{models}
 For fitting models of evolution to continuous data we will use the \texttt{fitContinuous} function in the R package \texttt{geiger}.
 
 \texttt{fitContinuous} is a likelihood based method, so the output will give the maximum likelihood (ML) estimates of the parameters. Bayesian methods are becoming preferred for these kinds of analyses and \texttt{fitContinuousMCMC} will perform these analyses. However, due to time constraints (and a need to accompany it with a primer on Bayesian statistics!) we will not cover this function.
@@ -654,11 +653,11 @@ As an example, letâ€™s look at the evolution of log(body size) in Primates. Weâ€
 \subsection{Model descriptions}
 \subsubsection{The Brownian motion (BM model)}
 
-The Brownian motion model (Edwards \& Cavalli-Sforza 1964, Felsenstein 1973) is assumed to be the underlying mode of evolution in the majority of phylogenetic comparative methods (though this assumption is rarely tested; Freckleton \& Harvey 2006). In the model, a trait X evolves at random at a rate $\sigma$:
+The Brownian motion model (\citep{cavalli1967phylogenetic,felsenstein1973maximum} is assumed to be the underlying mode of evolution in the majority of phylogenetic comparative methods (though this assumption is rarely tested; \citealt{freckleton2006detecting}). In the model, a trait X evolves at random at a rate $\sigma$:
 \begin{equation}
 dX(t) = \sigma dW(t)
 \end{equation}
-where $W(t)$ is a white noise function and is a random variate drawn from a normal distribution with mean $0$ and variance $\sigma^2$. This model assumes that there is no overall drift in the direction of evolution (hence the expectation of $W(t)$ is zero) and that the rate of evolution is constant. Because the direction of change in trait values at each step is random, Brownian motion is often described as a ``random walk''.
+where $W(t)$ is a white noise function and is a random variate drawn from a normal distribution with mean $0$ and variance $\sigma^2$. This model assumes that there is no overall drift in the direction of evolution (hence the expectation of $W(t)$ is zero) and that the rate of evolution is constant. Because the direction of change in trait values at each step is random, Brownian motion is often described as a ``random walk'' (note that you can also fit models where $W(t)$ is not zero and there is drift in the direction of evolution. This is known as the drift model, or Brownian motion with a trend. We will not cover this here).
 
 %The Brownian model predicts after a time $T$ the variance in trait value $X_i$ for species $i$ is:
 %\begin{equation}
@@ -672,16 +671,16 @@ where $W(t)$ is a white noise function and is a random variate drawn from a norm
 
 The model assumes the correlation structure among trait values is proportional to the extent of shared ancestry for pairs of species. This means that close relatives will be more similar in their trait values than more distant relatives. It also means that variance in the trait will increase (linearly) in proportion to time. 
 
-The model has two parameters, the Brownian rate parameter, $\sigma^2$ and the state of the root at time zero, $X(0)$. \texttt{fitContinuous} estimates $\sigma^2$ and $X(0)$. Note that $\sigma^2$ can be used as a measure of the rate of trait evolution (Cooper \& Purvis 2010, Cooper \textit{et al.} 2011). 
+The model has two parameters, the Brownian rate parameter, $\sigma^2$ and the state of the root at time zero, $X(0)$. \texttt{fitContinuous} estimates $\sigma^2$ and $X(0)$. Note that $\sigma^2$ can be used as a measure of the rate of trait evolution \citep{cooper2010body,cooper2011phylogenetic}. 
 
 \subsubsection{The Ornstein-Uhlenbeck (OU) model}
-The Ornstein-Uhlenbeck (OU) model (Hansen 1997, Butler \& King 2004) is a random walk where trait values are pulled back towards some ``optimal'' value with an attraction strength proportional to the parameter $\alpha$. The model has the following form:
+The Ornstein-Uhlenbeck (OU) model \citep{hansen1997stabilizing,butler2004phylogenetic} is a random walk where trait values are pulled back towards some ``optimal'' value with an attraction strength proportional to the parameter $\alpha$. The model has the following form:
 \begin{equation}
 dX(t) = -\alpha(X(t) - \mu) + \sigma dW(t)
 \end{equation}
 Note that this model has two parameters in addition to those of the Brownian model, $\alpha$ and $\mu$. The parameter $\mu$ is a long-term mean, and it is assumed that species evolve around this value. $\alpha$ is the strength of evolutionary force that returns traits back towards the long-term mean if they evolve away from it. $\alpha$ is sometimes referred to as the ``rubber band'' parameter because of the way it forces traits back towards $\mu$.
 
-The OU model was introduced to population genetics by Lande (1976) to model stabilizing selection in which the mean was recast as a fitness optimum on an adaptive landscape. The process operating in comparative data is analogous, although clearly is not stabilizing selection (despite being sometimes referred to as such). 
+The OU model was introduced to population genetics by \cite{lande1976natural} to model stabilizing selection in which the mean was recast as a fitness optimum on an adaptive landscape. The process operating in comparative data is analogous, although clearly is not stabilizing selection (despite being sometimes referred to as such). 
 
 %The OU model predicts that after a time $T$ for a species $i$, the variance in trait value $X_i$ is:
 %\begin{equation}
@@ -698,15 +697,21 @@ The model has four parameters, the Brownian rate parameter, $\sigma^2$, the stat
 
 \subsubsection{The Early Burst (EB) model}
 
-The Early Burst (EB) model (Harmon et al. 2010, also called the ACDC model; Blomberg et al. 2003) is a Brownian motion/random walk model where the rate of evolution decreases exponentially through time under the model:
+The Early Burst (EB) model (\citealt{harmon2010early}, also called the ACDC model; \citealt{blomberg2003testing}) is a Brownian motion/random walk model where the rate of evolution decreases exponentially through time under the model:
 \begin{equation}
 r(t) = \sigma^2e(at)
 \end{equation}
-Where $r(t)$ is the rate of evolution at time $t$, $\sigma^2$ is the initial value of the Brownian rate parameter, i.e. the initial rate of evolution, $a$ is the rate change parameter, and $t$ is time. The value of $a$ is generally less than or equal to 0 (note that you can force a to be greater than zero by changing the bounds - see section \ref{bounds} - however, this will only work if you have fossil species in your data; Slater \textit{et al.} 2012). When $a$ is negative, rates of evolution decrease through time.
+Where $r(t)$ is the rate of evolution at time $t$, $\sigma^2$ is the initial value of the Brownian rate parameter, i.e. the initial rate of evolution, $a$ is the rate change parameter, and $t$ is time. The value of $a$ is generally less than or equal to 0 (note that you can force a to be greater than zero by changing the bounds - see section \ref{bounds} - however, this will only work if you have fossil species in your data; \citealt{slater2012integrating}). When $a$ is negative, rates of evolution decrease through time.
 
-The model fits traits where diversification occurs most rapidly early in a lineage and slows as the lineage approaches the present, so that subclades tend to retain their differences through time. This is consistent with a clade radiating adaptively into a fixed set of niches and has been used as evidence of niche-filling modes of evolution (Harmon et al 2010, Cooper \& Purvis 2010).
+The model fits traits where diversification occurs most rapidly early in a lineage and slows as the lineage approaches the present, so that subclades tend to retain their differences through time. This is consistent with a clade radiating adaptively into a fixed set of niches and has been used as evidence of niche-filling modes of evolution \citep{harmon2010early,cooper2010body}.
 
 The model has three parameters, the Brownian rate parameter, $\sigma^2$, the state of the root at time zero, $X(0)$, and the rate of change parameter, $a$. \texttt{fitContinuous} estimates $\sigma^2$, $X(0)$ and $a$. Note that if $a$ is close to zero then evolution is approximately Brownian.
+
+Note that although many people report $a$ values when reporting the results of fitting an Early Burst model, it is often more intuitive to report the rate half-life, $t_{\frac{1}{2}}$ \citep{Slater22102013}. This is calculated as:
+\begin{equation}
+t_{\frac{1}{2}} = \frac{log(2)}{|a|}
+\end{equation}
+It can be interpreted as the time it takes for the rate of evolution of the trait to halve (see example below).
 
 \subsection{Fitting the models using fitContinuous}
 
@@ -732,7 +737,7 @@ The \texttt{fitContinuous} function also requires that the species in the phylog
 
 \begin{snugshade}
 \begin{Highlighting}[]
-\NormalTok{match.species <-}\StringTok{ }\KeywordTok{treedata}\NormalTok{(}\DataTypeTok{phy = }\NormalTok{primatetree,} \DataTypeTok{dat = }\NormalTok{primatedatasubset)}
+\NormalTok{match.species <-}\StringTok{ }\KeywordTok{treedata}\NormalTok{(}\DataTypeTok{phy = }\NormalTok{primatetree,} \DataTypeTok{dat = }\NormalTok{primatedatasubset,} \DataTypeTok{sort = }\OtherTok{TRUE}\NormalTok{)}
 \end{Highlighting}
 \end{snugshade}
 
@@ -755,6 +760,7 @@ Next we use the output from the \texttt{treedata} function to get a dataset and 
 \begin{snugshade}
 \begin{Highlighting}[]
 \NormalTok{mytree <-}\StringTok{ }\NormalTok{match.species\$phy}
+
 \NormalTok{mydata <-}\StringTok{ }\NormalTok{match.species\$data}
 \end{Highlighting}
 \end{snugshade}
@@ -898,6 +904,20 @@ The output should look like this:
 
 As above, the maximum likelihood estimates (lnL) of the model parameters are found near the top of the output. In an Early Burst (EB) model we estimate the Brownian rate parameter, $\sigma^2$ or \texttt{sigsq} in the output above, the value of the trait at the root of the tree, $X_0$ or \texttt{$z0$} in the output above, and the rate of change parameter, $a$. Here $a = -0.0377$ indicating that the rate of log(body mass) evolution in Primates has decreased through time.
 
+We can also extract the rate half-life, $t_\frac{1}{2}$, for this model as follows:
+
+\begin{snugshade}
+\begin{Highlighting}[]
+\KeywordTok{log}\NormalTok{(}\DecValTok{2}\NormalTok{)}\KeywordTok{/}\KeywordTok{abs}\NormalTok{(EB\$opt\$a)}
+\end{Highlighting}
+\end{snugshade}
+
+\begin{verbatim}
+## [1] 18.38991
+\end{verbatim}
+
+For these data, the rate half-life is $\approx 18$ million years, which means over the course of primate evolution, body size rate has undergone $\approx 4$ rate halvings. This is also well within the range of ``hard to detect'' bursts reported in Figure 1 of \cite{Slater22102013}. 
+
 \subsection{Comparing models}
 
 Often we want to know which of the models fits our variable best. We can use \texttt{fitContinuous} to fit the models we are interested in and can then compare them using AIC. We can extract the AICs from the models we fitted above as follows:
@@ -929,6 +949,26 @@ Often we want to know which of the models fits our variable best. We can use \te
 
 The ``best'' model is the one with the smallest AIC, in this case the Early Burst model. There is much debate about how big of a difference in AIC values can be classed as substantial improvement to a model fit (it ranges from 2-10 AIC units). Generally we use 4 units, so EB probably doesn't fit substantially better than BM ($160.1921 - 156.857257 = 3.334843$). 
 
+Alternatively we can use $\Delta$AIC or AIC weights to compare our models using the following code and the \texttt{geiger} function \texttt{aicw}:
+
+\begin{snugshade}
+\begin{Highlighting}[]
+\NormalTok{aic.scores <-}\StringTok{ }\KeywordTok{setNames}\NormalTok{(}\KeywordTok{c}\NormalTok{(BM\$opt\$aic, OU\$opt\$aic, EB\$opt\$aic),}
+                       \KeywordTok{c}\NormalTok{(}\StringTok{"}\CharTok{BM}\StringTok{"}\NormalTok{,}\StringTok{"}\CharTok{OU}\StringTok{"}\NormalTok{,}\StringTok{"}\CharTok{EB}\StringTok{"}\NormalTok{))}
+
+\KeywordTok{aicw}\NormalTok{(aic.scores)}
+\end{Highlighting}
+\end{snugshade}
+
+\begin{verbatim}
+##          fit    delta          w
+##  BM 160.1921 3.334827 0.15000767
+##  OU 162.1921 5.334827 0.05518474
+##  EB 156.8573 0.000000 0.79480759
+\end{verbatim}
+
+\texttt{aicw} outputs the AIC (\texttt{fit}), $\Delta$AIC (\texttt{delta}) and AIC weights (\texttt{w}) for each of the models we fitted. The best model is the model with $\Delta AIC =0$ or with AICw closest to $1$. Using $\Delta$AIC we can conclude that the Early Burst model is the best fit to the data.
+
 \subsection{Problems with convergence and bounds}
 \label{bounds}
 
@@ -957,6 +997,8 @@ This example gives the following warning message because $\alpha$ is zero, so wh
 
 Graham's bit
 
-
+\newpage
+\bibliographystyle{sysbio}
+\bibliography{LinnSoc}
 
 \end{document}
