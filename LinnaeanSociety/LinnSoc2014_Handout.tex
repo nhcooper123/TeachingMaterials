@@ -93,7 +93,7 @@
 \begin{document}
 
 \title{Introduction to Phylogenetic Comparative Methods in R: Models of evolution}
-\author{Natalie Cooper (ncooper@tcd.ie) and Graham Slater (slaterg@si.edu)}
+\author{Natalie Cooper (ncooper@tcd.ie)}
 \date{}
 \maketitle
 
@@ -105,8 +105,9 @@ comparative questions. By the end of this problem set you should be able to:
 \item View and manipulate your data and phylogeny
 \item Match taxa in your data with those in your phylogeny
 \item Fit simple models of evolution to continuous data
-\item Graham's magical OUwie stuff
 \end{enumerate}
+
+Note that there is a second part to this problem set written by Graham Slater that will be available soon!
 
 We will be using the evolution of primate life-history variables as an
 example. These data come from the PanTHERIA database \citep{jones2009pantheria} and 10kTrees \citep{arnold201010ktrees}. Note that this is an old version of 10kTrees, so if you want to use it in your research please download the newest version.
@@ -857,7 +858,7 @@ The output should look like this:
 ##  'opt' -- maximum likelihood parameter estimates
 \end{verbatim}
 
-As above, the maximum likelihood estimates (lnL) of the model parameters are found near the top of the output. In an Ornstein-Uhlenbeck (OU) model we estimate the Brownian rate parameter, $\sigma^2$ or \texttt{sigsq} in the output above, the value of the trait at the root of the tree, $X_0$ or \texttt{z$0$} in the output above, and the blah blah parameter, $\alpha$ or \texttt{alpha} in the output above. As $alpha = 0$ here, the model is identical to the Brownian motion model.
+As above, the maximum likelihood estimates (lnL) of the model parameters are found near the top of the output. In an Ornstein-Uhlenbeck (OU) model we estimate the Brownian rate parameter, $\sigma^2$ or \texttt{sigsq} in the output above, the value of the trait at the root of the tree, $X_0$ or \texttt{z$0$} in the output above, and the selection strength parameter, $\alpha$ or \texttt{alpha} in the output above. As $alpha = 0$ here, the model is identical to the Brownian motion model.
 
 Finally, to fit an Early Burst (EB) model to log(body mass):
 
@@ -993,10 +994,6 @@ This example gives the following warning message because $\alpha$ is zero, so wh
 ##    Parameter estimates appear at bounds:
 ##    alpha
 \end{verbatim}
-
-\section{OUwie for doing more exciting things!}
-
-Graham's bit
 
 \newpage
 \bibliographystyle{sysbio}
