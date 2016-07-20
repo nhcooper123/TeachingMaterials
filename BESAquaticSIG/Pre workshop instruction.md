@@ -5,7 +5,7 @@
 
 * R (the latest version)
 * R packages glm
-* Data files from: https://github.com/nhcooper123/TeachingMaterials/tree/master/BESAquaticSIG/Data 
+* Data files from: https://github.com/nhcooper123/TeachingMaterials/tree/master/BESAquaticSIG/Data OR https://drive.google.com/folderview?id=0B6WKgRBJw5LOQXJ4WXBPSks2V3M&usp=sharing
 
 #### Before the workshop please ensure you can do the following. 
 *If you can't don't panic, but please alert me at the start of the workshop so we can help.*
