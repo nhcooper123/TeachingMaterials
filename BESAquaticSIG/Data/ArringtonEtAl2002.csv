@@ -1,0 +1,256 @@
+# Data from Arrington et al. (2002) Ecology 83:2145-2151: http://www.esapubs.org/archive/ecol/E083/038/appendix-A.htm
+Order,Family,Species,Location,DielBehavior,TrophicCategory,NIndiv,PercEmpty
+Osteoglossiformes,Mormyridae,Hippopotamyrus discorhynchus,Africa,Nocturnal,Invertivore,37,10.81
+Osteoglossiformes,Mormyridae,Marcusenius macrolepidotus,Africa,Nocturnal,Invertivore,83,16.87
+Osteoglossiformes,Mormyridae,Mormyrus lacerda,Africa,Nocturnal,Invertivore,46,4.35
+Osteoglossiformes,Mormyridae,Petrocephalus catostoma,Africa,Nocturnal,Invertivore,11,0.00
+Osteoglossiformes,Mormyridae,Pollimyrus castelnaui,Africa,Nocturnal,Invertivore,47,0.00
+Cypriniformes,Cyprinidae,Barbus annectens,Africa,Diurnal,Omnivore,17,0.00
+Cypriniformes,Cyprinidae,Barbus paludinosus,Africa,Diurnal,Invertivore,60,8.33
+Cypriniformes,Cyprinidae,Barbus poechii,Africa,Diurnal,Omnivore,51,3.92
+Cypriniformes,Cyprinidae,Labeo lunatus,Africa,Diurnal,Algiv./Detritiv.,19,21.05
+Characiformes,Alestiidae,Brycinus lateralis,Africa,Diurnal,Omnivore,19,0.00
+Characiformes,Hepsetidae,Hepsetus odoe,Africa,Diurnal,Piscivore,194,56.19
+Siluriformes,Clariidae,Clarias gariepinus,Africa,Nocturnal,Piscivore,59,64.41
+Siluriformes,Clariidae,Clarias ngamensis,Africa,Nocturnal,Piscivore,48,41.67
+Siluriformes,Clariidae,Clarias theodorae,Africa,Nocturnal,Piscivore,19,10.53
+Siluriformes,Mochokidae,Synodontis leopardinus,Africa,Nocturnal,Invertivore,62,29.03
+Siluriformes,Mochokidae,Synodontis macrostigma,Africa,Nocturnal,Invertivore,28,21.43
+Siluriformes,Mochokidae,Synodontis nigromaculatus,Africa,Nocturnal,Invertivore,24,0.00
+Siluriformes,Mochokidae,Synodontis woosnami,Africa,Nocturnal,Invertivore,82,8.54
+Siluriformes,Schilbeidae,Schilbe mystus,Africa,Nocturnal,Piscivore,399,40.35
+Cyprinodontiformes,Poeciliidae,Aplocheilichthys johnstoni,Africa,Diurnal,Invertivore,65,1.54
+Synbranchiformes,Mastacembelidae,Caecomastacembelus frenatus,Africa,Nocturnal,Invertivore,10,40.00
+Perciformes,Cichlidae,Hemichromis fasciatus,Africa,Diurnal,Piscivore,20,65.00
+Perciformes,Cichlidae,Oreochromis andersonii,Africa,Diurnal,Algiv./Detritiv.,20,0.00
+Perciformes,Cichlidae,Oreochromis macrochir,Africa,Diurnal,Invertivore,42,9.52
+Perciformes,Cichlidae,Pharyngochromis darlingi,Africa,Diurnal,Invertivore,28,0.00
+Perciformes,Cichlidae,Pseudocrenilabrus philander,Africa,Diurnal,Invertivore,48,0.00
+Perciformes,Cichlidae,Sargochromis carlottae,Africa,Diurnal,Invertivore,35,5.71
+Perciformes,Cichlidae,Sargochromis codringtonii,Africa,Diurnal,Invertivore,119,10.92
+Perciformes,Cichlidae,Sargochromis giardi,Africa,Diurnal,Invertivore,101,50.50
+Perciformes,Cichlidae,Serranochromis altus,Africa,Diurnal,Piscivore,104,77.88
+Perciformes,Cichlidae,Serranochromis angusticeps,Africa,Diurnal,Piscivore,223,78.92
+Perciformes,Cichlidae,Serranochromis macrocephalus,Africa,Diurnal,Piscivore,267,70.79
+Perciformes,Cichlidae,Serranochromis robustus,Africa,Diurnal,Piscivore,181,58.01
+Perciformes,Cichlidae,Tilapia rendalli,Africa,Diurnal,Algiv./Detritiv.,86,9.30
+Perciformes,Cichlidae,Tilapia sparrmani,Africa,Diurnal,Algiv./Detritiv.,92,4.35
+Clupeiformes,Clupeidae,Pellona castelnaeana,Central/South America,Diurnal,Piscivore,20,35.00
+Characiformes,Alestiidae,Hydrocynus vittatus,Central/South America,Diurnal,Piscivore,319,55.80
+Characiformes,Anostomidae,Leporinus friderici,Central/South America,Diurnal,Omnivore,65,3.08
+Characiformes,Anostomidae,Schizodon isognathus,Central/South America,Diurnal,Omnivore,92,1.09
+Characiformes,Characidae,Acestrorhynchus heterolepis,Central/South America,Diurnal,Piscivore,11,72.73
+Characiformes,Characidae,Acestrorhynchus minimus,Central/South America,Diurnal,Piscivore,35,45.71
+Characiformes,Characidae,Aphyocharax erythrurus,Central/South America,Diurnal,Invertivore,273,2.56
+Characiformes,Characidae,Astyanax bimaculatus,Central/South America,Diurnal,Omnivore,390,1.79
+Characiformes,Characidae,Astyanax fasciatus,Central/South America,Diurnal,Omnivore,549,1.46
+Characiformes,Characidae,Astyanax metae,Central/South America,Diurnal,Omnivore,182,1.10
+Characiformes,Characidae,Brycon guatemalensis,Central/South America,Diurnal,Omnivore,115,2.61
+Characiformes,Characidae,Brycon sp.,Central/South America,Diurnal,Omnivore,18,0.00
+Characiformes,Characidae,Bryconamericus beta,Central/South America,Diurnal,Omnivore,460,0.65
+Characiformes,Characidae,Bryconops giacopinii,Central/South America,Diurnal,Omnivore,110,0.91
+Characiformes,Characidae,Catoprion mento,Central/South America,Diurnal,Piscivore,23,8.70
+Characiformes,Characidae,Characidium sp.,Central/South America,Diurnal,Invertivore,17,0.00
+Characiformes,Characidae,Characidium sp. 1,Central/South America,Diurnal,Invertivore,183,6.01
+Characiformes,Characidae,Characidium sp. 2,Central/South America,Diurnal,Invertivore,27,14.81
+Characiformes,Characidae,Characidium sp. J,Central/South America,Diurnal,Invertivore,68,19.12
+Characiformes,Characidae,Charax condei,Central/South America,Nocturnal,Invertivore,75,36.00
+Characiformes,Characidae,Charax gibbosus,Central/South America,Diurnal,Piscivore,295,26.78
+Characiformes,Characidae,Cheirodon pulcher,Central/South America,Diurnal,Omnivore,345,2.03
+Characiformes,Characidae,Cheirodontops geayi,Central/South America,Diurnal,Invertivore,94,6.38
+Characiformes,Characidae,Corynopoma riisei,Central/South America,Diurnal,Invertivore,243,0.41
+Characiformes,Characidae,Creagrutus sp.,Central/South America,Diurnal,Omnivore,317,0.95
+Characiformes,Characidae,Ctenobrycon spilurus,Central/South America,Diurnal,Omnivore,384,1.56
+Characiformes,Characidae,Ephippicharax orbicularis,Central/South America,Diurnal,Omnivore,13,0.00
+Characiformes,Characidae,Gephyrocharax valencia,Central/South America,Diurnal,Invertivore,295,2.37
+Characiformes,Characidae,Gnathocharax steindachneri,Central/South America,Diurnal,Invertivore,33,3.03
+Characiformes,Characidae,Hemigrammus analis,Central/South America,Diurnal,Invertivore,189,10.05
+Characiformes,Characidae,Hemigrammus barrigonae,Central/South America,Diurnal,Invertivore,213,7.04
+Characiformes,Characidae,Hemigrammus bellottii,Central/South America,Diurnal,Invertivore,174,12.07
+Characiformes,Characidae,Hemigrammus micropterus,Central/South America,Diurnal,Invertivore,217,2.30
+Characiformes,Characidae,Hemigrammus microstomus,Central/South America,Diurnal,Invertivore,210,2.86
+Characiformes,Characidae,Hemigrammus rhodostomus,Central/South America,Diurnal,Invertivore,107,7.48
+Characiformes,Characidae,Hemigrammus sp. arriba,Central/South America,Diurnal,Invertivore,136,5.15
+Characiformes,Characidae,Hemigrammus sp. scissortail,Central/South America,Diurnal,Invertivore,55,9.09
+Characiformes,Characidae,Hemigrammus stictus,Central/South America,Diurnal,Invertivore,208,4.81
+Characiformes,Characidae,Hemigrammus vorderwinkleri,Central/South America,Diurnal,Invertivore,117,11.11
+Characiformes,Characidae,Heterocharax macrolepis,Central/South America,Nocturnal,Invertivore,113,9.73
+Characiformes,Characidae,Hyphessobrycon metae,Central/South America,Diurnal,Omnivore,56,28.57
+Characiformes,Characidae,Hyphessobrycon sweglesi,Central/South America,Diurnal,Omnivore,30,0.00
+Characiformes,Characidae,Iguanodectes spilurus,Central/South America,Diurnal,Omnivore,27,0.00
+Characiformes,Characidae,Jupiaba abramoides,Central/South America,Diurnal,Omnivore,35,0.00
+Characiformes,Characidae,Markiana geayi,Central/South America,Diurnal,Omnivore,264,3.79
+Characiformes,Characidae,Metynnis hypsauchen,Central/South America,Diurnal,Omnivore,239,0.00
+Characiformes,Characidae,Moenkhausia copei,Central/South America,Diurnal,Omnivore,165,19.39
+Characiformes,Characidae,Moenkhausia lepidura,Central/South America,Diurnal,Omnivore,31,6.45
+Characiformes,Characidae,Myleus rubripinnis,Central/South America,Diurnal,Omnivore,16,0.00
+Characiformes,Characidae,Parapristella georgiae,Central/South America,Diurnal,Omnivore,208,36.54
+Characiformes,Characidae,Pristobrycon sp.,Central/South America,Diurnal,Piscivore,62,0.00
+Characiformes,Characidae,Pristobrycon striolatus,Central/South America,Diurnal,Piscivore,12,8.33
+Characiformes,Characidae,Pygocentrus cariba,Central/South America,Diurnal,Piscivore,204,1.96
+Characiformes,Characidae,Pygopristis denticulatus,Central/South America,Diurnal,Piscivore,79,0.00
+Characiformes,Characidae,Roeboides dayi,Central/South America,Diurnal,Piscivore,753,9.16
+Characiformes,Characidae,Roeboides guatemalensis,Central/South America,Diurnal,Piscivore,21,9.52
+Characiformes,Characidae,Serrabrycon magoi,Central/South America,Diurnal,Invertivore,150,22.00
+Characiformes,Characidae,Serrasalmus irritans,Central/South America,Diurnal,Piscivore,73,1.37
+Characiformes,Characidae,Serrasalmus manueli,Central/South America,Diurnal,Piscivore,301,18.60
+Characiformes,Characidae,Serrasalmus rhombeus,Central/South America,Diurnal,Piscivore,75,2.67
+Characiformes,Characidae,Tetragonopterus argenteus,Central/South America,Diurnal,Omnivore,133,0.75
+Characiformes,Characidae,Triportheus sp. black-tail,Central/South America,Diurnal,Omnivore,54,0.00
+Characiformes,Characidae,Triportheus sp. red-tail,Central/South America,Diurnal,Omnivore,125,0.80
+Characiformes,Characidae,Xenagoniates bondi,Central/South America,Diurnal,Piscivore,13,7.69
+Characiformes,Ctenoluciidae,Boulengerella cuvieri,Central/South America,Diurnal,Piscivore,34,79.41
+Characiformes,Ctenoluciidae,Boulengerella lucius,Central/South America,Diurnal,Piscivore,22,63.64
+Characiformes,Curimatidae,Curimata cyprinoides,Central/South America,Diurnal,Algiv./Detritiv.,11,9.09
+Characiformes,Curimatidae,Curimatopsis evelynae,Central/South America,Diurnal,Algiv./Detritiv.,149,2.01
+Characiformes,Curimatidae,Cyphocharax spilurus,Central/South America,Diurnal,Algiv./Detritiv.,255,3.14
+Characiformes,Curimatidae,Prochilodus mariae,Central/South America,Diurnal,Algiv./Detritiv.,88,37.50
+Characiformes,Curimatidae,Steindachnerina argentea,Central/South America,Diurnal,Algiv./Detritiv.,97,2.06
+Characiformes,Cynodontidae,Hydrolycus armatus,Central/South America,Diurnal,Piscivore,38,55.26
+Characiformes,Erythrinidae,Hoplerythrinus unitaeniatus,Central/South America,Diurnal,Piscivore,116,31.03
+Characiformes,Erythrinidae,Hoplias malabaricus,Central/South America,Diurnal,Piscivore,646,35.91
+Characiformes,Gasteropelecidae,Thoracocharax stellatus,Central/South America,Diurnal,Omnivore,216,9.26
+Characiformes,Lebiasinidae,Copella metae,Central/South America,Diurnal,Invertivore,31,0.00
+Characiformes,Lebiasinidae,Lebiasina erythrinoides,Central/South America,Diurnal,Omnivore,283,0.35
+Characiformes,Lebiasinidae,Pyrrhulina lugubris,Central/South America,Diurnal,Invertivore,350,12.00
+Siluriformes,Ageneiosidae,Ageneiosus brevifilis,Central/South America,Nocturnal,Piscivore,17,23.53
+Siluriformes,Aspredinidae,Bunocephalus sp.,Central/South America,Nocturnal,Invertivore,299,48.83
+Siluriformes,Auchenipteridae,Entomocorus gameroi,Central/South America,Nocturnal,Invertivore,49,0.00
+Siluriformes,Auchenipteridae,Trachelyopterus galeatus,Central/South America,Nocturnal,Invertivore,211,18.48
+Siluriformes,Callichthyidae,Corydoras aeneus,Central/South America,Diurnal,Invertivore,176,11.93
+Siluriformes,Callichthyidae,Corydoras sp. pygmy,Central/South America,Diurnal,Invertivore,210,2.86
+Siluriformes,Callichthyidae,Corydoras sp. stripetail,Central/South America,Diurnal,Invertivore,172,24.42
+Siluriformes,Callichthyidae,Hoplosternum littorale,Central/South America,Nocturnal,Omnivore,141,56.74
+Siluriformes,Loricariidae,Ancistrus sp.,Central/South America,Nocturnal,Algiv./Detritiv.,89,2.25
+Siluriformes,Loricariidae,Hypoptopoma sp.,Central/South America,Diurnal,Algiv./Detritiv.,40,2.50
+Siluriformes,Loricariidae,Hypostomus sp.,Central/South America,Nocturnal,Algiv./Detritiv.,103,0.00
+Siluriformes,Loricariidae,Loricariichthys platymetopon,Central/South America,Nocturnal,Omnivore,62,3.23
+Siluriformes,Loricariidae,Otocinclus sp.,Central/South America,Diurnal,Algiv./Detritiv.,72,1.39
+Siluriformes,Loricariidae,Pterygoplichthys sp.,Central/South America,Nocturnal,Algiv./Detritiv.,54,1.85
+Siluriformes,Loricariidae,Rineloricaria sp.,Central/South America,Nocturnal,Algiv./Detritiv.,72,8.33
+Siluriformes,Pimelodidae,Microglanis iheringi,Central/South America,Nocturnal,Invertivore,247,23.89
+Siluriformes,Pimelodidae,Pimelodella sp.,Central/South America,Nocturnal,Invertivore,12,8.33
+Siluriformes,Pimelodidae,Pimelodella sp. 2,Central/South America,Nocturnal,Invertivore,183,3.83
+Siluriformes,Pimelodidae,Pimelodella sp. 3,Central/South America,Nocturnal,Invertivore,203,9.36
+Siluriformes,Pimelodidae,Platynematichthys notatus,Central/South America,Nocturnal,Piscivore,15,46.67
+Siluriformes,Pimelodidae,Rhamdia guatemalensis,Central/South America,Nocturnal,Invertivore,182,53.85
+Siluriformes,Pimelodidae,Rhamdia sp.,Central/South America,Nocturnal,Piscivore,113,14.16
+Siluriformes,Pimelodidae,Rhamdia sp. 1,Central/South America,Nocturnal,Piscivore,43,18.60
+Siluriformes,Pimelodidae,Rhamdia sp. 2,Central/South America,Nocturnal,Piscivore,37,5.41
+Siluriformes,Trichomycteridae,Ochmacanthus alternus,Central/South America,Nocturnal,Piscivore,301,18.60
+Gymnotiformes,Apteronotidae,Adontosternarchus devenanzii,Central/South America,Nocturnal,Invertivore,58,0.00
+Gymnotiformes,Gymnotidae,Gymnotus carapo,Central/South America,Nocturnal,Piscivore,298,5.37
+Gymnotiformes,Gymnotidae,Gymnotus cylindricus,Central/South America,Nocturnal,Invertivore,15,20.00
+Gymnotiformes,Hypopomidae,Brachyhypopomus occidentalis,Central/South America,Nocturnal,Invertivore,83,36.14
+Gymnotiformes,Hypopomidae,Hypopomus sp.,Central/South America,Nocturnal,Invertivore,19,15.79
+Gymnotiformes,Hypopomidae,Hypopomus sp. 1,Central/South America,Nocturnal,Invertivore,45,4.44
+Gymnotiformes,Hypopomidae,Microsternarchus bilineatus,Central/South America,Nocturnal,Invertivore,13,23.08
+Gymnotiformes,Rhamphichthyidae,Rhamphichthys marmoratus,Central/South America,Nocturnal,Invertivore,19,31.58
+Gymnotiformes,Sternopygidae,Eigenmannia virescens,Central/South America,Nocturnal,Invertivore,138,0.00
+Atheriniformes,Atherinidae,Atherinella hubbsi,Central/South America,Diurnal,Invertivore,238,2.10
+Cyprinodontiformes,Aplocheilidae,Rachovia maculipinnis,Central/South America,Diurnal,Invertivore,95,2.11
+Cyprinodontiformes,Aplocheilidae,Rivulus isthmensis,Central/South America,Diurnal,Invertivore,264,7.58
+Cyprinodontiformes,Poeciliidae,Alfaro cultratus,Central/South America,Diurnal,Invertivore,413,1.21
+Cyprinodontiformes,Poeciliidae,Belonesox belizanus,Central/South America,Diurnal,Piscivore,151,59.60
+Cyprinodontiformes,Poeciliidae,Brachyrhaphis parismina,Central/South America,Diurnal,Invertivore,53,0.00
+Cyprinodontiformes,Poeciliidae,Phallichthys amates,Central/South America,Diurnal,Algiv./Detritiv.,337,0.30
+Cyprinodontiformes,Poeciliidae,Poecilia gillii,Central/South America,Diurnal,Algiv./Detritiv.,326,4.60
+Cyprinodontiformes,Poeciliidae,Poecilia reticulata,Central/South America,Diurnal,Algiv./Detritiv.,214,1.40
+Gasterosteiformes,Syngnathidae,Microphis brachyurus lineatus,Central/South America,Diurnal,Invertivore,248,28.63
+Synbranchiformes,Synbranchidae,Synbranchus marmoratus,Central/South America,Nocturnal,Invertivore,81,14.81
+Perciformes,Centropomidae,Centropomus pectinatus,Central/South America,Diurnal,Piscivore,46,19.57
+Perciformes,Cichlidae,Aequidens diadema,Central/South America,Diurnal,Invertivore,103,56.31
+Perciformes,Cichlidae,'Aequidens' pulcher,Central/South America,Diurnal,Omnivore,677,4.14
+Perciformes,Cichlidae,Amphilophus citrinellus,Central/South America,Diurnal,Invertivore,88,1.14
+Perciformes,Cichlidae,Apistogramma hoignei,Central/South America,Diurnal,Invertivore,181,0.55
+Perciformes,Cichlidae,Apistogramma sp.,Central/South America,Diurnal,Invertivore,18,22.22
+Perciformes,Cichlidae,Archocentrus centrarchus,Central/South America,Diurnal,Invertivore,182,0.00
+Perciformes,Cichlidae,Archocentrus nigrofasciatus,Central/South America,Diurnal,Omnivore,223,2.24
+Perciformes,Cichlidae,Astatheros alfari,Central/South America,Diurnal,Invertivore,58,0.00
+Perciformes,Cichlidae,Astronotus ocellatus,Central/South America,Diurnal,Piscivore,99,10.10
+Perciformes,Cichlidae,Caquetaia kraussii,Central/South America,Diurnal,Piscivore,370,7.84
+Perciformes,Cichlidae,Cichla intermedia,Central/South America,Diurnal,Piscivore,16,68.75
+Perciformes,Cichlidae,Cichla orinocensis,Central/South America,Diurnal,Piscivore,96,60.42
+Perciformes,Cichlidae,Cichla temensis,Central/South America,Diurnal,Piscivore,365,50.41
+Perciformes,Cichlidae,Cichlasoma orinocense,Central/South America,Diurnal,Omnivore,271,16.97
+Perciformes,Cichlidae,Crenicichla geayi,Central/South America,Diurnal,Invertivore,111,3.60
+Perciformes,Cichlidae,Crenicichla saxatilis,Central/South America,Diurnal,Piscivore,14,14.29
+Perciformes,Cichlidae,Crenicichla sp. M,Central/South America,Diurnal,Piscivore,24,58.33
+Perciformes,Cichlidae,Herotilapia multispinosa,Central/South America,Diurnal,Omnivore,11,9.09
+Perciformes,Cichlidae,Mikrogeophagus ramirezi,Central/South America,Diurnal,Invertivore,240,10.83
+Perciformes,Cichlidae,Nandopsis dovii,Central/South America,Diurnal,Piscivore,156,13.46
+Perciformes,Cichlidae,Nandopsis friedrichsthalii,Central/South America,Diurnal,Piscivore,493,5.88
+Perciformes,Cichlidae,Satanoperca daemon,Central/South America,Diurnal,Invertivore,49,14.29
+Perciformes,Cichlidae,Vieja maculicauda,Central/South America,Diurnal,Omnivore,160,0.63
+Perciformes,Eleotridae,Dormitator maculatus,Central/South America,Diurnal,Omnivore,222,4.50
+Perciformes,Eleotridae,Eleotris amblyopsis,Central/South America,Diurnal,Invertivore,625,18.24
+Perciformes,Eleotridae,Eleotris pisonis,Central/South America,Diurnal,Invertivore,146,34.25
+Perciformes,Eleotridae,Gobiomorus dormitor,Central/South America,Diurnal,Piscivore,187,27.27
+Perciformes,Gobiidae,Ctenogobius pseudofasciatus,Central/South America,Diurnal,Invertivore,91,0.00
+Perciformes,Gobiidae,Evorthodus lyricus,Central/South America,Diurnal,Invertivore,70,1.43
+Perciformes,Haemulidae,Pomadasys crocro,Central/South America,Diurnal,Invertivore,97,24.74
+Perciformes,Lutjanidae,Lutjanus jocu,Central/South America,Diurnal,Piscivore,57,19.30
+Perciformes,Sciaenidae,Plagioscion squamosissimus,Central/South America,Nocturnal,Invertivore,56,35.71
+Pleuronectiformes,Achiridae,Achirus lineatus,Central/South America,Diurnal,Invertivore,40,7.50
+Pleuronectiformes,Achiridae,Trinectes paulistanus,Central/South America,Diurnal,Invertivore,62,4.84
+Pleuronectiformes,Paralichthyidae,Citharichthys spilopterus,Central/South America,Diurnal,Invertivore,32,12.50
+Tetraodontiformes,Tetraodontidae,Sphoeroides testudineus,Central/South America,Diurnal,Omnivore,10,0.00
+Semionotiformes,Lepisosteidae,Atractosteus spatula,North America,Diurnal,Piscivore,30,40.00
+Semionotiformes,Lepisosteidae,Lepisosteus platyrhincus,North America,Diurnal,Piscivore,536,51.87
+Amiiformes,Amiidae,Amia calva,North America,Diurnal,Piscivore,93,19.35
+Elopiformes,Elopidae,Elops saurus,North America,Diurnal,Piscivore,10,40.00
+Clupeiformes,Clupeidae,Brevoortia patronus,North America,Diurnal,Algiv./Detritiv.,524,0.00
+Clupeiformes,Clupeidae,Dorosoma cepedianum,North America,Diurnal,Algiv./Detritiv.,201,6.97
+Clupeiformes,Engraulidae,Anchoa mitchilli,North America,Diurnal,Invertivore,910,15.16
+Cypriniformes,Catostomidae,Erimyzon sucetta,North America,Diurnal,Omnivore,20,15.00
+Cypriniformes,Cyprinidae,Notropis maculatus,North America,Diurnal,Omnivore,17,23.53
+Cypriniformes,Cyprinidae,Notropis petersoni,North America,Diurnal,Omnivore,31,16.13
+Siluriformes,Ariidae,Arius felis,North America,Nocturnal,Invertivore,78,20.51
+Siluriformes,Clariidae,Clarias batrachus,North America,Nocturnal,Omnivore,38,18.42
+Siluriformes,Ictaluridae,Ameiurus natalis,North America,Nocturnal,Invertivore,296,21.28
+Siluriformes,Ictaluridae,Noturus gyrinus,North America,Nocturnal,Invertivore,56,25.00
+Esociformes,Esocidae,Esox niger,North America,Diurnal,Piscivore,22,50.00
+Mugiliformes,Mugilidae,Mugil cephalus,North America,Diurnal,Algiv./Detritiv.,517,17.60
+Atheriniformes,Atherinidae,Labidesthes sicculus,North America,Diurnal,Invertivore,30,6.67
+Atheriniformes,Atherinidae,Menidia beryllina,North America,Diurnal,Invertivore,619,22.62
+Atheriniformes,Atherinidae,Menidia peninsulae,North America,Diurnal,Invertivore,70,37.14
+Cyprinodontiformes,Cyprinodontidae,Cyprinodon variegatus,North America,Diurnal,Algiv./Detritiv.,171,5.85
+Cyprinodontiformes,Cyprinodontidae,Jordanella floridae,North America,Diurnal,Algiv./Detritiv.,151,1.32
+Cyprinodontiformes,Fundulidae,Adinia xenica,North America,Diurnal,Omnivore,60,5.00
+Cyprinodontiformes,Fundulidae,Fundulus chrysotus,North America,Diurnal,Invertivore,313,1.92
+Cyprinodontiformes,Fundulidae,Fundulus confluentus,North America,Diurnal,Invertivore,133,8.27
+Cyprinodontiformes,Fundulidae,Fundulus grandis,North America,Diurnal,Omnivore,133,28.57
+Cyprinodontiformes,Fundulidae,Fundulus pulvereus,North America,Diurnal,Omnivore,11,9.09
+Cyprinodontiformes,Fundulidae,Lucania goodei,North America,Diurnal,Invertivore,339,0.29
+Cyprinodontiformes,Fundulidae,Lucania parva,North America,Diurnal,Omnivore,172,30.23
+Cyprinodontiformes,Poeciliidae,Belonesox belizanus*,North America,Diurnal,Piscivore,141,58.16
+Cyprinodontiformes,Poeciliidae,Gambusia holbrooki,North America,Diurnal,Omnivore,295,1.02
+Cyprinodontiformes,Poeciliidae,Heterandria formosa,North America,Diurnal,Omnivore,207,0.48
+Cyprinodontiformes,Poeciliidae,Poecilia latipinna,North America,Diurnal,Algiv./Detritiv.,62,30.65
+Cyprinodontiformes,Poeciliidae,Poecilia latipinna,North America,Diurnal,Algiv./Detritiv.,88,5.68
+Gasterosteiformes,Syngnathidae,Syngnathus scovelli,North America,Diurnal,Invertivore,16,12.50
+Perciformes,Carangidae,Hemicaranx amblyrhynchus,North America,Diurnal,Invertivore,14,7.14
+Perciformes,Centrarchidae,Chaenobryttus gulosus,North America,Diurnal,Invertivore,300,42.33
+Perciformes,Centrarchidae,Enneacanthus gloriosus,North America,Diurnal,Invertivore,59,5.08
+Perciformes,Centrarchidae,Lepomis macrochirus,North America,Diurnal,Invertivore,42,0.00
+Perciformes,Centrarchidae,Lepomis marginatus,North America,Diurnal,Invertivore,158,9.49
+Perciformes,Centrarchidae,Lepomis microlophus,North America,Diurnal,Invertivore,46,32.61
+Perciformes,Centrarchidae,Lepomis punctatus,North America,Diurnal,Omnivore,263,12.17
+Perciformes,Centrarchidae,Micropterus salmoides,North America,Diurnal,Piscivore,296,27.36
+Perciformes,Centrarchidae,Pomoxis nigromaculatus,North America,Diurnal,Piscivore,21,9.52
+Perciformes,Cichlidae,Nandopsis urophthalmus,North America,Diurnal,Omnivore,19,15.79
+Perciformes,Cichlidae,Tilapia mariae,North America,Diurnal,Algiv./Detritiv.,27,3.70
+Perciformes,Elassomatidae,Elassoma evergladei,North America,Diurnal,Invertivore,72,1.39
+Perciformes,Gobiidae,Gobionellus boleosoma,North America,Diurnal,Omnivore,75,6.67
+Perciformes,Gobiidae,Gobiosoma bosc,North America,Diurnal,Omnivore,165,26.06
+Perciformes,Gobiidae,Gobiosoma robustum,North America,Diurnal,Omnivore,11,9.09
+Perciformes,Sciaenidae,Bairdiella chrysoura,North America,Diurnal,Invertivore,198,17.68
+Perciformes,Sciaenidae,Cynoscion arenarius,North America,Nocturnal,Piscivore,10,10.00
+Perciformes,Sciaenidae,Cynoscion nebulosus,North America,Nocturnal,Piscivore,92,19.57
+Perciformes,Sciaenidae,Leiostomus xanthurus,North America,Nocturnal,Invertivore,538,8.36
+Perciformes,Sciaenidae,Micropogonias undulatus,North America,Nocturnal,Invertivore,514,14.01
+Perciformes,Sciaenidae,Pogonias cromis,North America,Nocturnal,Invertivore,57,36.84
+Perciformes,Sciaenidae,Sciaenops ocellatus,North America,Diurnal,Piscivore,95,31.58
+Perciformes,Sparidae,Lagodon rhomboides,North America,Diurnal,Omnivore,364,4.40
+Pleuronectiformes,Paralichthyidae,Citharichthys spilopterus,North America,Diurnal,Invertivore,49,4.08
+Pleuronectiformes,Paralichthyidae,Paralichthys lethostigma,North America,Diurnal,Piscivore,45,40.00
