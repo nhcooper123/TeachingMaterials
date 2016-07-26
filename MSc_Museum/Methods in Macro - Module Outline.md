@@ -11,32 +11,61 @@ There will be one morning and one afternoon session each day. Morning sessions w
 
 **Thursday 23rd February**
 
-Morning: What are macroecology and macroevolution? Introduction to the module
+Morning: What are macroecology and macroevolution? Introduction to the module, assessments, and aims.
 
-*Natalie Cooper*
-*natalie.cooper@nhm.ac.uk* 
+*Natalie Cooper (natalie.cooper@nhm.ac.uk)*
 
-Afternoon
+Afternoon: Macroecology I: Macroecological patterns and diversity indices in R.
+
+*Natalie Cooper (natalie.cooper@nhm.ac.uk)*
 
 **Friday February 24rd February**
+
+Morning: Macroecology II: Using macroecology in conservation with the PREDICTS project.
+
+*Andy Purvis (a.purvis@nhm.ac.uk)*
+
+Afternoon: Comparative Biology: The comparative method, dealing with phylogenetic non-independence in comparative analyses. PGLS in R.
+
+*Natalie Cooper (natalie.cooper@nhm.ac.uk)*
+
 **Monday February 27rd February**
-**Tuesday 28rd February **
+
+Morning: Macroevolution I: Macroevolutionary patterns and models of evolution in R.
+
+*Natalie Cooper (natalie.cooper@nhm.ac.uk)*
+
+Afternoon: Macroevolution II: case study using foraminfera
+
+*Isabel Fenton (i.fenton@nhm.ac.uk)*
+
+**Tuesday 28rd February**
+
+Morning: Big data: Using museum specimen data in macroecological and macroevolutinary analyses.
+
+*Natalie Cooper (natalie.cooper@nhm.ac.uk)*
+
+Afternoon: Big data: Using the paleobiology database (PBDB) to get data on fossil species for macroecological and macroevolutinary analyses.
+
+*Terri Cleary (t.cleary@nhm.ac.uk)*
+
 **Wednesday 1st March**
+
+Morning: Macroevolution III: Diversification rates, BAMM
+
+*Natalie Cooper (natalie.cooper@nhm.ac.uk)*
+
+Afternoon: Critical thinking: 
+
+*Natalie Cooper (natalie.cooper@nhm.ac.uk)*
+
 **Thursday 2nd March**
+
+Practical: Paleo biology practical
+
 **Friday 3rd March**
 
-Thurs	Definitions, module outline, assessment	
-Macroecology - diversity indices
-Fri	Macroecology - PREDICTS	
-Comparative Biology - PGLS 
-Mon	Macroevolution - models of evolution	
-Macroevolution - Isabel
-Tues	Big data - Using specimen data/digitsing	
-Big data - Using the PBDB
-Wed	Macroevolution -diversification, BAMM	
-Methods critiques
-
-Thurs-Friday	Practical paleo macroecology
+Practical: Paleo biology practical
 
 Assessment
 There are two assessments connected to this module.
