@@ -11,53 +11,50 @@ There will be one morning and one afternoon session each day. Morning sessions w
 
 ### Thursday 23rd February
 
-Morning: What are macroecology and macroevolution? Introduction to the module, assessments, and aims.
+**Morning:** What are macroecology and macroevolution? Introduction to the module, assessments, and aims.
 
-Afternoon: Macroecology I: Macroecological patterns and diversity indices in R.
+**Afternoon:** Macroecology I: Macroecological patterns and diversity indices in R.
 
 *Natalie Cooper (natalie.cooper@nhm.ac.uk)*
 
-**Friday February 24rd February**
+### Friday February 24rd February
 
-Morning: Macroecology II: Using macroecology in conservation with the PREDICTS project.
+**Morning:** Macroecology II: Using macroecology in conservation with the PREDICTS project.
 
 *Andy Purvis (a.purvis@nhm.ac.uk)*
 
-Afternoon: Comparative Biology: The comparative method, dealing with phylogenetic non-independence in comparative analyses. PGLS in R.
+**Afternoon:** Comparative Biology: The comparative method, dealing with phylogenetic non-independence in comparative analyses. PGLS in R.
 
 *Natalie Cooper (natalie.cooper@nhm.ac.uk)*
 
-**Monday February 27rd February**
+### Monday February 27rd February
 
-Morning: Macroevolution I: Macroevolutionary patterns and models of evolution in R.
+**Morning:** Macroevolution I: Macroevolutionary patterns and models of evolution in R.
 
 *Natalie Cooper (natalie.cooper@nhm.ac.uk)*
 
-Afternoon: Macroevolution II: case study using foraminfera
+**Afternoon:** Macroevolution II: case study using foraminfera
 
 *Isabel Fenton (i.fenton@nhm.ac.uk)*
 
-**Tuesday 28rd February**
+### Tuesday 28rd February
 
-Morning: Big data: Using museum specimen data in macroecological and macroevolutionary analyses. Practical digitising and/or landmarking.
+**Morning:** Big data: Using museum specimen data in macroecological and macroevolutionary analyses. Practical digitising and/or landmarking.
 
 *Natalie Cooper (natalie.cooper@nhm.ac.uk)*
 
-Afternoon: Big data: Using the paleobiology database (PBDB) to get data on fossil species for macroecological and macroevolutinary analyses.
+**Afternoon:** Big data: Using the paleobiology database (PBDB) to get data on fossil species for macroecological and macroevolutinary analyses.
 
 *Terri Cleary (t.cleary@nhm.ac.uk)*
 
-**Wednesday 1st March**
+### Wednesday 1st March
 
-Morning: Macroevolution III: Diversification rates, BAMM
-
-*Natalie Cooper (natalie.cooper@nhm.ac.uk)*
-
-Afternoon: Critical thinking: 
+**Morning:** Macroevolution III: Diversification rates, BAMM
+**Afternoon:** Critical thinking: Do you trust your methods?
 
 *Natalie Cooper (natalie.cooper@nhm.ac.uk)*
 
-**Thursday 2nd March AND Friday 3rd March**
+### Thursday 2nd March AND Friday 3rd March
 
 Practical: Using fossil assemblages to assess the impact of mass extinction events: comparative palaeoecology of Ordovician and Silurian fossil assemblages.
 
