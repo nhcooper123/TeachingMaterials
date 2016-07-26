@@ -3,7 +3,7 @@
 ### natalie.cooper@nhm.ac.uk
 
 ## Module Aims
-The aim of this module is to introduce you to some of the cutting-edge methods being used in macroecology and macroevolution, with particular focus on work being done right now at the Museum. Rather than concentrating on learning theory through lectures, the module will introduce you to various ways we collect, analyse and interpret macro-scale data. 
+The aim of this module is to introduce you to some of the cutting-edge methods being used in macroecology and macroevolution, with particular focus on work being done right now at the Museum. Rather than concentrating on learning theory through lectures, the module will introduce you to various ways we collect, analyse and interpret macro-scale data with a large emphasis on practical work, mostly using R. 
 
 
 ## Timetable
