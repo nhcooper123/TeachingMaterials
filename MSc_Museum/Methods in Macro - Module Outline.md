@@ -9,12 +9,21 @@ The aim of this module is to introduce you to some of the cutting-edge methods b
 ## Timetable
 There will be one morning and one afternoon session each day. Morning sessions will run from 10am-1pm, afternoon sessions from 2pm-5pm. It is likely not every session will require a full three hours. Instructors for each session are below.
 
-**Thursday February** 
+**Thursday 23rd February**
+
 Morning: What are macroecology and macroevolution? Introduction to the module
+
 *Natalie Cooper*
 *natalie.cooper@nhm.ac.uk* 
 
 Afternoon
+
+**Friday February 24rd February**
+**Monday February 27rd February**
+**Tuesday 28rd February **
+**Wednesday 1st March**
+**Thursday 2nd March**
+**Friday 3rd March**
 
 Thurs	Definitions, module outline, assessment	
 Macroecology - diversity indices
