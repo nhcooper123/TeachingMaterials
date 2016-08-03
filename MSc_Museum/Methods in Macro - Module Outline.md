@@ -17,7 +17,7 @@ There will be one morning and one afternoon session each day. Morning sessions w
 
 *Natalie Cooper (natalie.cooper@nhm.ac.uk)*
 
-### Friday February 24rd February
+### Friday February 24th February
 
 **Morning:** Macroecology II: Using macroecology in conservation with the PREDICTS project.
 
@@ -27,7 +27,7 @@ There will be one morning and one afternoon session each day. Morning sessions w
 
 *Natalie Cooper (natalie.cooper@nhm.ac.uk)*
 
-### Monday February 27rd February
+### Monday February 27th February
 
 **Morning:** Macroevolution I: Macroevolutionary patterns and models of evolution in R.
 
@@ -37,7 +37,7 @@ There will be one morning and one afternoon session each day. Morning sessions w
 
 *Isabel Fenton (i.fenton@nhm.ac.uk)*
 
-### Tuesday 28rd February
+### Tuesday 28th February
 
 **Morning:** Big data: Using museum specimen data in macroecological and macroevolutionary analyses. Practical digitising and/or landmarking.
 
