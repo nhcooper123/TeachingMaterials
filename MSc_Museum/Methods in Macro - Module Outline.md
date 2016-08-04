@@ -19,7 +19,7 @@ There will be one morning and one afternoon session each day. Morning sessions w
 
 ### Friday February 24th February
 
-**Morning:** Macroecology II: Using macroecology in conservation with the PREDICTS project.
+**Morning:** Big Data I: Using Big Data in conservation with the PREDICTS project.
 
 *Andy Purvis (a.purvis@nhm.ac.uk)*
 
