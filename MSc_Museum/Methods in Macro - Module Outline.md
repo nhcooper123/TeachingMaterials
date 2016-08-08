@@ -5,14 +5,12 @@
 ## Module Aims
 The aim of this module is to introduce you to some of the cutting-edge methods being used in macroecology and macroevolution, with particular focus on work being done right now at the Museum. Rather than concentrating on learning theory through lectures, the module will introduce you to various ways we collect, analyse and interpret macro-scale data with a large emphasis on practical work, mostly using R. 
 
-
 ## Timetable
 There will be one morning and one afternoon session each day. Morning sessions will run from 10am-1pm, afternoon sessions from 2pm-5pm. Not every session will require a full three hours. Instructors for each session are below.
 
 ### Thursday 23rd February
 
 **Morning:** What are macroecology and macroevolution? Introduction to the module, assessments, and aims.
-
 **Afternoon:** Macroecology I: Macroecological patterns and diversity indices in R.
 
 *Natalie Cooper (natalie.cooper@nhm.ac.uk)*
@@ -23,19 +21,17 @@ There will be one morning and one afternoon session each day. Morning sessions w
 
 *Andy Purvis (a.purvis@nhm.ac.uk)*
 
-**Afternoon:** Comparative Biology: The comparative method, dealing with phylogenetic non-independence in comparative analyses. PGLS in R.
+**Afternoon:** Big data: Using the paleobiology database (PBDB) to get data on fossil species for macroecological and macroevolutinary analyses.
 
-*Natalie Cooper (natalie.cooper@nhm.ac.uk)*
+*Terri Cleary (t.cleary@nhm.ac.uk)*
+
 
 ### Monday February 27th February
 
-**Morning:** Macroevolution I: Macroevolutionary patterns and models of evolution in R.
+**Morning:** Comparative Biology: The comparative method, dealing with phylogenetic non-independence in comparative analyses. PGLS in R.
+**Afternoon:** Macroevolution I: Macroevolutionary patterns and models of evolution in R.
 
 *Natalie Cooper (natalie.cooper@nhm.ac.uk)*
-
-**Afternoon:** Macroevolution II: case study using foraminfera
-
-*Isabel Fenton (i.fenton@nhm.ac.uk)*
 
 ### Tuesday 28th February
 
@@ -43,19 +39,19 @@ There will be one morning and one afternoon session each day. Morning sessions w
 
 *Natalie Cooper (natalie.cooper@nhm.ac.uk)*
 
-**Afternoon:** Big data: Using the paleobiology database (PBDB) to get data on fossil species for macroecological and macroevolutinary analyses.
+**Afternoon:** Macroevolution II: case study using foraminifera
 
-*Terri Cleary (t.cleary@nhm.ac.uk)*
+*Isabel Fenton (i.fenton@nhm.ac.uk)*
 
 ### Wednesday 1st March
 
-**Morning:** Macroevolution III: Diversification rates, BAMM
+**Morning:** Macroevolution III: Diversification rates and adaptive radiations.
 **Afternoon:** Critical thinking: Do you trust your methods?
 
 *Natalie Cooper (natalie.cooper@nhm.ac.uk)*
 
 ### Thursday 2nd March AND Friday 3rd March
-
+**All day:** 
 Practical: Using fossil assemblages to assess the impact of mass extinction events: comparative palaeoecology of Ordovician and Silurian fossil assemblages.
 
 *Richard Twitchett (r.twitchett@nhm.ac.uk)*
