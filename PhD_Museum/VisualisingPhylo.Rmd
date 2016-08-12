@@ -1,0 +1,84 @@
+# Visualising phylogenies in R
+
+This is a quick practical to introduce you to some of the fun ways you can visualise phylogenetic trees in R. The code and examples are based on Liam Revell's book chapter [here](http://faculty.umb.edu/liam.revell/pdfs/Revell_2014.MPCM-chapter.pdf).
+
+Before we start you'll need to download R from [CRAN](https://cran.r-project.org/) and you will need the phylogeny and dataset we'll be playing around with. 
+
+```
+dataset
+phylogeny
+```
+
+You will also need to install the package phytools:
+
+```{r}
+install.packages("phytools")
+```
+
+Note that installing packages in R only needs to be done once (like installing an app on your phone) but every time you want to use the package you need to load it using `r library` (like clicking on the app when you want to open it).
+
+```{r}
+library(phytools)
+```
+
+Great, we are now ready to begin!
+
+To start let's read in the phylogeny, using `r read.tree` and plot it very simply using `r plot`.
+
+```{r}
+tree <- read.tree("Centrarchidae.tre")
+
+plot(tree)
+```
+
+We 
+
+plot(tree, type="fan")
+
+data(anoletree)
+# this is a stochastic mapped tree - pull tip states
+x<-getStates(anoletree,"tips")
+# conduct stochastic mapping
+trees<-make.simmap(anoletree,x,model="ER",nsim=100,message=FALSE)
+# get the states at ancestral nodes
+aa<-describe.simmap(trees,plot=FALSE)
+# set colors to be used for mapping
+# cols<-setNames(palette()[1:6],sort(unique(x)))
+cols<-setNames(c("blue","gold1","chartreuse3","saddlebrown",
+    "orangered","purple"),sort(unique(x)))
+# plotSimmap
+plotSimmap(anoletree,cols,type="fan",lwd=3,fsize=0.8,ftype="i")
+
+par(fg="transparent")
+nodelabels(pie=aa$ace,piecol=cols,cex=0.4)
+# add legend
+par(fg="black")
+add.simmap.legend(colors=cols,fsize=0.8,x=-max(nodeHeights(anoletree)),
+    y=-max(nodeHeights(anoletree)),prompt=FALSE)
+
+tree<-pbtree(n=26)
+tree$tip.label<-LETTERS
+X<-sim.corrs(tree,matrix(c(1,0.7,0.7,1),2,2))
+par(mfcol=c(1,3))
+par(mar=c(4.1,4.1,4.1,2.1))
+phenogram(tree,X[,1],spread.labels=TRUE)
+title(main="(a)",adj=0,cex=3)
+fancyTree(tree,"traitgram3d",X=X,method="static",angle=-30)
+title(main="(b)",adj=0,cex=3)
+par(mar=c(4.1,4.1,4.1,2.1))
+fancyTree(tree,"phenogram95",x=X[,1],link=0.1*max(nodeHeights(tree)))
+title(main="(c)",adj=0,cex=3)
+
+tree<-pbtree(n=26,scale=100)
+tree$tip.label<-LETTERS[26:1]
+lat<-fastBM(tree,sig2=10,bounds=c(-90,90))
+long<-fastBM(tree,sig2=80,bounds=c(-180,180))
+# now plot projection
+xx<-phylo.to.map(tree,cbind(lat,long),plot=FALSE)
+layout(matrix(c(1,2),2,1),heights=c(0.61,0.39))
+plot(xx,type="phylogram",asp=1.3,mar=c(0.1,0.5,3.1,0.1))
+title(main="(a)",adj=0)
+plot(xx,type="direct",asp=1.3,mar=c(0.1,0.5,3.1,0.1))
+title(main="(b)",adj=0)
+```
+
