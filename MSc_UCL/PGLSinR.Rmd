@@ -1,0 +1,109 @@
+# Phylogenetic Comparative Methods in R
+## Using phylogeny as a statistical fix
+### Natalie Cooper (natalie.cooper@nhm.ac.uk)
+
+#### Introduction
+
+The aims of this problem set are to learn how to use R to answer phylogenetic comparative questions without panicking! 
+I am assuming that people have little or no experience with R so more experienced users may want to skip quickly through the first few sections. 
+
+By the end of this problem set you should be able to:
+
+1. Read your data and phylogeny into R
+2. View and manipulate your data and phylogeny
+3. Match taxa in your data with those in your phylogeny
+4. Perform PGLS analyses using \texttt{caper}
+5. Perform model diagnostics for PGLS
+6. Estimate phylogenetic signal using $\lambda$ and K
+
+We will be using the evolution of primate life-history variables as an example. These data come from the PanTHERIA database (Jones et al. 2009) and 10kTrees (Arnold et al. 2010). 
+Note that this is an old version of 10kTrees, so if you want to use it in your research please download the newest version.
+
+Throughout, R code will be in shaded boxes:
+
+```{r}
+library(ape)
+```
+
+R output will be preceded by ## and important comments will be in quote blocks:
+
+> Note that many things in R can be done in multiple ways. 
+You should choose the methods you feel most comfortable with, and do not panic if someone is doing the same analyses as you in a different way! 
+
+***
+
+#### Preparations
+##### Setting the working directory
+First you need to download all the files for this problem set into a folder somewhere on your computer (I usually put mine on the Desktop). We will use this folder throughout the problem set. You'll need to know what the **path** of the folder is. For example on my Windows machine, the path is:
+
+```{r}
+C:/Users/Natalie/Desktop/RAnalyses
+```
+
+The path is really easy to find in a Windows machine, just click on the address bar of the folder and the whole path will appear.
+
+On my Mac the path is:
+
+```{r}
+~/Desktop/RAnalyses
+```
+
+It's a bit trickier to find the path on a Mac, so ask if you need help. Note that the tilde ~ is a shorthand for /Users/Natalie. 
+
+We can the set the working directory to your folder using `setwd`:
+
+```{r}
+setwd("~/Desktop/RAnalyses")
+```
+
+Setting the working directory tells R which folder to look for data in (and which folder you'd like it to write results to). It saves a bit of typing when reading files into R. Now I can read in a file called `mydata.csv` as follows:
+
+```{r}
+mydata <- read.csv("mydata.csv")
+```
+
+rather than having to specify the folder too:
+
+```{r}
+mydata <- read.csv("~/Desktop/RAnalyses/mydata.csv")
+```
+
+##### Using a script
+Next, open a text editor. R has an inbuilt editor that works pretty well, but NotePad and TextEdit are fine too. However, in the future I **highly** recommend using something that will highlight code for you. My personal favorite is Sublime Text 2, because you can also use it for any other kind of text editing like LaTeX, html etc.
+
+You should type (or copy and paste) your code into the text editor, edit it until you think it'll work, and then paste it into R's console window. Saving the script file lets you keep a record of the code you used, which can be a great timesaver if you want to use it again, especially as you know this code will work!
+
+> You can cut and paste code from this handout into your script. You don't need to retype everything!
+
+If you want to add comments to the file (i.e., notes to remind yourself what the code is doing), put a hash/pound sign (#) in front of the comment.
+
+> Comments are ignored by R but can remind you what the code is doing. 
+You need a hash sign at the start of each line of a comment.
+
+##### Installing and loading extra packages in R
+
+To run comparative analyses (or any specialized analysis) in R, you need to download one or more additional packages from the basic R installation. For this problem set you will need to install the following packages: 
+
+* `ape`
+* `picante`
+* `caper`
+
+To install the package `ape`:
+
+```{r}
+install.packages("ape")
+```
+
+Pick the closest mirror to you if asked. Now install `picante` and `caper`.
+
+You've installed the packages but they don't automatically get loaded into your R session. 
+Instead you need to tell R to load them **every time** you start a new R session and want to use functions from these packages. 
+To load the package `ape` into your current R session:
+
+```{r}
+library(ape)
+```
+
+You can thing of `install.packages` like installing an app from the App Store on your smart phone - you only do this once - and `library` as being like pushing the app button on your phone - you do this every time you want to use the app.
+
+Don't forget to load `picante` and `caper` too!
