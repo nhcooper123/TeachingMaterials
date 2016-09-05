@@ -2,7 +2,7 @@
 ## Using phylogeny as a statistical fix
 ### Natalie Cooper (natalie.cooper@nhm.ac.uk)
 
-#### Introduction
+## Introduction
 
 The aims of this problem set are to learn how to use R to answer phylogenetic comparative questions without panicking! 
 I am assuming that people have little or no experience with R so more experienced users may want to skip quickly through the first few sections. 
@@ -32,8 +32,8 @@ You should choose the methods you feel most comfortable with, and do not panic i
 
 ***
 
-#### Preparations
-##### Setting the working directory
+## Preparations
+### Setting the working directory
 First you need to download all the files for this problem set into a folder somewhere on your computer (I usually put mine on the Desktop). We will use this folder throughout the problem set. You'll need to know what the **path** of the folder is. For example on my Windows machine, the path is:
 
 ```{r}
@@ -68,7 +68,7 @@ rather than having to specify the folder too:
 mydata <- read.csv("~/Desktop/RAnalyses/mydata.csv")
 ```
 
-##### Using a script
+### Using a script
 Next, open a text editor. R has an inbuilt editor that works pretty well, but NotePad and TextEdit are fine too. However, in the future I **highly** recommend using something that will highlight code for you. My personal favorite is Sublime Text 2, because you can also use it for any other kind of text editing like LaTeX, html etc.
 
 You should type (or copy and paste) your code into the text editor, edit it until you think it'll work, and then paste it into R's console window. Saving the script file lets you keep a record of the code you used, which can be a great timesaver if you want to use it again, especially as you know this code will work!
@@ -80,7 +80,7 @@ If you want to add comments to the file (i.e., notes to remind yourself what the
 > Comments are ignored by R but can remind you what the code is doing. 
 You need a hash sign at the start of each line of a comment.
 
-##### Installing and loading extra packages in R
+### Installing and loading extra packages in R
 
 To run comparative analyses (or any specialized analysis) in R, you need to download one or more additional packages from the basic R installation. For this problem set you will need to install the following packages: 
 
@@ -107,3 +107,149 @@ library(ape)
 You can thing of `install.packages` like installing an app from the App Store on your smart phone - you only do this once - and `library` as being like pushing the app button on your phone - you do this every time you want to use the app.
 
 Don't forget to load `picante` and `caper` too!
+
+## Reading your data and phylogeny into R
+### Reading data into R
+
+Next we need to load the data we are going to use for the analysis. R can read files in lots of formats, including comma-delimited and tab-delimited files. Excel (and many other applications) can output files in this format (it's an option in the ``Save As'' dialog box under the ``File'' menu). To save time I have given you a tab-delimited text file called `Primatedata.txt` which we are going to use. Load these data as follows. I am assuming you have set your working directory.
+
+```{r}
+primatedata <- read.delim("Primatedata.txt", header = TRUE)
+```
+
+You can use `read.delim` for tab delimited files or `read.csv` for comma delimited files. `header = TRUE`, indicates that the first line of the data contains column headings.
+
+This is a good point to note that unless you \textbf{tell} R you want to do something, it won't do it automatically. So here if you successfully entered the data, R won't give you any indication that it worked. Instead you need to specifically ask R to look at the data.
+
+We can look at the data by typing:
+
+```{r}
+str(primatedata)
+```
+
+**Always** look at your data before beginning any analysis to check it read in correctly.
+
+`str` shows the structure of the data frame (this can be a really useful command when you have a big data file). It also tells you what kind of variables R thinks you have (characters, integers, numeric, factors etc.). Some R functions need the data to be certain kinds of variables so it's useful to check this.
+
+As you can see, the data contains the following variables: Order, Family, Binomial, AdultBodyMass_g, GestationLen_d, HomeRange_km2, MaxLongevity_m, and SocialGroupSize.
+
+```{r}
+head(primatedata)
+```
+
+This gives you the first few rows of data along with the column headings.
+
+```{r}
+names(primatedata)
+```
+
+This gives you the names of the columns.
+
+```{r, eval = FALSE}
+primatedata
+```
+
+This will print out all of the data!
+
+### Reading and displaying your phylogeny in R
+
+To load a tree you need either the function `read.tree` or `read.nexus`.
+`read.tree` can deal with a number of different types of data (including DNA) whereas `read.nexus` reads NEXUS files. 
+We will use a NEXUS file of the consensus tree from 10kTrees.
+
+```{r}
+primatetree <-read.nexus("consensusTree_10kTrees_Version2.nex")
+```
+
+Let's examine the tree by typing:
+
+```{r}
+primatetree
+str(primatetree)
+```
+
+`primatetree` is a fully resolved tree with branch lengths. There are 226 species and 221 internal nodes. 
+We can plot the tree by using the `plot.phylo` function of `ape`. 
+Note that we can just use the function `plot` to do is as R know if we ask it to plot a phylogeny to use `plot.phylo` instead!
+
+```{r}
+plot(primatetree)
+```
+
+
+Note that the tree has too many species for us to read the species names. 
+You can make the tip labels smaller, but that doesn't help much here:
+
+```{r, eval = FALSE}
+plot(primatetree, cex = 0.5)
+```
+
+Alternatively you can zoom into different sections of the tree that you're interested in:
+
+```{r}
+zoom(primatetree, grep("Cercopithecus", primatetree$tip.label), subtree = FALSE)
+```
+
+This just gives you the tree for \textit{Cercopithecus} species but you can also see how the species fit into the rest of the tree using:
+
+```{r}
+zoom(primatetree, grep("Cercopithecus", primatetree$tip.label), subtree = TRUE)
+```
+
+Note that `zoom` automatically sets the plotting window to display two plots at once. 
+To reset this to one plot only use:
+
+```{r}
+par(mfrow = c(1, 1))
+```
+
+You can also remove species from the tree very easily using the `ape` function `drop.tip`:
+
+```{r}
+primatetree2 <- drop.tip(primatetree, "Aotus_azarae_infulatus")
+str(primatetree2)
+```
+
+To remove more than one species see below. 
+To get further options for the plotting of phylogenies:
+
+```{r}
+?plot.phylo
+```
+
+Note that although you can use `plot` to plot the phylogeny, you need to specify `plot.phylo` to find out the options for plotting trees. You can change the style of the tree (type), the color of the branches and tips (edge.color, tip.color). Here's an fun/hideous example! 
+
+```{r}
+plot(primatetree, type = "fan", edge.color = "deeppink", tip.color = "green", cex = 0.5)
+```
+
+You can also add a timescale to your tree:
+
+```{r}
+plot(primatetree)
+axisPhylo()
+```
+
+Most R functions require your tree to be dichotomous, i.e. to have no polytomies. 
+To check whether your tree is dichotomous use `is.binary.tree`. 
+If this is FALSE, use `multi2di` to make the tree dichotomous. 
+This function works by randomly resolving polytomies with zero-length branches.
+
+```{r}
+is.binary.tree(primatetree) # We want this to be TRUE
+```
+
+```{r}
+primatetree <- multi2di(primatetree)
+```
+
+Most functions also require the tree to be rooted, i.e., to have one taxon designated as the outgroup. 
+Our tree is rooted but if you wanted to change the root, or root an unrooted tree use `root`. 
+Note that here I've just chosen a random species *Saimiri sciureus* to be the root.
+
+```{r}
+primatetree.reroot <- root(primatetree, "Saimiri_sciureus")
+plot(primatetree.reroot)
+```
+
+
