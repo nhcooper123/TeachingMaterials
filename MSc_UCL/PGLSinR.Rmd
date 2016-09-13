@@ -70,8 +70,10 @@ rather than having to specify the folder too:
 mydata <- read.csv("~/Desktop/RAnalyses/mydata.csv")
 ```
 
+If you'd rather specify the path and not set the working directory that's fine.
+
 ### Using a script
-Next, open a text editor. R has an inbuilt editor that works pretty well, but NotePad and TextEdit are fine too. However, in the future I **highly** recommend using something that will highlight code for you. My personal favorite is Sublime Text 2, because you can also use it for any other kind of text editing like LaTeX, html etc.
+Next, open a text editor. R has an inbuilt editor that works pretty well, but NotePad and TextEdit are fine too. However, in the future I **highly** recommend using something that will highlight code for you. My personal favorite is Sublime Text 2, because you can also use it for any other kind of text editing like LaTeX, html etc. RStudio's editor is also very nice.
 
 You should type (or copy and paste) your code into the text editor, edit it until you think it'll work, and then paste it into R's console window. Saving the script file lets you keep a record of the code you used, which can be a great timesaver if you want to use it again, especially as you know this code will work!
 
@@ -79,8 +81,11 @@ You should type (or copy and paste) your code into the text editor, edit it unti
 
 If you want to add comments to the file (i.e., notes to remind yourself what the code is doing), put a hash/pound sign (#) in front of the comment.
 
-> Comments are ignored by R but can remind you what the code is doing. 
-You need a hash sign at the start of each line of a comment.
+```{r}
+# Comments are ignored by R but remind you what the code is doing. 
+# You need a # at the start of each line of a comment.
+# Always make plenty of notes to help you remember what you did and why
+```
 
 ### Installing and loading extra packages in R
 
@@ -107,7 +112,7 @@ To load the package `ape` into your current R session:
 library(ape)
 ```
 
-You can thing of `install.packages` like installing an app from the App Store on your smart phone - you only do this once - and `library` as being like pushing the app button on your phone - you do this every time you want to use the app.
+You can think of `install.packages` like installing an app from the App Store on your smart phone - you only do this once - and `library` as being like pushing the app button on your phone - you do this every time you want to use the app.
 
 Don't forget to load `geiger`, `picante` and `caper` too!
 
@@ -123,7 +128,7 @@ library(caper)
 ### Reading and viewing your data in R
 
 Next we need to load the data we are going to use for the analysis. 
-R can read files in lots of formats, including comma-delimited and tab-delimited files. Excel (and many other applications) can output files in this format (it's an option in the ``Save As'' dialog box under the ``File'' menu). 
+R can read files in lots of formats, including comma-delimited and tab-delimited files. Excel (and many other applications) can output files in this format (it's an option in the `Save As` dialog box under the `File` menu). 
 To save time I have given you a tab-delimited text file called `Primatedata.txt` which we are going to use. Load these data as follows. 
 I am assuming you have set your working directory.
 
@@ -190,7 +195,7 @@ str(primatetree)
 
 `primatetree` is a fully resolved tree with branch lengths. There are 226 species and 221 internal nodes. 
 We can plot the tree by using the `plot.phylo` function of `ape`. 
-Note that we can just use the function `plot` to do is as R know if we ask it to plot a phylogeny to use `plot.phylo` instead!
+Note that we can just use the function `plot` to do this as R knows if we ask it to plot a phylogeny to use `plot.phylo` instead!
 
 ```{r}
 plot(primatetree)
@@ -209,7 +214,7 @@ Alternatively you can zoom into different sections of the tree that you're inter
 zoom(primatetree, grep("Cercopithecus", primatetree$tip.label), subtree = FALSE, cex = 0.5)
 ```
 
-This just gives you the tree for \textit{Cercopithecus} species but you can also see how the species fit into the rest of the tree using:
+This just gives you the tree for *Cercopithecus* species but you can also see how the species fit into the rest of the tree using:
 
 ```{r}
 zoom(primatetree, grep("Cercopithecus", primatetree$tip.label), subtree = TRUE, cex = 0.5)
@@ -236,8 +241,7 @@ To get further options for the plotting of phylogenies:
 ?plot.phylo
 ```
 
-Note that although you can use `plot` to plot the phylogeny, you need to specify `plot.phylo` to find out the options for plotting trees. Y
-ou can change the style of the tree (type), the color of the branches and tips (edge.color, tip.color). 
+Note that although you can use `plot` to plot the phylogeny, you need to specify `plot.phylo` to find out the options for plotting trees. You can change the style of the tree (`type`), the color of the branches and tips (`edge.color`, `tip.color`). 
 Here's an fun/hideous example! 
 
 ```{r}
@@ -277,8 +281,8 @@ plot(primatetree.reroot, cex = 0.2)
 
 ## 4. Manipulating your data and phylogeny in R
 ### Species names with spaces
-Species names in the tree cannot contain spaces so they are generally written as Genus_species (the gap between the genus name and species name replaced by _). 
-If the species names in the data are written as Genus species with a space, then you will have to replace the spaces with _ so that they match up with the species names in the tree. 
+Species names in the tree cannot contain spaces so they are generally written as Genus_species (the gap between the genus name and species name replaced by an underscore `_`). 
+If the species names in the data are written as Genus species with a space, then you will have to replace the spaces with `_` so that they match up with the species names in the tree. 
 You can do this as follows:
 
 ```{r}
@@ -286,7 +290,7 @@ primatedata$Binomial <- gsub(" ", "_", primatedata$Binomial)
 ```
 
 `gsub` means general substitution. 
-It replaces any instance of the first item (here it's a space) with the second item (_) but only in the variable you tell it to (`primatedata\$Binomial`).
+It replaces any instance of the first item (here it's a space) with the second item (_) but only in the variable you tell it to (`primatedata$Binomial`).
 
 ### Mismatches between species in your data and phylogeny
 Often you will have data for species which are not in your phylogeny and/or species in your phylogeny which are not in your data. 
@@ -321,7 +325,7 @@ primatetree <- drop.tip(primatetree, check$tree_not_data)
 ```
 
 In this case we don't have any species in the tree missing from the data, `data_not_tree` contains no species. 
-However, if you do, to remove species from the data which are not in the tree you can use `match` and `subset`:
+However, if you do, to remove species from the data which are not in the tree you can use `match` and `subset` as follows:
 
 ```{r}
 matches <- match(primatedata$Binomial, check$data_not_tree, nomatch = 0)
@@ -353,8 +357,8 @@ And for fun let's make everything rainbow colored!
 par(mfrow = c(2,2)) # So we can see 4 plots at once
 
 # Raw data
-hist(primatedata$AdultBodyMass_g) #, col = rainbow(8))
-hist(primatedata$GestationLen_d)#, col = rainbow(8))
+hist(primatedata$AdultBodyMass_g, col = rainbow(8))
+hist(primatedata$GestationLen_d, col = rainbow(8))
 
 # Log transformed
 hist(log(primatedata$AdultBodyMass_g), col = rainbow(8))
@@ -389,9 +393,9 @@ plot(log(GestationLen_d) ~ log(AdultBodyMass_g), data = primatedata, col = prima
 
 ### Phylogenetic generalized least squares models (PGLS)
 There are several ways of accounting for phylogenetic non independence in your analyses.
-Here we will just cover one phylogenetic generalized least squares (PGLS).
-{Another popular earlier method is independent contrasts. 
-}This method is really similar to PGLS, in fact it is just a special kind of PGLS where $\lambda$ is equal to 1.
+Here we will just cover one - phylogenetic generalized least squares (PGLS).
+Another popular earlier method is independent contrasts. 
+This method is really similar to PGLS, in fact it is just a special kind of PGLS where $\lambda$ is equal to 1.
 PGLS offers some important advantages over independent contrasts. 
 The model of trait evolution can be more flexible i.e., it can depart from a strict Brownian motion process ($\lambda$ or K = 1). Different scaling parameters ($\lambda$, $\kappa$, and $\delta$) can be incorporated in the analysis, which can significantly improve the fit of the data to the model and thus also improve the estimation of the trait correlation. 
 Another advantage of PGLS is that the intercept of the regression is not forced to be zero.
@@ -401,7 +405,7 @@ To perform PGLS models in R, `caper` requires you to first combine the phylogeny
 Note that `vcv = TRUE` stores a variance covariance matrix of your tree (you will need this for the `pgls` function). 
 `na.omit = FALSE` stops the function from removing species without data for all variables. 
 `warn.dropped = TRUE` will tell you if any species are not in both the tree and the data and are therefore dropped from the comparative data object. 
-Here we will be dropping the 149 species from the tree that we don't have any data for, but we won't drop any species from the data.
+Here we won't drop any species because we already did this using `name.check`.
 
 ```{r}
 primate <- comparative.data(phy = primatetree, data = primatedata, 
@@ -409,7 +413,7 @@ primate <- comparative.data(phy = primatetree, data = primatedata,
                             na.omit = FALSE, warn.dropped = TRUE)
 ```
 
-This will give a warning telling you that some species have been dropped.
+If you do need to drop species, this function will give a warning telling you that some species have been dropped.
 You can view the dropped species using:
 
 ```{r}
@@ -420,7 +424,7 @@ primate$dropped$unmatched.rows
 > **Always** make sure you check the list of dropped species is what you expected, it often reveals typos in your species names, or mismatches in taxonomies used etc.
 
 The function for PGLS analyses in `caper` is `pgls`. 
-To fit a model which uses the maximum likelihood estimate of $\lambda$ we use the following code:
+To fit a model which uses the Maximum Likelihood (ML) estimate of $\lambda$ we use the following code:
 
 ```{r}
 model.pgls <- pgls(log(GestationLen_d) ~ log(AdultBodyMass_g), data = primate, lambda = "ML")
@@ -440,7 +444,7 @@ plot(log(GestationLen_d) ~ log(AdultBodyMass_g), data = primatedata)
 abline(model.pgls)
 ```
 
-> Sometimes you will find that \texttt{pgls} will not work and you get an `optim error`. This is much more common when using a Mac. To fix it all you need to do is change the bounds (upper and lower values) on the parameter being optimized, in this case $\lambda$. Just change the lower bound of $\lambda$ to something a little bigger than 1e-6 until it works. For example:
+> Sometimes you will find that `pgls` will not work and you get an `optim error`. This is much more common when using a Mac. To fix it all you need to do is change the bounds (upper and lower values) on the parameter being optimized, in this case $\lambda$. Just change the lower bound of $\lambda$ to something a little bigger than 1e-6 until it works. For example:
 
 ```{r}
 model.pgls2 <- pgls(log(GestationLen_d) ~ log(AdultBodyMass_g), data = primate, lambda = "ML", bounds = list(lambda = c(1e-05, 1)))
@@ -448,7 +452,7 @@ model.pgls2 <- pgls(log(GestationLen_d) ~ log(AdultBodyMass_g), data = primate, 
 
 ***
 
-### Likelihood profiles for $\lambda$ in PGLS models}
+### Likelihood profiles for $\lambda$ in PGLS models
 You can look at the likelihood profiles for branch length transformations in PGLS models using `pgls.profile`:
 
 ```{r}
@@ -501,10 +505,10 @@ Without going into the statistical details (and if you've no idea what these plo
 
 1. In plot one you shouldn't see any data with a studentized residual > $\pm$ 3. 
 Any species with such large residuals should be removed as these outliers may overly influence the results of the regression (see Jones and Purvis 1997). Often these are the result of measurement error associated with species pairs joined by very short branches. You should generally report results with and without outliers unless the results remain qualitatively the same.
-2.  The points of the Q-Q plot (plot 2) should approximately fall on the line.
-3.  Plots 3 and 4 should show a fairly random scattering of points. You want to avoid any clear patterns.
+2.  The points of the Q-Q plot (plot 2) should approximately fall on the line. This tests for normality of residuals, one of the assumptions of linear models
+3.  Plots 3 and 4 should show a fairly random scattering of points. You want to avoid any clear patterns. The first is related to the systematic component of the model - any pattern here suggests that the model has not been correctly specified. The second is to test the assumption that variances are equal (homoscedascity).
 
-It takes practice to know what is ``good'', ``bad'' and ``acceptable'' with these plots. I would say the plots above are fine, but there appear to be a couple of data points with studentized residuals > $\pm$ 3 in plot 1 that should be removed, or at least checked for errors. 
+It takes practice to know what is "good", "bad" and "acceptable" with these plots. I would say the plots above are fine, but there appear to be a couple of data points with studentized residuals > $\pm$ 3 in plot 1 that should be removed, or at least checked for errors. 
 
 ***
 
@@ -558,22 +562,22 @@ This is repeated 1000 times (if `reps = 1000`) and the observed value of K is th
 phylosignal(lngest[primatetree$tip.label], primatetree, reps = 1000)
 ```
 
-In this case the observed K is significantly higher than the random values of K. 
+In this case the observed K is significantly higher than the random values of K (`PIC.variance.P` < 0.001). 
 
 > Note this is a randomization test so your output here will not be identical to mine.
 
 ***
 
-## 7. Practice exercises
-The code above only runs these analyses on a few variables. 
-If you have time, try and run some analyses on the other variables. 
-Here are some example questions to get you started.
+[//]: # 7. Practice exercises
+[//]: #The code above only runs these analyses on a few variables. 
+[//]: #If you have time, try and run some analyses on the other variables. 
+[//]: #Here are some example questions to get you started.
 
-1. What is $\lambda$ for primate social group size?
-2. Make a plot of social group size against home range size.
-3. Perform a PGLS of two variables of your choice.
-4. Does home range size differ significantly among the different primate genera?
-5. What is Blomberg’s K for adult body mass?
-6. Plot the primate tree and zoom in on the \textit{Saimiri} genus.
-7. Run a PGLS analysis to determine the relationship between social group size and gestation length. How does this differ from the result obtained with an OLS regression? Plot the result.
+[//]: #1. What is $\lambda$ for primate social group size?
+[//]: #2. Make a plot of social group size against home range size.
+[//]: #3. Perform a PGLS of two variables of your choice.
+[//]: #4. Does home range size differ significantly among the different primate genera?
+[//]: #5. What is Blomberg’s K for adult body mass?
+[//]: #6. Plot the primate tree and zoom in on the \textit{Saimiri} genus.
+[//]: #7. Run a PGLS analysis to determine the relationship between social group size and gestation length. How does this differ from the result obtained with an OLS regression? Plot the result.
 
