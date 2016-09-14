@@ -1,8 +1,6 @@
 # Visualising phylogenies in R
 ## Natalie Cooper (natalie.cooper@nhm.ac.uk)
 
-[//]: # http://www.mpcm-evolution.org/practice/online-practical-material-chapter-4/chapter-4-1-codes-used-produce-twelve-figures-chapter
-
 ## 1. Introduction
 
 This is a quick practical to introduce you to some of the fun ways you can visualise phylogenetic trees in R. 
@@ -123,11 +121,10 @@ library(phytools)
 ### Reading in a phylogeny from a file
 To load a tree you need either the function `read.tree` or `read.nexus`.
 `read.tree` can deal with a number of different types of data (including DNA) whereas `read.nexus` reads NEXUS files. 
-`Centrarchidae.tre` and `elopomorph.tre` are not in NEXUS format so we use `read.tree`. 
+`elopomorph.tre` is not in NEXUS format so we use `read.tree`. 
 
 ```{r}
-fishtree <- read.tree("Centrarchidae.tre")
-eloptree <- read.tree("elopomorph.tre")
+fishtree <- read.tree("elopomorph.tre")
 ```
 
 ### Reading in a phylogeny that is already built into R
@@ -188,10 +185,10 @@ anoledata
 This will print out all of the data!
 
 ## 4. Basic tree viewing in R
-Now let's visualise some phylogenies! We'll use the Centrarchidae tree to start as it is simple.
+Now let's visualise some phylogenies! We'll use the Elopomorpha (eels and similar fishes) tree to start as it is simple.
 
 ```{r}
-fishtree <-read.tree("Centrarchidae.tre")
+fishtree <- read.tree("elopomorph.tre")
 ```
 
 Let's examine the tree by typing:
@@ -202,24 +199,25 @@ str(fishtree)
 ```
 
 `fishtree` is a fully resolved tree with branch lengths. 
-There are 32 species and 31 internal nodes. 
+There are 62 species and 61 internal nodes. 
 We can plot the tree by using the `plot.phylo` function of `ape`. 
 Note that we can just use the function `plot` to do this as R knows if we ask it to plot a phylogeny to use `plot.phylo` instead!
 
 ```{r}
-plot(fishtree)
+plot(fishtree, cex = 0.5)
 ```
 
-We can zoom into different sections of the tree that you're interested in:
+`cex = 0.5` reduces the size of the tip labels so we can read them. 
+We can also zoom into different sections of the tree that you're interested in:
 
 ```{r}
-zoom(fishtree, grep("Micropterus", fishtree$tip.label), subtree = FALSE)
+zoom(fishtree, grep("Gymnothorax", fishtree$tip.label), subtree = FALSE, cex = 0.8)
 ```
 
 This just gives you the tree for *Micropterus* species but you can also see how the species fit into the rest of the tree using:
 
 ```{r}
-zoom(fishtree, grep("Micropterus", fishtree$tip.label), subtree = TRUE)
+zoom(fishtree, grep("Gymnothorax", fishtree$tip.label), subtree = TRUE, cex = 0.8)
 ```
 
 Note that `zoom` automatically sets the plotting window to display two plots at once. 
@@ -282,7 +280,8 @@ To look at a list of colours in R type in `colors()`.
 colours <- c("cornflowerblue", "cyan4", "goldenrod")
 ```
 
-Now plot the tree and add labels to the tips and the nodes using the results in `ancestors`. We use `label.offset = 1` to move the labels to the right a bit so the pie charts will fit...
+Now plot the tree and add labels to the tips and the nodes using the results in `ancestors`. 
+We use `label.offset = 1` to move the labels to the right a bit so the pie charts will fit...
 
 ```{r}
 plot(bird.orders, label.offset = 1)
@@ -300,10 +299,25 @@ Remember we already loaded the phylogeny and data as follows:
 
 ```{r}
 data(anoletree)
-anoledata <- read.csv("anole.data.csv", header = TRUE)
+anoledata <- read.csv("anole.data.csv", header = TRUE, row.names = 1) 
 ```
 
-First we make a matrix containing only the SVL values for each *Anolis* species:
+Note the names in `anoledata` are the species names without the Genus. 
+In the phylogeny the species names are `Anolis_species`. 
+So to get the two to match we need to add `Anolis_` to each name.
+
+```{r}
+rownames(anoledata) <- paste("Anolis", rownames(anoledata), sep = "_")
+```
+`paste` just sticks together `Anolis` with the names in `anoles` already with an underscore (`_`) separating them (`sep = "_"`)
+
+We then need to make sure the order of the species in the data matches that of the phylogeny.
+
+```{r}
+anoledata <- anoledata[anoletree$tip.label, ]
+```
+
+Next we make a matrix containing only the SVL values for each *Anolis* species:
 
 ```{r}
 SVL <- as.matrix(anoledata)[,"AVG.SVL"]
@@ -311,26 +325,10 @@ SVL <- as.matrix(anoledata)[,"AVG.SVL"]
 
 This code selects only the variable `AVG.SVL` from `anoledata` (square brackets subset in R in the form [rows, columns]), and then uses `as.matrix` to make this into a matrix.
 
-Take a look at SVL
+Take a look at `SVL`
 
 ```{r}
 head(SVL)
-```
-
-Note that the names of SVL are the species names without the Genus. 
-In the phylogeny the species names are `Anolis_species`. 
-So to get the two to match we need to add `Anolis_` to each name.
-
-```{r}
-names(SVL) <- paste("Anolis", names(SVL), sep = "_")
-```
-
-`paste` just sticks together `Anolis` with the names in SVL already with an underscore (`_`) separating them (`sep = "_"`)
-
-Next we need to make sure the order of the species in SVL matches that of the phylogeny.
-
-```{r}
-SVL <- SVL[anoletree$tip.label]
 ```
 
 We then use the function `contMap`. 
@@ -338,74 +336,104 @@ We then use the function `contMap`.
 The estimating of the character along the tree uses a Maximum Likelihood estimation procedure.
 Here we will tell `contMap` not to automatically plot the tree (using `plot = FALSE`) so we can make some modifications.
 
-[//]: #```{r}
-[//]: #SVLplot <- contMap(anoletree, SVL, plot = FALSE)
-[//]: #```
-[//]: # For some reason this code breaks...
+```{r}
+SVLplot <- contMap(anoletree, SVL, plot = FALSE)
+```
+ For some reason this code breaks...
 
-Finally let's plot the tree as a fan (`legend = 5` just spreads the legend out so it is readable).
+Finally let's plot the tree as a fan (`legend = 10` just spreads the legend out so it is readable).
 
-[//]: #```{r}
-[//]: #plot(SVLplot, type = "fan", legend = 5)
-[//]: #```
+```{r}
+plot(SVLplot, type = "fan", legend = 10)
+```
 
 ## 6. Phylomorphospace plots in R
 
+We are going to use the *Anolis* data to create a phylomorphospace plot. 
+These plots show where species fall within a morphospace (usually based on principal components analyses of morphological variables), and then reconstructs values for the nodes of the phylogeny so the whole phylogeny can be projected into the morphospace.
+
+We already loaded the phylogeny and data as follows:
+
+```{r}
+data(anoletree)
+anoledata <- read.csv("anole.data.csv", header = TRUE, row.names = 1)
+```
+
+As we saw above, the names of `anoles` are the species names without the Genus. 
+In the phylogeny the species names are `Anolis_species`. 
+So to get the two to match we need to add `Anolis_` to each name.
+
+```{r}
+rownames(anoledata) <- paste("Anolis", rownames(anoledata), sep = "_")
+```
+
+`paste` just sticks together `Anolis` with the names in `anoles` already with an underscore (`_`) separating them (`sep = "_"`)
+
+Next we again need to make sure the order of the species in the data matches that of the phylogeny.
+
+```{r}
+anoledata <- anoledata[anoletree$tip.label, ]
+```
+
+We can now run a phylogenetic principal components analysis on our morphological trait data and extract the PC scores for each PC axis using `$S`.
+
+```{r}
+PC <- phyl.pca(anoletree, anoledata)$S
+```
+
+To plot the morphospace with colours, we need to define them. 
+Here we choose six colours, and matched them with the ecomorph types listed [here](https://en.wikipedia.org/wiki/Anolis_ecomorphs).
+These were built into `anoletree`.
 
 
-[//]: # X<-read.csv("anole.data.csv",header=T,row.names=1)
-[//]: # X<-as.matrix(X)
-[//]: # rownames(X)<-paste("Anolis_",rownames(X),sep="")
-[//]: # data(anoletree)
-[//]: # X<-X[anoletree$tip.label,]
-[//]: # X<-cbind(X[,1],phyl.resid(anoletree,X[,1],X[,2:20])$resid,phyl.resid(anoletree,
- [//]: #    X[,21],X[,22])$resid)
-[//]: # PC<-phyl.pca(anoletree,X)$S
-[//]: # PC<-cbind(-PC[,1],PC[,2])
-[//]: # colnames(PC)<-c("PC1 (limb length)","PC2 (size)")
-[//]: # par(mar=c(5.1,4.1,2.1,2.1))
-[//]: # colors<-setNames(c("blue","gold1","chartreuse3","saddlebrown","orangered","purple"),
-    sort(unique(getStates(anoletree,"tips"))))
-[//]: # phylomorphospace(anoletree,PC[,c(1,2)],label="off",node.by.map=TRUE,colors=colors)
-[//]: # add.simmap.legend(colors=colors,prompt=FALSE,x=-1.5,y=1.1)
+```{r}
+colors <- setNames(c("cornflowerblue", "goldenrod", "chartreuse", "hotpink",
+	                 "orangered", "darkviolet"), 
+                     sort(unique(getStates(anoletree, "tips"))))
+```
 
+Finally we can make the plot, and colour by ecomorph. 
+`label = "off"` suppresses the printing of tip labels which keeps things a bit tidier.
 
+```{r}
+phylomorphospace(anoletree, PC[,1:2], label = "off", node.by.map = TRUE, colors = colors)
+```
 
+## 7. Phylogenies and maps!
 
+We can also plot phylogenies attached to maps showing where species come from.
+We will use the bird orders tree again as it's small.
 
+```{r}
+data(bird.orders)
+```
 
+We don't know where the birds come from, so we will simulate some latitude and longitude data as follows. 
+This uses a function that simulates traits along the phylogeny, so close relatives should end up with more similar latitude and longitude values.
+I've used high rates of evolution (`sig2`) to force the points to be spread out. 
+Of course these values will be nonsensical for birds!
 
+```{r}
+lat <- fastBM(bird.orders, sig2 = 100, bounds = c(-90, 90))
+long <- fastBM(bird.orders, sig2 = 150, bounds = c(-180, 180))
+```
 
+Then we use the function `phylo.to.map` to match the locations with the world map. This produces some output in the form `objective 98` etc. (I have suppressed it here). 
 
+```{r, message = FALSE}
+phylomap <- phylo.to.map(bird.orders, cbind(lat,long), plot = FALSE)
+```
 
+We can either put the phylogeny next to the map and draw lines to the places they come from using `type = "phylogram"`...
 
+```{r}
+plot(phylomap,type = "phylogram", asp = 1.3, mar = c(0.1, 0.5, 3.1, 0.1))
+```
 
+...or plot the phylogeny directly onto the map using `type = "direct"`
 
+```{r}
+plot(phylomap,type = "direct", asp = 1.3, mar = c(0.1, 0.5, 3.1, 0.1))
+```
 
-
-[//]: # tree<-pbtree(n=26)
-[//]: # tree$tip.label<-LETTERS
-[//]: # X<-sim.corrs(tree,matrix(c(1,0.7,0.7,1),2,2))
-[//]: # par(mfcol=c(1,3))
-[//]: # par(mar=c(4.1,4.1,4.1,2.1))
-[//]: # phenogram(tree,X[,1],spread.labels=TRUE)
-[//]: # title(main="(a)",adj=0,cex=3)
-[//]: # fancyTree(tree,"traitgram3d",X=X,method="static",angle=-30)
-[//]: # title(main="(b)",adj=0,cex=3)
-[//]: # par(mar=c(4.1,4.1,4.1,2.1))
-[//]: # fancyTree(tree,"phenogram95",x=X[,1],link=0.1*max(nodeHeights(tree)))
-[//]: # title(main="(c)",adj=0,cex=3)
-
-[//]: # tree<-pbtree(n=26,scale=100)
-[//]: # tree$tip.label<-LETTERS[26:1]
-[//]: # lat<-fastBM(tree,sig2=10,bounds=c(-90,90))
-[//]: # long<-fastBM(tree,sig2=80,bounds=c(-180,180))
-[//]: # # now plot projection
-[//]: # xx<-phylo.to.map(tree,cbind(lat,long),plot=FALSE)
-[//]: # layout(matrix(c(1,2),2,1),heights=c(0.61,0.39))
-[//]: # plot(xx,type="phylogram",asp=1.3,mar=c(0.1,0.5,3.1,0.1))
-[//]: # title(main="(a)",adj=0)
-[//]: # plot(xx,type="direct",asp=1.3,mar=c(0.1,0.5,3.1,0.1))
-[//]: # title(main="(b)",adj=0)
-[//]: # ```
-
+## 8. Adding tiny silhouettes to trees! Or Strap???
