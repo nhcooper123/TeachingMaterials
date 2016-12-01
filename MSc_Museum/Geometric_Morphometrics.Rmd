@@ -1,0 +1,84 @@
+---
+title: "Geometric Morphometrics in R"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## A quick introduction to morphometrics
+
+### What is morphometrics?
+Morphometrics is the study of shape and size and their relationships with other variables. 
+Shape is generally defined as __the property of an object invariant under scaling, rotation, or translation__. 
+
+To compare shapes, we need to define which bits of the shape to compare, for example if comparing the shapes of two cups, we might compare the width of their handles, or their diameters. 
+In biological objects, structures that are recognizable and comparable among specimens are said to be __homologous__. 
+Homologous points include things like the points that two bones join together.
+We need homologous points to compare the shapes of biological specimens.
+In morphometrics these points are referred to as __landmarks__.
+
+### Landmarks
+There are three types of landmarks (defined by Bookstein 1991)
+__Type I__ landmarks are truly homologous features that can be definied by a single point, for example where bone plates join, or small knobs on the bone.
+__Type II__ landmarks include things like maximum of curvature of a feature, such as the most extreme part of the curve of the skull.
+__Type III__ landmarks can also be refered to as __pseudolandmarks__ or __semi-landmarks__. 
+These are contructed geometrically, rather than being identifiable as unique points on the structure. 
+For examaple, the centre of a series of points, or the intersection of a line joining up several landmarks.
+
+Type I landmarks are generally favoured as they are easier to put in the right place and give more information about the development of the feature. 
+However, often we also use some Type II and Type III landmarks.
+Choosing landmarks carefully is really important - they need to be informative for the question you are trying to answer and capture the variation in shape that you are interested in.
+They should also be easy to identify and repeat to reduce measurement error.
+
+### Collecting data and adding landmarks
+You can collect morphometric data in lots of ways - sometimes using measurements with calipers or rulers, but more often these days by taking digital photographs or 3D scans of specimens. 
+Once you have your data, you need to add landmarks to them - the relationships between the landmarks will then be used in your shape analyses. 
+You can do this in lots of different programs including R (see practical example below).
+
+### Measurement error
+As with all analyses there are lots of sources of error in the collection of morphometric data. 
+Think about what some of these might be, and see if you can think of ways to test whether they are a problem with your data.
+See Claude pages 63-65 for some ideas.
+We will not cover this today but it is very important to consider if you use these methods in your projects.
+
+
+
+
+
+
+## Practical example using R
+For this practical we are going to use the package `geomorph`. 
+You will need to install it on your computer for this example to work.
+Load the package using `library`
+
+```{r, message = FALSE}
+library(geomorph)
+```
+
+### 1. Digitising (adding landmarks and curves)
+
+```{r, eval = FALSE}
+digitize2d(filelist = "myfiles.jpg",
+           nlandmarks = 5, tpsfile = "mytps.tps", scale = 10)
+```
+
+### 2. Reading in your data and plotting it
+If you aren't using R to digitise you can start at this step, assuming you have a TPS file with all your landmarks in it.
+
+```{r, eval = FALSE}
+lands <- readland.tps("mytps.tps")
+```
+
+### 3. Procrustes 
+
+```{r, eval = FALSE}
+gpa.lands <- gpagen(lands)
+pca.lands <- plotTangentSpace(gpa.lands$coords, label=TRUE)
+lands
+```
+
+### 4. Principal components and plotting
+
+### 5. Statistical analyses
