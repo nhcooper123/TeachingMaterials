@@ -7,7 +7,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## A quick introduction to morphometrics
+## A quick introduction to geometric morphometrics
 
 ### What is morphometrics?
 Morphometrics is the study of shape and size and their relationships with other variables. 
