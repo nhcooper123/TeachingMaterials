@@ -1,6 +1,14 @@
-# Phylogenetic Comparative Methods in R
-## Using phylogeny as a statistical fix
-### Natalie Cooper (natalie.cooper@nhm.ac.uk)
+---
+title: "PGLS in R"
+output: html_document
+---
+
+
+# Phylogenetic Generalised Least Squares (PGLS) in R
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 ## 1. Introduction
 
