@@ -1,3 +1,12 @@
+---
+title: "PGLS in R"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+
 # Methods in Macroecology and Macroevolution
 ### Module coordinator: Natalie Cooper
 ### natalie.cooper@nhm.ac.uk
