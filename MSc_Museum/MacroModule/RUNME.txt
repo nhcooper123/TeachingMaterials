@@ -1,0 +1,5 @@
+To get gitbook, navigate to Macro Module folder in R then:
+
+bookdown::render_book("index.Rmd", "bookdown::gitbook", clean_envir = TRUE)
+
+Or compile each separately in RStudio to get PDFs

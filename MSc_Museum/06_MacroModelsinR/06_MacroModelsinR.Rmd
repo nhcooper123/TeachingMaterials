@@ -1,0 +1,701 @@
+---
+title: "Macroevolutionary models in R"
+author: "Natalie Cooper (natalie.cooper@nhm.ac.uk)"
+date: "Feb 2017"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The aims of this practical are to learn how to use R to fit macroevolutionary models in R.
+
+We will be using the evolution of primate life-history variables as an example. These data come
+from the PanTHERIA database (Jones et al., 2009) and 10kTrees (Arnold et al., 2010). Note that
+this is an old version of 10kTrees, so if you want to use it in your research please download the
+newest version.
+
+__REMEMBER__
+
+- Download all of the data for the practical into a folder somewhere on your computer.
+- Set your working directory to this folder.
+- Start a new script for this practical.
+
+You will also need to install the following packages: 
+
+* `ape`
+* `geiger`
+
+***
+
+# 1. Load packages, read in the data and the tree
+This is the same as we did in the PGLS practical, so I won't give detailed instructions here.
+
+```{r, message = FALSE}
+# Load packages
+library(ape)
+library(geiger)
+```
+
+```{r, message = FALSE}
+# Read in data
+primatedata <- read.table("Primatedata.txt", sep = "\t", header = TRUE)
+# Check data is loaded correctly
+str(primatedata)
+
+# Read in tree
+primatetree <- read.nexus("consensusTree_10kTrees_Version2.nex") 
+# Check tree is loaded correctly
+str(primatetree)
+```
+
+# 2. Modify the tree and data so they can be used in the analyses.
+Again we did this in the PGLS practical. 
+Please remind yourself of what these steps are needed for.
+
+```{r}
+# Ensure tree is fully bifurcating
+primatetree <- multi2di(primatetree) 
+
+# Replace spaces with underscores in the species names
+primatedata$Binomial <- gsub(" ", "_", primatedata$Binomial)
+
+# Add species names to row names
+row.names(primatedata) <- primatedata$Binomial
+```
+
+For some weird reason the `geiger` function we need (see below) won’t work if you input a dataset with variables that are characters i.e. words or letters. 
+Our taxonomic variables Order, Family and Binomial arecharacters so we need to exclude them from the data.
+We will do this by making a new datasetcalled primatedata2.
+
+```{r}
+primatedata2 <- primatedata[, 4:8]
+```
+
+Here the [ ] tells R we want to subset the dataset. R data frames are always described by [X,Y] where X is rows and Y is columns. 
+So [1, 1] will select the entry in the first column and the first row of the data frame. 
+[, 4:8] selects all rows but only columns 4 to 8. 
+These are the columns containing our numeric variables.
+
+We then need to match the species in tree to those in the dataset as in the PGLS practical. 
+__Note that we are using `primatedata2` here.__
+
+```{r}
+match.species <- treedata(primatetree, primatedata2)
+
+mytree <- match.species$phy
+mydata <- match.species$data
+```
+
+# 3 Fitting simple models of evolution to continuous data
+For fitting models of evolution to continuous data we will use the `fitContinuous` function in the R package `geiger`.
+`fitContinuous` is a likelihood based method, so the output will give the maximum likelihood (ML) estimates of the parameters. 
+Bayesian methods are becoming preferred for these kinds of analyses and `fitContinuousMCMC` will perform these analyses. 
+However, due to time constraints we will not cover this function.
+As an example, let’s look at the evolution of `log(body size)` in Primates. 
+We’ll fit three evolutionary models – the Brownian motion (BM) model, the Ornstein-Uhlenbeck (OU) model and the Early Burst (EB) model. 
+`fitContinuous` can also fit several other models. 
+For more details look at the help file by typing: `?fitContinuous`
+
+## Model descriptions
+### The Brownian motion (BM model)
+The Brownian motion model ((Cavalli-Sforza and Edwards, 1967; Felsenstein, 1973) is assumed to be the underlying mode of evolution in the majority of phylogenetic comparative methods
+(though this assumption is rarely tested; Freckleton and Harvey 2006). 
+In the model, a trait X evolves at random at a rate s:
+
+dX(t) = sdW(t) (1)
+
+where W(t) is a white noise function and is a random variate drawn from a normal distribution with mean 0 and variance s2. This model assumes that there is no overall drift in the direction of evolution (hence the expectation of W(t) is zero) and that the rate of evolution is constant.
+Because the direction of change in trait values at each step is random, Brownian motion is often described as a “random walk” (note that you can also fit models where W(t) is not zero and there is drift in the direction of evolution. This is known as the drift model, or Brownian motion with a trend. We will not cover this here).
+
+The model assumes the correlation structure among trait values is proportional to the extent of shared ancestry for pairs of species. This means that close relatives will be more similar in their trait values than more distant relatives. 
+It also means that variance in the trait will increase (linearly) in proportion to time.
+The model has two parameters, the Brownian rate parameter, s2 and the state of the root at time zero, X(0). 
+`fitContinuous` estimates s2 and X(0). 
+Note that s2 can be used as a measure of the rate of trait evolution (Cooper and Purvis, 2010; Cooper et al., 2011).
+
+### The Ornstein-Uhlenbeck (OU) model
+The Ornstein-Uhlenbeck (OU) model (Hansen, 1997; Butler and King, 2004) is a random walk where trait values are pulled back towards some “optimal” value with an attraction strength proportional to the parameter a. 
+
+The model has the following form:
+
+dX(t) = 􀀀a(X(t) 􀀀 m) + sdW(t) (2)
+
+Note that this model has two parameters in addition to those of the Brownian model, a and m.
+The parameter m is a long-term mean, and it is assumed that species evolve around this value. 
+a is the strength of evolutionary force that returns traits back towards the long-term mean if they evolve away from it. a is sometimes referred to as the “rubber band” parameter because of the way it forces traits back towards m.
+The OU model was introduced to population genetics by Lande (1976) to model stabilizing selection in which the mean was recast as a fitness optimum on an adaptive landscape. 
+The process operating in comparative data is analogous, although clearly is not stabilizing selection (despite being sometimes referred to as such).
+The model has four parameters, the Brownian rate parameter, s2, the state of the root at time zero, X(0), the attraction strength or “rubber band” parameter, a, and the long-term mean, m.
+fitContinuous estimates s2, X(0), and a. 
+It does not estimate m but in this implementation of the model, m is equivalent to X(0). 
+Note that if a is close to zero then evolution is approximately Brownian.
+
+### The Early Burst (EB) model
+The Early Burst (EB) model (Harmon et al. 2010, also called the ACDC model; Blomberg et al. 2003) is a Brownian motion/random walk model where the rate of evolution decreases exponentially through time under the model:
+
+r(t) = s2e(at) (3)
+
+Where r(t) is the rate of evolution at time t, s2 is the initial value of the Brownian rate parameter, i.e. the initial rate of evolution, a is the rate change parameter, and t is time. 
+The value of a is generally less than or equal to 0 (note that you can force a to be greater than zero by changing the bounds - see section 3.4 - however, this will only work if you have fossil species in your data; Slater et al. 2012). 
+When a is negative, rates of evolution decrease through time. 
+The model fits traits where diversification occurs most rapidly early in a lineage and slows as the
+lineage approaches the present, so that subclades tend to retain their differences through time. 
+This is consistent with a clade radiating adaptively into a fixed set of niches and has been used as evidence of niche-filling modes of evolution (Harmon et al., 2010; Cooper and Purvis, 2010).
+The model has three parameters, the Brownian rate parameter, s2, the state of the root at time zero, X(0), and the rate of change parameter, a. 
+`fitContinuous` estimates s2, X(0) and a. 
+Note that if a is close to zero then evolution is approximately Brownian.
+Note that although many people report a values when reporting the results of fitting an Early Burst model, it is often more intuitive to report the rate half-life, t12 (Slater and Pennell, 2014). 
+This is calculated as:
+t12
+=
+log(2)
+jaj
+(4)
+
+It can be interpreted as the time it takes for the rate of evolution of the trait to halve (see example below).
+
+## Fitting the models using fitContinuous
+
+First we will fit a Brownian motion (BM) model to log(body mass):
+
+```{r}
+BM <- fitContinuous(mytree, log(mydata[,"AdultBodyMass_g"]), model = c("BM"))
+```
+
+To look at the output type:
+```{r}
+BM
+```
+
+The maximum likelihood estimates (lnL) of the model parameters are found near the top of the output. 
+In a Brownian motion (BM) model we estimate the Brownian rate parameter, s2 or `sigsq` in the output above, which is `0.028655` and the value of the trait at the root of the tree, X0 or `z0` in the output above, which is `6.773956`.
+Other useful things in the output are the maximum-likelihood estimate (`lnL`) of the model (log-likelihood), the Akaike Information Criterion (`AIC`), sample-size corrected AIC (`AICc`) and the number of model parameters (free parameters) also known as k in the literature. 
+We will return to the AIC values below.
+
+To fit an Ornstein-Uhlenbeck model to log(body mass) we only need to change the model in the
+formula we used above:
+
+```{r}
+OU <- fitContinuous(mytree, log(mydata[,"AdultBodyMass_g"]), model = c("OU"))
+```
+
+To look at the output type:
+```{r}
+OU
+```
+
+As above, the maximum likelihood estimates (`lnL`) of the model parameters are found near the top of the output. 
+In an Ornstein-Uhlenbeck (OU) model we estimate the Brownian rate parameter, s2 or `sigsq` in the output above, the value of the trait at the root of the tree, X0 or `z0` in the output above, and the selection strength parameter, a or `alpha` in the output above. 
+As `alpha = 0` here, the model is identical to the Brownian motion model.
+
+Finally, to fit an Early Burst (EB) model to log(body mass):
+
+```{r}
+EB <- fitContinuous(mytree, log(mydata[,"AdultBodyMass_g"]), model = c("EB"))
+```
+
+To look at the output type:
+
+```{r}
+EB
+```
+
+As above, the maximum likelihood estimates (`lnL`) of the model parameters are found near the
+top of the output. In an Early Burst (EB) model we estimate the Brownian rate parameter, s2 or
+`sigsq` in the output above, the value of the trait at the root of the tree, X0 or `z0` in the output
+above, and the rate of change parameter, `a`. Here `a = 􀀀0.03`77 indicating that the rate of log(body
+mass) evolution in Primates has decreased through time.
+
+We can also extract the rate half-life, t12, for this model as follows:
+
+```{r}
+log(2)/abs(EB$opt$a)
+```
+
+For these data, the rate half-life is ~ 18 million years, which means over the course of primate
+evolution, body size rate has undergone ~ 4 rate halvings. This is also well within the range of
+“hard to detect” bursts reported in Figure 1 of Slater and Pennell (2014).
+
+## Comparing models of evolution
+Often we want to know which of the models fits our variable best. 
+We can use `fitContinuous` to fit the models we are interested in and can then compare them using AIC. 
+We can extract the AICs from the models we fitted above as follows:
+
+```{r}
+BM$opt$aic
+
+OU$opt$aic
+
+EB$opt$aic
+```
+
+The “best” model is the one with the smallest AIC, in this case the Early Burst model. 
+There is
+much debate about how big of a difference in AIC values can be classed as substantial improvement
+to a model fit (it ranges from 2-10 AIC units). 
+Generally we use 4 units, so EB probably doesn’t fit
+substantially better than BM (160.1921 􀀀 156.857257 = 3.334843).
+
+Alternatively we can use DAIC or AIC weights to compare our models using the following code
+and the geiger function aicw:
+```{r}
+aic.scores <- setNames(c(BM$opt$aic, OU$opt$aic, EB$opt$aic), c("BM","OU","EB"))
+aicw(aic.scores)
+```
+
+`aicw` outputs the AIC (`fit`), DAIC (`delta`) and AIC weights (`w`) for each of the models we fitted.
+The best model is the model with DAIC = 0 or with AICw closest to 1. 
+Using DAIC we can
+conclude that the Early Burst model is the best fit to the data.
+
+## Problems with convergence and bounds
+Above we have mentioned the default bounds on each parameter. Sometimes these need to be
+changed because the model will not converge. This happens when the likelihood surface has long
+flat ridges that cause the likelihood search to get “stuck” (this is particularly common under the
+OU model). You can change bounds with the bounds argument in fitContinuous. Several bounds
+can be given at a time e.g. `bounds=list(sigsq=c(0,0.1),alpha=c(0,1))` would constrain both
+the s2 and a parameters.
+
+For example, if an OU model keeps getting stuck you could try changing the lower bound on a:
+
+```{r}
+OU <- fitContinuous(phy = mytree, dat = log(mydata[,"AdultBodyMass_g"]), model = c("OU"), bounds = list(alpha = c(0.01, 1)))
+```
+
+This example gives this warning message because a is zero, so when we make the lower bound larger the method ends up giving us this value instead because it’s as close to zero as we are allowing the model to go.
+
+## References
+
+* Arnold, C., L. J. Matthews, and C. L. Nunn. 2010. The 10ktrees website: a new online resource for primate phylogeny. Evolutionary Anthropology: Issues, News, and Reviews 19:114–118.
+* Blomberg, S. P., T. Garland, and A. R. Ives. 2003. Testing for phylogenetic signal in comparative data: behavioral traits are more labile. Evolution 57:717–745.
+* Butler, M. A. and A. A. King. 2004. Phylogenetic comparative analysis: a modeling approach for adaptive evolution. The American Naturalist 164:683–695.
+* Cavalli-Sforza, L. L. and A. W. Edwards. 1967. Phylogenetic analysis. models and estimation procedures. American Journal of Human Genetics 19:233.
+* Cooper, N., R. P. Freckleton, and W. Jetz. 2011. Phylogenetic conservatism of environmental niches in mammals. Proceedings of the Royal Society B: Biological Sciences 278:2384–2391.
+* Cooper, N. and A. Purvis. 2010. Body size evolution in mammals: complexity in tempo and mode.The American Naturalist 175:727–738.
+* Felsenstein, J. 1973. Maximum likelihood and minimum-steps methods for estimating evolutionary trees from data on discrete characters. Systematic Biology 22:240–249.
+* Freckleton, R. P. and P. H. Harvey. 2006. Detecting non-brownian trait evolution in adaptive radiations. PLoS Biology 4:e373.
+* Hansen, T. F. 1997. Stabilizing selection and the comparative analysis of adaptation. Evolution Pages 1341–1351.
+* Harmon, L. J., J. B. Losos, T. Jonathan Davies, R. G. Gillespie, J. L. Gittleman, W. Bryan Jennings, K. H. Kozak, M. A. McPeek, F. Moreno-Roark, T. J. Near, et al. 2010. Early bursts of body size and shape evolution are rare in comparative data. Evolution 64:2385–2396.
+* Jones, K. E., J. Bielby, M. Cardillo, S. A. Fritz, J. O’Dell, C. D. L. Orme, K. Safi, W. Sechrest, E. H. Boakes, C. Carbone, et al. 2009. Pantheria: a species-level database of life history, ecology, and geography of extant and recently extinct mammals: Ecological archives e090-184. Ecology 90:2648–2648.
+* Lande, R. 1976. Natural selection and random genetic drift in phenotypic evolution. Evolution 30:314–334.
+* Slater, G. J., L. J. Harmon, and M. E. Alfaro. 2012. Integrating fossils with molecular phylogenies improves inference of trait evolution. Evolution 66:3931–3944.
+* Slater, G. J. and M.W. Pennell. 2014. Robust regression and posterior predictive simulation increase power to detect early bursts of trait evolution. Systematic Biology 63:293–308.
+
+
+
+### Graham's stuff
+
+Regime Dependent Evolution
+In the previous section we saw how to fit three models of trait evolution to a comparative dataset.
+Although the evolutionary modes seem quite different, all are similar in that the evolutionary
+process is constant over the entire clade. Regardless of what part of the tree we are in, all branches
+are evolving at the same rate (in BM), drawn to the same trait value with the same strength (OU)
+or decline in rate at the same time-dependent pace (EB). Often, we want to relax this assumption.
+Members of our clade might belong to one of a set of ecological regimes, for example dietary
+niches or locomotor modes, and we might hypothesize that there are different evolutionary rates
+or different optimal trait values for each of these regimes. In this section, we’ll look at how to
+fit these kinds of models using the OUwie package. We’ll first look at how to reconstruct the
+evolutionary history of a discrete trait. We’ll then look at how to allow rates and optimal trait
+values for a continuously valued trait, like body size, to vary, based on that discrete trait.
+4.0.1 Obtaining a Set of Evolutionary Regimes
+You’ll have a very good idea about the regimes you are interested in, based on your knowledge of
+your clade. For example, I’m often interested in how continuous traits, such as tooth shape, vary
+as a function of diet. For these primate data, there are no discrete traits but there is a trait that
+could be transformed into one. Let’s take a look...
+mydata[,"SocialGroupSize"]
+This should bring up a vector of social group sizes in your R console. This is a continuously
+valued trait – group size can vary between 1 and 91.2. But there is an obvious way of breaking this
+trait up into discrete states; any species with a social group size of 1 is solitary, while any species
+with a group size greater than 1 is social. Let’s make a trait that distinguishes such behaviors.
+18
+SocialStatus <- numeric(length = nrow(mydata))
+names(SocialStatus) <- rownames(mydata)
+SocialStatus[mydata[,"SocialGroupSize"]==1] <- 1
+SocialStatus[!mydata[,"SocialGroupSize"]==1] <- 2
+cbind(SocialStatus,mydata[,"SocialGroupSize"])
+Do you follow what happened there? If so, skip ahead. If not, read this paragraph. The first
+two lines create an empty numeric vector of the same length as our data (that is, the number of
+rows in mydata. The second line assigns names to this empty vector – we need to know which
+entry corresponds to which species. Now we need to fill this vector with codings corresponding
+to solitary or social behavior. Any species with a social group size of 1 is solitary. So the third
+line says fill all entries in SocialStatus that have corresponding values of 1 in SocialGroupSize
+with the value 1. The fourth line does the opposite – fill all values in SocialStatus that do not
+have a corresponding value of 1 in social group size with the value 2 (note that the exclamation
+point is used in R to denote that everything following it is NOT true). So we’re just saying, if
+social group size is 1 put 1 in social status, and if social group size is not 1 put 2 in social status.
+1 is solitary, 2 is social. The final line confirms this by binding our new SocialStatus vector to
+the original SocialGroupSize values. It’s always a good idea to do this last step, to make sure
+everything worked.
+We can now visualize these regimes on our tree by plotting them with colors. We’ll use blue
+for solitary (because you’re blue when you’re lonely) and red for social. Because our states are
+coded as "1" and “2", we can use a little trick to get the appropriate colors by indexing a vector
+containing red and blue:
+social.colors <- c("blue", "red")
+plot(mytree, cex=0.5, tip.color=social.colors[SocialStatus])
+axisPhylo()
+legend("bottomleft",legend=c("solitary", "social"), pch = 15, cex=1.3,
+col=c("blue", "red"))
+You’ll see that solitary behavior seems to be restricted in its distribution. Most solitary primates
+are Strepsirrines (lorises, galagos and lemurs). In fact, tarsiers are the only solitary Haplorhines
+(the group that includes apes and monkeys). From this, we might guess that solitary behavior is
+the ancestral state. This is exactly what we need to know in order to test whether evolutionary
+modes for body size vary for solitary vs social primates. But before we can infer ancestral states,
+we need to chose the most appropriate model of social evolution.
+4.1 Models of Discrete Trait Evolution
+There are several ways of mapping social status onto the tree but probably the most straightforward
+(and useful to learn here) is to use an ancestral state estimation. We will estimate ancestral states
+for each node under a Markov model, pick the state with the highest marginal likelihood, and
+then assign that as the node state.
+19
+The wrinkle is that, just like rates can vary for continuous traits, so they can vary for discrete
+traits, and this can impact our ancestral state estimation. Fortunately, it’s straightforward to test
+for this kind of heterogeneity using the fitDiscrete function in the geiger package.
+4.1.1 Mk1 – all rates equal
+The simplest Markov model we can fit to comparative data is an Mk1 model – M for Markov, k1
+for k=1 or 1 parameter. The single parameter of this model is a transition rate – the rate at which
+states change. Because we only have one rate, transitions between any pair of states occur at the
+same rate and are therefore equally probable. We can visualize the Q (rate) matrix for an Mk1
+model like this:
+1 2 3
+1 - 1 1
+2 1 - 1
+3 1 1 -
+The off-diagonals are the transition rates from state 1 to 2, 1 to 3, 2 to 1 and so on (read rows
+then columns). We typically designate individual transition rates in the form qij, which means the
+rate of going from state i to state j. Here, the 1 in all off-diagonal elements represents the fact
+that rates are the same regardless of what state i and j are, and the direction of that change. The
+diagonal elements qii give the rate of not changing and are computed as the negative sum of the
+non-diagonal row elements. This is so that the rows sum to zero.
+If you’re familiar with models of molecular evolution, you might know this model better as the
+Jukes-Cantor model, where transition rates = transversion rates.
+4.1.2 Mk – symmetric rates
+We could add some complexity, and perhaps realism, by imagining that the rate of change between
+any pair of states is the same regardless of direction, but that the rate of change differs among
+states. Such a model is referred to as a symmetric model, and has a Q matrix of the form:
+1 2 3
+1 - 1 2
+2 1 - 3
+3 2 3 -
+Here, q12 = q21 but this rate is allowed to be different from q13/31 and from q23/32. The number
+of different rates is three for S=3. However, if we were to add a fourth state, the new number
+of rates would not be 4 but rather would be 6. This is because there would now be 6 distinct
+off-diagonal elements present in the upper or lower diagonals. The number of independent rates
+in a symmetric model is therefore given by:
+S2 􀀀 S
+2
+(5)
+20
+If you’re more familiar with molecular models, this is how we get the 6-rate GTR (General Time
+Reversible) model:
+A C T G
+A - 1 2 3
+C 1 - 4 5
+T 2 4 - 6
+G 3 5 6 -
+Obviously, a symmetric model with only 2 states becomes an equal rates (Mk1) model.
+4.1.3 Mk – All Rates Different
+Finally, we can go crazy and allow all rates to be different. For S-states, this would generate S2 􀀀 S
+rates, which might be crazy, depending on how many states you have. For completeness, the Q
+matrix for an All Rates Different model would look like this:
+1 2 3
+1 - 1 2
+2 3 - 4
+3 5 6 -
+If you’re more familiar with molecular models, then you’ll be aware that molecular folks don’t
+do this because of potential over-fitting. This is a very important point to consider. However, in
+comparative data, there are three situations in which this model might realistically be a good fit.
+First, an All Rates Different model might be a good fit if you have an especially large datasets that
+spans a variety of different states. For example, if you had a tree of all 64 000 + vertebrates and
+wanted to examine transition rates among different dietary strategies, this model would be worth
+examining. Second, if you have strong reasons to suppose character states are not reversible, this
+is worth using. For example, complex structures like eyes or teeth tend not to reappear once lost
+so asymmetric models might be a better fit for these kinds of characters. Finally, but related, this
+model is also a good option when you only have two states but think rates back and forth might
+be different. In this latter situation, the All Rates Different model simply gives you 2 rates, which
+isn’t really over-fitting.
+4.2 Modeling Social Evolution in Primates
+Let’s try these models with our primate dataset. We’ll use fitDiscrete, with the primate tree
+and social data we just created.
+equal <- fitDiscrete(mytree, SocialStatus, model = "ER")
+#sym <- fitDiscrete(mytree, SocialStatus, model = "SYM")
+ard <- fitDiscrete(mytree, SocialStatus, model = "ARD")
+21
+Before moving on, note that the commented out fitting of the symmetric model is on purpose.
+Why? Remember that we only have 2 states, solitary and social. A symmetric model with 2 states
+is just an equal rates model, so we can conveniently ignore it here.
+let’s look at the output for one of these models:
+equal
+## GEIGER-fitted comparative model of discrete data
+## fitted Q matrix:
+## 1 2
+## 1 -0.003931397 0.003931397
+## 2 0.003931397 -0.003931397
+## model summary:
+## log-likelihood = -18.491537
+## AIC = 38.983074
+## AICc = 39.036407
+## free parameters = 1
+## Convergence diagnostics:
+## optimization iterations = 100
+## failed iterations = 0
+## frequency of best fit = 1.00
+## object summary:
+## 'lik' -- likelihood function
+## 'bnd' -- bounds for likelihood search
+## 'res' -- optimization iteration summary
+## 'opt' -- maximum likelihood parameter estimates
+This looks very similar to the output from fitContinuous. We’ve got a model summary, with loglikelihoods
+and AIC scores, convergence diagnostics and an object summary. The only difference
+is the first part, which gives us a fitted Q matrix, rather than a summary of model parameters
+(the Q matrix IS the model parameters). This is an equal rates model, so the two off-diagonal
+elements are all same, and the diagonals are the negative values of the rates (so rows sum to
+zero). Because the output is just like fitContinuous, we can pull AICc values out and use them
+to perform model selection:
+aic.discrete <- setNames(c(equal$opt$aic, ard$opt$aic), c("equal", "different"))
+weights <- aicw(aic.discrete)
+weights
+22
+Based on Akaike Weights, which model should we prefer?
+## fit delta w
+## equal 38.98307 5.313651 0.06556956
+## different 33.66942 0.000000 0.93443044
+The all-rates-different model is much more strongly supported (AICcW = 0.93) than the equal
+rates model (AICcW = 0.06). By typing ard, we can look at the Q matrix for this model to see
+what it implies:
+## 1 2
+## 1 -9.264914e-03 9.264914e-03
+## 2 1.971883e-18 -1.971883e-18
+It seems as though the rate of moving from solitary to social is much higher than the rate of going
+from social to solitary. Based on our color-coordinated plot from earlier, we might have predicted
+this to be the case. Now we can move forward with reconstructing ancestral states under this
+preferred asymmetric transition rate model.
+5 Ancestral State Reconstructions
+Ancestral state reconstruction is probably one of the most over-used and uninformative methods
+in the phylogenetic comparative methods toolkit. There are many reasons to be highly skeptical
+of ancestral state estimates and interpretations of macroevolutionary patterns and process that are
+based on them. However, if you want to know if evolutionary tempo or mode have varied over
+clade history based on the state of a discrete trait, you’ll need to do it.
+We’ll use ape’s ace function here. There are other options out there, for example in the phytools
+package. But ace will work for our purposes. To perform ancestral state estimation under the
+all-rates-different model, type
+asr <- ace(SocialStatus, mytree, type="discrete", model = "ARD")
+You might see an error message appear:
+Warning message:
+In sqrt(diag(solve(h))) : NaNs produced
+Don’t worry about this – it happens when rates for one transition are particularly low but doesn’t
+really affect our node state estimates. One point to note here is that ace now defaults to a joint
+estimation procedure, where the ancestral states are optimized based on all information in the
+tree, not just the states at descendant tips.
+We can access our ancestral states by typing
+23
+asr$lik.anc
+What you should see is a matrix as follows:
+## 1 2
+## [1,] 1.000000000 0.0000000
+## [2,] 1.000000000 0.0000000
+## [3,] 0.166548938 0.8334511
+## [4,] 0.030966681 0.9690333
+## [5,] 0.015399007 0.9846010
+## [6,] 0.008291691 0.9917083
+The columns correspond to nodes in the tree (the numbering is off, as we’ll see in a sec) and the
+two columns give the scaled likelihoods that the node is in states 1 or 2. The scaled likelihoods are
+like probabilities, so for the first node, we reconstruct state with probability = 1, but for node 3 the
+probability of state 1 = 0.16 while that of state 2 = 0.83. Scaled likelihoods lend themselves very
+well to graphical display, so we can visualize these states with pie charts on the tree we plotted
+earlier.
+nodelabels(pie = asr$lik.anc, piecol= social.colors, cex=0.4)
+Now it’s obvious that our intuition was correct – we reconstruct solitary as the ancestral state for
+primates, but with multiple transitions to sociality. For our next analyses though, we want to be
+able to extract the "best" state for each node. We can do this quite easily with the data structure
+the ace gives us. First, we need to assign row names to our ancestral states that actual correspond
+to node numbers. phylo–format trees number nodes from n+1 onwards, where n in the number
+of taxa in the tree. So if there are 10 taxa, the root node is 11. Recall also that a fully bifurcating
+tree has n -1 nodes.
+We can pull out the scaled likelihoods and number the rows appropriately with two simple lines
+of code:
+node.states <- asr$lik.anc
+rownames(node.states) <- seq(1:nrow(node.states)) + length(mytree$tip.label)
+node.states
+## 1 2
+## 78 1.0000000000 0.0000000
+## 79 1.0000000000 0.0000000
+## 80 0.1665489381 0.8334511
+## 81 0.0309666813 0.9690333
+## 82 0.0153990075 0.9846010
+## 83 0.0082916906 0.9917083
+24
+Now the rownumbers correspond to node numbers. This is useful. Now we’ll use a simple trick
+to extract the most likely states and assign them as node values on our tree.
+best <- apply(node.states, 1, which.max)
+best
+## 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96
+## 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+## 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115
+## 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+## 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134
+## 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 1 1
+## 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149 150 151 152 153
+## 1 1 1 1 1 1 1 1 2 2 2 2 1 1 1 1 2 2 1
+Now we have a named vector of “best" estimates of the node state. We can assign these to the tree
+using the following line of code.
+mytree$node.label <- best
+mytree
+## Phylogenetic tree with 77 tips and 76 internal nodes.
+## Tip labels:
+## Cercopithecus_ascanius, Cercopithecus_cephus, Cercopithecus_mitis, Cercopithecus_neglectus, ...
+## Node labels:
+## 1, 1, 2, 2, 2, 2, ...
+## Rooted; includes branch lengths.
+Now we have node labels associated with our primate tree that specify which social regime each
+branch is evolving under. We’re now ready to move on to modeling state specific rate variation
+and adaptive optima, using OUwie
+6 OUwie
+OUwie (pronounced Ow-EE) is a package written by Brian O’Meara and Jeremy Beaulieu that
+performs Maximum Likelihood optimization of Brownian motion and Ornstein-Uhlenbeck models.
+The models implemented include the simple versions that Natalie introduced earlier, but also
+25
+include more complex versions that allow model parameters (rates, selection, optima) to vary
+among evolutionary regimes. The name of the package pays homage to Brian’s earlier C++
+package Brownie that fit Variable Rate Brownian motion models and was itself named after
+delicious chocolate treats.OUwie can perform all of the same functions that Brownie could.
+We’ll start figuring out how to use OUwie by fitting a two rate BM model to our data. It’ll help to
+understand how OUwie works if we look at the help file
+library(OUwie)
+?OUwie
+If you look at the first three items in the Arguments, you’ll see the following:
+## Arguments
+## phy a phylogenetic tree, in ape “phylo” format and with internal nodes labeled
+denoting the ancestral selective regimes.
+## data a data matrix containing species information (see Details).
+## model models to fit to comparative data (see Details).
+These are the three fundamental things we need to fit an OUwie model. We’ve done the first. The
+second – the format of the data – tells us to look in the details (as does the model type). If we
+scroll down, we find
+## The data matrix must have column entries in the following order: [,1] species names,
+## [,2] current selective regime, and [,3] the continuous trait of interest.
+This makes sense. We want the species name, we want to know which regime they’re in and
+finally what they’re trait value is. We can do this quite easily, in fact. All we need to do is make a
+dataframe (I know it says matrix, but they want a dataframe!) with the relevant information. Let’s
+make it and look at the first few lines
+ouwie.data <- data.frame(species=rownames(mydata), regime = SocialStatus,
+trait = log(mydata[,"AdultBodyMass_g"]))
+head(ouwie.data)
+## species regime trait
+## Cercopithecus_ascanius 2 8.171950
+## Cercopithecus_cephus 2 8.144644
+## Cercopithecus_mitis 2 8.525417
+## Cercopithecus_neglectus 2 8.580078
+## Cercopithecus_nictitans 2 8.567299
+## Erythrocebus_patas 2 8.982975
+26
+Easy. Finally, we want to decide which model we’re going to fit. Looking at the details tells us
+that a muli-rate BM model is "BMS". So let’s go ahead.
+BMv <- OUwie(mytree, ouwie.data, model="BMS")
+What you should see is something like this
+## Initializing...
+## Finished. Begin thorough search...
+## Finished. Summarizing results.
+## Fit
+## -lnL AIC AICc model ntax
+## -77.54448 161.089 161.4177 BMS 77
+## Rates
+## 1 2
+## alpha NA NA
+## sigma.sq 0.04034198 0.02551513
+## Optima
+## 1 2
+## estimate 6.9274293 6.9274293
+## se 0.6885034 0.6885034
+## Arrived at a reliable solution
+The final line tells us that we arrived at a reliable solution – that is that the optimizer converged
+on a reliable set of parameter estimates. The rest of the output is quite derivative for OUwie; we
+have a set of model fit numbers (LnL, AIC etc); the rates (incliding the alpha parameters), and the
+optima. You’ll see here that there are NAs for the alphas and the optima are the same. This is a
+BM model, so there are no alpha values, and the optima are the same because they correspond to
+the root state. For OU models, these would be the adaptive optimal values.
+The one thing you will see is that the rates differ for regimes 1 and 2. Specifically, the rate for
+regime 1 appears to be twice that of regime 2. So rates of body size evolution seem to be faster for
+solitary primates than for social primates. To know whether this different is great enough to say
+we would prefer this model, we’d need to compare AIC scores, or something similar. We’ll come
+back to this in a minute.First, we’ll move on to fitting a multi-peak OU model. If you go back to
+the help file you’ll see the following options are available to us:
+Possible models are as follows: single-rate Brownian motion (model=BM1), Brownian motion
+with different rate parameters for each state on a tree (model=BMS), Ornstein-Uhlenbeck model
+27
+with a single optimum for all species (model=OU1), Ornstein-Uhlenbeck model with different state
+means and a single alpha and sigma^2 acting all selective regimes (model=OUM), and new
+Ornstein-Uhlenbeck models that assume different state means as well as either multiple
+sigma^2 (model=OUMV), multiple alpha (model=OUMA), or multiple alpha and sigma^2
+per selective regime (model=OUMVA).
+We have quite a few options when it comes to OU models; we can allow the optima to vary, the
+rates, the alphas and any combination of these. I’d encourage you to play around with these
+options with your own data, but for now, we’ll focus on the different optima models (OUM). Be
+aware too that these methods are very data hungry. I wouldn’t recommend fitting an OUMVA
+model to a tree with 50 tips – you’d need closer to 200 and ideally more to get good fits for this
+complex model.
+OUm <- OUwie(mytree, ouwie.data, model="OUM")
+What you should see is something like this
+## Fit
+## -lnL AIC AICc model ntax
+## -76.04717 160.0943 160.6499 OUM 77
+##
+##
+## Rates
+## 1 2
+## alpha 0.0000000001 0.0000000001
+## sigma.sq 0.0282112148 0.0282112148
+##
+## Optima
+## 1 2
+## estimate 5.998150 8.638409
+## se 0.713202 1.099311
+##
+## Arrived at a reliable solution
+What is different here? Well, first we now have parameter estimates for alpha, as well as sigmasq.
+They’re very low – 0.0000000001 – in fact they’re at the lower bounds – but they’re there. We also
+now have different values of the optima for groups 1 and 2. We infer an optimal size for solitary
+primates of 5.99 ln(mass) and an optimal mass of 8.6 ln(mass) for social primates. What does this
+mean in the context of the low alpha estimates?
+To find out which model best fits our data, we’ll need to compute AICweights again. Let’s try:
+28
+aic <- setNames(c(BM$opt$aicc, OU$opt$aicc, EB$opt$aicc, BMv$AICc, OUm$AICc), c("BM", "OU", "EB", aicw(aic)
+What happened?
+29
+References
+Arnold, C., L. J. Matthews, and C. L. Nunn. 2010. The 10ktrees website: a new online resource for
+primate phylogeny. Evolutionary Anthropology: Issues, News, and Reviews 19:114–118.
+Blomberg, S. P., T. Garland, and A. R. Ives. 2003. Testing for phylogenetic signal in comparative
+data: behavioral traits are more labile. Evolution 57:717–745.
+Butler, M. A. and A. A. King. 2004. Phylogenetic comparative analysis: a modeling approach for
+adaptive evolution. The American Naturalist 164:683–695.
+Cavalli-Sforza, L. L. and A. W. Edwards. 1967. Phylogenetic analysis. models and estimation
+procedures. American Journal of Human Genetics 19:233.
+Cooper, N., R. P. Freckleton, and W. Jetz. 2011. Phylogenetic conservatism of environmental niches
+in mammals. Proceedings of the Royal Society B: Biological Sciences 278:2384–2391.
+Cooper, N. and A. Purvis. 2010. Body size evolution in mammals: complexity in tempo and mode.
+The American Naturalist 175:727–738.
+Felsenstein, J. 1973. Maximum likelihood and minimum-steps methods for estimating evolutionary
+trees from data on discrete characters. Systematic Biology 22:240–249.
+Freckleton, R. P. and P. H. Harvey. 2006. Detecting non-brownian trait evolution in adaptive
+radiations. PLoS Biology 4:e373.
+Hansen, T. F. 1997. Stabilizing selection and the comparative analysis of adaptation. Evolution
+Pages 1341–1351.
+Harmon, L. J., J. B. Losos, T. Jonathan Davies, R. G. Gillespie, J. L. Gittleman, W. Bryan Jennings,
+K. H. Kozak, M. A. McPeek, F. Moreno-Roark, T. J. Near, et al. 2010. Early bursts of body size
+and shape evolution are rare in comparative data. Evolution 64:2385–2396.
+Jones, K. E., J. Bielby, M. Cardillo, S. A. Fritz, J. O’Dell, C. D. L. Orme, K. Safi, W. Sechrest,
+E. H. Boakes, C. Carbone, et al. 2009. Pantheria: a species-level database of life history, ecology,
+and geography of extant and recently extinct mammals: Ecological archives e090-184. Ecology
+90:2648–2648.
+Lande, R. 1976. Natural selection and random genetic drift in phenotypic evolution. Evolution
+30:314–334.
+Slater, G. J., L. J. Harmon, and M. E. Alfaro. 2012. Integrating fossils with molecular phylogenies
+improves inference of trait evolution. Evolution 66:3931–3944.
+Slater, G. J. and M.W. Pennell. 2014. Robust regression and posterior predictive simulation increase
+power to detect early bursts of trait evolution. Systematic Biology 63:293–308.
+30

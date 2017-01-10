@@ -1,0 +1,29 @@
+---
+title: "Diversity Indices in R"
+author: "Natalie Cooper (natalie.cooper@nhm.ac.uk)"
+date: "Feb 2017"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The aims of this practical are to learn how to use R to estimate diversity indices.
+
+We will be using 
+
+__REMEMBER__
+
+- Download all of the data for the practical into a folder somewhere on your computer.
+- Set your working directory to this folder.
+- Start a new script for this practical.
+
+You will also need to install the following packages: 
+
+* `vegan`
+
+***
