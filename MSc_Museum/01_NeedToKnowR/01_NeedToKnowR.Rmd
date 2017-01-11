@@ -12,7 +12,7 @@ output:
 
 I know that most people taking this module have used R a lot already, but it is possible you're a bit rusty, or you've found this course on GitHub and have no R experience.
 This isn't a problem, I will try and summarise what you need to be able to do to get these practicals running below. 
-However, I'm not going to write a help guide to R here, if you can't work out how to open it and get started etc. I strongly recommend this book by [].
+However, I'm not going to write a help guide to R here, if you can't work out how to open it and get started etc. I strongly recommend the book [Getting Started With R](http://www.r4all.org/) or there are lots of great tutorials online.
 
 Throughout, R code will be in shaded boxes:
 
@@ -57,6 +57,9 @@ We can then set the working directory to your folder using `setwd`:
 setwd("~/Desktop/RAnalyses")
 ```
 
+Alternatively if using RStudio you use the menus to do this.
+Go to Session > Set Working Directory > Choose Directory.
+
 Setting the working directory tells R which folder to look for data in (and which folder you'd like it to write results to). 
 It saves a bit of typing when reading files into R. Now I can read in a file called `mydata.csv` as follows:
 
@@ -70,7 +73,7 @@ rather than having to specify the folder too:
 mydata <- read.csv("~/Desktop/RAnalyses/mydata.csv")
 ```
 
-But remember if you move the data files, or the folder itself, you'll need to set the working directory again.
+> Remember if you move the data files, or the folder itself, you'll need to set the working directory again.
 
 ## 3. Using a script
 Next, open a text editor. 
@@ -79,8 +82,10 @@ However, in the future I **highly** recommend using something that will highligh
 My personal favorite is Sublime Text 2, because you can also use it for any other kind of text editing like LaTeX, html etc. 
 RStudio's editor is also very nice.
 
-You should type (or copy and paste) your code into the text editor, edit it until you think it'll work, and then paste it into R's console window. 
-Saving the script file lets you keep a record of the code you used, which can be a great timesaver if you want to use it again, especially as you know this code will work!
+You should type (or copy and paste) your code into the text editor, edit it until you think it'll work, and then either paste it into R's console window, or you can highlight the bit of code you want to run and press ctrl or cmd and enter. 
+This will automatically send it to the console.
+
+Saving the script file lets you keep a record of the code you used, which can be a great time saver if you want to use it again, especially as you know this code will work!
 
 > You can cut and paste code from my handouts into your script. You don't need to retype everything!
 
