@@ -79,66 +79,6 @@ str(primatetree)
 ```
 
 `primatetree` is a fully resolved tree with branch lengths. There are 226 species and 221 internal nodes. 
-We can plot the tree by using the `plot.phylo` function of `ape`. 
-Note that we can just use the function `plot` to do this as R knows if we ask it to plot a phylogeny to use `plot.phylo` instead!
-
-```{r}
-plot(primatetree)
-```
-
-Note that the tree has too many species for us to read the species names. 
-You can make the tip labels smaller, but that doesn't help much here:
-
-```{r}
-plot(primatetree, cex = 0.5)
-```
-
-Alternatively you can zoom into different sections of the tree that you're interested in:
-
-```{r}
-zoom(primatetree, grep("Cercopithecus", primatetree$tip.label), subtree = FALSE, cex = 0.5)
-```
-
-This just gives you the tree for *Cercopithecus* species but you can also see how the species fit into the rest of the tree using:
-
-```{r}
-zoom(primatetree, grep("Cercopithecus", primatetree$tip.label), subtree = TRUE, cex = 0.5)
-```
-
-Note that `zoom` automatically sets the plotting window to display two plots at once. 
-To reset this to one plot only use:
-
-```{r}
-par(mfrow = c(1, 1))
-```
-
-You can also remove species from the tree very easily using the `ape` function `drop.tip`:
-
-```{r}
-primatetree2 <- drop.tip(primatetree, "Aotus_azarae_infulatus")
-str(primatetree2)
-```
-
-To remove more than one species see below. 
-To get further options for the plotting of phylogenies:
-
-```{r, eval = FALSE}
-?plot.phylo
-```
-
-Note that although you can use `plot` to plot the phylogeny, you need to specify `plot.phylo` to find out the options for plotting trees. You can change the style of the tree (`type`), the color of the branches and tips (`edge.color`, `tip.color`). 
-Here's an fun/hideous example! 
-
-```{r}
-plot(primatetree, type = "fan", edge.color = "deeppink", tip.color = "green", cex = 0.3)
-```
-
-You can also add a timescale to your tree:
-
-```{r}
-plot(primatetree, cex = 0.3)
-axisPhylo()
-```
 
 Most R functions require your tree to be dichotomous, i.e. to have no polytomies. 
 To check whether your tree is dichotomous use `is.binary.tree`. 
