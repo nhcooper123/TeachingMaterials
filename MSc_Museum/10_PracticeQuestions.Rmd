@@ -1,0 +1,19 @@
+
+
+***
+
+# 7. Practice exercises
+#The code above only runs these analyses on a few variables. 
+#If you have time, try and run some analyses on the other variables. 
+#Here are some example questions to get you started.
+
+#1. What is $\lambda$ for primate social group size?
+#2. Make a plot of social group size against home range size.
+#3. Perform a PGLS of two variables of your choice.
+#4. Does home range size differ significantly among the different primate genera?
+#5. What is Blomberg’s K for adult body mass?
+#6. Plot the primate tree and zoom in on the \textit{Saimiri} genus.
+#7. Run a PGLS analysis to determine the relationship between social group size and gestation length. How does this differ from the result obtained with an OLS regression? Plot the result.
+
+
+Answers...
