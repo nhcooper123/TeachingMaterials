@@ -61,7 +61,7 @@ str(primatedata)
 
 As you can see, the data contains the following variables: Order, Family, Binomial, AdultBodyMass_g, GestationLen_d, HomeRange_km2, MaxLongevity_m, and SocialGroupSize.
 
-### Reading and viewing your phylogeny in R
+## 3. Reading and checking your phylogeny in R
 
 To load a tree you need either the function `read.tree` or `read.nexus`.
 `read.tree` can deal with a number of different types of data (including DNA) whereas `read.nexus` reads NEXUS files. 
@@ -76,9 +76,12 @@ Let's examine the tree by typing:
 ```{r}
 primatetree
 str(primatetree)
+# It's usually a good idea to quickly plot the tree too
+plot(primatetree, cex = 0.2, typ = "fan")
 ```
 
-`primatetree` is a fully resolved tree with branch lengths. There are 226 species and 221 internal nodes. 
+`primatetree` is a fully resolved tree with branch lengths. 
+There are 226 species and 221 internal nodes. 
 
 Most R functions require your tree to be dichotomous, i.e. to have no polytomies. 
 To check whether your tree is dichotomous use `is.binary.tree`. 
@@ -101,8 +104,6 @@ Note that here I've just chosen a random species *Saimiri sciureus* to be the ro
 primatetree.reroot <- root(primatetree, "Saimiri_sciureus")
 plot(primatetree.reroot, cex = 0.2)
 ```
-
-***
 
 ## 4. Manipulating your data and phylogeny in R
 ### Species names with spaces
@@ -170,10 +171,9 @@ str(primatetree)
 
 ***
 
-## 5. Controlling for phylogenetic non-independence
-### Ordinary least squares (OLS) regression
+## 5. Ordinary least squares (OLS) regression
 Before we use phylogenetic comparative methods, we will quickly do an ordinary least squares (OLS) regression. 
-Let's assume that we’re interested in the relationship between primate body mass and gestation length. 
+Let's assume that we're interested in the relationship between primate body mass and gestation length. 
 First we should look at the data. Note that both variables are highly skewed so we need to log transform them. 
 Also note that the function `log` in R is actually natural log, not log10. 
 And for fun let's make everything rainbow colored!
@@ -199,7 +199,7 @@ model.ols <- lm(log(GestationLen_d) ~ log(AdultBodyMass_g), data = primatedata)
 summary(model.ols)
 ```
 
-The slope is positive (0.1204 ± 0.0141), and very significant (note that R can't give values lower than <2e-16 which is why it shows up so often). 
+The slope is positive (`0.1204 ± 0.0141`), and very significant (note that R can't display values lower than <2e-16 which is why it shows up so often). 
 
 We can also plot the regression line on a scatter plot:
 
@@ -216,7 +216,7 @@ plot(log(GestationLen_d) ~ log(AdultBodyMass_g), data = primatedata, col = prima
 
 ***
 
-### Phylogenetic generalized least squares models (PGLS)
+## 6. Phylogenetic generalized least squares models (PGLS)
 There are several ways of accounting for phylogenetic non independence in your analyses.
 Here we will just cover one - phylogenetic generalized least squares (PGLS).
 Another popular earlier method is independent contrasts. 
@@ -275,8 +275,6 @@ abline(model.pgls)
 model.pgls2 <- pgls(log(GestationLen_d) ~ log(AdultBodyMass_g), data = primate, lambda = "ML", bounds = list(lambda = c(1e-05, 1)))
 ```
 
-***
-
 ### Likelihood profiles for $\lambda$ in PGLS models
 You can look at the likelihood profiles for branch length transformations in PGLS models using `pgls.profile`:
 
@@ -295,8 +293,6 @@ The dotted red lines are the 95\% confidence intervals on $\lambda$ for our mode
 pgls.confint(model.pgls, "lambda")$ci.val
 ```
 
-***
-
 > **Big problems with small datasets**
 You will often find strange $\lambda$ profiles when you don't have a lot of species in your data, because $\lambda$ (and Blomberg's K - see below) has very low power to detect phylogenetic signal for less than 20-30 data points (see Freckleton et al. 2002 Am Nat). 
 This means that using PGLS on small datasets is tricky - you almost always get ML $\lambda$ of zero but the $\lambda$ profile will show a pretty flat likelihood surface. 
@@ -311,8 +307,6 @@ This problem comes up every year and consensus among the PCM community (well Rob
 ```{r}
 model.pgls3 <- pgls(log(GestationLen_d) ~ log(AdultBodyMass_g), data = primate, lambda = 1)
 ```
-
-***
 
 ### Model diagnostics for PGLS models
 
@@ -338,11 +332,11 @@ It takes practice to know what is "good", "bad" and "acceptable" with these plot
 ***
 
 ## 6. Estimating phylogenetic signal for one variable
-### a. Pagel's $\lambda$
-Phylogenetic signal is merely the pattern where close relatives have more similar trait values than more distant relatives (see Kamilar and Cooper 2013, Phil Trans Roy Soc B). 
+### Pagel's $\lambda$ (Pagel 1997/1999, Freckleton et al 2002)
+Phylogenetic signal is merely the pattern where close relatives have more similar trait values than more distant relatives (see Kamilar and Cooper 2013). 
 Often people will mention that they "corrected for phylogeny" because of the phylogenetic signal in their variables. 
 However, we **do not** correct for phylogeny because our variables show phylogenetic signal. 
-We account for phylogenetic non-independence because the **residuals** from our models show phylogenetic signal – see Revell 2010 Methods in Ecology and Evolution. 
+We account for phylogenetic non-independence because the **residuals** from our models show phylogenetic signal (see Revell 2010). 
 $\lambda$ shown in PGLS models above is the $\lambda$ for the model residuals **not** the individual variables. 
 
 Sometimes however, you might be interested in the phylogenetic signal of just one trait. $\lambda$ is really easy to estimate using `caper`. To do this for log GestationLen_d:
@@ -357,7 +351,7 @@ Thus the $\lambda$ value is the $\lambda$ estimate for log GestationLen_d and th
 
 ***
 
-### b. Blomberg's K
+### Blomberg's K (Blomberg et al 2003)
 
 To estimate Blomberg’s K we use the `Kcalc` function in `picante`. 
 First you need to set up a new vector with the values for the variable you are interested in, here the log of gestation length, and with a names attribute with the names of your species. 
@@ -393,16 +387,15 @@ In this case the observed K is significantly higher than the random values of K 
 
 ***
 
-[//]: # 7. Practice exercises
-[//]: #The code above only runs these analyses on a few variables. 
-[//]: #If you have time, try and run some analyses on the other variables. 
-[//]: #Here are some example questions to get you started.
+## References
+* Arnold, C., L. J. Matthews, and C. L. Nunn. 2010. The 10ktrees website: a new online resource for primate phylogeny. Evolutionary Anthropology: Issues, News, and Reviews 19:114–118.
+* Blomberg, S. P., T. Garland, and A. R. Ives. 2003. Testing for phylogenetic signal in comparative data: behavioral traits are more labile. Evolution 57:717–745.
+* Freckleton, R. P., P. H. Harvey, and M. Pagel. 2002. Phylogenetic analysis and comparative data: a test and review of evidence. The American Naturalist 160:712-726.
+* Freckleton, R. P. (2009) The seven deadly sins of comparative analysis. Journal of Evolutionary Biology, 22, 1367–1375.
+* Jones, K. E., J. Bielby, M. Cardillo, S. A. Fritz, J. O'Dell, C. D. L. Orme, K. Safi, W. Sechrest, E. H. Boakes, C. Carbone, et al. 2009. Pantheria: a species-level database of life history, ecology, and geography of extant and recently extinct mammals: Ecological archives e090-184. Ecology 90:2648–2648.
+* Kamilar, J. M., & Cooper, N. 2013. Phylogenetic signal in primate behaviour, ecology and life history. Phil. Trans. R. Soc. B, 368(1618), 20120341.
+* Pagel, M. 1999. Inferring the historical patterns of biological evolution. Nature, 401(6756), 877-884.
+* Revell, L. J. 2010. Phylogenetic signal and linear regression on species data. Methods in Ecology and Evolution, 1, 319-329.
 
-[//]: #1. What is $\lambda$ for primate social group size?
-[//]: #2. Make a plot of social group size against home range size.
-[//]: #3. Perform a PGLS of two variables of your choice.
-[//]: #4. Does home range size differ significantly among the different primate genera?
-[//]: #5. What is Blomberg’s K for adult body mass?
-[//]: #6. Plot the primate tree and zoom in on the \textit{Saimiri} genus.
-[//]: #7. Run a PGLS analysis to determine the relationship between social group size and gestation length. How does this differ from the result obtained with an OLS regression? Plot the result.
-
+## Extra Reading
+* Losos, J.B. (2011) Seeing the forest for the trees: the limitations of phylogenies in comparative biology. The American Naturalist, 177, 709–727.
