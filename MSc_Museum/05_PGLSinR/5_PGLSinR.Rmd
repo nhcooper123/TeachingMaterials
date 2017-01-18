@@ -45,12 +45,12 @@ library(caper)
 
 ## 2. Reading and checking your data in R
 
-The data are in a tab-delimited text file called `Primatedata.txt`. 
+The data are in a comma-delimited text file called `Primatedata.csv`. 
 Load these data as follows. 
 I am assuming you have set your working directory.
 
 ```{r}
-primatedata <- read.delim("Primatedata.txt", header = TRUE)
+primatedata <- read.csv("Primatedata.csv")
 ```
 
 Check everything loaded correctly:
