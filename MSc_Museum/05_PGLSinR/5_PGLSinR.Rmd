@@ -32,7 +32,7 @@ You will also need to install the following packages:
 * `caper`
 
 ***
-
+# Preparing for the analysis
 ## 1. Load the required packages
 To begin we need to load the packages for this practical.
 
@@ -170,7 +170,7 @@ str(primatetree)
 ```
 
 ***
-
+# Running the analyses
 ## 5. Ordinary least squares (OLS) regression
 Before we use phylogenetic comparative methods, we will quickly do an ordinary least squares (OLS) regression. 
 Let's assume that we're interested in the relationship between primate body mass and gestation length. 
