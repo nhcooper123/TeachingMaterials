@@ -86,7 +86,7 @@ pokemon.matrix <- sample2matrix(pokemon)
 pokemon.matrix
 ```
 
-### Species diversity indices
+## Species diversity indices
 ### $\alpha$ diversity
 The simplest measure of $\alpha$ diversity is just the number of species in each site. 
 You can easily extract this as follows.
@@ -161,7 +161,7 @@ pokemon[31, 2] <- 0
 length(unique(pokemon$Species[!is.na(pokemon$Abundance) & pokemon$Abundance != 0]))
 ```
 
-### Species accumulation curves (Colwell & Coddington 1994)
+## Species accumulation curves (Colwell & Coddington 1994)
 Often when we talk about species diversity we're interested in the total diversity of an area or a site. 
 For example, if we want to conserve a patch of woodland, we might need to know how many species in total live there.
 Sounds easy enough right? 
@@ -179,7 +179,7 @@ The first few samples you take will probably have lots of species you haven't re
 Eventually you hope that you'll stop finding any new species to record so the curve will asymptote, but in reality sampling is rarely that thorough. 
 Luckily we can use species accumulation curves to estimate where the curve would asymptote if we kept on sampling.
 
-# Practical example
+## Practical example
 
 Let's try this for our Pokemon, how many species might be hiding in the Museum if we sampled throughly?
 
@@ -235,6 +235,8 @@ specpool(pokemon.matrix)
 
 Estimates range from 10.9 $\pm$ 0.75 (bootstrap) to 11.8 $\pm$ 3.39 (Chao2). 
 So we can be fairly confident there are between 10 and 15 Pokemon in the Museum.
+
+***
 
 ## References
 * Chao, A. (1987). Estimating the population size for capture-recapture data with unequal catchability. Biometrics 43, 783–791.

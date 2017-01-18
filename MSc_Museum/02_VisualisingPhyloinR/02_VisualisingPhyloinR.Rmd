@@ -128,7 +128,7 @@ plot(fishtree, type = "c", edge.color = "darkviolet", tip.color = "hotpink",
 ```
 
 ## 3. Adding trait data to trees in R
-### A. Ancestral state reconstructions on discrete data
+### Ancestral state reconstructions on discrete data
 We will use the bird data
 Remember we already loaded the phylogeny and data as follows:
 
@@ -172,7 +172,7 @@ nodelabels(pie = ancestors$lik.anc, piecol = colours)
 `cex = 2` doubles the point size, and `adj = 1` moves the tip labels sideways so they don't obscure the ends of the branches.
 `pie` makes pie charts coloured using the ancestral state reconstructions in `ancestors`, and `piecol` tells it to use the colours we have defined.
 
-### B. Ancestral state reconstructions on continuous data
+### Ancestral state reconstructions on continuous data
 We are going to use the *Anolis* data to create a phylogeny with different colours for different observed and reconstructed body sizes (snout-to-vent length, SVL). 
 Remember we already loaded the phylogeny and data as follows:
 
@@ -339,6 +339,7 @@ Note that the layers here are the tree, and then the tip labels.
 Layers are separated by `+`
 
 We can also zoom in on sections like with `ape`.
+
 ```{r}
 gzoom(fishtree, grep("Gymnothorax", fishtree$tip.label))
 ```
@@ -369,4 +370,4 @@ geom_hilight(node = 97, fill = "darkgreen", alpha = 0.6)
 
 This package has a huge amount of promise, but still a few bugs and weird features (it's designed by geneticists who are used to dealing with short species labels, hence the issues getting our species names to actually fit on the plot). The help files are also currently a bit sparse and some of the vignette examples don't work. But if you're likely to need to do any of this kind of stuff I recommend checking out the vignette and the paper:
 
-Guangchuang Yu, David Smith, Huachen Zhu, Yi Guan, Tommy Tsan-Yuk Lam. ggtree: an R package for visualization and annotation of phylogenetic trees with their covariates and other associated data. _Methods in Ecology and Evolution_ 2016, doi:10.1111/2041-210X.12628.
+* Guangchuang Yu, David Smith, Huachen Zhu, Yi Guan, Tommy Tsan-Yuk Lam. ggtree: an R package for visualization and annotation of phylogenetic trees with their covariates and other associated data. _Methods in Ecology and Evolution_ 2016, doi:10.1111/2041-210X.12628.
