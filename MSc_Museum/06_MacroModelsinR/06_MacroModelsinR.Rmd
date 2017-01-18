@@ -14,10 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 The aims of this practical are to learn how to use R to fit macroevolutionary models in R.
 
-We will be using the evolution of primate life-history variables as an example. These data come
-from the PanTHERIA database (Jones et al., 2009) and 10kTrees (Arnold et al., 2010). Note that
-this is an old version of 10kTrees, so if you want to use it in your research please download the
-newest version.
+We will be using the evolution of primate life-history variables as an example. These data come from the PanTHERIA database (Jones et al., 2009) and 10kTrees (Arnold et al., 2010). Note that this is an old version of 10kTrees, so if you want to use it in your research please download the newest version.
 
 __REMEMBER__
 
@@ -33,7 +30,8 @@ You will also need to install the following packages:
 
 ***
 
-# 1. Load packages, read in the data and the tree
+# Preparing for the analysis
+## 1. Load packages, read in the data and the tree
 This is the same as we did in the PGLS practical, so I won't give detailed instructions here.
 
 ```{r, message = FALSE}
@@ -45,7 +43,7 @@ library(OUwie)
 
 ```{r, message = FALSE}
 # Read in data
-primatedata <- read.table("Primatedata.txt", sep = "\t", header = TRUE)
+primatedata <- read.csv("Primatedata.csv")
 # Check data is loaded correctly
 str(primatedata)
 
@@ -55,7 +53,7 @@ primatetree <- read.nexus("consensusTree_10kTrees_Version2.nex")
 str(primatetree)
 ```
 
-# 2. Modify the tree and data so they can be used in the analyses.
+## 2. Modify the tree and data so they can be used in the analyses.
 Again we did this in the PGLS practical. 
 Please remind yourself of what these steps are needed for.
 
@@ -75,12 +73,12 @@ Our taxonomic variables Order, Family and Binomial arecharacters so we need to e
 We will do this by making a new datasetcalled primatedata2.
 
 ```{r}
-primatedata2 <- primatedata[, 4:8]
+primatedata2 <- primatedata[, 4:9]
 ```
 
 Here the [ ] tells R we want to subset the dataset. R data frames are always described by [X,Y] where X is rows and Y is columns. 
 So [1, 1] will select the entry in the first column and the first row of the data frame. 
-[, 4:8] selects all rows but only columns 4 to 8. 
+[, 4:9] selects all rows but only columns 4 to 9. 
 These are the columns containing our numeric variables.
 
 We then need to match the species in tree to those in the dataset as in the PGLS practical. 
@@ -93,7 +91,9 @@ mytree <- match.species$phy
 mydata <- match.species$data
 ```
 
-# 3 Fitting simple models of evolution to continuous data
+***
+# Running the analysis
+## 3. Fitting simple models of evolution to continuous data
 For fitting models of evolution to continuous data we will use the `fitContinuous` function in the R package `geiger`.
 `fitContinuous` is a likelihood based method, so the output will give the maximum likelihood (ML) estimates of the parameters. 
 Bayesian methods are becoming preferred for these kinds of analyses and `fitContinuousMCMC` will perform these analyses. 
@@ -103,7 +103,7 @@ We'll fit three evolutionary models – the Brownian motion (BM) model, the Orns
 `fitContinuous` can also fit several other models. 
 For more details look at the help file by typing: `?fitContinuous`
 
-## Model descriptions
+## 3.1 Models of continuous trait evolution
 ### The Brownian motion (BM model)
 The Brownian motion model ((Cavalli-Sforza and Edwards, 1967; Felsenstein, 1973) is assumed to be the underlying mode of evolution in the majority of phylogenetic comparative methods
 (though this assumption is rarely tested; Freckleton and Harvey 2006). 
@@ -161,8 +161,7 @@ jaj
 
 It can be interpreted as the time it takes for the rate of evolution of the trait to halve (see example below).
 
-## Fitting the models using fitContinuous
-
+## 3.2 Fitting the models using fitContinuous
 First we will fit a Brownian motion (BM) model to log(body mass):
 
 ```{r}
@@ -170,6 +169,7 @@ BM <- fitContinuous(mytree, log(mydata[,"AdultBodyMass_g"]), model = c("BM"))
 ```
 
 To look at the output type:
+
 ```{r}
 BM
 ```
@@ -187,6 +187,7 @@ OU <- fitContinuous(mytree, log(mydata[,"AdultBodyMass_g"]), model = c("OU"))
 ```
 
 To look at the output type:
+
 ```{r}
 OU
 ```
@@ -223,7 +224,7 @@ For these data, the rate half-life is ~ 18 million years, which means over the c
 evolution, body size rate has undergone ~ 4 rate halvings. This is also well within the range of
 “hard to detect” bursts reported in Figure 1 of Slater and Pennell (2014).
 
-## 4. Comparing models of evolution
+## 3.3 Comparing models of evolution
 Often we want to know which of the models fits our variable best. 
 We can use `fitContinuous` to fit the models we are interested in and can then compare them using AIC. 
 We can extract the AICs from the models we fitted above as follows:
@@ -245,6 +246,7 @@ substantially better than BM (160.1921   156.857257 = 3.334843).
 
 Alternatively we can use DAIC or AIC weights to compare our models using the following code
 and the geiger function aicw:
+
 ```{r}
 aic.scores <- setNames(c(BM$opt$aic, OU$opt$aic, EB$opt$aic), c("BM","OU","EB"))
 aicw(aic.scores)
@@ -255,7 +257,7 @@ The best model is the model with DAIC = 0 or with AICw closest to 1.
 Using DAIC we can
 conclude that the Early Burst model is the best fit to the data.
 
-## Problems with convergence and bounds
+## 3.4 Problems with convergence and bounds
 Above we have mentioned the default bounds on each parameter. Sometimes these need to be
 changed because the model will not converge. This happens when the likelihood surface has long
 flat ridges that cause the likelihood search to get “stuck” (this is particularly common under the
@@ -265,68 +267,48 @@ the s2 and a parameters.
 
 For example, if an OU model keeps getting stuck you could try changing the lower bound on a:
 
-```{r}
-OU <- fitContinuous(phy = mytree, dat = log(mydata[,"AdultBodyMass_g"]), model = c("OU"), bounds = list(alpha = c(0.01, 1)))
-```
-
-This example gives this warning message because a is zero, so when we make the lower bound larger the method ends up giving us this value instead because it's as close to zero as we are allowing the model to go.
-
-
-# 5. Fitting models of evolution to discrete data (Regime Dependent Evolution) 
-In the previous section we saw how to fit three models of trait evolution to a comparative dataset.
-Although the evolutionary modes seem quite different, all are similar in that the evolutionary process is constant over the entire clade. Regardless of what part of the tree we are in, all branches are evolving at the same rate (in BM), drawn to the same trait value with the same strength (OU) or decline in rate at the same time-dependent pace (EB). Often, we want to relax this assumption.
-Members of our clade might belong to one of a set of ecological regimes, for example dietary niches or locomotor modes, and we might hypothesize that there are different evolutionary rates or different optimal trait values for each of these regimes. In this section, we'll look at how to fit these kinds of models using the `OUwie` package. 
-We'll first look at how to reconstruct the evolutionary history of a discrete trait. 
-We'll then look at how to allow rates and optimal trait values for a continuously valued trait, like body size, to vary, based on that discrete trait.
-
-## Obtaining a Set of Evolutionary Regimes
-You'll have a very good idea about the regimes you are interested in, based on your knowledge of your clade. 
-For example, I'm often interested in how continuous traits, such as tooth shape, vary as a function of diet. For these primate data, there are no discrete traits but there is a trait that could be transformed into one. 
-Let's take a look...
-
-```{r, eval = FALSE}
-mydata[,"SocialGroupSize"]
-```
-
-This should bring up a vector of social group sizes in your R console. 
-This is a continuously valued trait – group size can vary between 1 and 91.2. 
-But there is an obvious way of breaking this trait up into discrete states; any species with a social group size of 1 is solitary, while any species with a group size greater than 1 is social. 
-Let's make a trait that distinguishes such behaviors.
-
-```{r}
-SocialStatus <- numeric(length = nrow(mydata))
-names(SocialStatus) <- rownames(mydata)
-SocialStatus[mydata[,"SocialGroupSize"] == 1] <- 1
-SocialStatus[!mydata[,"SocialGroupSize"] == 1] <- 2
-```
-FIXXXXXX
 ```{r, message = FALSE}
-cbind(SocialStatus,mydata[,"SocialGroupSize"])
+OU <- fitContinuous(phy = mytree, dat = log(mydata[,"AdultBodyMass_g"]), model = c("OU"), 
+                    bounds = list(alpha = c(0.01, 1)))
 ```
 
-Do you follow what happened there? 
-If so, skip ahead. 
-If not, read this paragraph. 
-The first two lines create an empty numeric vector of the same length as our data (that is, the number of rows in mydata. 
-The second line assigns names to this empty vector – we need to know which entry corresponds to which species. Now we need to fill this vector with codings corresponding to solitary or social behavior. 
-Any species with a social group size of 1 is solitary. 
-So the third line says fill all entries in SocialStatus that have corresponding values of 1 in SocialGroupSize with the value 1. 
-The fourth line does the opposite – fill all values in SocialStatus that do not have a corresponding value of 1 in social group size with the value 2 (note that the exclamation point is used in R to denote that everything following it is NOT true). 
-So we're just saying, if social group size is 1 put 1 in social status, and if social group size is not 1 put 2 in social status.
-1 is solitary, 2 is social. 
-The final line confirms this by binding our new SocialStatus vector to the original SocialGroupSize values. 
-It's always a good idea to do this last step, to make sure everything worked.
-We can now visualize these regimes on our tree by plotting them with colors. 
+This example gives a warning message because `alpha` is zero, so when we make the lower bound larger the method ends up giving us this value instead because it's as close to zero as we are allowing the model to go.
+
+***
+
+## 4. Fitting models of evolution to discrete data (regime dependent evolution) 
+In the previous section we saw how to fit three models of trait evolution to continuous variables.
+Although the evolutionary modes seem quite different, all are similar in that the evolutionary process is constant over the entire clade, i.e., all branches are evolving at the same rate (in BM), drawn to the same trait value with the same strength (OU) or decline in rate at the same time-dependent pace (EB). 
+Often, we want to relax this assumption.
+Members of our clade might belong to one of a set of ecological regimes, for example dietary niches or locomotor modes, and we might hypothesize that there are different evolutionary rates or different optimal trait values for each of these regimes. 
+In this section, we'll look at how to fit these kinds of models using the `OUwie` package. 
+
+First we will look at how to reconstruct the evolutionary history of a discrete trait. 
+Then we will use `OUwie` to allow rates and optimal trait values for a continuously valued trait, like body size, to vary, based on that discrete trait.
+
+You'll have a very good idea about the regimes you are interested in, based on your knowledge of your clade. 
+For example, you might be interested in how continuous traits, such as tooth shape, vary as a function of diet. 
+Here we will use the discrete variable `SocialStatus` from our Primate dataset. 
+Any species with a social group size of 1 is solitary (SocialStatus = 1), while any species with a group size greater than 1 is social (SocialStatus = 2).
+
+We can visualize these variables on our tree by plotting them with colors. 
 We'll use light blue for solitary and plum for social. 
-Because our states are coded as "1" and “2", we can use a little trick to get the appropriate colors by indexing a vector
-containing red and blue:
+Because our states are coded as "1" and "2", we can use a little trick to get the appropriate colors by indexing a vector of "lightblue" and "plum":
 
 ```{r, eval = FALSE}
+# Create a vector of two colours
 social.colors <- c("lightblue", "plum")
-plot.new()
-plot(mytree)
-tiplabels(pch = 16, col = social.colors[SocialStatus])
-legend("bottomleft",legend=c("solitary", "social"), pch = 15, cex=1.3, col=c("lightblue", "plum"))
+
+# Change the margins so the tree fits
+par(mar = c(0,0,0,0)) 
+
+# Plot the tree, add coloured tip labels and a legend
+plot(mytree, cex = 0.5)
+tiplabels(pch = 16, col = social.colors[primatedata2$SocialStatus])
+legend("bottomleft",legend=c("solitary", "social"), 
+       pch = 15, cex=1.3, col=c("lightblue", "plum"), bty = "n")
+# Put the margins back to the default
+par(mar = c(5,4,4,2)) 
 ```
 
 You'll see that solitary behavior seems to be restricted in its distribution. 
@@ -335,23 +317,23 @@ In fact, tarsiers are the only solitary Haplorhines (the group that includes ape
 This is exactly what we need to know in order to test whether evolutionary modes for body size vary for solitary vs social primates. 
 But before we can infer ancestral states, we need to chose the most appropriate model of social evolution.
 
-## Models of Discrete Trait Evolution
-There are several ways of mapping social status onto the tree but probably the most straightforward (and useful to learn here) is to use an ancestral state estimation. 
+## 4.1 Models of discrete trait evolution
+There are several ways of mapping social status onto the tree but probably the most straightforward is to use an ancestral state estimation. 
 We will estimate ancestral states for each node under a Markov model, pick the state with the highest marginal likelihood, and then assign that as the node state.
 
 Unfortunately, just like rates can vary for continuous traits, so they can vary for discrete traits, and this can impact our ancestral state estimation. 
 Fortunately, it's straightforward to test for this kind of heterogeneity using the `fitDiscrete` function in the `geiger` package.
 
-### 4.1.1 Mk1 – all rates equal
+### Mk1 – all rates equal (ER)
 The simplest Markov model we can fit to comparative data is an Mk1 model – M for Markov, k1 for k=1 or 1 parameter. 
 The single parameter of this model is a transition rate – the rate at which states change. 
 Because we only have one rate, transitions between any pair of states occur at the same rate and are therefore equally probable. We can visualize the Q (rate) matrix for an Mk1 model like this:
 
-| 1 | 2 | 3
-----|----|----|----
-1 | - | 1| 1
-2 |1| -| 1
-3 |1 |1 |-
+-|1|2|3
+--|--|--|--
+1|-|1|1
+2|1|-|1
+3|1|1|-
 
 The off-diagonals are the transition rates from state 1 to 2, 1 to 3, 2 to 1 and so on (read rows then columns). 
 We typically designate individual transition rates in the form qij, which means the rate of going from state i to state j. Here, the 1 in all off-diagonal elements represents the fact that rates are the same regardless of what state i and j are, and the direction of that change. 
@@ -359,39 +341,48 @@ The diagonal elements qii give the rate of not changing and are computed as the 
 
 If you're familiar with models of molecular evolution, you might know this model better as the Jukes-Cantor model, where transition rates = transversion rates.
 
-### 4.1.2 Mk – symmetric rates
+### Mk – symmetric rates (SYM)
 We could add some complexity, and perhaps realism, by imagining that the rate of change between any pair of states is the same regardless of direction, but that the rate of change differs among states. 
 Such a model is referred to as a symmetric model, and has a Q matrix of the form:
-1 2 3
-1 - 1 2
-2 1 - 3
-3 2 3 -
+
+-|1|2|3
+--|--|--|--
+1|-|1|2
+2|1|-|3
+3|2|3|-
+
 Here, q12 = q21 but this rate is allowed to be different from q13/31 and from q23/32. 
 The number of different rates is three for S=3. 
 However, if we were to add a fourth state, the new number of rates would not be 4 but rather would be 6. 
 This is because there would now be 6 distinct off-diagonal elements present in the upper or lower diagonals. The number of independent rates in a symmetric model is therefore given by:
-S2   S
+
+S2
+S
 2
 (5)
 20
+
 If you're more familiar with molecular models, this is how we get the 6-rate GTR (General Time Reversible) model:
-A C T G
-A - 1 2 3
-C 1 - 4 5
-T 2 4 - 6
-G 3 5 6 -
+
+-|A|C|T|G
+--|--|--|--|--
+A|-|1|2|3
+C|1|-|4|5
+T|2|4|-|6
+G|3|5|6|-
 
 Obviously, a symmetric model with only 2 states becomes an equal rates (Mk1) model.
 
-### 4.1.3 Mk – All Rates Different
+### Mk – All Rates Different (ARD)
 Finally, we can go crazy and allow all rates to be different. 
 For S-states, this would generate S2   S rates, which might be crazy, depending on how many states you have. 
 For completeness, the Q matrix for an All Rates Different model would look like this:
 
-1 2 3
-1 - 1 2
-2 3 - 4
-3 5 6 -
+-|1|2|3
+--|--|--|--
+1|-|1|2
+2|3|-|4
+3|5|6|-
 
 If you're more familiar with molecular models, then you'll be aware that molecular folks don't do this because of potential over-fitting. 
 This is a very important point to consider. However, in comparative data, there are three situations in which this model might realistically be a good fit.
@@ -403,14 +394,13 @@ Finally, but related, this model is also a good option when you only have two st
 be different. 
 In this latter situation, the All Rates Different model simply gives you 2 rates, which isn't really over-fitting.
 
-## Modeling Social Evolution in Primates
-Let's try these models with our primate dataset. 
-We'll use `fitDiscrete`, with the primate tree and social data we just created.
+## 4.2 Fitting the models using fitDiscret
+Let's try these models with our primate dataset using `fitDiscrete`.
 
 ```{r}
-equal <- fitDiscrete(mytree, SocialStatus, model = "ER")
-#sym <- fitDiscrete(mytree, SocialStatus, model = "SYM")
-ard <- fitDiscrete(mytree, SocialStatus, model = "ARD")
+equal <- fitDiscrete(mytree, mydata[,"SocialStatus"], model = "ER")
+#sym <- fitDiscrete(mytree, mydata[,"SocialStatus"], model = "SYM")
+ard <- fitDiscrete(mytree, mydata[,"SocialStatus"], model = "ARD")
 ```
 
 Before moving on, note that the commented out fitting of the symmetric model is on purpose.
@@ -448,7 +438,7 @@ It seems as though the rate of moving from solitary to social is much higher tha
 Based on our color-coordinated plot from earlier, we might have predicted this to be the case. 
 Now we can move forward with reconstructing ancestral states under this preferred asymmetric transition rate model.
 
-## Ancestral State Reconstructions
+## 5. Ancestral state reconstructions
 Ancestral state reconstruction is probably one of the most over-used and uninformative methods in the phylogenetic comparative methods toolkit. 
 There are many reasons to be highly skeptical of ancestral state estimates and interpretations of macroevolutionary patterns and process that are based on them. 
 However, if you want to know if evolutionary tempo or mode have varied over clade history based on the state of a discrete trait, you'll need to do it.
@@ -457,7 +447,7 @@ There are other options out there, for example in the `phytools` package. But `a
 
 To perform ancestral state estimation under the all-rates-different model:
 ```{r}
-asr <- ace(SocialStatus, mytree, type="discrete", model = "ARD")
+asr <- ace(mydata[,"SocialStatus"], mytree, type="discrete", model = "ARD")
 ```
 
 You might see an error message appear:
@@ -549,7 +539,7 @@ All we need to do is make a dataframe (I know it says matrix, but they want a da
 Let's make it and look at the first few lines:
 
 ```{r}
-ouwie.data <- data.frame(species=rownames(mydata), regime = SocialStatus,
+ouwie.data <- data.frame(species=rownames(mydata), regime = mydata[,"SocialStatus"],
 trait = log(mydata[,"AdultBodyMass_g"]))
 head(ouwie.data)
 ```
@@ -608,6 +598,7 @@ What happened?
 * Cavalli-Sforza, L. L. and A. W. Edwards. 1967. Phylogenetic analysis. models and estimation procedures. American Journal of Human Genetics 19:233.
 * Cooper, N., R. P. Freckleton, and W. Jetz. 2011. Phylogenetic conservatism of environmental niches in mammals. Proceedings of the Royal Society B: Biological Sciences 278:2384–2391.
 * Cooper, N. and A. Purvis. 2010. Body size evolution in mammals: complexity in tempo and mode.The American Naturalist 175:727–738.
+* Cooper, N., Thomas, G.H., Venditti, C., Meade, A. & Freckleton, R.P. (2016b) A cautionary note on the use of ornstein-uhlenbeck models in macroevolutionary studies. Biological Journal of the Linnaean Society
 * Felsenstein, J. 1973. Maximum likelihood and minimum-steps methods for estimating evolutionary trees from data on discrete characters. Systematic Biology 22:240–249.
 * Freckleton, R. P. and P. H. Harvey. 2006. Detecting non-brownian trait evolution in adaptive radiations. PLoS Biology 4:e373.
 * Hansen, T. F. 1997. Stabilizing selection and the comparative analysis of adaptation. Evolution Pages 1341–1351.
