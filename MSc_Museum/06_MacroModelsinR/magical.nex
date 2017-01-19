@@ -1,0 +1,73 @@
+#NEXUS
+[R-package APE, Thu Jan 19 14:28:07 2017]
+
+BEGIN TAXA;
+	DIMENSIONS NTAX = 30;
+	TAXLABELS
+		Skrewt
+		Fire_crab
+		Acromantula
+		Doxie
+		Bowtruckle
+		Hinkypuff
+		Grindylow
+		Gnome
+		Pixie
+		Kelpie
+		Imp
+		Fairy
+		Boggart
+		Demiguise
+		Thestral
+		Hippogriff
+		Graphorn
+		Erumpent
+		Mooncalf
+		Niffler
+		Murtlap
+		Nundu
+		Dragon
+		Basilisk
+		Thunderbird
+		Swooping_evil
+		Phoenix
+		Fwooper
+		Occamy
+		Fire_salamander
+	;
+END;
+BEGIN TREES;
+	TRANSLATE
+		1	Skrewt,
+		2	Fire_crab,
+		3	Acromantula,
+		4	Doxie,
+		5	Bowtruckle,
+		6	Hinkypuff,
+		7	Grindylow,
+		8	Gnome,
+		9	Pixie,
+		10	Kelpie,
+		11	Imp,
+		12	Fairy,
+		13	Boggart,
+		14	Demiguise,
+		15	Thestral,
+		16	Hippogriff,
+		17	Graphorn,
+		18	Erumpent,
+		19	Mooncalf,
+		20	Niffler,
+		21	Murtlap,
+		22	Nundu,
+		23	Dragon,
+		24	Basilisk,
+		25	Thunderbird,
+		26	Swooping_evil,
+		27	Phoenix,
+		28	Fwooper,
+		29	Occamy,
+		30	Fire_salamander
+	;
+	TREE * UNTITLED = [&R] (((1:0.01039923553,2:0.01039923553):0.7881684481,3:0.7985676836):1.890339154,((((4:0.004863628843,5:0.004863628843):0.1616617787,((6:0.05366601583,(7:0.04217651609,((8:0.02307638836,(9:0.002619601383,10:0.002619601383):0.02045678698):0.006977753329,(11:0.00220755025,12:0.00220755025):0.02784659144):0.0121223744):0.01148949974):0.09661803192,(13:0.05722724397,14:0.05722724397):0.09305680379):0.01624135976):0.1094810432,((((15:0.006063243472,16:0.006063243472):0.03516660827,(17:0.03076983149,18:0.03076983149):0.01046002024):0.1051968415,19:0.1464266932):0.05073826361,(20:0.1304321653,(21:0.09697651705,22:0.09697651705):0.03345564825):0.0667327915):0.07884149386):0.2280962921,((23:0.02129561802,24:0.02129561802):0.2866102643,((((25:0.0002566997777,26:0.0002566997777):0.02503299874,(27:0.003431721603,28:0.003431721603):0.02185797691):0.07474690185,29:0.1000366004):0.05778057999,30:0.1578171804):0.1500887019):0.1961968604):2.184804095);
+END;
