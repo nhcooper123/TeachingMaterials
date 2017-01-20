@@ -22,7 +22,7 @@ library(ape)
 
 R output will be preceded by ## and important comments will be in quote blocks:
 
-> Note that many things in R can be done in multiple ways. 
+Note that many things in R can be done in multiple ways. 
 You should choose the methods you feel most comfortable with, and do not panic if someone is doing the same analyses as you in a different way! 
 
 ## 1. Installing R (and RStudio)
@@ -87,7 +87,7 @@ This will automatically send it to the console.
 
 Saving the script file lets you keep a record of the code you used, which can be a great time saver if you want to use it again, especially as you know this code will work!
 
-> You can cut and paste code from my handouts into your script. You don't need to retype everything!
+__You can cut and paste code from my handouts into your script. You don't need to retype everything!__
 
 If you want to add comments to the file (i.e., notes to remind yourself what the code is doing), put a hash/pound sign (#) in front of the comment.
 
@@ -175,4 +175,4 @@ primatedata
 
 This will print out all of the data!
 
-> This should be everything you need to know to get the practicals that follow working. Let me know if you have any problems (natalie.cooper@nhm.ac.uk).
+*This should be everything you need to know to get the practicals that follow working. Let me know if you have any problems (natalie.cooper@nhm.ac.uk).*
