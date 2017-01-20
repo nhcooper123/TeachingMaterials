@@ -57,7 +57,7 @@ We're going to play around with some invented data on sampling sites within the 
 
 ![Who doesn't love a practical handout being interrupted by an enormous Pikachu?](pokemon.png)
 
-```{r}
+```{r, message = FALSE}
 # Load picante and vegan
 library(picante)
 library(vegan)
@@ -203,7 +203,9 @@ pokemon.curve <- specaccum(pokemon.matrix, method = "random", permutations = 100
 pokemon.curve
 
 # Plot the curve
-plot(pokemon.curve, ci.type = "poly", col = "blue", ci.col = "lightblue", lwd = 2, ci.lty = 0, xlab = "number of sites", ylab = "cumulative number of Pokemon species")
+plot(pokemon.curve, ci.type = "poly", col = "blue", ci.col = "lightblue", 
+     lwd = 2, ci.lty = 0, xlab = "number of sites", 
+     ylab = "cumulative number of Pokemon species")
 ```
 
 `"ci.type = "poly"` tells R that you want a shaded area showing the confidence intervals from your randomisations.
