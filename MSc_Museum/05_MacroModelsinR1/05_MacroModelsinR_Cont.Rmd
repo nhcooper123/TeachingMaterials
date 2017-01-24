@@ -8,9 +8,7 @@ output:
 ---
 
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+# Macroevolutionary models in R: Part 1 - continuous traits
 
 The aims of this practical are to learn how to use R to fit macroevolutionary models in R to continuous traits.
 
@@ -34,8 +32,8 @@ This practical is in two parts, Part 2 deals with discrete traits.
 
 ***
 
-# Preparing for the analysis
-## Load packages, read in the data and the tree
+## Preparing for the analysis
+### Load packages, read in the data and the tree
 This is the same as we did in the PGLS practical, so I won't give detailed instructions here.
 
 ```{r, message = FALSE}
@@ -57,7 +55,7 @@ magicaltree <- read.nexus("magicaltree.nex")
 str(magicaltree)
 ```
 
-## Modify the tree and data so they can be used in the analyses.
+### Modify the tree and data so they can be used in the analyses.
 Again we did this in the PGLS practical. 
 Please remind yourself of what these steps are needed for.
 
@@ -98,7 +96,7 @@ mydata <- match.species$data
 ```
 
 ***
-# Models of continuous trait evolution
+## Models of continuous trait evolution
 For fitting models of evolution to continuous data we will use the `fitContinuous` function in the R package `geiger`.
 `fitContinuous` is a likelihood based method, so the output will give the maximum likelihood (ML) estimates of the parameters. 
 Bayesian methods are becoming preferred for these kinds of analyses and `fitContinuousMCMC` will perform these analyses. 
@@ -108,7 +106,7 @@ We'll fit three evolutionary models – the Brownian motion (BM) model, the Orns
 `fitContinuous` can also fit several other models. 
 For more details look at the help file by typing: `?fitContinuous`
 
-## The Brownian motion (BM model)
+### The Brownian motion (BM model)
 The Brownian motion model (Cavalli-Sforza and Edwards, 1967; Felsenstein, 1973) is assumed to be the underlying mode of evolution in the majority of phylogenetic comparative methods (though this assumption is rarely tested; Freckleton and Harvey 2006). 
 In the model, a trait $X$ evolves at random at a rate $\sigma$:
 
@@ -125,7 +123,7 @@ The model has two parameters, the Brownian rate parameter, $\sigma^2$ and the st
 `fitContinuous` estimates $\sigma^2$ and $X(0)$. 
 Note that $\sigma^2$ can be used as a measure of the rate of trait evolution (Cooper and Purvis, 2010; Cooper et al., 2011).
 
-## The Ornstein-Uhlenbeck (OU) model
+### The Ornstein-Uhlenbeck (OU) model
 The Ornstein-Uhlenbeck (OU) model (Hansen, 1997; Butler and King, 2004) is a random walk where trait values are pulled back towards some “optimal” value with an attraction strength proportional to the parameter $\alpha$. 
 The model has the following form:
 
@@ -142,7 +140,7 @@ The model has four parameters, the Brownian rate parameter, $\sigma^2$, the stat
 It does not estimate $\mu$ but in this implementation of the model, $\mu$ is equivalent to $X(0)$. 
 Note that if $\alpha$ is close to zero then evolution is approximately Brownian.
 
-## The Early Burst (EB) model
+### The Early Burst (EB) model
 The Early Burst (EB) model (Harmon et al. 2010, also called the ACDC model; Blomberg et al. 2003) is a Brownian motion/random walk model where the rate of evolution decreases exponentially through time under the model:
 
 $r(t) = \sigma^2e(at)$
@@ -163,7 +161,7 @@ $t_{\frac{1}{2}} = \frac{log(2)}{|a|}$
 
 It can be interpreted as the time it takes for the rate of evolution of the trait to halve.
 
-# Fitting the models using `fitContinuous`
+## Fitting the models using `fitContinuous`
 First we will fit a Brownian motion (BM) model to log(body mass):
 
 ```{r}
@@ -223,7 +221,7 @@ log(2)/abs(EB$opt$a)
 For these data, the rate half-life is almost 700,000 time units, much greater than the total time represented on the tree!
 This means over the course of magical creature evolution, body size rate has not halved (yet). 
 
-## Comparing models of evolution
+### Comparing models of evolution
 Often we want to know which of the models fits our variable best. 
 We can use `fitContinuous` to fit the models we are interested in and can then compare them using AIC. 
 We can extract the AICs from the models we fitted above as follows:
@@ -255,7 +253,7 @@ aicw(aic.scores)
 The best model is the model with $\Delta$AIC = 0 or with AICw closest to 1. 
 Using $\Delta$AIC we can conclude that the OU model is the best fit to the data.
 
-## Problems with convergence and bounds
+### Problems with convergence and bounds
 Above we have mentioned the default bounds on each parameter. 
 Sometimes these need to be changed because the model will not converge. 
 This happens when the likelihood surface has long flat ridges that cause the likelihood search to get “stuck” (this is particularly common under the OU model). 
@@ -274,7 +272,7 @@ This example gives a warning message because `alpha` is over 1, so when we make 
 
 ***
 
-# References
+## References
 
 * Blomberg, S. P., T. Garland, and A. R. Ives. 2003. Testing for phylogenetic signal in comparative data: behavioral traits are more labile. Evolution 57:717–745.
 * Butler, M. A. and A. A. King. 2004. Phylogenetic comparative analysis: a modeling approach for adaptive evolution. The American Naturalist 164:683–695.

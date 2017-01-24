@@ -8,10 +8,7 @@ output:
 ---
 
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
+# Diversity Indices in R
 The aims of this practical are to learn how to use R to estimate diversity indices and species accumulation curves. 
 You will need some of these functions to complete your paleoecology assessment.
 
@@ -30,7 +27,7 @@ You will also need to install the following packages:
 
 ***
 
-# What are diversity indices?
+## What are diversity indices?
 A diversity index is a measure of the "diversity" of an area.
 *Diversity* could be measured in terms of the numbers of species (or higher taxonomic groupings like genera, families, phyla), or other metrics such as number of haplotypes if you're interested in genetic diversity, or number of functional groups for studies of functional diversity.
 
@@ -41,7 +38,7 @@ These differences in evenness may be as important for ecosystem function as the 
 There are about a million different diversity indices (OK this is a slight exaggeration but there are a lot check out the [vegan package](https://cran.r-project.org/web/packages/vegan/vegan.pdf) vignette and search for "diversity"), and different people prefer different measures for different questions.
 Amusingly the `vegan` helpfile for the function `diversify` states "these indices are all very closely related (Hill 1973), and there is no reason to despise one more than others (but if you are a graduate student, don't drag me in, but obey your Professor's orders)".
 
-## $\alpha$, $\beta$ and $\gamma$ diversity (Whittaker 1960, 1972)
+### $\alpha$, $\beta$ and $\gamma$ diversity (Whittaker 1960, 1972)
 * $\alpha$ diversity is the mean species diversity in sites or habitats at a local scale. 
 * $\beta$ diversity is turnover in $\alpha$ diversity among different sites.
 * $\gamma$ gamma diversity is diversity at the landscape level.
@@ -52,7 +49,7 @@ $\gamma$ diversity would be all the species found across London.
 
 $\beta$ diversity is the hardest to measure, and there are far more metrics for measuring this than any others.
 
-# Practical example using Pokemon...
+## Practical example using Pokemon...
 We're going to play around with some invented data on sampling sites within the Museum and the Pokemon we've managed to find there (don't complain about my unlikely Pokemon combinations, they're just made up data with Pokemon names rather than A, B, C etc!). 
 
 ![Who doesn't love a practical handout being interrupted by an enormous Pikachu?](pokemon.png)
@@ -86,8 +83,8 @@ pokemon.matrix <- sample2matrix(pokemon)
 pokemon.matrix
 ```
 
-# Species diversity indices
-## $\alpha$ diversity
+## Species diversity indices
+### $\alpha$ diversity
 The simplest measure of $\alpha$ diversity is just the number of species in each site. 
 You can easily extract this as follows.
 
@@ -105,7 +102,7 @@ diversity(pokemon.matrix, index = "simpson")
 diversity(pokemon.matrix, index = "shannon")
 ```
 
-## $\beta$ diversity
+### $\beta$ diversity
 The function `betadiver` allows you to estimate all the $\beta$ diversity indices mentioned in Koleff et al. 2003.
 For help on which indices are included type:
 
@@ -132,7 +129,7 @@ You can estimate Whittaker's original using `method = "w"` (this is a dissimilar
 betadiver(pokemon.matrix, method = "w")
 ```
 
-## $\gamma$ diversity
+### $\gamma$ diversity
 In this example, $\gamma$ diversity is the total number of species found across all sites.
 We can very simply calculate this in R using the following code:
 
@@ -161,7 +158,7 @@ pokemon[31, 2] <- 0
 length(unique(pokemon$Species[!is.na(pokemon$Abundance) & pokemon$Abundance != 0]))
 ```
 
-# Species accumulation curves (Colwell & Coddington 1994)
+## Species accumulation curves (Colwell & Coddington 1994)
 Often when we talk about species diversity we're interested in the total diversity of an area or a site. 
 For example, if we want to conserve a patch of woodland, we might need to know how many species in total live there.
 Sounds easy enough right? 
@@ -179,7 +176,7 @@ The first few samples you take will probably have lots of species you haven't re
 Eventually you hope that you'll stop finding any new species to record so the curve will asymptote, but in reality sampling is rarely that thorough. 
 Luckily we can use species accumulation curves to estimate where the curve would asymptote if we kept on sampling.
 
-## Practical example
+### Practical example
 
 Let's try this for our Pokemon, how many species might be hiding in the Museum if we sampled throughly?
 
@@ -240,7 +237,7 @@ So we can be fairly confident there are between 10 and 15 Pokemon in the Museum.
 
 ***
 
-# References
+## References
 * Chao, A. (1987). Estimating the population size for capture-recapture data with unequal catchability. Biometrics 43, 783–791.
 * Colwell, R.K. & Coddington, J.A. (1994). Estimating terrestrial biodiversity through extrapolation. Phil. Trans. Roy. Soc. London B 345, 101–118.
 * Hill, M. O. (1973) Diversity and evenness: a unifying notation and its consequences. Ecology, 54, 427–432
@@ -248,16 +245,16 @@ So we can be fairly confident there are between 10 and 15 Pokemon in the Museum.
 * Whittaker, R.H. (1960) Vegetation of Siskiyou mountains, Oregon and California. Ecological Monographs 30, 279–338.
 * Whittaker, R. H. (1972). Evolution and Measurement of Species Diversity. Taxon, 21, 213-251. doi:10.2307/1218190
 
-## Extra reading
+### Extra reading
 * Whittaker, R. J. et al. (2001). Scale and species richness: towards a general, hierarchical theory of species diversity. Journal of Biogeography, 28, 453-470. doi:10.1046/j.1365-2699.2001.00563.x
 * O'Hara, R.B. (2005). Species richness estimators: how many species can dance on the head of a pin? J. Anim. Ecol. 74, 375–386.
 
-### Nice series of papers on betadiversity
+#### Nice series of papers on betadiversity
 * Tuomisto, H. (2010) A diversity of beta diversities: straightening up a concept gone awry. Part 1. Defining beta diversity as a function of alpha and gamma diversity. Ecography, 33, 2-22. 
 * Tuomisto, H. (2010) A diversity of beta diversities: straightening up a concept gone awry. Part 2. Quantifying beta diversity and related phenomena. Ecography, 33, 23-45. doi:10.1111/j.1600-0587.2009.06148.x
 * Tuomisto, H. 2010. A consistent terminology for quantifying species diversity? Yes, it does exist. Oecologia 4: 853–860. doi:10.1007/s00442-010-1812-0
 * Tuomisto, H. (2011) Commentary: do we have a consistent terminology for species diversity? Yes, if we choose to use it. Oecologia, 167, 903-911.
 
-### Immensely cool new approach using methods developed by Alan Turing
+#### Immensely cool new approach using methods developed by Alan Turing
 * Chiu, C.H., Wang, Y.T., Walther, B.A. & Chao, A. (2014). Improved nonparametric lower bound of species richness via a modified Good-Turing frequency formula. Biometrics 70, 671–682.
 

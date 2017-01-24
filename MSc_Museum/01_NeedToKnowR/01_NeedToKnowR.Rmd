@@ -7,6 +7,8 @@ output:
   html_document: default
 ---
 
+# What you need to be able to do in R before you start
+
 Most people taking this module have used R a lot already, but it is possible you're a bit rusty, or you've found this course on GitHub and have no R experience.
 This isn't a problem, I will try and summarise what you need to be able to do to get these practicals running below. 
 However, I'm not going to write a help guide to R here, if you can't work out how to open it and get started etc. I strongly recommend the book [Getting Started With R](http://www.r4all.org/) or there are lots of great tutorials online.
@@ -22,12 +24,12 @@ R output will be preceded by ## and important comments will be in quote blocks:
 Note that many things in R can be done in multiple ways. 
 You should choose the methods you feel most comfortable with, and do not panic if someone is doing the same analyses as you in a different way! 
 
-# Installing R (and RStudio)
+## Installing R (and RStudio)
 * Install R from [https://cran.r-project.org]
 * You can install RStudio from [http://www.rstudio.com/products/rstudio/download/].
 I’d recommend trying this out if you're a beginner as it has a nicer interface.
 
-# Setting the working directory
+## Setting the working directory
 To use the practicals you need to download all the files for each practical into a folder somewhere on your computer (I usually put mine on the Desktop). 
 We will then tell R to look in this folder for all data etc. by __setting the working directory__ to that folder.
 
@@ -72,7 +74,7 @@ mydata <- read.csv("~/Desktop/RAnalyses/mydata.csv")
 
 > Remember if you move the data files, or the folder itself, you'll need to set the working directory again.
 
-# Using a script
+## Using a script
 Next, open a text editor. 
 R has an inbuilt editor that works pretty well, but NotePad and TextEdit are fine too. 
 However, I **highly** recommend using something that will highlight code for you. 
@@ -94,7 +96,7 @@ If you want to add comments to the file (i.e., notes to remind yourself what the
 # Always make plenty of notes to help you remember what you did and why
 ```
 
-# Installing and loading extra packages in R
+## Installing and loading extra packages in R
 To run any specialised analysis in R, you need to download one or more additional packages from the basic R installation. 
 For these problem sets you will need to install the following packages: 
 
@@ -122,7 +124,7 @@ library(ape)
 
 You can think of `install.packages` like installing an app from the App Store on your smart phone - *you only do this once* - and `library` as being like pushing the app button on your phone - *you do this every time you want to use the app*.
 
-# Loading and viewing your data in R
+## Loading and viewing your data in R
 R can read files in lots of formats, including comma-delimited and tab-delimited files. 
 Excel (and many other applications) can output files in this format (it's an option in the `Save As` dialog box under the `File` menu). 
 Mostly I will give you .csv or .txt files during these practicals.

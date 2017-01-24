@@ -8,10 +8,7 @@ output:
 ---
 
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
+# Visualising phylogenies in R
 The aims of this practical are to introduce you to some of the fun ways you can visualise phylogenetic trees in R.
 The code and examples are based on Liam Revell's book chapter [here](http://faculty.umb.edu/liam.revell/pdfs/Revell_2014.MPCM-chapter.pdf).
 
@@ -48,8 +45,8 @@ str(anoledata)
 ```
 Now let's visualise some phylogenies!
 
-# Loading your phylogeny and data into R
-## Reading in a phylogeny from a file
+## Loading your phylogeny and data into R
+### Reading in a phylogeny from a file
 To load a tree you need either the function `read.tree` or `read.nexus`.
 `read.tree` can deal with a number of different types of data (including DNA) whereas `read.nexus` reads NEXUS files. 
 `elopomorph.tre` is not in NEXUS format so we use `read.tree`. 
@@ -58,7 +55,7 @@ To load a tree you need either the function `read.tree` or `read.nexus`.
 fishtree <- read.tree("elopomorph.tre")
 ```
 
-## Reading in a phylogeny that is already built into R
+### Reading in a phylogeny that is already built into R
 The bird and anole phylogenies are already built into R so we don't need to read them in using `read.tree`.
 Instead we just use:
 
@@ -67,7 +64,7 @@ data(bird.orders)
 data(anoletree)
 ```
 
-# Basic tree viewing in R
+## Basic tree viewing in R
 We'll use the Elopomorpha (eels and similar fishes) tree to start as it is simple.
 
 Let's examine the tree by typing:
@@ -127,9 +124,10 @@ plot(fishtree, type = "c", edge.color = "darkviolet", tip.color = "hotpink",
 	 cex = 0.5)
 ```
 
-# Adding trait data to trees in R
-## Ancestral state reconstructions on discrete data
-We will use the bird data
+## Adding trait data to trees in R
+*Note that the theory behind this is covered in more detail in the "Macroevolutionary Models in R" practicals part 1 and 2.*
+### Ancestral state reconstructions on discrete data
+We will use the bird data.
 Remember we already loaded the phylogeny and data as follows:
 
 ```{r}
@@ -172,7 +170,7 @@ nodelabels(pie = ancestors$lik.anc, piecol = colours)
 `cex = 2` doubles the point size, and `adj = 1` moves the tip labels sideways so they don't obscure the ends of the branches.
 `pie` makes pie charts coloured using the ancestral state reconstructions in `ancestors`, and `piecol` tells it to use the colours we have defined.
 
-## Ancestral state reconstructions on continuous data
+### Ancestral state reconstructions on continuous data
 We are going to use the *Anolis* data to create a phylogeny with different colours for different observed and reconstructed body sizes (snout-to-vent length, SVL). 
 Remember we already loaded the phylogeny and data as follows:
 
@@ -226,7 +224,7 @@ Finally let's plot the tree as a fan (`legend = 10` just spreads the legend out 
 plot(SVLplot, type = "fan", legend = 10)
 ```
 
-# Phylomorphospace plots in R
+## Phylomorphospace plots in R
 We are going to use the *Anolis* data to create a phylomorphospace plot. 
 These plots show where species fall within a morphospace (usually based on principal components analyses of morphological variables), and then reconstructs values for the nodes of the phylogeny so the whole phylogeny can be projected into the morphospace.
 
@@ -277,7 +275,7 @@ Finally we can make the plot, and colour by ecomorph.
 phylomorphospace(anoletree, PC[,1:2], label = "off", node.by.map = TRUE, colors = colors)
 ```
 
-# Phylogenies and maps!
+## Phylogenies and maps!
 We can also plot phylogenies attached to maps showing where species come from.
 We will use the bird orders tree again as it's small.
 
@@ -313,21 +311,23 @@ plot(phylomap,type = "phylogram", asp = 1.3, mar = c(0.1, 0.5, 3.1, 0.1))
 plot(phylomap,type = "direct", asp = 1.3, mar = c(0.1, 0.5, 3.1, 0.1))
 ```
 
-# A new package for visualising trees: ggtree
+## A new package for visualising trees: ggtree
 `ggtree` is a newly released package that works with the popular `ggplot` framework in R. 
 `ggplot` works by adding layers of different features together. 
 A standard `ggplot` includes a layer that assigns the x and y variables then can have lots of other layers of points, lines, shapes and now with `ggtree` phylogenies.
 
+__Unfortunately this is broken in the most recent version of R. I've left this in, just in case they fix it soon__
+
 To use `ggtree` you will have to install it, then load it using:
 
-```{r, message = FALSE}
+```{r, eval = FALSE}
 library(ggtree)
 ```
 
 Let's replicate some of the stuff we did above but using `ggtree`. 
 As always choose whichever method you prefer when you're doing this with your own data.
 
-```{r}
+```{r, eval = FALSE}
 ggtree(fishtree) +
 geom_text(aes(label=label), size = 1)
 ```
@@ -337,13 +337,13 @@ Layers are separated by `+`
 
 We can also zoom in on sections like with `ape`.
 
-```{r}
+```{r, eval = FALSE}
 gzoom(fishtree, grep("Gymnothorax", fishtree$tip.label))
 ```
 
 And we can have different shapes of phylogeny, different colours and even different line types.
 
-```{r}
+```{r, eval = FALSE}
 ggtree(fishtree, color = "steelblue")
 ggtree(fishtree, layout = "circular")
 ggtree(fishtree, linetype = "dotted")
@@ -352,14 +352,14 @@ ggtree(fishtree, linetype = "dotted")
 `ggtree` is really great for highlighting sections of a tree.
 First look at the nodes on your tree and pick an interesting one...
 
-```{r}
+```{r, eval = FALSE}
 ggtree(fishtree) + 
   geom_text(aes(label = node))
 ```
 
 Then highlight and/or annotate...
 
-```{r}
+```{r, eval = FALSE}
 ggtree(fishtree) +
 geom_hilight(node = 73, fill = "steelblue", alpha = 0.6) +
 geom_hilight(node = 97, fill = "darkgreen", alpha = 0.6)

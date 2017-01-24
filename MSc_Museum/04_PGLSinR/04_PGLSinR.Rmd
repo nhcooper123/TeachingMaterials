@@ -8,10 +8,7 @@ output:
 ---
 
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
+# Phylogenetic Generalised Least Squares (PGLS) in R
 The aims of this practical are to learn how to use R to perform Phylogenetic Generalised Least Squares (PGLS) analyses, and to estimate phylogenetic signal.
 
 We will be using the evolution of primate life-history variables as an example. 
@@ -32,8 +29,8 @@ You will also need to install the following packages:
 * `caper`
 
 ***
-# Preparing for the analysis
-## Load the required packages
+## Preparing for the analysis
+### Load the required packages
 To begin we need to load the packages for this practical.
 
 ```{r, message = FALSE}
@@ -43,7 +40,7 @@ library(picante)
 library(caper)
 ```
 
-## Reading and checking your data in R
+### Reading and checking your data in R
 The data are in a comma-delimited text file called `Primatedata.csv`. 
 Load these data as follows. 
 I am assuming you have set your working directory.
@@ -60,7 +57,7 @@ str(primatedata)
 
 As you can see, the data contains the following variables: Order, Family, Binomial, AdultBodyMass_g, GestationLen_d, HomeRange_km2, MaxLongevity_m, and SocialGroupSize.
 
-## Reading and checking your phylogeny in R
+### Reading and checking your phylogeny in R
 To load a tree you need either the function `read.tree` or `read.nexus`.
 `read.tree` can deal with a number of different types of data (including DNA) whereas `read.nexus` reads NEXUS files. 
 We will use a NEXUS file of the consensus tree from 10kTrees.
@@ -103,8 +100,8 @@ primatetree.reroot <- root(primatetree, "Saimiri_sciureus")
 plot(primatetree.reroot, cex = 0.2)
 ```
 
-## Manipulating your data and phylogeny in R
-### Species names with spaces
+### Manipulating your data and phylogeny in R
+#### Species names with spaces
 Species names in the tree cannot contain spaces so they are generally written as Genus_species (the gap between the genus name and species name replaced by an underscore `_`). 
 If the species names in the data are written as Genus species with a space, then you will have to replace the spaces with `_` so that they match up with the species names in the tree. 
 You can do this as follows:
@@ -116,7 +113,7 @@ primatedata$Binomial <- gsub(" ", "_", primatedata$Binomial)
 `gsub` means general substitution. 
 It replaces any instance of the first item (here it's a space) with the second item (_) but only in the variable you tell it to (`primatedata$Binomial`).
 
-### Mismatches between species in your data and phylogeny
+#### Mismatches between species in your data and phylogeny
 Often you will have data for species which are not in your phylogeny and/or species in your phylogeny which are not in your data. 
 Some functions in R can deal with this, others will produce an error telling you the tree and data do not match (e.g. most `ape` functions). 
 It's useful to know how to deal with this so I have provided code below.
@@ -168,7 +165,7 @@ str(primatetree)
 ```
 
 ***
-# Ordinary least squares (OLS) regression
+## Ordinary least squares (OLS) regression
 Before we use phylogenetic comparative methods, we will quickly do an ordinary least squares (OLS) regression. 
 Let's assume that we're interested in the relationship between primate body mass and gestation length. 
 First we should look at the data. Note that both variables are highly skewed so we need to log transform them. 
@@ -213,7 +210,7 @@ plot(log(GestationLen_d) ~ log(AdultBodyMass_g), data = primatedata, col = prima
 
 ***
 
-# Phylogenetic generalized least squares models (PGLS)
+## Phylogenetic generalized least squares models (PGLS)
 There are several ways of accounting for phylogenetic non independence in your analyses.
 Here we will just cover one - phylogenetic generalized least squares (PGLS).
 Another popular earlier method is independent contrasts. 
@@ -272,7 +269,7 @@ Sometimes you will find that `pgls` will not work and you get an `optim error`. 
 model.pgls2 <- pgls(log(GestationLen_d) ~ log(AdultBodyMass_g), data = primate, lambda = "ML", bounds = list(lambda = c(1e-05, 1)))
 ```
 
-## Likelihood profiles for $\lambda$ in PGLS models
+### Likelihood profiles for $\lambda$ in PGLS models
 You can look at the likelihood profiles for branch length transformations in PGLS models using `pgls.profile`:
 
 ```{r}
@@ -305,7 +302,7 @@ This problem comes up every year and current consensus among the PCM community i
 model.pgls3 <- pgls(log(GestationLen_d) ~ log(AdultBodyMass_g), data = primate, lambda = 1)
 ```
 
-## Model diagnostics for PGLS models
+### Model diagnostics for PGLS models
 You should always check model diagnostic plots whenever you fit a model in R to check that your data meet the assumptions of the model. 
 The method for this in PGLS is the same for OLS, independent contrasts and PGLS models (though the graphs are slightly different). 
 To get model diagnostic plots for PGLS:
@@ -327,8 +324,8 @@ It takes practice to know what is "good", "bad" and "acceptable" with these plot
 
 ***
 
-# Estimating phylogenetic signal for one variable
-## Pagel's $\lambda$ (Pagel 1997/1999, Freckleton et al 2002)
+## Estimating phylogenetic signal for one variable
+### Pagel's $\lambda$ (Pagel 1997/1999, Freckleton et al 2002)
 Phylogenetic signal is merely the pattern where close relatives have more similar trait values than more distant relatives (see Kamilar and Cooper 2013). 
 Often people will mention that they "corrected for phylogeny" because of the phylogenetic signal in their variables. 
 However, we **do not** correct for phylogeny because our variables show phylogenetic signal. 
@@ -347,8 +344,7 @@ Thus the $\lambda$ value is the $\lambda$ estimate for log GestationLen_d and th
 
 ***
 
-## Blomberg's K (Blomberg et al 2003)
-
+### Blomberg's K (Blomberg et al 2003)
 To estimate Blomberg’s K we use the `Kcalc` function in `picante`. 
 First you need to set up a new vector with the values for the variable you are interested in, here the log of gestation length, and with a names attribute with the names of your species. 
 Here I'll call this vector `lngest`.
@@ -383,7 +379,7 @@ In this case the observed K is significantly higher than the random values of K 
 
 ***
 
-# References
+## References
 * Arnold, C., L. J. Matthews, and C. L. Nunn. 2010. The 10ktrees website: a new online resource for primate phylogeny. Evolutionary Anthropology: Issues, News, and Reviews 19:114–118.
 * Blomberg, S. P., T. Garland, and A. R. Ives. 2003. Testing for phylogenetic signal in comparative data: behavioral traits are more labile. Evolution 57:717–745.
 * Freckleton, R. P., P. H. Harvey, and M. Pagel. 2002. Phylogenetic analysis and comparative data: a test and review of evidence. The American Naturalist 160:712-726.
@@ -393,5 +389,5 @@ In this case the observed K is significantly higher than the random values of K 
 * Pagel, M. 1999. Inferring the historical patterns of biological evolution. Nature, 401(6756), 877-884.
 * Revell, L. J. 2010. Phylogenetic signal and linear regression on species data. Methods in Ecology and Evolution, 1, 319-329.
 
-## Extra Reading
+### Extra Reading
 * Losos, J.B. (2011) Seeing the forest for the trees: the limitations of phylogenies in comparative biology. The American Naturalist, 177, 709–727.

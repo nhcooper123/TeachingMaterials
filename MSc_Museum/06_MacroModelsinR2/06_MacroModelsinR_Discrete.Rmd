@@ -8,10 +8,7 @@ output:
 ---
 
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
+# Macroevolutionary models in R: Part 2 - discrete traits
 The aims of this practical are to learn how to use R to fit macroevolutionary models in R to discrete traits.
 
 We will be using the evolution of magical creature life-history variables as an example. 
@@ -37,8 +34,8 @@ Many thanks to Graham for his invaluable input.
 
 ***
 
-# Preparing for the analysis
-## Load packages, read in the data and the tree
+## Preparing for the analysis
+### Load packages, read in the data and the tree
 This is the same as we did in the PGLS practical, so I won't give detailed instructions here.
 
 ```{r, message = FALSE}
@@ -60,7 +57,7 @@ magicaltree <- read.nexus("magicaltree.nex")
 str(magicaltree)
 ```
 
-## 2. Modify the tree and data so they can be used in the analyses.
+### Modify the tree and data so they can be used in the analyses.
 Again we did this in the PGLS practical. 
 Please remind yourself of what these steps are needed for.
 
@@ -101,7 +98,7 @@ mydata <- match.species$data
 ```
 
 ***
-# Fitting models of evolution to discrete data (regime dependent evolution) 
+## Fitting models of evolution to discrete data (regime dependent evolution) 
 In the previous section we saw how to fit three models of trait evolution to continuous variables.
 Although the evolutionary modes seem quite different, all are similar in that the evolutionary process is constant over the entire clade, i.e., all branches are evolving at the same rate (in BM), drawn to the same trait value with the same strength (OU) or decline in rate at the same time-dependent pace (EB). 
 Often, we want to relax this assumption.
@@ -145,8 +142,8 @@ We will estimate ancestral states for each node under a Markov model, pick the s
 Unfortunately, just like rates can vary for continuous traits, so they can vary for discrete traits, and this can impact our ancestral state estimation. 
 Fortunately, it's straightforward to test for this kind of heterogeneity using the `fitDiscrete` function in the `geiger` package.
 
-# Models of discrete trait evolution
-## Mk1 – all rates equal (ER)
+## Models of discrete trait evolution
+### Mk1 – all rates equal (ER)
 The simplest Markov model we can fit to comparative data is an Mk1 model – M for Markov, k1 for $k = 1$ or 1 parameter. 
 The single parameter of this model is a transition rate – the rate at which states change. 
 Because we only have one rate, transitions between any pair of states occur at the same rate and are therefore equally probable. 
@@ -166,7 +163,7 @@ This is so that the rows sum to zero.
 
 If you're familiar with models of molecular evolution, you might know this model better as the **Jukes-Cantor model**, where transition rates = transversion rates.
 
-## Mk – symmetric rates (SYM)
+### Mk – symmetric rates (SYM)
 We could add some complexity, and perhaps realism, by imagining that the rate of change between any pair of states is the same regardless of direction, but that the rate of change differs among states. 
 Such a model is referred to as a symmetric model, and has a $Q$ matrix of the form:
 
@@ -192,7 +189,7 @@ G|3|5|6|-
 
 Obviously, a symmetric model with only 2 states becomes an equal rates (Mk1) model.
 
-## Mk – All Rates Different (ARD)
+### Mk – All Rates Different (ARD)
 Finally, we can go crazy and allow all rates to be different. 
 For S-states, this would generate $S^2$    S rates 
 FIXXXXXX, 
@@ -217,7 +214,7 @@ For example, complex structures like eyes or teeth tend not to reappear once los
 be different. 
 In this latter situation, the All Rates Different model simply gives you two rates, which isn't really over-fitting.
 
-# Fitting the models using `fitDiscrete`
+## Fitting the models using `fitDiscrete`
 Let's try these models with our magical creatures dataset using `fitDiscrete`.
 We will investigate rates of change in social status.
 
@@ -263,7 +260,7 @@ Based on AIC weights, which model should we prefer?
 The all-rates-different model is less strongly supported (`AICcW = 0.306`) than the equal rates model (`AICcW = 0.694`). 
 Now we can move forward with reconstructing ancestral states under the preferred equal rates transition rate model.
 
-# Ancestral state reconstructions
+## Ancestral state reconstructions
 Ancestral state reconstruction is probably one of the most over-used and uninformative methods in the phylogenetic comparative methods toolkit. 
 There are many reasons to be highly skeptical of ancestral state estimates and interpretations of macroevolutionary patterns and process that are based on them. 
 However, if you want to know if evolutionary tempo or mode have varied over clade history based on the state of a discrete trait, you'll need to do it.
@@ -335,7 +332,7 @@ mytree
 Now we have node labels associated with our magical tree that specify which social regime each branch is evolving under. 
 We're now ready to move on to modeling state specific rate variation and adaptive optima, using OUwie.
 
-# Fitting models using `OUwie`
+## Fitting models using `OUwie`
 `OUwie` (pronounced Ow-EE) is a package written by Brian O'Meara and Jeremy Beaulieu that performs maximum likelihood optimization of Brownian motion and Ornstein-Uhlenbeck models.
 The models implemented include the simple versions introduced earlier, but also include more complex versions that allow model parameters (rates, selection, optima) to vary among evolutionary regimes. 
 
@@ -355,7 +352,7 @@ head(ouwie.data)
 
 Finally, we want to decide which model we're going to fit. 
 
-## Multi-rate Brownian motion (BMS)
+### Multi-rate Brownian motion (BMS)
 In `OUwie` a multi-rate BM model is coded as "BMS". 
 
 ```{r, message = FALSE}
@@ -381,7 +378,7 @@ So rates of body size evolution seem to be faster for solitary magical animals t
 To know whether this difference is great enough for us to prefer this model, we'd need to compare AIC scores, or something similar. 
 We'll come back to this in a minute.
 
-## Multi-peak OU models
+### Multi-peak OU models
 If you look at the help file for `?OUwie` you'll see the following options are available to us.
 
 1. single-rate Brownian motion (model=BM1) [equivalent to "BM" in `fitContinuous`]
@@ -420,7 +417,7 @@ Which is the best model overall?
 
 ***
 
-# References
+## References
 
 * Blomberg, S. P., T. Garland, and A. R. Ives. 2003. Testing for phylogenetic signal in comparative data: behavioral traits are more labile. Evolution 57:717–745.
 * Butler, M. A. and A. A. King. 2004. Phylogenetic comparative analysis: a modeling approach for adaptive evolution. The American Naturalist 164:683–695.
