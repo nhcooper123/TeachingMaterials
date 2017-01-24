@@ -127,18 +127,17 @@ You can think of `install.packages` like installing an app from the App Store on
 ## Loading and viewing your data in R
 R can read files in lots of formats, including comma-delimited and tab-delimited files. 
 Excel (and many other applications) can output files in this format (it's an option in the `Save As` dialog box under the `File` menu). 
-Mostly I will give you .csv or .txt files during these practicals.
-As an example, here is how you would read in the tab-delimited text file called `Primatedata.txt` which we are going to use in the PGLS practical. 
+Mostly I will give you `.csv` files during these practicals.
+As an example, here is how you would read in the tab-delimited text file called `Primatedata.csv` which we are going to use in the PGLS practical. 
 Load these data as follows, assuming you have set your working directory (see step 2 above).
 
 ```{r}
-primatedata <- read.delim("Primatedata.txt", header = TRUE)
+primatedata <- read.csv("Primatedata.csv")
 ```
 
-You can use `read.delim` for tab delimited files or `read.csv` for comma delimited files. 
-`header = TRUE`, indicates that the first line of the data contains column headings.
+`read.csv` reads in comma delimited files. 
 
-This is a good point to note that unless you __tell__R you want to do something, it won't do it automatically. 
+This is a good point to note that unless you __tell__ R you want to do something, it won't do it automatically. 
 So here if you successfully entered the data, R won't give you any indication that it worked. 
 Instead you need to specifically ask R to look at the data.
 
