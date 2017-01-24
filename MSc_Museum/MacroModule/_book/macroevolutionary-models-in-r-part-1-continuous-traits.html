@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="what-you-need-to-be-able-to-do-in-r-before-you-start.html">
+<link rel="prev" href="phylogenetic-generalised-least-squares-pgls-in-r.html">
+<link rel="next" href="macroevolutionary-models-in-r-part-2-discrete-traits.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -242,60 +242,234 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Methods in Macroecology and Macroevolution</h1>
-<h4 class="author"><em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></h4>
-<h4 class="date"><em>February 2017</em></h4>
+<div id="macroevolutionary-models-in-r-part-1---continuous-traits" class="section level1">
+<h1><span class="header-section-number">Practical 6</span> Macroevolutionary models in R: Part 1 - continuous traits</h1>
+<p>The aims of this practical are to learn how to use R to fit macroevolutionary models in R to continuous traits.</p>
+<p>We will be using the evolution of magical creature life-history variables as an example. The data includes body mass (average adult size at rest) in kg, social status (1 = solitary, 2 = social), habitat (1 = terrestrial, 2 = aquatic, 3 = volant) and magical power (in thaum - with thanks to Terry Pratchett for the units). These data are invented, so please don’t get too upset if I’ve misclassified anything!</p>
+<p><strong>REMEMBER</strong></p>
+<ul>
+<li>Download all of the data for the practical into a folder somewhere on your computer.</li>
+<li>Set your working directory to this folder.</li>
+<li>Start a new script for this practical.</li>
+</ul>
+<p>You will also need to install the following packages:</p>
+<ul>
+<li><code>ape</code></li>
+<li><code>geiger</code></li>
+<li><code>OUwie</code></li>
+</ul>
+<p>This practical is in two parts, Part 2 deals with discrete traits.</p>
+<hr />
+<div id="preparing-for-the-analysis-1" class="section level2">
+<h2><span class="header-section-number">6.1</span> Preparing for the analysis</h2>
+<div id="load-packages-read-in-the-data-and-the-tree" class="section level3">
+<h3><span class="header-section-number">6.1.1</span> Load packages, read in the data and the tree</h3>
+<p>This is the same as we did in the PGLS practical, so I won’t give detailed instructions here.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load packages</span>
+<span class="kw">library</span>(ape)
+<span class="kw">library</span>(geiger)
+<span class="kw">library</span>(OUwie)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Read in data</span>
+magicaldata &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;magicalcreatures.csv&quot;</span>)
+<span class="co"># Check data is loaded correctly</span>
+<span class="kw">str</span>(magicaldata)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    30 obs. of  5 variables:
+##  $ Species     : Factor w/ 30 levels &quot;Acromantula&quot;,..: 22 24 19 5 7 16 21 25 30 29 ...
+##  $ BodySize_kg : num  1.5 50 0.5 100 8000 1 2.5 6 800 600 ...
+##  $ SocialStatus: int  2 2 2 1 1 2 2 1 1 2 ...
+##  $ Habitat     : int  1 1 2 1 3 1 1 3 3 3 ...
+##  $ Magic_thaum : num  106.3 86.7 98.6 57 131.9 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Read in tree</span>
+magicaltree &lt;-<span class="st"> </span><span class="kw">read.nexus</span>(<span class="st">&quot;magicaltree.nex&quot;</span>) 
+<span class="co"># Check tree is loaded correctly</span>
+<span class="kw">str</span>(magicaltree)</code></pre></div>
+<pre><code>## List of 4
+##  $ edge       : int [1:52, 1:2] 28 29 30 31 31 30 32 33 33 34 ...
+##  $ edge.length: num [1:52] 136.86 65.69 97 2.92 2.92 ...
+##  $ Nnode      : int 26
+##  $ tip.label  : chr [1:27] &quot;Doxie&quot; &quot;Bowtruckle&quot; &quot;Hinkypuff&quot; &quot;Grindylow&quot; ...
+##  - attr(*, &quot;class&quot;)= chr &quot;phylo&quot;
+##  - attr(*, &quot;order&quot;)= chr &quot;cladewise&quot;</code></pre>
 </div>
-<div id="methods-in-macroecology-and-macroevolution-module-outline" class="section level1">
-<h1><span class="header-section-number">Practical 1</span> Methods in Macroecology and Macroevolution: Module outline</h1>
-<div id="module-aims" class="section level2">
-<h2><span class="header-section-number">1.1</span> Module Aims</h2>
-<p>The aim of this module is to introduce you to some of the cutting-edge methods being used in macroecology and macroevolution, with particular focus on work being done right now at the Museum. Rather than concentrating on learning theory through lectures, the module will introduce you to various ways we collect, analyse and interpret macro-scale data with a large emphasis on practical work, mostly using R.</p>
+<div id="modify-the-tree-and-data-so-they-can-be-used-in-the-analyses." class="section level3">
+<h3><span class="header-section-number">6.1.2</span> Modify the tree and data so they can be used in the analyses.</h3>
+<p>Again we did this in the PGLS practical. Please remind yourself of what these steps are needed for.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Ensure tree is fully bifurcating</span>
+magicaltree &lt;-<span class="st"> </span><span class="kw">multi2di</span>(magicaltree) 
+
+<span class="co"># Replace spaces with underscores in the species names</span>
+magicaldata$Species &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;_&quot;</span>, magicaldata$Species)
+
+<span class="co"># Add species names to row names</span>
+<span class="kw">row.names</span>(magicaldata) &lt;-<span class="st"> </span>magicaldata$Species</code></pre></div>
+<p>For some weird reason the <code>geiger</code> function we need (<code>treedata</code> see below) won’t work if you input a dataset with variables that are characters i.e. words or letters. Our taxonomic variable Species is a character so we need to exclude it from the data. Note for your own data you’d need to remove all character variables (or recode them as 0,12 etc.). We will do this by making a new dataset called magicaldata2.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">magicaldata2 &lt;-<span class="st"> </span>magicaldata[, <span class="dv">2</span>:<span class="dv">5</span>]</code></pre></div>
+<p>Here the [ ] tells R we want to subset the dataset. R data frames are always described by [X,Y] where X is rows and Y is columns. So [1, 1] will select the entry in the first column and the first row of the data frame. [, 2:2] selects all rows but only columns 2 to 5. These are the columns containing our numeric variables.</p>
+<p>We then need to match the species in tree to those in the dataset as in the PGLS practical. <strong>Note that we are using <code>magicaldata2</code> here.</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">match.species &lt;-<span class="st"> </span><span class="kw">treedata</span>(magicaltree, magicaldata2)
+
+mytree &lt;-<span class="st"> </span>match.species$phy
+mydata &lt;-<span class="st"> </span>match.species$data</code></pre></div>
+<hr />
 </div>
-<div id="datasets-and-practical-handouts" class="section level2">
-<h2><span class="header-section-number">1.2</span> Datasets and practical handouts</h2>
-<p>All datasets and practical handouts are available on GitHub. It can be tricky to download data from GitHub if you don’t know what you’re doing and/or don’t want to clone the entire repository so the materials are also available at this DropBox link: []. It will save time if you download this before coming to class.</p>
 </div>
-<div id="timetable" class="section level2">
-<h2><span class="header-section-number">1.3</span> Timetable</h2>
-<p>There will be one morning and one afternoon session each day. Morning sessions will run from 10am-1pm, afternoon sessions from 2pm-5pm. Not every session will require a full three hours. Instructors for each session are below. Note that Thursday and Friday of the first week we have had to move to the Gavin de Beer room. <strong>PLEASE BRING LAPTOPS</strong>.</p>
-<p><strong>Thursday 23rd February - GAVIN DE BEER not UBR or LBR</strong></p>
-<ul>
-<li><p>Morning: What are macroecology and macroevolution? Introduction to the module, assessments, and aims. <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-<li><p>Afternoon: Macroecology I: Macroecological patterns and diversity indices in R. <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-</ul>
-<p><strong>Friday February 24th February - GAVIN DE BEER not UBR or LBR</strong></p>
-<ul>
-<li><p>Morning: Big Data I: Using Big Data in conservation with the PREDICTS project. <em>Andy Purvis (<a href="mailto:a.purvis@nhm.ac.uk">a.purvis@nhm.ac.uk</a>)</em></p></li>
-<li><p>Afternoon: Big data II: Using the paleobiology database (PBDB) to get data on fossil species for macroecological and macroevolutionary analyses. <em>Terri Cleary (<a href="mailto:t.cleary@nhm.ac.uk">t.cleary@nhm.ac.uk</a>)</em></p></li>
-</ul>
-<p><strong>Monday February 27th February - UBR/LBR </strong></p>
-<ul>
-<li><p>Morning: Comparative Biology: The comparative method, dealing with phylogenetic non-independence in comparative analyses. PGLS in R. <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-<li><p>Afternoon: Macroevolution I: Macroevolutionary patterns and models of evolution in R. <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-</ul>
-<p><strong>Tuesday 28th February - UBR/LBR</strong></p>
-<ul>
-<li><p>Morning: Big data III: Using museum specimen data in macroecological and macroevolutionary analyses. Geometric morphometrics. <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-<li><p>Afternoon: Macroevolution II: case study using Foraminifera. <em>Isabel Fenton (<a href="mailto:i.fenton@nhm.ac.uk">i.fenton@nhm.ac.uk</a>)</em></p></li>
-</ul>
-<p><strong>Wednesday 1st March - UBR/LBR</strong></p>
-<ul>
-<li><p>Morning: Macroevolution III: Diversification rates and adaptive radiations. <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-<li><p>Afternoon: Critical thinking: Do you trust your methods? <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-</ul>
-<p><strong>Thursday 2nd March AND Friday 3rd March - UBR</strong></p>
-<p><em>Richard Twitchett (<a href="mailto:r.twitchett@nhm.ac.uk">r.twitchett@nhm.ac.uk</a>)</em></p>
-<ul>
-<li>All day: Using fossil assemblages to assess the impact of mass extinction events: comparative palaeoecology of Ordovician and Silurian fossil assemblages (practical and assessment).</li>
-</ul>
+<div id="models-of-continuous-trait-evolution" class="section level2">
+<h2><span class="header-section-number">6.2</span> Models of continuous trait evolution</h2>
+<p>For fitting models of evolution to continuous data we will use the <code>fitContinuous</code> function in the R package <code>geiger</code>. <code>fitContinuous</code> is a likelihood based method, so the output will give the maximum likelihood (ML) estimates of the parameters. Bayesian methods are becoming preferred for these kinds of analyses and <code>fitContinuousMCMC</code> will perform these analyses. However, due to time constraints we will not cover this function. As an example, let’s look at the evolution of <code>log(body size)</code> in magical creatures. We’ll fit three evolutionary models – the Brownian motion (BM) model, the Ornstein-Uhlenbeck (OU) model and the Early Burst (EB) model. <code>fitContinuous</code> can also fit several other models. For more details look at the help file by typing: <code>?fitContinuous</code></p>
+<div id="the-brownian-motion-bm-model" class="section level3">
+<h3><span class="header-section-number">6.2.1</span> The Brownian motion (BM model)</h3>
+<p>The Brownian motion model (Cavalli-Sforza and Edwards, 1967; Felsenstein, 1973) is assumed to be the underlying mode of evolution in the majority of phylogenetic comparative methods (though this assumption is rarely tested; Freckleton and Harvey 2006). In the model, a trait <span class="math inline">\(X\)</span> evolves at random at a rate <span class="math inline">\(\sigma\)</span>:</p>
+<p><span class="math inline">\(dX(t) = \sigma dW(t)\)</span></p>
+<p>where <span class="math inline">\(W(t)\)</span> is a white noise function and is a random variate drawn from a normal distribution with mean 0 and variance <span class="math inline">\(\sigma^2\)</span>. This model assumes that there is no overall drift in the direction of evolution (hence the expectation of <span class="math inline">\(W(t)\)</span> is zero) and that the rate of evolution is constant. Because the direction of change in trait values at each step is random, Brownian motion is often described as a “random walk” (note that you can also fit models where <span class="math inline">\(W(t)\)</span> is not zero and there is drift in the direction of evolution. This is known as the drift model, or Brownian motion with a trend. We will not cover this here).</p>
+<p>The model assumes the correlation structure among trait values is proportional to the extent of shared ancestry for pairs of species. This means that close relatives will be more similar in their trait values than more distant relatives. It also means that variance in the trait will increase (linearly) in proportion to time. The model has two parameters, the Brownian rate parameter, <span class="math inline">\(\sigma^2\)</span> and the state of the root at time zero, <span class="math inline">\(X(0)\)</span>. <code>fitContinuous</code> estimates <span class="math inline">\(\sigma^2\)</span> and <span class="math inline">\(X(0)\)</span>. Note that <span class="math inline">\(\sigma^2\)</span> can be used as a measure of the rate of trait evolution (Cooper and Purvis, 2010; Cooper et al., 2011).</p>
 </div>
-<div id="assessment" class="section level2">
-<h2><span class="header-section-number">1.4</span> Assessment</h2>
-<p>There are two assessments connected to this module.</p>
-<p>The first will be based on computer practicals early in the course. These will be done at the end of the practicals, and consist of some online multiple choice questions. No write up will be required and the assessment will be completed by the end of the week, if not the end of the practical.</p>
-<p>The second, although within this module, belongs to the Paleobiology module. Due to the large class size during that module it couldn’t happen there so we’ve moved it here. However, the techniques and concepts are highly relevant to macroecology and macroevolution. Richard Twitchett (<a href="mailto:r.twitchett@nhm.ac.uk">r.twitchett@nhm.ac.uk</a>) will provide a full explanation of the assessment during the practical on <strong>Thursday 2nd March and Friday 3rd March</strong>.</p>
+<div id="the-ornstein-uhlenbeck-ou-model" class="section level3">
+<h3><span class="header-section-number">6.2.2</span> The Ornstein-Uhlenbeck (OU) model</h3>
+<p>The Ornstein-Uhlenbeck (OU) model (Hansen, 1997; Butler and King, 2004) is a random walk where trait values are pulled back towards some “optimal” value with an attraction strength proportional to the parameter <span class="math inline">\(\alpha\)</span>. The model has the following form:</p>
+<p><span class="math inline">\(dX(t) = -\alpha(X(t) - \mu) + \sigma dW(t)\)</span></p>
+<p>Note that this model has two parameters in addition to those of the Brownian model, <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\mu\)</span>. The parameter m is a long-term mean, and it is assumed that species evolve around this value. <span class="math inline">\(\alpha\)</span> is the strength of evolutionary force that returns traits back towards the long-term mean if they evolve away from it. <span class="math inline">\(\alpha\)</span> is sometimes referred to as the “rubber band” parameter because of the way it forces traits back towards <span class="math inline">\(\mu\)</span>. The OU model was introduced to population genetics by Lande (1976) to model stabilizing selection in which the mean was recast as a fitness optimum on an adaptive landscape. The process operating in comparative data is analogous, although clearly is not stabilizing selection (despite being sometimes referred to as such). The model has four parameters, the Brownian rate parameter, <span class="math inline">\(\sigma^2\)</span>, the state of the root at time zero, <span class="math inline">\(X(0)\)</span>, the attraction strength or “rubber band” parameter, <span class="math inline">\(\alpha\)</span>, and the long-term mean, <span class="math inline">\(\mu\)</span>. <code>fitContinuous</code> estimates <span class="math inline">\(\sigma^2\)</span>, <span class="math inline">\(X(0)\)</span>, and <span class="math inline">\(\alpha\)</span>. It does not estimate <span class="math inline">\(\mu\)</span> but in this implementation of the model, <span class="math inline">\(\mu\)</span> is equivalent to <span class="math inline">\(X(0)\)</span>. Note that if <span class="math inline">\(\alpha\)</span> is close to zero then evolution is approximately Brownian.</p>
+</div>
+<div id="the-early-burst-eb-model" class="section level3">
+<h3><span class="header-section-number">6.2.3</span> The Early Burst (EB) model</h3>
+<p>The Early Burst (EB) model (Harmon et al. 2010, also called the ACDC model; Blomberg et al. 2003) is a Brownian motion/random walk model where the rate of evolution decreases exponentially through time under the model:</p>
+<p><span class="math inline">\(r(t) = \sigma^2e(at)\)</span></p>
+<p>Where <span class="math inline">\(r(t)\)</span> is the rate of evolution at time <span class="math inline">\(t\)</span>, <span class="math inline">\(\sigma^2\)</span> is the initial value of the Brownian rate parameter, i.e. the initial rate of evolution, <span class="math inline">\(a\)</span> is the rate change parameter, and <span class="math inline">\(t\)</span> is time. The value of <span class="math inline">\(a\)</span> is generally less than or equal to 0 (note that you can force <span class="math inline">\(a\)</span> to be greater than zero by changing the bounds - see section 3.4 - however, this will only work if you have fossil species in your data; Slater et al. 2012). When a is negative, rates of evolution decrease through time. The model fits traits where diversification occurs most rapidly early in a lineage and slows as the lineage approaches the present, so that subclades tend to retain their differences through time. This is consistent with a clade radiating adaptively into a fixed set of niches and has been used as evidence of niche-filling modes of evolution (Harmon et al., 2010; Cooper and Purvis, 2010). The model has three parameters, the Brownian rate parameter, <span class="math inline">\(\sigma^2\)</span>, the state of the root at time zero, <span class="math inline">\(X(0)\)</span>, and the rate of change parameter, <span class="math inline">\(a\)</span>. <code>fitContinuous</code> estimates <span class="math inline">\(\sigma^2\)</span>, <span class="math inline">\(X(0)\)</span> and <span class="math inline">\(a\)</span>. Note that if <span class="math inline">\(a\)</span> is close to zero then evolution is approximately Brownian. Note that although many people report a values when reporting the results of fitting an Early Burst model, it is often more intuitive to report the rate half-life, <span class="math inline">\(t_{\frac{1}{2}}\)</span> (Slater and Pennell, 2014). This is calculated as:</p>
+<p><span class="math inline">\(t_{\frac{1}{2}} = \frac{log(2)}{|a|}\)</span></p>
+<p>It can be interpreted as the time it takes for the rate of evolution of the trait to halve.</p>
+</div>
+</div>
+<div id="fitting-the-models-using-fitcontinuous" class="section level2">
+<h2><span class="header-section-number">6.3</span> Fitting the models using <code>fitContinuous</code></h2>
+<p>First we will fit a Brownian motion (BM) model to log(body mass):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">BM &lt;-<span class="st"> </span><span class="kw">fitContinuous</span>(mytree, <span class="kw">log</span>(mydata[,<span class="st">&quot;BodySize_kg&quot;</span>]), <span class="dt">model =</span> <span class="kw">c</span>(<span class="st">&quot;BM&quot;</span>))</code></pre></div>
+<p>To look at the output type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">BM</code></pre></div>
+<pre><code>## GEIGER-fitted comparative model of continuous data
+##  fitted &#39;BM&#39; model parameters:
+##  sigsq = 2.207510
+##  z0 = 4.304110
+## 
+##  model summary:
+##  log-likelihood = -98.541855
+##  AIC = 201.083711
+##  AICc = 201.583711
+##  free parameters = 2
+## 
+## Convergence diagnostics:
+##  optimization iterations = 100
+##  failed iterations = 0
+##  frequency of best fit = 1.00
+## 
+##  object summary:
+##  &#39;lik&#39; -- likelihood function
+##  &#39;bnd&#39; -- bounds for likelihood search
+##  &#39;res&#39; -- optimization iteration summary
+##  &#39;opt&#39; -- maximum likelihood parameter estimates</code></pre>
+<p>The maximum likelihood estimates (<code>lnL</code>) of the model parameters are found near the top of the output. In a Brownian motion (BM) model we estimate the Brownian rate parameter, <span class="math inline">\(\sigma^2\)</span> or <code>sigsq</code> in the output above, which is <code>2.208</code> and the value of the trait at the root of the tree, <span class="math inline">\(X(0)\)</span> or <code>z0</code> in the output above, which is <code>4.304</code>. Other useful things in the output are the maximum-likelihood estimate (<code>lnL</code>) of the model (log-likelihood), the Akaike Information Criterion (<code>AIC</code>), sample-size corrected AIC (<code>AICc</code>) and the number of model parameters (free parameters) also known as <span class="math inline">\(k\)</span> in the literature. We will return to the AIC values below.</p>
+<p>To fit an Ornstein-Uhlenbeck model to log(body mass) we only need to change the model in the formula we used above:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">OU &lt;-<span class="st"> </span><span class="kw">fitContinuous</span>(mytree, <span class="kw">log</span>(mydata[,<span class="st">&quot;BodySize_kg&quot;</span>]), <span class="dt">model =</span> <span class="kw">c</span>(<span class="st">&quot;OU&quot;</span>))</code></pre></div>
+<p>To look at the output type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">OU</code></pre></div>
+<pre><code>## GEIGER-fitted comparative model of continuous data
+##  fitted &#39;OU&#39; model parameters:
+##  alpha = 2.718282
+##  sigsq = 60.982371
+##  z0 = 3.203383
+## 
+##  model summary:
+##  log-likelihood = -70.843002
+##  AIC = 147.686004
+##  AICc = 148.729482
+##  free parameters = 3
+## 
+## Convergence diagnostics:
+##  optimization iterations = 100
+##  failed iterations = 0
+##  frequency of best fit = 0.10
+## 
+##  object summary:
+##  &#39;lik&#39; -- likelihood function
+##  &#39;bnd&#39; -- bounds for likelihood search
+##  &#39;res&#39; -- optimization iteration summary
+##  &#39;opt&#39; -- maximum likelihood parameter estimates</code></pre>
+<p>As above, the maximum likelihood estimates (<code>lnL</code>) of the model parameters are found near the top of the output. In an Ornstein-Uhlenbeck (OU) model we estimate the Brownian rate parameter, <span class="math inline">\(\sigma^2\)</span> or <code>sigsq</code> in the output above, the value of the trait at the root of the tree, <span class="math inline">\(X(0)\)</span> or <code>z0</code> in the output above, and the selection strength parameter, <span class="math inline">\(\alpha\)</span> or <code>alpha</code> in the output above. As <code>alpha = 2.718</code> here, it suggests that there is evolution towards a body mass optimum.</p>
+<p>Finally, to fit an Early Burst (EB) model to log(body mass):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">EB &lt;-<span class="st"> </span><span class="kw">fitContinuous</span>(mytree, <span class="kw">log</span>(mydata[,<span class="st">&quot;BodySize_kg&quot;</span>]), <span class="dt">model =</span> <span class="kw">c</span>(<span class="st">&quot;EB&quot;</span>))</code></pre></div>
+<p>To look at the output type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">EB</code></pre></div>
+<pre><code>## GEIGER-fitted comparative model of continuous data
+##  fitted &#39;EB&#39; model parameters:
+##  a = -0.000001
+##  sigsq = 2.208172
+##  z0 = 4.304129
+## 
+##  model summary:
+##  log-likelihood = -98.542390
+##  AIC = 203.084780
+##  AICc = 204.128258
+##  free parameters = 3
+## 
+## Convergence diagnostics:
+##  optimization iterations = 100
+##  failed iterations = 0
+##  frequency of best fit = 0.57
+## 
+##  object summary:
+##  &#39;lik&#39; -- likelihood function
+##  &#39;bnd&#39; -- bounds for likelihood search
+##  &#39;res&#39; -- optimization iteration summary
+##  &#39;opt&#39; -- maximum likelihood parameter estimates</code></pre>
+<p>As above, the maximum likelihood estimates (<code>lnL</code>) of the model parameters are found near the top of the output. In an Early Burst (EB) model we estimate the Brownian rate parameter, <span class="math inline">\(\sigma^2\)</span> or <code>sigsq</code> in the output above, the value of the trait at the root of the tree, <span class="math inline">\(X(0)\)</span> or <code>z0</code> in the output above, and the rate of change parameter, <span class="math inline">\(a\)</span>. Here <code>a</code> is very close to 0 indicating that the rate of log(body mass) evolution in magical creatures has not decreased through time.</p>
+<p>We can also extract the rate half-life, <span class="math inline">\(t_{\frac{1}{2}}\)</span>, for this model as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">log</span>(<span class="dv">2</span>)/<span class="kw">abs</span>(EB$opt$a)</code></pre></div>
+<pre><code>## [1] 693144.2</code></pre>
+<p>For these data, the rate half-life is almost 700,000 time units, much greater than the total time represented on the tree! This means over the course of magical creature evolution, body size rate has not halved (yet).</p>
+<div id="comparing-models-of-evolution" class="section level3">
+<h3><span class="header-section-number">6.3.1</span> Comparing models of evolution</h3>
+<p>Often we want to know which of the models fits our variable best. We can use <code>fitContinuous</code> to fit the models we are interested in and can then compare them using AIC. We can extract the AICs from the models we fitted above as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">BM$opt$aic</code></pre></div>
+<pre><code>## [1] 201.0837</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">OU$opt$aic</code></pre></div>
+<pre><code>## [1] 147.686</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">EB$opt$aic</code></pre></div>
+<pre><code>## [1] 203.0848</code></pre>
+<p>The “best” model is the one with the smallest AIC, in this case the OU model. There is much debate about how big of a difference in AIC values can be classed as substantial improvement to a model fit (it usually ranges from 2-10 AIC units). Generally we use 4 units, so EB probably doesn’t fit substantially better than BM, but OU is substantially better than BM and EB.</p>
+<p>Alternatively we can use <span class="math inline">\(\Delta\)</span>AIC or AIC weights to compare our models using the following code and the <code>geiger</code> function <code>aicw</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">aic.scores &lt;-<span class="st"> </span><span class="kw">setNames</span>(<span class="kw">c</span>(BM$opt$aic, OU$opt$aic, EB$opt$aic), <span class="kw">c</span>(<span class="st">&quot;BM&quot;</span>,<span class="st">&quot;OU&quot;</span>,<span class="st">&quot;EB&quot;</span>))
+<span class="kw">aicw</span>(aic.scores)</code></pre></div>
+<pre><code>##         fit    delta            w
+## BM 201.0837 53.39771 2.540009e-12
+## OU 147.6860  0.00000 1.000000e+00
+## EB 203.0848 55.39878 9.339176e-13</code></pre>
+<p><code>aicw</code> outputs the AIC (<code>fit</code>), <span class="math inline">\(\Delta\)</span>AIC (<code>delta</code>) and AIC weights (<code>w</code>) for each of the models we fitted. The best model is the model with <span class="math inline">\(\Delta\)</span>AIC = 0 or with AICw closest to 1. Using <span class="math inline">\(\Delta\)</span>AIC we can conclude that the OU model is the best fit to the data.</p>
+</div>
+<div id="problems-with-convergence-and-bounds" class="section level3">
+<h3><span class="header-section-number">6.3.2</span> Problems with convergence and bounds</h3>
+<p>Above we have mentioned the default bounds on each parameter. Sometimes these need to be changed because the model will not converge. This happens when the likelihood surface has long flat ridges that cause the likelihood search to get “stuck” (this is particularly common under the OU model). You can change bounds with the bounds argument in <code>fitContinuous</code>. Several bounds can be given at a time e.g. <code>bounds = list(sigsq = c(0, 0.1), alpha = c(0, 1))</code> would constrain both the <span class="math inline">\(\sigma^2\)</span> and <span class="math inline">\(\alpha\)</span> parameters.</p>
+<p>For example, if an OU model keeps getting stuck you could try changing the lower bound on <span class="math inline">\(\alpha\)</span>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">OU &lt;-<span class="st"> </span><span class="kw">fitContinuous</span>(<span class="dt">phy =</span> mytree, <span class="dt">dat =</span> <span class="kw">log</span>(mydata[,<span class="st">&quot;BodySize_kg&quot;</span>]), <span class="dt">model =</span> <span class="kw">c</span>(<span class="st">&quot;OU&quot;</span>), 
+                    <span class="dt">bounds =</span> <span class="kw">list</span>(<span class="dt">alpha =</span> <span class="kw">c</span>(<span class="fl">0.01</span>, <span class="dv">1</span>)))</code></pre></div>
+<p>This example gives a warning message because <code>alpha</code> is over 1, so when we make the upper bound smaller the method ends up giving us this value instead because it’s as close to 1 as we are allowing the model to go.</p>
+<hr />
+</div>
+</div>
+<div id="references-2" class="section level2">
+<h2><span class="header-section-number">6.4</span> References</h2>
+<ul>
+<li>Blomberg, S. P., T. Garland, and A. R. Ives. 2003. Testing for phylogenetic signal in comparative data: behavioral traits are more labile. Evolution 57:717–745.</li>
+<li>Butler, M. A. and A. A. King. 2004. Phylogenetic comparative analysis: a modeling approach for adaptive evolution. The American Naturalist 164:683–695.</li>
+<li>Cavalli-Sforza, L. L. and A. W. Edwards. 1967. Phylogenetic analysis. models and estimation procedures. American Journal of Human Genetics 19:233.</li>
+<li>Cooper, N., R. P. Freckleton, and W. Jetz. 2011. Phylogenetic conservatism of environmental niches in mammals. Proceedings of the Royal Society B: Biological Sciences 278:2384–2391.</li>
+<li>Cooper, N. and A. Purvis. 2010. Body size evolution in mammals: complexity in tempo and mode.The American Naturalist 175:727–738.</li>
+<li>Cooper, N., Thomas, G.H., Venditti, C., Meade, A. &amp; Freckleton, R.P. (2016b) A cautionary note on the use of ornstein-uhlenbeck models in macroevolutionary studies. Biological Journal of the Linnaean Society</li>
+<li>Felsenstein, J. 1973. Maximum likelihood and minimum-steps methods for estimating evolutionary trees from data on discrete characters. Systematic Biology 22:240–249.</li>
+<li>Freckleton, R. P. and P. H. Harvey. 2006. Detecting non-brownian trait evolution in adaptive radiations. PLoS Biology 4:e373.</li>
+<li>Hansen, T. F. 1997. Stabilizing selection and the comparative analysis of adaptation. Evolution Pages 1341–1351.</li>
+<li>Harmon, L. J., J. B. Losos, T. Jonathan Davies, R. G. Gillespie, J. L. Gittleman, W. Bryan Jennings, K. H. Kozak, M. A. McPeek, F. Moreno-Roark, T. J. Near, et al. 2010. Early bursts of body size and shape evolution are rare in comparative data. Evolution 64:2385–2396.</li>
+<li>Lande, R. 1976. Natural selection and random genetic drift in phenotypic evolution. Evolution 30:314–334.</li>
+<li>Slater, G. J., L. J. Harmon, and M. E. Alfaro. 2012. Integrating fossils with molecular phylogenies improves inference of trait evolution. Evolution 66:3931–3944.</li>
+<li>Slater, G. J. and M.W. Pennell. 2014. Robust regression and posterior predictive simulation increase power to detect early bursts of trait evolution. Systematic Biology 63:293–308.</li>
+</ul>
 
 </div>
 </div>
@@ -304,8 +478,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-
-<a href="what-you-need-to-be-able-to-do-in-r-before-you-start.html" class="navigation navigation-next navigation-unique" aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="phylogenetic-generalised-least-squares-pgls-in-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="macroevolutionary-models-in-r-part-2-discrete-traits.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -333,7 +507,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/nhcooper123/TeachingMaterials/MSc_Museum/MacroModule/edit/master/index.Rmd",
+"link": "https://github.com/nhcooper123/TeachingMaterials/MSc_Museum/MacroModule/edit/master/05_MacroModelsinR_Cont.Rmd",
 "text": "Edit"
 },
 "download": ["macro-module.pdf"],

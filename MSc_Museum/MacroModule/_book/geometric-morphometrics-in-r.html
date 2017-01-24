@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Methods in Macroecology and Macroevolution</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="Practical notes for macro module">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Methods in Macroecology and Macroevolution" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Practical notes for macro module" />
+  <meta name="github-repo" content="nhcooper123/TeachingMaterials/MSc_Museum/MacroModule" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Methods in Macroecology and Macroevolution" />
+  
+  <meta name="twitter:description" content="Practical notes for macro module" />
+  
+
+<meta name="author" content="Natalie Cooper (natalie.cooper@nhm.ac.uk)">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="macroevolutionary-models-in-r-part-2-discrete-traits.html">
+
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Macro Methods Module</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Methods in Macroecology and Macroevolution: Module outline</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#module-aims"><i class="fa fa-check"></i><b>1.1</b> Module Aims</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#datasets-and-practical-handouts"><i class="fa fa-check"></i><b>1.2</b> Datasets and practical handouts</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#timetable"><i class="fa fa-check"></i><b>1.3</b> Timetable</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#assessment"><i class="fa fa-check"></i><b>1.4</b> Assessment</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="what-you-need-to-be-able-to-do-in-r-before-you-start.html"><a href="what-you-need-to-be-able-to-do-in-r-before-you-start.html"><i class="fa fa-check"></i><b>2</b> What you need to be able to do in R before you start</a><ul>
+<li class="chapter" data-level="2.1" data-path="what-you-need-to-be-able-to-do-in-r-before-you-start.html"><a href="what-you-need-to-be-able-to-do-in-r-before-you-start.html#installing-r-and-rstudio"><i class="fa fa-check"></i><b>2.1</b> Installing R (and RStudio)</a></li>
+<li class="chapter" data-level="2.2" data-path="what-you-need-to-be-able-to-do-in-r-before-you-start.html"><a href="what-you-need-to-be-able-to-do-in-r-before-you-start.html#setting-the-working-directory"><i class="fa fa-check"></i><b>2.2</b> Setting the working directory</a></li>
+<li class="chapter" data-level="2.3" data-path="what-you-need-to-be-able-to-do-in-r-before-you-start.html"><a href="what-you-need-to-be-able-to-do-in-r-before-you-start.html#using-a-script"><i class="fa fa-check"></i><b>2.3</b> Using a script</a></li>
+<li class="chapter" data-level="2.4" data-path="what-you-need-to-be-able-to-do-in-r-before-you-start.html"><a href="what-you-need-to-be-able-to-do-in-r-before-you-start.html#installing-and-loading-extra-packages-in-r"><i class="fa fa-check"></i><b>2.4</b> Installing and loading extra packages in R</a></li>
+<li class="chapter" data-level="2.5" data-path="what-you-need-to-be-able-to-do-in-r-before-you-start.html"><a href="what-you-need-to-be-able-to-do-in-r-before-you-start.html#loading-and-viewing-your-data-in-r"><i class="fa fa-check"></i><b>2.5</b> Loading and viewing your data in R</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="diversity-indices-in-r.html"><a href="diversity-indices-in-r.html"><i class="fa fa-check"></i><b>3</b> Diversity Indices in R</a><ul>
+<li class="chapter" data-level="3.1" data-path="diversity-indices-in-r.html"><a href="diversity-indices-in-r.html#what-are-diversity-indices"><i class="fa fa-check"></i><b>3.1</b> What are diversity indices?</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="diversity-indices-in-r.html"><a href="diversity-indices-in-r.html#alpha-beta-and-gamma-diversity-whittaker-1960-1972"><i class="fa fa-check"></i><b>3.1.1</b> <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\gamma\)</span> diversity (Whittaker 1960, 1972)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="diversity-indices-in-r.html"><a href="diversity-indices-in-r.html#practical-example-using-pokemon"><i class="fa fa-check"></i><b>3.2</b> Practical example using Pokemon…</a></li>
+<li class="chapter" data-level="3.3" data-path="diversity-indices-in-r.html"><a href="diversity-indices-in-r.html#species-diversity-indices"><i class="fa fa-check"></i><b>3.3</b> Species diversity indices</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="diversity-indices-in-r.html"><a href="diversity-indices-in-r.html#alpha-diversity"><i class="fa fa-check"></i><b>3.3.1</b> <span class="math inline">\(\alpha\)</span> diversity</a></li>
+<li class="chapter" data-level="3.3.2" data-path="diversity-indices-in-r.html"><a href="diversity-indices-in-r.html#beta-diversity"><i class="fa fa-check"></i><b>3.3.2</b> <span class="math inline">\(\beta\)</span> diversity</a></li>
+<li class="chapter" data-level="3.3.3" data-path="diversity-indices-in-r.html"><a href="diversity-indices-in-r.html#gamma-diversity"><i class="fa fa-check"></i><b>3.3.3</b> <span class="math inline">\(\gamma\)</span> diversity</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="diversity-indices-in-r.html"><a href="diversity-indices-in-r.html#species-accumulation-curves-colwell-coddington-1994"><i class="fa fa-check"></i><b>3.4</b> Species accumulation curves (Colwell &amp; Coddington 1994)</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="diversity-indices-in-r.html"><a href="diversity-indices-in-r.html#practical-example"><i class="fa fa-check"></i><b>3.4.1</b> Practical example</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="diversity-indices-in-r.html"><a href="diversity-indices-in-r.html#references"><i class="fa fa-check"></i><b>3.5</b> References</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="diversity-indices-in-r.html"><a href="diversity-indices-in-r.html#extra-reading"><i class="fa fa-check"></i><b>3.5.1</b> Extra reading</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="visualising-phylogenies-in-r.html"><a href="visualising-phylogenies-in-r.html"><i class="fa fa-check"></i><b>4</b> Visualising phylogenies in R</a><ul>
+<li class="chapter" data-level="4.1" data-path="visualising-phylogenies-in-r.html"><a href="visualising-phylogenies-in-r.html#loading-your-phylogeny-and-data-into-r"><i class="fa fa-check"></i><b>4.1</b> Loading your phylogeny and data into R</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="visualising-phylogenies-in-r.html"><a href="visualising-phylogenies-in-r.html#reading-in-a-phylogeny-from-a-file"><i class="fa fa-check"></i><b>4.1.1</b> Reading in a phylogeny from a file</a></li>
+<li class="chapter" data-level="4.1.2" data-path="visualising-phylogenies-in-r.html"><a href="visualising-phylogenies-in-r.html#reading-in-a-phylogeny-that-is-already-built-into-r"><i class="fa fa-check"></i><b>4.1.2</b> Reading in a phylogeny that is already built into R</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="visualising-phylogenies-in-r.html"><a href="visualising-phylogenies-in-r.html#basic-tree-viewing-in-r"><i class="fa fa-check"></i><b>4.2</b> Basic tree viewing in R</a></li>
+<li class="chapter" data-level="4.3" data-path="visualising-phylogenies-in-r.html"><a href="visualising-phylogenies-in-r.html#adding-trait-data-to-trees-in-r"><i class="fa fa-check"></i><b>4.3</b> Adding trait data to trees in R</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="visualising-phylogenies-in-r.html"><a href="visualising-phylogenies-in-r.html#ancestral-state-reconstructions-on-continuous-data"><i class="fa fa-check"></i><b>4.3.1</b> Ancestral state reconstructions on continuous data</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="visualising-phylogenies-in-r.html"><a href="visualising-phylogenies-in-r.html#phylomorphospace-plots-in-r"><i class="fa fa-check"></i><b>4.4</b> Phylomorphospace plots in R</a></li>
+<li class="chapter" data-level="4.5" data-path="visualising-phylogenies-in-r.html"><a href="visualising-phylogenies-in-r.html#phylogenies-and-maps"><i class="fa fa-check"></i><b>4.5</b> Phylogenies and maps!</a></li>
+<li class="chapter" data-level="4.6" data-path="visualising-phylogenies-in-r.html"><a href="visualising-phylogenies-in-r.html#a-new-package-for-visualising-trees-ggtree"><i class="fa fa-check"></i><b>4.6</b> A new package for visualising trees: ggtree</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html"><i class="fa fa-check"></i><b>5</b> Phylogenetic Generalised Least Squares (PGLS) in R</a><ul>
+<li class="chapter" data-level="5.1" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#preparing-for-the-analysis"><i class="fa fa-check"></i><b>5.1</b> Preparing for the analysis</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#load-the-required-packages"><i class="fa fa-check"></i><b>5.1.1</b> Load the required packages</a></li>
+<li class="chapter" data-level="5.1.2" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#reading-and-checking-your-data-in-r"><i class="fa fa-check"></i><b>5.1.2</b> Reading and checking your data in R</a></li>
+<li class="chapter" data-level="5.1.3" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#reading-and-checking-your-phylogeny-in-r"><i class="fa fa-check"></i><b>5.1.3</b> Reading and checking your phylogeny in R</a></li>
+<li class="chapter" data-level="5.1.4" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#manipulating-your-data-and-phylogeny-in-r"><i class="fa fa-check"></i><b>5.1.4</b> Manipulating your data and phylogeny in R</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#ordinary-least-squares-ols-regression"><i class="fa fa-check"></i><b>5.2</b> Ordinary least squares (OLS) regression</a></li>
+<li class="chapter" data-level="5.3" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#phylogenetic-generalized-least-squares-models-pgls"><i class="fa fa-check"></i><b>5.3</b> Phylogenetic generalized least squares models (PGLS)</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#likelihood-profiles-for-lambda-in-pgls-models"><i class="fa fa-check"></i><b>5.3.1</b> Likelihood profiles for <span class="math inline">\(\lambda\)</span> in PGLS models</a></li>
+<li class="chapter" data-level="5.3.2" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#model-diagnostics-for-pgls-models"><i class="fa fa-check"></i><b>5.3.2</b> Model diagnostics for PGLS models</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#estimating-phylogenetic-signal-for-one-variable"><i class="fa fa-check"></i><b>5.4</b> Estimating phylogenetic signal for one variable</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#pagels-lambda-pagel-19971999-freckleton-et-al-2002"><i class="fa fa-check"></i><b>5.4.1</b> Pagel’s <span class="math inline">\(\lambda\)</span> (Pagel 1997/1999, Freckleton et al 2002)</a></li>
+<li class="chapter" data-level="5.4.2" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#blombergs-k-blomberg-et-al-2003"><i class="fa fa-check"></i><b>5.4.2</b> Blomberg’s K (Blomberg et al 2003)</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#references-1"><i class="fa fa-check"></i><b>5.5</b> References</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#extra-reading-1"><i class="fa fa-check"></i><b>5.5.1</b> Extra Reading</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="macroevolutionary-models-in-r-part-1-continuous-traits.html"><a href="macroevolutionary-models-in-r-part-1-continuous-traits.html"><i class="fa fa-check"></i><b>6</b> Macroevolutionary models in R: Part 1 - continuous traits</a><ul>
+<li class="chapter" data-level="6.1" data-path="macroevolutionary-models-in-r-part-1-continuous-traits.html"><a href="macroevolutionary-models-in-r-part-1-continuous-traits.html#preparing-for-the-analysis-1"><i class="fa fa-check"></i><b>6.1</b> Preparing for the analysis</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="macroevolutionary-models-in-r-part-1-continuous-traits.html"><a href="macroevolutionary-models-in-r-part-1-continuous-traits.html#load-packages-read-in-the-data-and-the-tree"><i class="fa fa-check"></i><b>6.1.1</b> Load packages, read in the data and the tree</a></li>
+<li class="chapter" data-level="6.1.2" data-path="macroevolutionary-models-in-r-part-1-continuous-traits.html"><a href="macroevolutionary-models-in-r-part-1-continuous-traits.html#modify-the-tree-and-data-so-they-can-be-used-in-the-analyses."><i class="fa fa-check"></i><b>6.1.2</b> Modify the tree and data so they can be used in the analyses.</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="macroevolutionary-models-in-r-part-1-continuous-traits.html"><a href="macroevolutionary-models-in-r-part-1-continuous-traits.html#models-of-continuous-trait-evolution"><i class="fa fa-check"></i><b>6.2</b> Models of continuous trait evolution</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="macroevolutionary-models-in-r-part-1-continuous-traits.html"><a href="macroevolutionary-models-in-r-part-1-continuous-traits.html#the-brownian-motion-bm-model"><i class="fa fa-check"></i><b>6.2.1</b> The Brownian motion (BM model)</a></li>
+<li class="chapter" data-level="6.2.2" data-path="macroevolutionary-models-in-r-part-1-continuous-traits.html"><a href="macroevolutionary-models-in-r-part-1-continuous-traits.html#the-ornstein-uhlenbeck-ou-model"><i class="fa fa-check"></i><b>6.2.2</b> The Ornstein-Uhlenbeck (OU) model</a></li>
+<li class="chapter" data-level="6.2.3" data-path="macroevolutionary-models-in-r-part-1-continuous-traits.html"><a href="macroevolutionary-models-in-r-part-1-continuous-traits.html#the-early-burst-eb-model"><i class="fa fa-check"></i><b>6.2.3</b> The Early Burst (EB) model</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="macroevolutionary-models-in-r-part-1-continuous-traits.html"><a href="macroevolutionary-models-in-r-part-1-continuous-traits.html#fitting-the-models-using-fitcontinuous"><i class="fa fa-check"></i><b>6.3</b> Fitting the models using <code>fitContinuous</code></a><ul>
+<li class="chapter" data-level="6.3.1" data-path="macroevolutionary-models-in-r-part-1-continuous-traits.html"><a href="macroevolutionary-models-in-r-part-1-continuous-traits.html#comparing-models-of-evolution"><i class="fa fa-check"></i><b>6.3.1</b> Comparing models of evolution</a></li>
+<li class="chapter" data-level="6.3.2" data-path="macroevolutionary-models-in-r-part-1-continuous-traits.html"><a href="macroevolutionary-models-in-r-part-1-continuous-traits.html#problems-with-convergence-and-bounds"><i class="fa fa-check"></i><b>6.3.2</b> Problems with convergence and bounds</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="macroevolutionary-models-in-r-part-1-continuous-traits.html"><a href="macroevolutionary-models-in-r-part-1-continuous-traits.html#references-2"><i class="fa fa-check"></i><b>6.4</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html"><i class="fa fa-check"></i><b>7</b> Macroevolutionary models in R: Part 2 - discrete traits</a><ul>
+<li class="chapter" data-level="7.1" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#preparing-for-the-analysis-2"><i class="fa fa-check"></i><b>7.1</b> Preparing for the analysis</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#load-packages-read-in-the-data-and-the-tree-1"><i class="fa fa-check"></i><b>7.1.1</b> Load packages, read in the data and the tree</a></li>
+<li class="chapter" data-level="7.1.2" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#modify-the-tree-and-data-so-they-can-be-used-in-the-analyses.-1"><i class="fa fa-check"></i><b>7.1.2</b> Modify the tree and data so they can be used in the analyses.</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#fitting-models-of-evolution-to-discrete-data-regime-dependent-evolution"><i class="fa fa-check"></i><b>7.2</b> Fitting models of evolution to discrete data (regime dependent evolution)</a></li>
+<li class="chapter" data-level="7.3" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#models-of-discrete-trait-evolution"><i class="fa fa-check"></i><b>7.3</b> Models of discrete trait evolution</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#mk1-all-rates-equal-er"><i class="fa fa-check"></i><b>7.3.1</b> Mk1 – all rates equal (ER)</a></li>
+<li class="chapter" data-level="7.3.2" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#mk-symmetric-rates-sym"><i class="fa fa-check"></i><b>7.3.2</b> Mk – symmetric rates (SYM)</a></li>
+<li class="chapter" data-level="7.3.3" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#mk-all-rates-different-ard"><i class="fa fa-check"></i><b>7.3.3</b> Mk – All Rates Different (ARD)</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#fitting-the-models-using-fitdiscrete"><i class="fa fa-check"></i><b>7.4</b> Fitting the models using <code>fitDiscrete</code></a></li>
+<li class="chapter" data-level="7.5" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#ancestral-state-reconstructions"><i class="fa fa-check"></i><b>7.5</b> Ancestral state reconstructions</a></li>
+<li class="chapter" data-level="7.6" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#fitting-models-using-ouwie"><i class="fa fa-check"></i><b>7.6</b> Fitting models using <code>OUwie</code></a><ul>
+<li class="chapter" data-level="7.6.1" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#multi-rate-brownian-motion-bms"><i class="fa fa-check"></i><b>7.6.1</b> Multi-rate Brownian motion (BMS)</a></li>
+<li class="chapter" data-level="7.6.2" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#multi-peak-ou-models"><i class="fa fa-check"></i><b>7.6.2</b> Multi-peak OU models</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#references-3"><i class="fa fa-check"></i><b>7.7</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html"><i class="fa fa-check"></i><b>8</b> Geometric Morphometrics in R</a><ul>
+<li class="chapter" data-level="8.1" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#a-quick-introduction-to-geometric-morphometrics"><i class="fa fa-check"></i><b>8.1</b> A quick introduction to geometric morphometrics</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#what-is-morphometrics"><i class="fa fa-check"></i><b>8.1.1</b> What is morphometrics?</a></li>
+<li class="chapter" data-level="8.1.2" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#landmarks"><i class="fa fa-check"></i><b>8.1.2</b> Landmarks</a></li>
+<li class="chapter" data-level="8.1.3" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#collecting-data-and-adding-landmarks"><i class="fa fa-check"></i><b>8.1.3</b> Collecting data and adding landmarks</a></li>
+<li class="chapter" data-level="8.1.4" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#measurement-error"><i class="fa fa-check"></i><b>8.1.4</b> Measurement error</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#a-practical-example-using-r"><i class="fa fa-check"></i><b>8.2</b> A practical example using R</a></li>
+<li class="chapter" data-level="8.3" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#gathering-the-data"><i class="fa fa-check"></i><b>8.3</b> Gathering the data</a></li>
+<li class="chapter" data-level="8.4" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#digitising-adding-landmarks-and-curves"><i class="fa fa-check"></i><b>8.4</b> Digitising (adding landmarks and curves)</a></li>
+<li class="chapter" data-level="8.5" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#reading-in-your-data-and-plotting-it"><i class="fa fa-check"></i><b>8.5</b> Reading in your data and plotting it</a></li>
+<li class="chapter" data-level="8.6" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#generalised-procrustes-superimposition-gpa"><i class="fa fa-check"></i><b>8.6</b> Generalised Procrustes Superimposition (GPA)</a></li>
+<li class="chapter" data-level="8.7" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#principal-components-and-plotting"><i class="fa fa-check"></i><b>8.7</b> Principal components and plotting</a></li>
+<li class="chapter" data-level="8.8" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#statistical-analyses-of-geometric-morphometric-datasets"><i class="fa fa-check"></i><b>8.8</b> Statistical analyses of geometric morphometric datasets</a></li>
+<li class="chapter" data-level="8.9" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#regression"><i class="fa fa-check"></i><b>8.9</b> Regression</a></li>
+<li class="chapter" data-level="8.10" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#multivariate-regression"><i class="fa fa-check"></i><b>8.10</b> Multivariate regression</a></li>
+<li class="chapter" data-level="8.11" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#anova"><i class="fa fa-check"></i><b>8.11</b> ANOVA</a></li>
+<li class="chapter" data-level="8.12" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#manova"><i class="fa fa-check"></i><b>8.12</b> MANOVA</a></li>
+<li class="chapter" data-level="8.13" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#resources-for-learning-geometric-morphometrics"><i class="fa fa-check"></i><b>8.13</b> Resources for learning geometric morphometrics</a></li>
+<li class="chapter" data-level="8.14" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#references-4"><i class="fa fa-check"></i><b>8.14</b> References</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/nhcooper123/TeachingMaterials/MSc_Museum/MacroModule" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Methods in Macroecology and Macroevolution</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="geometric-morphometrics-in-r" class="section level1">
+<h1><span class="header-section-number">Practical 8</span> Geometric Morphometrics in R</h1>
+<p>The aims of this practical are to learn how to use R to perform simple geometric morphometrics analyses.</p>
+<p>We will use a data set of ventral skull views for eight species of toothed whales (Odontoceti) taken by a previous Masters student (Dan Bell). Download the eight photographs, and place them into your working directory.</p>
+<p><strong>REMEMBER</strong></p>
+<ul>
+<li>Download all of the data for the practical into a folder somewhere on your computer.</li>
+<li>Set your working directory to this folder.</li>
+<li>Start a new script for this practical.</li>
+</ul>
+<p>You will also need to install the following packages:</p>
+<ul>
+<li><code>geomorph</code></li>
+</ul>
+<hr />
+<div id="a-quick-introduction-to-geometric-morphometrics" class="section level2">
+<h2><span class="header-section-number">8.1</span> A quick introduction to geometric morphometrics</h2>
+<div id="what-is-morphometrics" class="section level3">
+<h3><span class="header-section-number">8.1.1</span> What is morphometrics?</h3>
+<p>Morphometrics is the study of shape and size and their relationships with other variables. Shape is generally defined as <strong>the property of an object invariant under scaling, rotation, or translation</strong>.</p>
+<p>To compare shapes, we need to define which bits of the shape to compare, for example if comparing the shapes of two cups, we might compare the width of their handles, or their diameters. In biological objects, structures that are recognizable and comparable among specimens are said to be <strong>homologous</strong>. Homologous points include things like the points that two bones join together. We need homologous points to compare the shapes of biological specimens. In morphometrics these points are referred to as <strong>landmarks</strong>.</p>
+</div>
+<div id="landmarks" class="section level3">
+<h3><span class="header-section-number">8.1.2</span> Landmarks</h3>
+<p>There are three types of landmarks (defined by Bookstein 1991) <strong>Type I</strong> landmarks are truly homologous features that can be defined by a single point, for example where bone plates join, or small knobs on the bone. <strong>Type II</strong> landmarks include things like maximum of curvature of a feature, such as the most extreme part of the curve of the skull. <strong>Type III</strong> landmarks can also be referred to as <strong>pseudolandmarks</strong> or <strong>semi-landmarks</strong>. These are constructed geometrically, rather than being identifiable as unique points on the structure. For example, the centre of a series of points, or the intersection of a line joining up several landmarks.</p>
+<p>Type I landmarks are generally favoured as they are easier to put in the right place and give more information about the development of the feature. However, often we also use some Type II and Type III landmarks. Choosing landmarks carefully is really important - they need to be informative for the question you are trying to answer and capture the variation in shape that you are interested in. They should also be easy to identify and repeat to reduce measurement error.</p>
+</div>
+<div id="collecting-data-and-adding-landmarks" class="section level3">
+<h3><span class="header-section-number">8.1.3</span> Collecting data and adding landmarks</h3>
+<p>You can collect morphometric data in lots of ways - sometimes using measurements with calipers or rulers, but more often these days by taking digital photographs or 3D scans of specimens. Traditional morphometrics uses measurements, whereas <strong>geometric morphometrics</strong> uses geometric coordinates (x and y for 2D; x, y and z for 3D) instead. Geometric morphometrics have become a really popular way to investigate morphology (size and shape), and are a particularly useful tool when using museum specimen data. So we’ll be using geometric morphometric tools in this practical.</p>
+<p>Once you have your data (photos or scans), you need to add landmarks to them - the relationships between the landmarks will then be used in your shape analyses. You can do this in lots of different programs including R (see practical example below).</p>
+</div>
+<div id="measurement-error" class="section level3">
+<h3><span class="header-section-number">8.1.4</span> Measurement error</h3>
+<p>As with all analyses there are lots of sources of error in the collection of morphometric data. Think about what some of these might be, and see if you can think of ways to test whether they are a problem with your data. See <a href="http://lib.du.ac.ir/documents/10157/60743/Morphometrics+With+R.pdf">Claude</a> <em>pages 63-65</em> and <a href="http://link.springer.com/article/10.1007/s00427-016-0537-4">Fruciano 2016</a> for some ideas. We will not cover this today but it is very important to consider if you use these methods in your projects.</p>
+<hr />
+</div>
+</div>
+<div id="a-practical-example-using-r" class="section level2">
+<h2><span class="header-section-number">8.2</span> A practical example using R</h2>
+<p>For this practical we are going to use the package <code>geomorph</code>. You will need to <strong>install it in R</strong> for this example to work. Load the package using <code>library</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(geomorph)</code></pre></div>
+<p>You will also need to <strong>set the working directory</strong> before you start.</p>
+</div>
+<div id="gathering-the-data" class="section level2">
+<h2><span class="header-section-number">8.3</span> Gathering the data</h2>
+<p>We are going to use a data set of ventral skull views for eight species of toothed whales (Odontoceti) taken by a previous Masters student (Dan Bell). Download the eight photographs, and place them into your working directory.</p>
+<p>We will need to make a list of the files so we can tell <code>geomorph</code> what we want to work with. For this we can use the helpful R function <code>list.files</code>. This is better than manually typing a list as we avoid typos.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">myphotos &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="dt">pattern =</span> <span class="st">&quot;.jpg&quot;</span>)
+<span class="co"># This tells R to look in your working directory for files with .jpg in their names</span>
+
+<span class="co"># Look at the output</span>
+myphotos</code></pre></div>
+<p>This is just so you can see what <code>list.files</code> does. We will do this within the digitising function below rather than using <code>myphotos</code>.</p>
+</div>
+<div id="digitising-adding-landmarks-and-curves" class="section level2">
+<h2><span class="header-section-number">8.4</span> Digitising (adding landmarks and curves)</h2>
+<p>You’ll hear people use the word <strong>digitise</strong> to mean a bunch of different things (especially within museums!). In geometric morphometrics we mean the process of going from photos/scans to having coordinate data we can play around with, i.e. adding landmarks to our photos/scans. We will use the following landmarks for this practical:</p>
+<div class="figure">
+<img src="whale.png" alt="Whale landmarks example" />
+<p class="caption">Whale landmarks example</p>
+</div>
+<ol style="list-style-type: decimal">
+<li>Midway point between the occipital condyles.</li>
+<li>Suture where lacrimojugal and basoccipital bones join on left hand side (indentation).</li>
+<li>Most extreme point of the zygomatic arch on left hand side.</li>
+<li>Anterior edge of on rearmost tooth on left hand side.</li>
+<li>Tip of the rostrum.</li>
+<li>Same as 4 but right hand side.</li>
+<li>Same as 3 but right hand side.</li>
+<li>Same as 2 but right hand side.</li>
+</ol>
+<p>Digitizing is pretty simple to do in <code>geomorph</code>, though some people prefer to use package <a href="https://imagej.nih.gov/ij/download.html">ImageJ</a> or <a href="http://life.bio.sunysb.edu/morph/soft-dataacq.html">tpsdig</a> which are more user friendly. Either way, you use the mouse to click on the photos at the point you want each landmark to be. Curves/semi-landmarks are added after the initial digitisation step. Today we will use <code>geomorph</code> and we won’t add any curves.</p>
+<p>Remember you need to add landmarks in the <strong>same order</strong> for each specimen, and don’t forget to add the <strong>scale</strong> before you start. This step can be a time consuming process in a real analysis.</p>
+<p><strong>You will need to use the normal R Console, NOT RStudio for this stage to work</strong></p>
+<p>We are going to use the function <code>digitize2d</code> to add eight landmarks (<code>nlandmarks = 8</code>) to our list of photos (<code>list.files(pattern = &quot;.jpg&quot;)</code>) and output these into a TPS (thin plate spline) file called <code>whale_landmarks.tps</code>. The scale bars in each photo are 10cm long so we add <code>scale = 10</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">digitize2d</span>(<span class="dt">filelist =</span> <span class="kw">list.files</span>(<span class="dt">pattern =</span> <span class="st">&quot;.jpg&quot;</span>),
+           <span class="dt">nlandmarks =</span> <span class="dv">8</span>, <span class="dt">tpsfile =</span> <span class="st">&quot;whale_landmarks.tps&quot;</span>, <span class="dt">scale =</span> <span class="dv">10</span>)</code></pre></div>
+<p>Note that if you stop this procedure and then start again you may get the following error message: <code>Filelist does not contain the same specimens as TPS file.</code> To fix this you just need to delete <code>whale_landmarks.tps</code> from your working directory and then start again.</p>
+<p>If you don’t get an error you should find that a picture of the first specimen appears in your plotting window, and the message:</p>
+<p><code>Only 1 scale measure provided. Will use scale = 10  for all specimens. Digitizing specimen 1 in filelist  Set scale = 10</code></p>
+<p>To digitize proceed as follows. You will need to repeat this for <em>each</em> photo.</p>
+<ol style="list-style-type: decimal">
+<li>Set the scale by clicking on the start and end of the black scale bar.</li>
+<li>The console will then display <code>Keep scale (y/n)?</code>. If you’re happy press <code>y</code>, if not press <code>n</code> and try again. The function will check you are happy after every landmark you place. This gets a bit tedious but means you don’t have to start over if you click somewhere by accident.</li>
+<li>Select landmark 1, click <code>y</code> when happy, then select landmark 2 and so on…</li>
+<li>Once you’ve finished one specimen, you’ll be asked if you want to continue to the next specimen. Again you need to press <code>y</code> to continue.</li>
+<li>Continue until all eight are digitised</li>
+</ol>
+<p>Each specimen should end up looking something like this once the scale and landmarks have been added.</p>
+<div class="figure">
+<img src="whale3.png" alt="What your photos should look like post digitising" />
+<p class="caption">What your photos should look like post digitising</p>
+</div>
+<p>Don’t get too worried about digitising accurately today. This is just an example so you get a chance to try this out. You’ll notice that some landmarks are a lot harder than others to place accurately each time, bringing us back to thinking about potential sources of error.</p>
+<p>If you’re having trouble with this step you can use the TPS file I made earlier.</p>
+</div>
+<div id="reading-in-your-data-and-plotting-it" class="section level2">
+<h2><span class="header-section-number">8.5</span> Reading in your data and plotting it</h2>
+<p>We can now read in our TPS file to look at our landmarks using <code>readland.tps</code>. I’ve asked it to add the specimen identities from the file names so we know which species is which by using <code>specID = &quot;ID&quot;</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">landmarks &lt;-<span class="st"> </span><span class="kw">readland.tps</span>(<span class="st">&quot;whale_landmarks.tps&quot;</span>, <span class="dt">specID =</span> <span class="st">&quot;ID&quot;</span>)</code></pre></div>
+<pre><code>## [1] &quot;Specimen names extracted from line ID=&quot;</code></pre>
+<p>We can look at all the landmarks by typing:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">landmarks</code></pre></div>
+<p>To save printing them all out I’ll just look at the landmarks for the first specimen (<em>Pseudorca crassidens</em>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">landmarks[, , <span class="dv">1</span>]</code></pre></div>
+<pre><code>##           [,1]      [,2]
+## [1,]  4.917176 31.136595
+## [2,] 16.863048 49.815389
+## [3,] 27.883473 60.925151
+## [4,] 58.264038 42.370924
+## [5,] 82.299223 33.057950
+## [6,] 58.449630 19.410289
+## [7,] 26.973126  1.064303
+## [8,] 16.559808 11.230374</code></pre>
+<p>These are the Y and X coordinates of each point <em>after scaling</em>. They are scaled in the units of your scale bar (in the case mm). If you look at the TPS file itself in a text editor you’ll see the numbers are different and there is information on the length of the scale bars.</p>
+<p>We can plot the coordinates for the <em>Pseudorca</em> (specimen 1) and the <em>Tursiops truncatus</em> (specimen 8) specimens as follows.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(landmarks[, , <span class="dv">1</span>], <span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">xlab =</span> <span class="st">&quot;X coordinate&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Y coordinate&quot;</span>)
+<span class="kw">points</span>(landmarks[, , <span class="dv">8</span>], <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">pch =</span> <span class="dv">16</span>)</code></pre></div>
+<p><img src="macro-module_files/figure-html/unnamed-chunk-146-1.png" width="672" /></p>
+<p>You can see that although both filled the screen when you were digitising, <em>Tursiops</em> (in red) is much smaller. This is why this scaling step is so important.</p>
+</div>
+<div id="generalised-procrustes-superimposition-gpa" class="section level2">
+<h2><span class="header-section-number">8.6</span> Generalised Procrustes Superimposition (GPA)</h2>
+<p>If you plot all the landmarks at the same time you’ll notice it’s a bit of a mess.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(landmarks[, <span class="dv">2</span>, ] ~<span class="st"> </span>landmarks[, <span class="dv">1</span>, ], <span class="dt">xlab =</span> <span class="st">&quot;X coordinate&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;Y coordinate&quot;</span>)</code></pre></div>
+<p><img src="macro-module_files/figure-html/unnamed-chunk-147-1.png" width="672" /></p>
+<p>The skulls vary in their placement in each photo - in some they cover the whole area, in others they are further forward or sideways, some are at a slight angle (rotation). Also as we already noted, there is a difference in the <em>size</em> of the skulls. Remember that we are interested in comparing shapes and shape is defined as <strong>the property of an object invariant under scaling, rotation, or translation</strong>. So if we want to compare shapes, we need to remove these differences.</p>
+<p>Luckily a number of solutions exist. We are going to use Generalised Procrustes Superimposition/Analysis (GPA). GPA is a way to remove rotation, translation and scaling differences among specimens so they can be compared. GPA translates all specimens to the origin (0,0,0), scales them to unit-centroid size, and optimally rotates them (using a least-squares criterion) until the coordinates of corresponding points align as closely as possible. The resulting aligned Procrustes coordinates represent the shape of each specimen.</p>
+<p>This is hard to explain in words, but there are a number of excellent graphical explanations in the references below.</p>
+<p>Remember that you <em>never</em> do a morphometrics analysis on the raw landmarks, they must always be aligned first or the results are meaningless. Also remember that you need to align <strong>all</strong> the specimens you want to use in your analysis at the same time, or again your analysis will be meaningless.</p>
+<p>To do this in R we just need one line of code and the function <code>gpagen</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gpa.landmarks &lt;-<span class="st"> </span><span class="kw">gpagen</span>(landmarks)</code></pre></div>
+<pre><code>## 
+  |                                                                       
+  |                                                                 |   0%
+  |                                                                       
+  |=============                                                    |  20%
+  |                                                                       
+  |==========================                                       |  40%
+  |                                                                       
+  |=================================================================| 100%</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot the Procrusted coordinates </span>
+<span class="kw">plot</span>(gpa.landmarks)</code></pre></div>
+<p><img src="macro-module_files/figure-html/unnamed-chunk-148-1.png" width="672" /></p>
+<p>Note that now we have the average for each landmark as a large black point (the <strong>centroid</strong> - centroid just means the centre point of a sample of points/shapes), and the aligned landmarks for each specimen scattered around these in grey. You can see some landmarks are very variable, while others are more constant across our specimens.</p>
+<p><code>gpagen</code> not only outputs a nice plot of the specimens and their mean shape, but also the superimposed coordinates (<code>$coords</code>), the shape variables as principal components (<code>$pc.scores) and the centroid size of the specimens (</code>Csize`).</p>
+</div>
+<div id="principal-components-and-plotting" class="section level2">
+<h2><span class="header-section-number">8.7</span> Principal components and plotting</h2>
+<p>We now have superimposed coordinates we can use to further investigate shape variation among our specimens. But there’s a bit of a problem. If you think back to the assumptions we make when we do statistics, we often talk about how the variables should not be correlated. Here our points are highly correlated, e.g. the tip of the rostrum can only be in front of the back of the tooth row, so where the tooth row is in each specimen will be closely related to where the rostrum tip is. It can also be a bit hard to interpret analyses with all the landmarks included - how do we interpret a result that suggests a small increase in rostrum tip and a decrease in occipital condyle? To solve these issues we can use principal components analysis (PCA).</p>
+<p>PCA finds the axes of greatest variation in a dataset and removes correlations among variables. It does this while still preserving the distances between data points - i.e. it doesn’t distort variation in the data. The outputs of PCA are principal components scores, which we can think of as “shape variables”. These PC scores tend to be used in any further analysis and are <strong>independent components of shape variation</strong>. Note that PCA is essentially just a rotation of the data, nothing more complicated than that. Again I recommend checking out the graphical examples in the texts below to help with your understanding.</p>
+<p>Let’s extract principal components scores for our cetacean dataset using <code>plotTangentSpace</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pca.landmarks &lt;-<span class="st"> </span><span class="kw">plotTangentSpace</span>(gpa.landmarks$coords, <span class="dt">label =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p><img src="macro-module_files/figure-html/unnamed-chunk-149-1.png" width="672" /> This produces a plot of the first two principal components (PC1 and PC2), with dotted lines at the origin and each specimen represented by a point. Point 1 is <em>Pseudorca</em>. Note that what we are now looking at is called a “shape space” or “morphospace”. <strong>Each point represents a shape</strong> not an individual landmark.</p>
+<p>To help with interpretation, two grids are also plotted. These represent the shape at the points indicated by the arrows. These are called thin plate splines, because we imagine the landmarks for the average/centroid shape were engraved on a thin plate of metal, and then deformed to get to the shapes at the indicated points. The grid to the left shows lots of deformation, with a widening of the back of the skull, and a shortening of the rostrum. The grid to the right shows deformation with the tooth rows being closer together and some stretching at the front to enlarge the rostrum. Specimens with high PC1 scores look more like the right hand grid, specimens with low PC1 scores look more like the left hand grid.</p>
+<p>We can look at these grids individually, and for the other PC axes. The code below will show us the grids for the min and max PC1 and PC2. Note that I have included <code>mag = 2</code> which magnifies the differences two fold to make them easier to see.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Make plotting window into 2 x 2 grid</span>
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))
+<span class="co"># Reduce margins around the plots</span>
+<span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))
+
+<span class="co"># Select reference shape - the centroid of our Procrustes aligned coordinates</span>
+ref &lt;-<span class="st"> </span><span class="kw">mshape</span>(gpa.landmarks$coords)
+
+<span class="co"># Plot each min/max PC scores in comparison to the reference shape (ref) </span>
+<span class="co"># with two fold magnification (mag = 2)</span>
+<span class="kw">plotRefToTarget</span>(ref, pca.landmarks$pc.shapes$PC1min, <span class="dt">mag =</span> <span class="dv">2</span>)
+<span class="kw">plotRefToTarget</span>(ref, pca.landmarks$pc.shapes$PC1max, <span class="dt">mag =</span> <span class="dv">2</span>)
+<span class="kw">plotRefToTarget</span>(ref, pca.landmarks$pc.shapes$PC2min, <span class="dt">mag =</span> <span class="dv">2</span>)
+<span class="kw">plotRefToTarget</span>(ref, pca.landmarks$pc.shapes$PC2max, <span class="dt">mag =</span> <span class="dv">2</span>)</code></pre></div>
+<p><img src="macro-module_files/figure-html/unnamed-chunk-150-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Put graphics parameters back to default settings</span>
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))
+<span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>))</code></pre></div>
+<p>Another way of interpreting PC scores is to extract the <strong>loadings</strong> for each PC using <code>$rotation</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pca.landmarks$rotation</code></pre></div>
+<pre><code>##               PC1         PC2          PC3         PC4         PC5
+##  [1,]  0.07782421  0.01145886  0.010978946 -0.12118065  0.32956627
+##  [2,] -0.01685081 -0.02976881  0.237243510  0.15913484 -0.24917185
+##  [3,] -0.15165444 -0.35228327  0.131087366 -0.10282307 -0.11148058
+##  [4,] -0.26942003 -0.35780565  0.109069813  0.24333031  0.05325473
+##  [5,]  0.02198347  0.09012823 -0.784843674  0.20706328 -0.32689443
+##  [6,] -0.38619090  0.02990721 -0.053598578 -0.37241810 -0.21857694
+##  [7,] -0.23106590  0.32574319  0.026774344  0.21696513  0.37957940
+##  [8,] -0.16544042 -0.11557074 -0.153305579 -0.15718351  0.22318585
+##  [9,]  0.57879930 -0.30554975  0.024395464 -0.13850038  0.01307704
+## [10,] -0.03727420 -0.06838202 -0.212667343  0.08987931 -0.04242125
+## [11,] -0.23534726  0.36264877  0.184749068  0.19886767  0.17186361
+## [12,]  0.23024040  0.16755749 -0.072168034  0.17366534 -0.03227954
+## [13,]  0.02898251  0.23494160  0.398172339 -0.04393459 -0.61107235
+## [14,]  0.37752351 -0.03750461  0.165149456  0.42261250  0.12908818
+## [15,] -0.08952190 -0.36708762  0.008686147 -0.21645738  0.15536103
+## [16,]  0.26741245  0.41156713 -0.019723245 -0.55902070  0.13692083
+##                PC6         PC7         PC8
+##  [1,]  0.732980006 -0.08204786 -0.14042273
+##  [2,] -0.034715583  0.36122405 -0.05381482
+##  [3,]  0.007281487  0.43550615  0.06763819
+##  [4,]  0.158610967 -0.27638033  0.52594604
+##  [5,] -0.041646343 -0.07954720  0.05088173
+##  [6,]  0.149383964 -0.19916231 -0.56878480
+##  [7,] -0.128169667  0.36715675 -0.20297068
+##  [8,] -0.023489409 -0.04840285  0.04503906
+##  [9,]  0.054086438  0.03069426 -0.12319514
+## [10,]  0.037088383  0.41908435 -0.10530240
+## [11,] -0.117978102 -0.24845750  0.03602596
+## [12,]  0.071908482 -0.21206921 -0.03395509
+## [13,]  0.045527030 -0.13851486  0.01994870
+## [14,] -0.161022728 -0.14265102 -0.34854652
+## [15,] -0.552080849 -0.28478974 -0.20316407
+## [16,] -0.197764076  0.09835732  0.36740417</code></pre>
+<p>This shows how each of our landmarks contributes to each PC. Larger numbers mean the landmark has more influence on the PC, negative numbers show a negative effect. These can be hard to interpret but worth looking at. Remember each landmark has an X and a Y coordinate, so <code>[1,]</code> is the X coordinate of the occipital condyle landmark, and <code>[2,]</code> is the Y coordinate.</p>
+<p>Here for example I’d suggest that PC1 is most heavily influenced by <code>[9,]</code>, the X coordinate of landmark 5, the tip of the rostrum. It’s a positive number so it means species with high values for PC1 have an elongated rostrum. See if you can interpret these results further. It is often best to look at the loadings and the plots above to help with this.</p>
+<p>Another important output to look at is the summary of the PC axes:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(pca.landmarks)</code></pre></div>
+<pre><code>## 
+## PC Summary
+## 
+## Importance of components:
+##                           PC1     PC2     PC3     PC4     PC5      PC6
+## Standard deviation     0.1013 0.05135 0.02514 0.01454 0.01177 0.006117
+## Proportion of Variance 0.7361 0.18906 0.04531 0.01517 0.00994 0.002680
+## Cumulative Proportion  0.7361 0.92521 0.97052 0.98568 0.99562 0.998300
+##                             PC7       PC8
+## Standard deviation     0.004865 2.022e-17
+## Proportion of Variance 0.001700 0.000e+00
+## Cumulative Proportion  1.000000 1.000e+00</code></pre>
+<p>This shows the variance on each PC axis (eigenvalues). Note that the first PC has the highest proportion of the variance (73.61%). PCs will always decrease in the amount of variance explained because of the way PCA works - it takes the axis that explains most variation first. Often people will only use PCs in their later analyses that sum up to 95% or 99% of the cumulative variance, because the later PCs are not really explaining much of the variation in shapes. In this example we’d probably use PC1, PC2 and PC3.</p>
+<p>Finally, to extract the PC scores for each specimen we use <code>$pc.scores</code>. We’ll use these for all further analysis.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pca.landmarks$pc.scores</code></pre></div>
+<pre><code>##                                               PC1         PC2
+## Pseudorca_crassidens_1961.6.14.3.jpg  -0.22279912 -0.04990209
+## Sousa_plumbea_70.1506.jpg              0.04682774  0.00149044
+## Stenella_attenuata_1960.6.24.1.jpg     0.02583791  0.02145984
+## Stenella_coeruleoalba_1938.2.5.1.jpg   0.03489668 -0.04967601
+## Stenella_longirostris_1965.8.25.2.jpg  0.12500666 -0.07385256
+## Steno_bredanensis_345c.jpg             0.03680834  0.04572532
+## Tursiops_aduncus_1903.9.12.1.jpg      -0.01687868  0.05079845
+## Tursiops_truncatus_1920.8.14.1.jpg    -0.02969952  0.05395661
+##                                                 PC3          PC4
+## Pseudorca_crassidens_1961.6.14.3.jpg  -0.0006377733 -0.001028733
+## Sousa_plumbea_70.1506.jpg             -0.0417508568  0.009805947
+## Stenella_attenuata_1960.6.24.1.jpg     0.0169424424  0.030573421
+## Stenella_coeruleoalba_1938.2.5.1.jpg   0.0008958266  0.001192135
+## Stenella_longirostris_1965.8.25.2.jpg  0.0118958174 -0.010838289
+## Steno_bredanensis_345c.jpg            -0.0043676504 -0.014536311
+## Tursiops_aduncus_1903.9.12.1.jpg       0.0408120527 -0.006280211
+## Tursiops_truncatus_1920.8.14.1.jpg    -0.0237898587 -0.008887959
+##                                                PC5           PC6
+## Pseudorca_crassidens_1961.6.14.3.jpg   0.006797670 -7.155469e-05
+## Sousa_plumbea_70.1506.jpg              0.004444909 -8.639956e-03
+## Stenella_attenuata_1960.6.24.1.jpg     0.004876528  5.166614e-03
+## Stenella_coeruleoalba_1938.2.5.1.jpg  -0.023181651 -2.208889e-03
+## Stenella_longirostris_1965.8.25.2.jpg  0.009562895  4.327237e-03
+## Steno_bredanensis_345c.jpg             0.011629308 -1.185434e-03
+## Tursiops_aduncus_1903.9.12.1.jpg      -0.004195661 -6.823983e-03
+## Tursiops_truncatus_1920.8.14.1.jpg    -0.009933998  9.435965e-03
+##                                                 PC7          PC8
+## Pseudorca_crassidens_1961.6.14.3.jpg   0.0003870485 0.000000e+00
+## Sousa_plumbea_70.1506.jpg             -0.0036414119 2.081668e-17
+## Stenella_attenuata_1960.6.24.1.jpg     0.0017329304 2.059984e-17
+## Stenella_coeruleoalba_1938.2.5.1.jpg   0.0049957672 1.387779e-17
+## Stenella_longirostris_1965.8.25.2.jpg -0.0037522008 2.992398e-17
+## Steno_bredanensis_345c.jpg             0.0086445940 3.122502e-17
+## Tursiops_aduncus_1903.9.12.1.jpg      -0.0046789921 1.908196e-17
+## Tursiops_truncatus_1920.8.14.1.jpg    -0.0036877353 2.341877e-17</code></pre>
+</div>
+<div id="statistical-analyses-of-geometric-morphometric-datasets" class="section level2">
+<h2><span class="header-section-number">8.8</span> Statistical analyses of geometric morphometric datasets</h2>
+<p>This is the point at which geometric morphometrics gets really exciting - it’s the point that you get to answer whatever question you started out with! It’s also the point at which the number of different options becomes very large. Two common analyses are regressions and multivariate ANOVA (MANOVA). Regressions are used when you have continuous explanatory variables, for example if you want to see if body size is correlated with shape. MANOVA (or ANOVA) is used when you have categorical explanatory variables, for example if you want to see if habitat type is correlated with shape.</p>
+<p>At this stage of the analysis we often add a new dataset containing our variables of interest. For simplicity we will just invent some data as follows.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create new dataframe with PC scores, body size and diet.</span>
+<span class="co"># Body sizes from a random normal distribution with mean of 100 and sd of 25.</span>
+<span class="co"># Diet assigned as squid to first two specimens and fish to others.</span>
+mydata &lt;-<span class="st"> </span><span class="kw">data.frame</span>(pca.landmarks$pc.scores, 
+                     <span class="dt">body.size =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">8</span>, <span class="dt">mean =</span> <span class="dv">100</span>, <span class="dt">sd =</span> <span class="dv">25</span>), 
+                     <span class="dt">diet =</span> <span class="kw">c</span>(<span class="kw">rep</span>(<span class="st">&quot;squid&quot;</span>,<span class="dv">2</span>), <span class="kw">rep</span>(<span class="st">&quot;fish&quot;</span>, <span class="dv">6</span>)) 
+                     )
+<span class="co"># Look at the data</span>
+<span class="kw">str</span>(mydata)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    8 obs. of  10 variables:
+##  $ PC1      : num  -0.2228 0.0468 0.0258 0.0349 0.125 ...
+##  $ PC2      : num  -0.0499 0.00149 0.02146 -0.04968 -0.07385 ...
+##  $ PC3      : num  -0.000638 -0.041751 0.016942 0.000896 0.011896 ...
+##  $ PC4      : num  -0.00103 0.00981 0.03057 0.00119 -0.01084 ...
+##  $ PC5      : num  0.0068 0.00444 0.00488 -0.02318 0.00956 ...
+##  $ PC6      : num  -7.16e-05 -8.64e-03 5.17e-03 -2.21e-03 4.33e-03 ...
+##  $ PC7      : num  0.000387 -0.003641 0.001733 0.004996 -0.003752 ...
+##  $ PC8      : num  0.00 2.08e-17 2.06e-17 1.39e-17 2.99e-17 ...
+##  $ body.size: num  74.6 83.2 105.7 138.7 117.8 ...
+##  $ diet     : Factor w/ 2 levels &quot;fish&quot;,&quot;squid&quot;: 2 2 1 1 1 1 1 1</code></pre>
+</div>
+<div id="regression" class="section level2">
+<h2><span class="header-section-number">8.9</span> Regression</h2>
+<p>Regressions are done in the same way as usual.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Fit model</span>
+model1 &lt;-<span class="st"> </span><span class="kw">lm</span>(PC1 ~<span class="st"> </span>body.size, <span class="dt">data =</span> mydata)
+
+<span class="co"># Assess assumptions</span>
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
+<span class="kw">plot</span>(model1)</code></pre></div>
+<p><img src="macro-module_files/figure-html/unnamed-chunk-155-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))
+
+<span class="co"># Look at overall model significance</span>
+<span class="kw">anova</span>(model1)</code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: PC1
+##           Df   Sum Sq   Mean Sq F value Pr(&gt;F)
+## body.size  1 0.025005 0.0250051  3.2016 0.1238
+## Residuals  6 0.046861 0.0078102</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Look at parameters and their significance</span>
+<span class="kw">summary</span>(model1)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = PC1 ~ body.size, data = mydata)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.15345 -0.04245  0.02122  0.05001  0.09331 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept) -0.269043   0.153574  -1.752    0.130
+## body.size    0.002677   0.001496   1.789    0.124
+## 
+## Residual standard error: 0.08838 on 6 degrees of freedom
+## Multiple R-squared:  0.3479, Adjusted R-squared:  0.2393 
+## F-statistic: 3.202 on 1 and 6 DF,  p-value: 0.1238</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot</span>
+<span class="kw">plot</span>(PC1 ~<span class="st"> </span>body.size, <span class="dt">data =</span> mydata, <span class="dt">pch =</span> <span class="dv">16</span>)
+<span class="kw">abline</span>(model1)</code></pre></div>
+<p><img src="macro-module_files/figure-html/unnamed-chunk-155-2.png" width="672" /></p>
+<ul>
+<li>Can you remember how to interpret these results?</li>
+<li>Why will your results be different to mine?</li>
+</ul>
+</div>
+<div id="multivariate-regression" class="section level2">
+<h2><span class="header-section-number">8.10</span> Multivariate regression</h2>
+<p>Multivariate regression is the same as univariate regression but is used where you have multiple response variables, i.e. if we wanted to include PC1 and PC2 in the analysis. It’s quite easy to implement, we just use <code>cbind</code> to bind together the different variables we want to include. Note that assumption checking isn’t possible, nor is plotting in the usual way. Additionally, <code>summary(model)</code> presents the parameters for each response variable separately (e.g. <code>PC1 ~ body.size</code> then <code>PC2 ~ body.size</code>) so is not particularly useful here.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Fit model</span>
+model2 &lt;-<span class="st"> </span><span class="kw">lm</span>(<span class="kw">cbind</span>(mydata$PC1,mydata$PC2) ~<span class="st"> </span>body.size, <span class="dt">data =</span> mydata)
+
+<span class="co"># Look at overall model significance</span>
+<span class="kw">anova</span>(model2)</code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+##             Df  Pillai approx F num Df den Df Pr(&gt;F)
+## (Intercept)  1 0.00000   0.0000      2      5 1.0000
+## body.size    1 0.46734   2.1934      2      5 0.2071
+## Residuals    6</code></pre>
+<ul>
+<li>Can you guess how to interpret these results given what you know about regression?</li>
+</ul>
+</div>
+<div id="anova" class="section level2">
+<h2><span class="header-section-number">8.11</span> ANOVA</h2>
+<p>ANOVAs are done in the same way as usual.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Fit model</span>
+model3 &lt;-<span class="st"> </span><span class="kw">lm</span>(PC1 ~<span class="st"> </span>diet, <span class="dt">data =</span> mydata)
+
+<span class="co"># Assess assumptions</span>
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))
+<span class="kw">plot</span>(model3)</code></pre></div>
+<p><img src="macro-module_files/figure-html/unnamed-chunk-157-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))
+
+<span class="co"># Look at overall model significance</span>
+<span class="kw">anova</span>(model3)</code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+## Response: PC1
+##           Df   Sum Sq  Mean Sq F value Pr(&gt;F)
+## diet       1 0.020644 0.020644  2.4182 0.1709
+## Residuals  6 0.051222 0.008537</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Look at parameters and their significance</span>
+<span class="kw">summary</span>(model3)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = PC1 ~ diet, data = mydata)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.134813 -0.049412  0.001039  0.029529  0.134813 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)  0.02933    0.03772   0.778    0.466
+## dietsquid   -0.11731    0.07544  -1.555    0.171
+## 
+## Residual standard error: 0.0924 on 6 degrees of freedom
+## Multiple R-squared:  0.2873, Adjusted R-squared:  0.1685 
+## F-statistic: 2.418 on 1 and 6 DF,  p-value: 0.1709</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot</span>
+<span class="kw">plot</span>(PC1 ~<span class="st"> </span>diet, <span class="dt">data =</span> mydata, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;lightblue&quot;</span>, <span class="st">&quot;springgreen&quot;</span>))</code></pre></div>
+<p><img src="macro-module_files/figure-html/unnamed-chunk-157-2.png" width="672" /></p>
+<ul>
+<li>Can you remember how to interpret these results?</li>
+</ul>
+</div>
+<div id="manova" class="section level2">
+<h2><span class="header-section-number">8.12</span> MANOVA</h2>
+<p>MANOVA is the same as ANOVA but is used where you have multiple response variables, i.e. if we wanted to include PC1 and PC2 in the analysis. It’s quite easy to implement, we just use <code>cbind</code> to bind together the different variables we want to include. Note that assumption checking isn’t possible for MANOVA in R at this time.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Fit model</span>
+model4 &lt;-<span class="st"> </span><span class="kw">manova</span>(<span class="kw">cbind</span>(mydata$PC1,mydata$PC2) ~<span class="st"> </span>diet, <span class="dt">data =</span> mydata)
+
+<span class="co"># Look at overall model significance</span>
+<span class="kw">anova</span>(model4)</code></pre></div>
+<pre><code>## Analysis of Variance Table
+## 
+##             Df  Pillai approx F num Df den Df Pr(&gt;F)
+## (Intercept)  1 0.00000   0.0000      2      5 1.0000
+## diet         1 0.37191   1.4803      2      5 0.3127
+## Residuals    6</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Look at parameters and their significance</span>
+<span class="kw">summary</span>(model4)</code></pre></div>
+<pre><code>##           Df  Pillai approx F num Df den Df Pr(&gt;F)
+## diet       1 0.37191   1.4803      2      5 0.3127
+## Residuals  6</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot </span>
+<span class="kw">plot</span>(<span class="kw">cbind</span>(mydata$PC1,mydata$PC2) ~<span class="st"> </span>diet, <span class="dt">data =</span> mydata, <span class="dt">col =</span> <span class="kw">c</span>(<span class="st">&quot;lightblue&quot;</span>, <span class="st">&quot;springgreen&quot;</span>))</code></pre></div>
+<p><img src="macro-module_files/figure-html/unnamed-chunk-158-1.png" width="672" /></p>
+<ul>
+<li>Can you guess how to interpret these results given what you know about ANOVA?</li>
+</ul>
+<p>Of course the results here are nonsensical as we made u pthe data, but hopefully this gives you an idea of how we might use geometric morphometrics data in analyses. Other common analyses look at disparity of groups, convergence and divergence, evolution of shape and shape space etc.</p>
+<hr />
+</div>
+<div id="resources-for-learning-geometric-morphometrics" class="section level2">
+<h2><span class="header-section-number">8.13</span> Resources for learning geometric morphometrics</h2>
+<ol style="list-style-type: decimal">
+<li><p>I highly advise getting hold of this book (<a href="http://store.elsevier.com/Geometric-Morphometrics-for-Biologists/Miriam-Zelditch/isbn-9780123869036/">Zelditch et al. 2012</a>) from the library and reading the first few chapters, plus any chapters later in the book that are relevant to the analyses you will be doing. Don’t panic too much about the maths or the equations, just try to get a general understanding of what each method is doing, especially GPA and PCA.</p></li>
+<li><p>Another useful book is <a href="http://lib.du.ac.ir/documents/10157/60743/Morphometrics+With+R.pdf">Morphometrics with R</a> by Julien Claude. It is a little harder to read than Zelditch, but more focused on practical analysis in R. Note that I’d generally advise using the <a href="https://cran.r-project.org/web/packages/geomorph/geomorph.pdf">geomorph</a> package (see links below) to do these analyses in R, but many of the principles are the same in this book which uses other methods. It’s available as a <a href="http://lib.du.ac.ir/documents/10157/60743/Morphometrics+With+R.pdf">PDF</a>.</p></li>
+<li><p>David Polly has an excellent <a href="http://www.indiana.edu/~g562/">set of lectures</a> about all basic topics in geometric morphometrics including PCA and GPA. Note that these use Mathematica not R. There are also slides <a href="http://www.indiana.edu/~g562/PBDB2013/">here</a> from an R based course with a basic workflow for an <a href="http://www.indiana.edu/~g562/PBDB2013/Day%202B%20-%20Geometric%20Morphometrics%20in%20R.pdf">analysis using geomorph</a>. I’d recommend starting any project with a quick flick through these <a href="http://www.indiana.edu/~g562/PBDB2013/Day%202A%20-%20Introduction%20to%20Geometric%20Morphometrics.pdf">intro slides</a></p></li>
+<li><p>Emma Sherratt has put together an excellent tutorial/vignette for <a href="http://www.public.iastate.edu/~dcadams/PDFPubs/Quick%20Guide%20to%20Geomorph%20v2.0.pdf">geomorph</a> from inputting landmarks to complex analyses.</p></li>
+<li><p>The <a href="https://cran.r-project.org/web/packages/geomorph/geomorph.pdf">geomorph vignette</a> may also be helpful for more complex analyses.</p></li>
+<li><p>For error checking, take a look at <a href="http://link.springer.com/article/10.1007/s00427-016-0537-4">Fruciano 2016</a>, a review of the subject in Evolution. Also take a look at <a href="http://lib.du.ac.ir/documents/10157/60743/Morphometrics+With+R.pdf">Claude</a> pages 63-65 for ideas on sources of error.</p></li>
+</ol>
+</div>
+<div id="references-4" class="section level2">
+<h2><span class="header-section-number">8.14</span> References</h2>
+<ul>
+<li>Zelditch, M.L., Swiderski, D.L., and Sheets, H.D.. 2012. Geometric Morphometrics for Biologists: A Primer. Academic Press.</li>
+<li>Claude, Julien. Morphometrics with R. Springer Science &amp; Business Media, 2008.</li>
+<li>Fruciano, C. Measurement error in geometric morphometrics. 2016. Development genes and evolution 226:139-158.</li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="macroevolutionary-models-in-r-part-2-discrete-traits.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/nhcooper123/TeachingMaterials/MSc_Museum/MacroModule/edit/master/7_GeometricMorphometricsinR.Rmd",
+"text": "Edit"
+},
+"download": ["macro-module.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

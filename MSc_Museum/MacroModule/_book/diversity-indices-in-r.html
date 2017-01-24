@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="what-you-need-to-be-able-to-do-in-r-before-you-start.html">
+<link rel="prev" href="what-you-need-to-be-able-to-do-in-r-before-you-start.html">
+<link rel="next" href="visualising-phylogenies-in-r.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -242,61 +242,310 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Methods in Macroecology and Macroevolution</h1>
-<h4 class="author"><em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></h4>
-<h4 class="date"><em>February 2017</em></h4>
+<div id="diversity-indices-in-r" class="section level1">
+<h1><span class="header-section-number">Practical 3</span> Diversity Indices in R</h1>
+<p>The aims of this practical are to learn how to use R to estimate diversity indices and species accumulation curves. You will need some of these functions to complete your paleoecology assessment.</p>
+<p>We will be using some made up data about Pokemon sightings within the Museum.</p>
+<p><strong>REMEMBER</strong></p>
+<ul>
+<li>Download all of the data for the practical into a folder somewhere on your computer.</li>
+<li>Set your working directory to this folder.</li>
+<li>Start a new script for this practical.</li>
+</ul>
+<p>You will also need to install the following packages:</p>
+<ul>
+<li><code>vegan</code></li>
+<li><code>picante</code></li>
+</ul>
+<hr />
+<div id="what-are-diversity-indices" class="section level2">
+<h2><span class="header-section-number">3.1</span> What are diversity indices?</h2>
+<p>A diversity index is a measure of the “diversity” of an area. <em>Diversity</em> could be measured in terms of the numbers of species (or higher taxonomic groupings like genera, families, phyla), or other metrics such as number of haplotypes if you’re interested in genetic diversity, or number of functional groups for studies of functional diversity.</p>
+<p>Many diversity indices also account for how evenly spread these different types are. For example, they identify whether there are there five species with 10 individuals of each (even), or five species with one species with 96 individuals and four species with one individual each (uneven). These differences in evenness may be as important for ecosystem function as the number of species.</p>
+<p>There are about a million different diversity indices (OK this is a slight exaggeration but there are a lot check out the <a href="https://cran.r-project.org/web/packages/vegan/vegan.pdf">vegan package</a> vignette and search for “diversity”), and different people prefer different measures for different questions. Amusingly the <code>vegan</code> helpfile for the function <code>diversify</code> states “these indices are all very closely related (Hill 1973), and there is no reason to despise one more than others (but if you are a graduate student, don’t drag me in, but obey your Professor’s orders)”.</p>
+<div id="alpha-beta-and-gamma-diversity-whittaker-1960-1972" class="section level3">
+<h3><span class="header-section-number">3.1.1</span> <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\gamma\)</span> diversity (Whittaker 1960, 1972)</h3>
+<ul>
+<li><span class="math inline">\(\alpha\)</span> diversity is the mean species diversity in sites or habitats at a local scale.</li>
+<li><span class="math inline">\(\beta\)</span> diversity is turnover in <span class="math inline">\(\alpha\)</span> diversity among different sites.</li>
+<li><span class="math inline">\(\gamma\)</span> gamma diversity is diversity at the landscape level.</li>
+</ul>
+<p>For example, if we count the species in Hyde Park and Green Park, we’d have a measure of <span class="math inline">\(\alpha\)</span> diversity for each. <span class="math inline">\(\beta\)</span> diversity would measure the difference between species found in Hyde Park and those found in Green Park. <span class="math inline">\(\gamma\)</span> diversity would be all the species found across London.</p>
+<p><span class="math inline">\(\beta\)</span> diversity is the hardest to measure, and there are far more metrics for measuring this than any others.</p>
 </div>
-<div id="methods-in-macroecology-and-macroevolution-module-outline" class="section level1">
-<h1><span class="header-section-number">Practical 1</span> Methods in Macroecology and Macroevolution: Module outline</h1>
-<div id="module-aims" class="section level2">
-<h2><span class="header-section-number">1.1</span> Module Aims</h2>
-<p>The aim of this module is to introduce you to some of the cutting-edge methods being used in macroecology and macroevolution, with particular focus on work being done right now at the Museum. Rather than concentrating on learning theory through lectures, the module will introduce you to various ways we collect, analyse and interpret macro-scale data with a large emphasis on practical work, mostly using R.</p>
 </div>
-<div id="datasets-and-practical-handouts" class="section level2">
-<h2><span class="header-section-number">1.2</span> Datasets and practical handouts</h2>
-<p>All datasets and practical handouts are available on GitHub. It can be tricky to download data from GitHub if you don’t know what you’re doing and/or don’t want to clone the entire repository so the materials are also available at this DropBox link: []. It will save time if you download this before coming to class.</p>
+<div id="practical-example-using-pokemon" class="section level2">
+<h2><span class="header-section-number">3.2</span> Practical example using Pokemon…</h2>
+<p>We’re going to play around with some invented data on sampling sites within the Museum and the Pokemon we’ve managed to find there (don’t complain about my unlikely Pokemon combinations, they’re just made up data with Pokemon names rather than A, B, C etc!).</p>
+<div class="figure">
+<img src="pokemon.png" alt="Who doesn’t love a practical handout being interrupted by an enormous Pikachu?" />
+<p class="caption">Who doesn’t love a practical handout being interrupted by an enormous Pikachu?</p>
 </div>
-<div id="timetable" class="section level2">
-<h2><span class="header-section-number">1.3</span> Timetable</h2>
-<p>There will be one morning and one afternoon session each day. Morning sessions will run from 10am-1pm, afternoon sessions from 2pm-5pm. Not every session will require a full three hours. Instructors for each session are below. Note that Thursday and Friday of the first week we have had to move to the Gavin de Beer room. <strong>PLEASE BRING LAPTOPS</strong>.</p>
-<p><strong>Thursday 23rd February - GAVIN DE BEER not UBR or LBR</strong></p>
-<ul>
-<li><p>Morning: What are macroecology and macroevolution? Introduction to the module, assessments, and aims. <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-<li><p>Afternoon: Macroecology I: Macroecological patterns and diversity indices in R. <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-</ul>
-<p><strong>Friday February 24th February - GAVIN DE BEER not UBR or LBR</strong></p>
-<ul>
-<li><p>Morning: Big Data I: Using Big Data in conservation with the PREDICTS project. <em>Andy Purvis (<a href="mailto:a.purvis@nhm.ac.uk">a.purvis@nhm.ac.uk</a>)</em></p></li>
-<li><p>Afternoon: Big data II: Using the paleobiology database (PBDB) to get data on fossil species for macroecological and macroevolutionary analyses. <em>Terri Cleary (<a href="mailto:t.cleary@nhm.ac.uk">t.cleary@nhm.ac.uk</a>)</em></p></li>
-</ul>
-<p><strong>Monday February 27th February - UBR/LBR </strong></p>
-<ul>
-<li><p>Morning: Comparative Biology: The comparative method, dealing with phylogenetic non-independence in comparative analyses. PGLS in R. <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-<li><p>Afternoon: Macroevolution I: Macroevolutionary patterns and models of evolution in R. <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-</ul>
-<p><strong>Tuesday 28th February - UBR/LBR</strong></p>
-<ul>
-<li><p>Morning: Big data III: Using museum specimen data in macroecological and macroevolutionary analyses. Geometric morphometrics. <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-<li><p>Afternoon: Macroevolution II: case study using Foraminifera. <em>Isabel Fenton (<a href="mailto:i.fenton@nhm.ac.uk">i.fenton@nhm.ac.uk</a>)</em></p></li>
-</ul>
-<p><strong>Wednesday 1st March - UBR/LBR</strong></p>
-<ul>
-<li><p>Morning: Macroevolution III: Diversification rates and adaptive radiations. <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-<li><p>Afternoon: Critical thinking: Do you trust your methods? <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-</ul>
-<p><strong>Thursday 2nd March AND Friday 3rd March - UBR</strong></p>
-<p><em>Richard Twitchett (<a href="mailto:r.twitchett@nhm.ac.uk">r.twitchett@nhm.ac.uk</a>)</em></p>
-<ul>
-<li>All day: Using fossil assemblages to assess the impact of mass extinction events: comparative palaeoecology of Ordovician and Silurian fossil assemblages (practical and assessment).</li>
-</ul>
-</div>
-<div id="assessment" class="section level2">
-<h2><span class="header-section-number">1.4</span> Assessment</h2>
-<p>There are two assessments connected to this module.</p>
-<p>The first will be based on computer practicals early in the course. These will be done at the end of the practicals, and consist of some online multiple choice questions. No write up will be required and the assessment will be completed by the end of the week, if not the end of the practical.</p>
-<p>The second, although within this module, belongs to the Paleobiology module. Due to the large class size during that module it couldn’t happen there so we’ve moved it here. However, the techniques and concepts are highly relevant to macroecology and macroevolution. Richard Twitchett (<a href="mailto:r.twitchett@nhm.ac.uk">r.twitchett@nhm.ac.uk</a>) will provide a full explanation of the assessment during the practical on <strong>Thursday 2nd March and Friday 3rd March</strong>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load picante and vegan</span>
+<span class="kw">library</span>(picante)
+<span class="kw">library</span>(vegan)</code></pre></div>
+<p>Next read in the data and take a look at it.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pokemon &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;pokemon_communities.csv&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Look at the data</span>
+pokemon</code></pre></div>
+<p>For the <code>vegan</code> functions to work you need a matrix where the columns are the species names, the rows are the communities, and the contents of the matrix are the numbers of each species found at each site (or presence absence data as 0s and 1s). We can use the <code>sample2matrix</code> function in <code>picante</code> to do this easily.</p>
+<p>Note that this only works if your first variable is the name of the site, your second is abundance and your third is the names of the species present.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pokemon.matrix &lt;-<span class="st"> </span><span class="kw">sample2matrix</span>(pokemon)
 
+<span class="co"># Look at the matrix</span>
+pokemon.matrix</code></pre></div>
+<pre><code>##        Bulbasaur Caterpie Charmander Pidgey Pikachu Psyduck Rattata
+## site01         5        0          3      0       0       0       0
+## site02         0        0          0      6       0       0       6
+## site03         1        0          1      1       1       0      10
+## site04         0        0          2      0       1       0       0
+## site05         0        2          0      4       0       0       3
+## site06         0        0          0      0       0       1       0
+## site07         3        3          3      3       0       0       3
+## site08         5        5          0      0       0       0       0
+## site09         0        0          0      0       0       0       0
+## site10         0        0          6      3       0       0       0
+##        Spearow Squirtle Zubat
+## site01       0        0     0
+## site02       1        0     0
+## site03       1        0     0
+## site04       0        0     0
+## site05       0        3     0
+## site06       0        0     0
+## site07       3        3     0
+## site08       0        0     0
+## site09       0       10     0
+## site10       0        0     2</code></pre>
+</div>
+<div id="species-diversity-indices" class="section level2">
+<h2><span class="header-section-number">3.3</span> Species diversity indices</h2>
+<div id="alpha-diversity" class="section level3">
+<h3><span class="header-section-number">3.3.1</span> <span class="math inline">\(\alpha\)</span> diversity</h3>
+<p>The simplest measure of <span class="math inline">\(\alpha\)</span> diversity is just the number of species in each site. You can easily extract this as follows.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">specnumber</span>(pokemon.matrix)</code></pre></div>
+<pre><code>## site01 site02 site03 site04 site05 site06 site07 site08 site09 site10 
+##      2      3      6      2      4      1      7      2      1      3</code></pre>
+<p>Simpson’s and Shannon’s diversity indices can be estimated using the function <code>diversity</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Simpson&#39;s index</span>
+<span class="kw">diversity</span>(pokemon.matrix, <span class="dt">index =</span> <span class="st">&quot;simpson&quot;</span>)</code></pre></div>
+<pre><code>##    site01    site02    site03    site04    site05    site06    site07 
+## 0.4687500 0.5680473 0.5333333 0.4444444 0.7361111 0.0000000 0.8571429 
+##    site08    site09    site10 
+## 0.5000000 0.0000000 0.5950413</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Shannon&#39;s index</span>
+<span class="kw">diversity</span>(pokemon.matrix, <span class="dt">index =</span> <span class="st">&quot;shannon&quot;</span>)</code></pre></div>
+<pre><code>##    site01    site02    site03    site04    site05    site06    site07 
+## 0.6615632 0.9110175 1.1729935 0.6365142 1.3579779 0.0000000 1.9459101 
+##    site08    site09    site10 
+## 0.6931472 0.0000000 0.9949236</code></pre>
+</div>
+<div id="beta-diversity" class="section level3">
+<h3><span class="header-section-number">3.3.2</span> <span class="math inline">\(\beta\)</span> diversity</h3>
+<p>The function <code>betadiver</code> allows you to estimate all the <span class="math inline">\(\beta\)</span> diversity indices mentioned in Koleff et al. 2003. For help on which indices are included type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">betadiver</span>(<span class="dt">help=</span><span class="ot">TRUE</span>)</code></pre></div>
+<pre><code>## 1 &quot;w&quot; = (b+c)/(2*a+b+c)
+## 2 &quot;-1&quot; = (b+c)/(2*a+b+c)
+## 3 &quot;c&quot; = (b+c)/2
+## 4 &quot;wb&quot; = b+c
+## 5 &quot;r&quot; = 2*b*c/((a+b+c)^2-2*b*c)
+## 6 &quot;I&quot; = log(2*a+b+c) - 2*a*log(2)/(2*a+b+c) - ((a+b)*log(a+b) +
+## (a+c)*log(a+c)) / (2*a+b+c)
+## 7 &quot;e&quot; = exp(log(2*a+b+c) - 2*a*log(2)/(2*a+b+c) - ((a+b)*log(a+b)
+## + (a+c)*log(a+c)) / (2*a+b+c))-1
+## 8 &quot;t&quot; = (b+c)/(2*a+b+c)
+## 9 &quot;me&quot; = (b+c)/(2*a+b+c)
+## 10 &quot;j&quot; = a/(a+b+c)
+## 11 &quot;sor&quot; = 2*a/(2*a+b+c)
+## 12 &quot;m&quot; = (2*a+b+c)*(b+c)/(a+b+c)
+## 13 &quot;-2&quot; = pmin(b,c)/(pmax(b,c)+a)
+## 14 &quot;co&quot; = (a*c+a*b+2*b*c)/(2*(a+b)*(a+c))
+## 15 &quot;cc&quot; = (b+c)/(a+b+c)
+## 16 &quot;g&quot; = (b+c)/(a+b+c)
+## 17 &quot;-3&quot; = pmin(b,c)/(a+b+c)
+## 18 &quot;l&quot; = (b+c)/2
+## 19 &quot;19&quot; = 2*(b*c+1)/(a+b+c)/(a+b+c-1)
+## 20 &quot;hk&quot; = (b+c)/(2*a+b+c)
+## 21 &quot;rlb&quot; = a/(a+c)
+## 22 &quot;sim&quot; = pmin(b,c)/(pmin(b,c)+a)
+## 23 &quot;gl&quot; = 2*abs(b-c)/(2*a+b+c)
+## 24 &quot;z&quot; = (log(2)-log(2*a+b+c)+log(a+b+c))/log(2)</code></pre>
+<p>Note that some of these are similarity indices, and some are dissimilarity indices. See Koleff et al. 2003 for more details. Two commonly used similarity indices are Jaccard’s index and Sorenson’s index which can be estimated as follows (note that completely different communities get a score of 0):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Jaccard&#39;s index</span>
+<span class="kw">betadiver</span>(pokemon.matrix, <span class="dt">method =</span> <span class="st">&quot;j&quot;</span>)</code></pre></div>
+<pre><code>##           site01    site02    site03    site04    site05    site06
+## site02 0.0000000                                                  
+## site03 0.3333333 0.5000000                                        
+## site04 0.3333333 0.0000000 0.3333333                              
+## site05 0.0000000 0.4000000 0.2500000 0.0000000                    
+## site06 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000          
+## site07 0.2857143 0.4285714 0.6250000 0.1250000 0.5714286 0.0000000
+## site08 0.3333333 0.0000000 0.1428571 0.0000000 0.2000000 0.0000000
+## site09 0.0000000 0.0000000 0.0000000 0.0000000 0.2500000 0.0000000
+## site10 0.2500000 0.2000000 0.2857143 0.2500000 0.1666667 0.0000000
+##           site07    site08    site09
+## site02                              
+## site03                              
+## site04                              
+## site05                              
+## site06                              
+## site07                              
+## site08 0.2857143                    
+## site09 0.1428571 0.0000000          
+## site10 0.2500000 0.0000000 0.0000000</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Shannon&#39;s index</span>
+<span class="kw">betadiver</span>(pokemon.matrix, <span class="dt">method =</span> <span class="st">&quot;sor&quot;</span>)</code></pre></div>
+<pre><code>##           site01    site02    site03    site04    site05    site06
+## site02 0.0000000                                                  
+## site03 0.5000000 0.6666667                                        
+## site04 0.5000000 0.0000000 0.5000000                              
+## site05 0.0000000 0.5714286 0.4000000 0.0000000                    
+## site06 0.0000000 0.0000000 0.0000000 0.0000000 0.0000000          
+## site07 0.4444444 0.6000000 0.7692308 0.2222222 0.7272727 0.0000000
+## site08 0.5000000 0.0000000 0.2500000 0.0000000 0.3333333 0.0000000
+## site09 0.0000000 0.0000000 0.0000000 0.0000000 0.4000000 0.0000000
+## site10 0.4000000 0.3333333 0.4444444 0.4000000 0.2857143 0.0000000
+##           site07    site08    site09
+## site02                              
+## site03                              
+## site04                              
+## site05                              
+## site06                              
+## site07                              
+## site08 0.4444444                    
+## site09 0.2500000 0.0000000          
+## site10 0.4000000 0.0000000 0.0000000</code></pre>
+<p>Note that the outputs here are pairwise matrices, as these indices measure the similarity among each pair of sites. You can estimate Whittaker’s original using <code>method = &quot;w&quot;</code> (this is a dissimilarity method so completely different communities get a score of 1).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">betadiver</span>(pokemon.matrix, <span class="dt">method =</span> <span class="st">&quot;w&quot;</span>)</code></pre></div>
+<pre><code>##           site01    site02    site03    site04    site05    site06
+## site02 1.0000000                                                  
+## site03 0.5000000 0.3333333                                        
+## site04 0.5000000 1.0000000 0.5000000                              
+## site05 1.0000000 0.4285714 0.6000000 1.0000000                    
+## site06 1.0000000 1.0000000 1.0000000 1.0000000 1.0000000          
+## site07 0.5555556 0.4000000 0.2307692 0.7777778 0.2727273 1.0000000
+## site08 0.5000000 1.0000000 0.7500000 1.0000000 0.6666667 1.0000000
+## site09 1.0000000 1.0000000 1.0000000 1.0000000 0.6000000 1.0000000
+## site10 0.6000000 0.6666667 0.5555556 0.6000000 0.7142857 1.0000000
+##           site07    site08    site09
+## site02                              
+## site03                              
+## site04                              
+## site05                              
+## site06                              
+## site07                              
+## site08 0.5555556                    
+## site09 0.7500000 1.0000000          
+## site10 0.6000000 1.0000000 1.0000000</code></pre>
+</div>
+<div id="gamma-diversity" class="section level3">
+<h3><span class="header-section-number">3.3.3</span> <span class="math inline">\(\gamma\)</span> diversity</h3>
+<p>In this example, <span class="math inline">\(\gamma\)</span> diversity is the total number of species found across all sites. We can very simply calculate this in R using the following code:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(<span class="kw">unique</span>(pokemon$Species))</code></pre></div>
+<pre><code>## [1] 10</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># To view unique species</span>
+<span class="kw">unique</span>(pokemon$Species)</code></pre></div>
+<pre><code>##  [1] Bulbasaur  Charmander Pidgey     Rattata    Spearow    Pikachu   
+##  [7] Squirtle   Caterpie   Psyduck    Zubat     
+## 10 Levels: Bulbasaur Caterpie Charmander Pidgey Pikachu ... Zubat</code></pre>
+<p>Of course in this example things are simple as we only included species we actually spotted at each site. If we had a more complex dataset, we might worry about species being listed in a site with an NA or a zero for the abundance value. In this case we can ask R to only add up species where abundance is not NA (<code>!is.na(pokemon$Abundance)</code>) and (<code>&amp;</code>) where it is not zero (<code>pokemon$Abundance != 0</code>).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(<span class="kw">unique</span>(pokemon$Species[!<span class="kw">is.na</span>(pokemon$Abundance) &amp;<span class="st"> </span>pokemon$Abundance !=<span class="st"> </span><span class="dv">0</span>]))</code></pre></div>
+<pre><code>## [1] 10</code></pre>
+<p>If you want to test this out, we can remove the Zubat (which only occurs in site 10) and check.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Replace Zubat abundance with 0</span>
+<span class="co"># [31,2] means the 31st row and 2nd (Abundance) column</span>
+pokemon[<span class="dv">31</span>, <span class="dv">2</span>] &lt;-<span class="st"> </span><span class="dv">0</span>
+
+<span class="kw">length</span>(<span class="kw">unique</span>(pokemon$Species[!<span class="kw">is.na</span>(pokemon$Abundance) &amp;<span class="st"> </span>pokemon$Abundance !=<span class="st"> </span><span class="dv">0</span>]))</code></pre></div>
+<pre><code>## [1] 9</code></pre>
+</div>
+</div>
+<div id="species-accumulation-curves-colwell-coddington-1994" class="section level2">
+<h2><span class="header-section-number">3.4</span> Species accumulation curves (Colwell &amp; Coddington 1994)</h2>
+<p>Often when we talk about species diversity we’re interested in the total diversity of an area or a site. For example, if we want to conserve a patch of woodland, we might need to know how many species in total live there. Sounds easy enough right? Just go out and sample the heck out of that woodland… The problem of course is that sampling is time consuming and expensive, and in conservation we don’t have much time or money. In addition, completely sampling all species in an area is difficult, especially for small, rare, shy species. Instead we often estimate species richness by various means. Species accumulation curves are one way to do this.</p>
+<p>Species accumulation curves are graphs showing the <strong>cumulative number of species</strong> recorded in an area or site as a function of the <strong>cumulative sampling effort</strong> taken to search for them. Sampling effort can be number of quadrats, number of hours of sampling etc. for <span class="math inline">\(\alpha\)</span> diversity, or number of sites if trying to get an estimate of <span class="math inline">\(\gamma\)</span> diversity.</p>
+<p>The idea is that as you sample more, you should get closer to discovering all the species in the area. The first few samples you take will probably have lots of species you haven’t recorded yet, but this rate of discovery should slow down. Eventually you hope that you’ll stop finding any new species to record so the curve will asymptote, but in reality sampling is rarely that thorough. Luckily we can use species accumulation curves to estimate where the curve would asymptote if we kept on sampling.</p>
+<div id="practical-example" class="section level3">
+<h3><span class="header-section-number">3.4.1</span> Practical example</h3>
+<p>Let’s try this for our Pokemon, how many species might be hiding in the Museum if we sampled throughly?</p>
+<p>We can use the <code>pokemon.matrix</code> we’ve already created and estimate the accumulation curve using the <code>vegan</code> function <code>specaccum</code>. There are lots of methods for estimating these curves but we will use <code>method = &quot;random&quot;</code>. This works as follows.</p>
+<p>It randomly selects a site and calculates the initial richness, then randomly selects a second site and calculates the cumulative richness (i.e. the second site plus the first site), and repeats this until all the sites have been used. It then repeats this process 1000 times. You can change the number of times it does this using <code>permutations</code> but 1000 is about right - too few and the curves are not smooth, too many and it takes ages. The function outputs the mean cumulative richness and standard deviations for across all 1000 permutations. We do this because our curve will look different depending on which site we start with, and so will give a different total richness estimate. Randomising the order helps us get a better estimate of the total richness, and the standard error on that estimate.</p>
+<p>To do this for our Pokemon:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pokemon.curve &lt;-<span class="st"> </span><span class="kw">specaccum</span>(pokemon.matrix, <span class="dt">method =</span> <span class="st">&quot;random&quot;</span>, <span class="dt">permutations =</span> <span class="dv">1000</span>)
+
+<span class="co"># Look at the results</span>
+pokemon.curve</code></pre></div>
+<pre><code>## Species Accumulation Curve
+## Accumulation method: random, with 1000 permutations
+## Call: specaccum(comm = pokemon.matrix, method = &quot;random&quot;, permutations = 1000) 
+## 
+##                                                                      
+## Sites    1.000000 2.00000 3.00000 4.000000 5.000000 6.000000 7.000000
+## Richness 3.129000 5.27500 6.78400 7.771000 8.454000 8.931000 9.308000
+## sd       1.894188 1.69418 1.25416 0.898536 0.715819 0.662327 0.611154
+##                              
+## Sites    8.000000 9.000000 10
+## Richness 9.578000 9.803000 10
+## sd       0.529336 0.397931  0</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot the curve</span>
+<span class="kw">plot</span>(pokemon.curve, <span class="dt">ci.type =</span> <span class="st">&quot;poly&quot;</span>, <span class="dt">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">ci.col =</span> <span class="st">&quot;lightblue&quot;</span>, 
+     <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">ci.lty =</span> <span class="dv">0</span>, <span class="dt">xlab =</span> <span class="st">&quot;number of sites&quot;</span>, 
+     <span class="dt">ylab =</span> <span class="st">&quot;cumulative number of Pokemon species&quot;</span>)</code></pre></div>
+<p><img src="macro-module_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p><code>&quot;ci.type = &quot;poly&quot;</code> tells R that you want a shaded area showing the confidence intervals from your randomisations. You can play around with the colours etc. if you want to.</p>
+<p>To demonstrate why we need the randomisations, look at two curves for just 1 permutation each.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pokemon.curve1 &lt;-<span class="st"> </span><span class="kw">specaccum</span>(pokemon.matrix, <span class="dt">method =</span> <span class="st">&quot;random&quot;</span>, <span class="dt">permutations =</span> <span class="dv">1</span>)
+pokemon.curve2 &lt;-<span class="st"> </span><span class="kw">specaccum</span>(pokemon.matrix, <span class="dt">method =</span> <span class="st">&quot;random&quot;</span>, <span class="dt">permutations =</span> <span class="dv">1</span>)
+
+<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))
+
+<span class="kw">plot</span>(pokemon.curve1,  
+    <span class="dt">xlab =</span> <span class="st">&quot;number of sites&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;cumulative number of Pokemon species&quot;</span>)
+
+<span class="kw">plot</span>(pokemon.curve2, 
+    <span class="dt">xlab =</span> <span class="st">&quot;number of sites&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;cumulative number of Pokemon species&quot;</span>)</code></pre></div>
+<p><img src="macro-module_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</code></pre></div>
+<p>Finally to estimate total species richness across all sites we can (again) use many different metrics. Some common ones include Chao 2 (Chao 1987), Jackknife and Bootstrapping approaches and these are easy to estimate using the <code>vegan</code> function <code>specpool</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">specpool</span>(pokemon.matrix)</code></pre></div>
+<pre><code>##     Species chao  chao.se jack1 jack1.se    jack2     boot   boot.se  n
+## All      10 11.8 3.394113  11.8 1.272792 12.68889 10.90352 0.7502033 10</code></pre>
+<p>Estimates range from 10.9 <span class="math inline">\(\pm\)</span> 0.75 (bootstrap) to 11.8 <span class="math inline">\(\pm\)</span> 3.39 (Chao2). So we can be fairly confident there are between 10 and 15 Pokemon in the Museum.</p>
+<hr />
+</div>
+</div>
+<div id="references" class="section level2">
+<h2><span class="header-section-number">3.5</span> References</h2>
+<ul>
+<li>Chao, A. (1987). Estimating the population size for capture-recapture data with unequal catchability. Biometrics 43, 783–791.</li>
+<li>Colwell, R.K. &amp; Coddington, J.A. (1994). Estimating terrestrial biodiversity through extrapolation. Phil. Trans. Roy. Soc. London B 345, 101–118.</li>
+<li>Hill, M. O. (1973) Diversity and evenness: a unifying notation and its consequences. Ecology, 54, 427–432</li>
+<li>Koleff, P., Gaston, K.J. and Lennon, J.J. (2003) Measuring beta diversity for presence-absence data. Journal of Animal Ecology 72, 367–382.</li>
+<li>Whittaker, R.H. (1960) Vegetation of Siskiyou mountains, Oregon and California. Ecological Monographs 30, 279–338.</li>
+<li>Whittaker, R. H. (1972). Evolution and Measurement of Species Diversity. Taxon, 21, 213-251. <a href="doi:10.2307/1218190" class="uri">doi:10.2307/1218190</a></li>
+</ul>
+<div id="extra-reading" class="section level3">
+<h3><span class="header-section-number">3.5.1</span> Extra reading</h3>
+<ul>
+<li>Whittaker, R. J. et al. (2001). Scale and species richness: towards a general, hierarchical theory of species diversity. Journal of Biogeography, 28, 453-470. <a href="doi:10.1046/j.1365-2699.2001.00563.x" class="uri">doi:10.1046/j.1365-2699.2001.00563.x</a></li>
+<li>O’Hara, R.B. (2005). Species richness estimators: how many species can dance on the head of a pin? J. Anim. Ecol. 74, 375–386.</li>
+</ul>
+<div id="nice-series-of-papers-on-betadiversity" class="section level4">
+<h4><span class="header-section-number">3.5.1.1</span> Nice series of papers on betadiversity</h4>
+<ul>
+<li>Tuomisto, H. (2010) A diversity of beta diversities: straightening up a concept gone awry. Part 1. Defining beta diversity as a function of alpha and gamma diversity. Ecography, 33, 2-22.</li>
+<li>Tuomisto, H. (2010) A diversity of beta diversities: straightening up a concept gone awry. Part 2. Quantifying beta diversity and related phenomena. Ecography, 33, 23-45. <a href="doi:10.1111/j.1600-0587.2009.06148.x" class="uri">doi:10.1111/j.1600-0587.2009.06148.x</a></li>
+<li>Tuomisto, H. 2010. A consistent terminology for quantifying species diversity? Yes, it does exist. Oecologia 4: 853–860. <a href="doi:10.1007/s00442-010-1812-0" class="uri">doi:10.1007/s00442-010-1812-0</a></li>
+<li>Tuomisto, H. (2011) Commentary: do we have a consistent terminology for species diversity? Yes, if we choose to use it. Oecologia, 167, 903-911.</li>
+</ul>
+</div>
+<div id="immensely-cool-new-approach-using-methods-developed-by-alan-turing" class="section level4">
+<h4><span class="header-section-number">3.5.1.2</span> Immensely cool new approach using methods developed by Alan Turing</h4>
+<ul>
+<li>Chiu, C.H., Wang, Y.T., Walther, B.A. &amp; Chao, A. (2014). Improved nonparametric lower bound of species richness via a modified Good-Turing frequency formula. Biometrics 70, 671–682.</li>
+</ul>
+
+</div>
+</div>
 </div>
 </div>
             </section>
@@ -304,8 +553,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-
-<a href="what-you-need-to-be-able-to-do-in-r-before-you-start.html" class="navigation navigation-next navigation-unique" aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="what-you-need-to-be-able-to-do-in-r-before-you-start.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="visualising-phylogenies-in-r.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -333,7 +582,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/nhcooper123/TeachingMaterials/MSc_Museum/MacroModule/edit/master/index.Rmd",
+"link": "https://github.com/nhcooper123/TeachingMaterials/MSc_Museum/MacroModule/edit/master/02_DiversityIndicesinR.Rmd",
 "text": "Edit"
 },
 "download": ["macro-module.pdf"],

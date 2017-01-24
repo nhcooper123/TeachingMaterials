@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Methods in Macroecology and Macroevolution</title>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+  <meta name="description" content="Practical notes for macro module">
+  <meta name="generator" content="bookdown 0.3 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Methods in Macroecology and Macroevolution" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Practical notes for macro module" />
+  <meta name="github-repo" content="nhcooper123/TeachingMaterials/MSc_Museum/MacroModule" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Methods in Macroecology and Macroevolution" />
+  
+  <meta name="twitter:description" content="Practical notes for macro module" />
+  
+
+<meta name="author" content="Natalie Cooper (natalie.cooper@nhm.ac.uk)">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="macroevolutionary-models-in-r-part-1-continuous-traits.html">
+<link rel="next" href="geometric-morphometrics-in-r.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Macro Methods Module</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Methods in Macroecology and Macroevolution: Module outline</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#module-aims"><i class="fa fa-check"></i><b>1.1</b> Module Aims</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#datasets-and-practical-handouts"><i class="fa fa-check"></i><b>1.2</b> Datasets and practical handouts</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#timetable"><i class="fa fa-check"></i><b>1.3</b> Timetable</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#assessment"><i class="fa fa-check"></i><b>1.4</b> Assessment</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="what-you-need-to-be-able-to-do-in-r-before-you-start.html"><a href="what-you-need-to-be-able-to-do-in-r-before-you-start.html"><i class="fa fa-check"></i><b>2</b> What you need to be able to do in R before you start</a><ul>
+<li class="chapter" data-level="2.1" data-path="what-you-need-to-be-able-to-do-in-r-before-you-start.html"><a href="what-you-need-to-be-able-to-do-in-r-before-you-start.html#installing-r-and-rstudio"><i class="fa fa-check"></i><b>2.1</b> Installing R (and RStudio)</a></li>
+<li class="chapter" data-level="2.2" data-path="what-you-need-to-be-able-to-do-in-r-before-you-start.html"><a href="what-you-need-to-be-able-to-do-in-r-before-you-start.html#setting-the-working-directory"><i class="fa fa-check"></i><b>2.2</b> Setting the working directory</a></li>
+<li class="chapter" data-level="2.3" data-path="what-you-need-to-be-able-to-do-in-r-before-you-start.html"><a href="what-you-need-to-be-able-to-do-in-r-before-you-start.html#using-a-script"><i class="fa fa-check"></i><b>2.3</b> Using a script</a></li>
+<li class="chapter" data-level="2.4" data-path="what-you-need-to-be-able-to-do-in-r-before-you-start.html"><a href="what-you-need-to-be-able-to-do-in-r-before-you-start.html#installing-and-loading-extra-packages-in-r"><i class="fa fa-check"></i><b>2.4</b> Installing and loading extra packages in R</a></li>
+<li class="chapter" data-level="2.5" data-path="what-you-need-to-be-able-to-do-in-r-before-you-start.html"><a href="what-you-need-to-be-able-to-do-in-r-before-you-start.html#loading-and-viewing-your-data-in-r"><i class="fa fa-check"></i><b>2.5</b> Loading and viewing your data in R</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="diversity-indices-in-r.html"><a href="diversity-indices-in-r.html"><i class="fa fa-check"></i><b>3</b> Diversity Indices in R</a><ul>
+<li class="chapter" data-level="3.1" data-path="diversity-indices-in-r.html"><a href="diversity-indices-in-r.html#what-are-diversity-indices"><i class="fa fa-check"></i><b>3.1</b> What are diversity indices?</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="diversity-indices-in-r.html"><a href="diversity-indices-in-r.html#alpha-beta-and-gamma-diversity-whittaker-1960-1972"><i class="fa fa-check"></i><b>3.1.1</b> <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\gamma\)</span> diversity (Whittaker 1960, 1972)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="diversity-indices-in-r.html"><a href="diversity-indices-in-r.html#practical-example-using-pokemon"><i class="fa fa-check"></i><b>3.2</b> Practical example using Pokemon…</a></li>
+<li class="chapter" data-level="3.3" data-path="diversity-indices-in-r.html"><a href="diversity-indices-in-r.html#species-diversity-indices"><i class="fa fa-check"></i><b>3.3</b> Species diversity indices</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="diversity-indices-in-r.html"><a href="diversity-indices-in-r.html#alpha-diversity"><i class="fa fa-check"></i><b>3.3.1</b> <span class="math inline">\(\alpha\)</span> diversity</a></li>
+<li class="chapter" data-level="3.3.2" data-path="diversity-indices-in-r.html"><a href="diversity-indices-in-r.html#beta-diversity"><i class="fa fa-check"></i><b>3.3.2</b> <span class="math inline">\(\beta\)</span> diversity</a></li>
+<li class="chapter" data-level="3.3.3" data-path="diversity-indices-in-r.html"><a href="diversity-indices-in-r.html#gamma-diversity"><i class="fa fa-check"></i><b>3.3.3</b> <span class="math inline">\(\gamma\)</span> diversity</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="diversity-indices-in-r.html"><a href="diversity-indices-in-r.html#species-accumulation-curves-colwell-coddington-1994"><i class="fa fa-check"></i><b>3.4</b> Species accumulation curves (Colwell &amp; Coddington 1994)</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="diversity-indices-in-r.html"><a href="diversity-indices-in-r.html#practical-example"><i class="fa fa-check"></i><b>3.4.1</b> Practical example</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="diversity-indices-in-r.html"><a href="diversity-indices-in-r.html#references"><i class="fa fa-check"></i><b>3.5</b> References</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="diversity-indices-in-r.html"><a href="diversity-indices-in-r.html#extra-reading"><i class="fa fa-check"></i><b>3.5.1</b> Extra reading</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="visualising-phylogenies-in-r.html"><a href="visualising-phylogenies-in-r.html"><i class="fa fa-check"></i><b>4</b> Visualising phylogenies in R</a><ul>
+<li class="chapter" data-level="4.1" data-path="visualising-phylogenies-in-r.html"><a href="visualising-phylogenies-in-r.html#loading-your-phylogeny-and-data-into-r"><i class="fa fa-check"></i><b>4.1</b> Loading your phylogeny and data into R</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="visualising-phylogenies-in-r.html"><a href="visualising-phylogenies-in-r.html#reading-in-a-phylogeny-from-a-file"><i class="fa fa-check"></i><b>4.1.1</b> Reading in a phylogeny from a file</a></li>
+<li class="chapter" data-level="4.1.2" data-path="visualising-phylogenies-in-r.html"><a href="visualising-phylogenies-in-r.html#reading-in-a-phylogeny-that-is-already-built-into-r"><i class="fa fa-check"></i><b>4.1.2</b> Reading in a phylogeny that is already built into R</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="visualising-phylogenies-in-r.html"><a href="visualising-phylogenies-in-r.html#basic-tree-viewing-in-r"><i class="fa fa-check"></i><b>4.2</b> Basic tree viewing in R</a></li>
+<li class="chapter" data-level="4.3" data-path="visualising-phylogenies-in-r.html"><a href="visualising-phylogenies-in-r.html#adding-trait-data-to-trees-in-r"><i class="fa fa-check"></i><b>4.3</b> Adding trait data to trees in R</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="visualising-phylogenies-in-r.html"><a href="visualising-phylogenies-in-r.html#ancestral-state-reconstructions-on-continuous-data"><i class="fa fa-check"></i><b>4.3.1</b> Ancestral state reconstructions on continuous data</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="visualising-phylogenies-in-r.html"><a href="visualising-phylogenies-in-r.html#phylomorphospace-plots-in-r"><i class="fa fa-check"></i><b>4.4</b> Phylomorphospace plots in R</a></li>
+<li class="chapter" data-level="4.5" data-path="visualising-phylogenies-in-r.html"><a href="visualising-phylogenies-in-r.html#phylogenies-and-maps"><i class="fa fa-check"></i><b>4.5</b> Phylogenies and maps!</a></li>
+<li class="chapter" data-level="4.6" data-path="visualising-phylogenies-in-r.html"><a href="visualising-phylogenies-in-r.html#a-new-package-for-visualising-trees-ggtree"><i class="fa fa-check"></i><b>4.6</b> A new package for visualising trees: ggtree</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html"><i class="fa fa-check"></i><b>5</b> Phylogenetic Generalised Least Squares (PGLS) in R</a><ul>
+<li class="chapter" data-level="5.1" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#preparing-for-the-analysis"><i class="fa fa-check"></i><b>5.1</b> Preparing for the analysis</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#load-the-required-packages"><i class="fa fa-check"></i><b>5.1.1</b> Load the required packages</a></li>
+<li class="chapter" data-level="5.1.2" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#reading-and-checking-your-data-in-r"><i class="fa fa-check"></i><b>5.1.2</b> Reading and checking your data in R</a></li>
+<li class="chapter" data-level="5.1.3" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#reading-and-checking-your-phylogeny-in-r"><i class="fa fa-check"></i><b>5.1.3</b> Reading and checking your phylogeny in R</a></li>
+<li class="chapter" data-level="5.1.4" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#manipulating-your-data-and-phylogeny-in-r"><i class="fa fa-check"></i><b>5.1.4</b> Manipulating your data and phylogeny in R</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#ordinary-least-squares-ols-regression"><i class="fa fa-check"></i><b>5.2</b> Ordinary least squares (OLS) regression</a></li>
+<li class="chapter" data-level="5.3" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#phylogenetic-generalized-least-squares-models-pgls"><i class="fa fa-check"></i><b>5.3</b> Phylogenetic generalized least squares models (PGLS)</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#likelihood-profiles-for-lambda-in-pgls-models"><i class="fa fa-check"></i><b>5.3.1</b> Likelihood profiles for <span class="math inline">\(\lambda\)</span> in PGLS models</a></li>
+<li class="chapter" data-level="5.3.2" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#model-diagnostics-for-pgls-models"><i class="fa fa-check"></i><b>5.3.2</b> Model diagnostics for PGLS models</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#estimating-phylogenetic-signal-for-one-variable"><i class="fa fa-check"></i><b>5.4</b> Estimating phylogenetic signal for one variable</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#pagels-lambda-pagel-19971999-freckleton-et-al-2002"><i class="fa fa-check"></i><b>5.4.1</b> Pagel’s <span class="math inline">\(\lambda\)</span> (Pagel 1997/1999, Freckleton et al 2002)</a></li>
+<li class="chapter" data-level="5.4.2" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#blombergs-k-blomberg-et-al-2003"><i class="fa fa-check"></i><b>5.4.2</b> Blomberg’s K (Blomberg et al 2003)</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#references-1"><i class="fa fa-check"></i><b>5.5</b> References</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="phylogenetic-generalised-least-squares-pgls-in-r.html"><a href="phylogenetic-generalised-least-squares-pgls-in-r.html#extra-reading-1"><i class="fa fa-check"></i><b>5.5.1</b> Extra Reading</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="macroevolutionary-models-in-r-part-1-continuous-traits.html"><a href="macroevolutionary-models-in-r-part-1-continuous-traits.html"><i class="fa fa-check"></i><b>6</b> Macroevolutionary models in R: Part 1 - continuous traits</a><ul>
+<li class="chapter" data-level="6.1" data-path="macroevolutionary-models-in-r-part-1-continuous-traits.html"><a href="macroevolutionary-models-in-r-part-1-continuous-traits.html#preparing-for-the-analysis-1"><i class="fa fa-check"></i><b>6.1</b> Preparing for the analysis</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="macroevolutionary-models-in-r-part-1-continuous-traits.html"><a href="macroevolutionary-models-in-r-part-1-continuous-traits.html#load-packages-read-in-the-data-and-the-tree"><i class="fa fa-check"></i><b>6.1.1</b> Load packages, read in the data and the tree</a></li>
+<li class="chapter" data-level="6.1.2" data-path="macroevolutionary-models-in-r-part-1-continuous-traits.html"><a href="macroevolutionary-models-in-r-part-1-continuous-traits.html#modify-the-tree-and-data-so-they-can-be-used-in-the-analyses."><i class="fa fa-check"></i><b>6.1.2</b> Modify the tree and data so they can be used in the analyses.</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="macroevolutionary-models-in-r-part-1-continuous-traits.html"><a href="macroevolutionary-models-in-r-part-1-continuous-traits.html#models-of-continuous-trait-evolution"><i class="fa fa-check"></i><b>6.2</b> Models of continuous trait evolution</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="macroevolutionary-models-in-r-part-1-continuous-traits.html"><a href="macroevolutionary-models-in-r-part-1-continuous-traits.html#the-brownian-motion-bm-model"><i class="fa fa-check"></i><b>6.2.1</b> The Brownian motion (BM model)</a></li>
+<li class="chapter" data-level="6.2.2" data-path="macroevolutionary-models-in-r-part-1-continuous-traits.html"><a href="macroevolutionary-models-in-r-part-1-continuous-traits.html#the-ornstein-uhlenbeck-ou-model"><i class="fa fa-check"></i><b>6.2.2</b> The Ornstein-Uhlenbeck (OU) model</a></li>
+<li class="chapter" data-level="6.2.3" data-path="macroevolutionary-models-in-r-part-1-continuous-traits.html"><a href="macroevolutionary-models-in-r-part-1-continuous-traits.html#the-early-burst-eb-model"><i class="fa fa-check"></i><b>6.2.3</b> The Early Burst (EB) model</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="macroevolutionary-models-in-r-part-1-continuous-traits.html"><a href="macroevolutionary-models-in-r-part-1-continuous-traits.html#fitting-the-models-using-fitcontinuous"><i class="fa fa-check"></i><b>6.3</b> Fitting the models using <code>fitContinuous</code></a><ul>
+<li class="chapter" data-level="6.3.1" data-path="macroevolutionary-models-in-r-part-1-continuous-traits.html"><a href="macroevolutionary-models-in-r-part-1-continuous-traits.html#comparing-models-of-evolution"><i class="fa fa-check"></i><b>6.3.1</b> Comparing models of evolution</a></li>
+<li class="chapter" data-level="6.3.2" data-path="macroevolutionary-models-in-r-part-1-continuous-traits.html"><a href="macroevolutionary-models-in-r-part-1-continuous-traits.html#problems-with-convergence-and-bounds"><i class="fa fa-check"></i><b>6.3.2</b> Problems with convergence and bounds</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="macroevolutionary-models-in-r-part-1-continuous-traits.html"><a href="macroevolutionary-models-in-r-part-1-continuous-traits.html#references-2"><i class="fa fa-check"></i><b>6.4</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html"><i class="fa fa-check"></i><b>7</b> Macroevolutionary models in R: Part 2 - discrete traits</a><ul>
+<li class="chapter" data-level="7.1" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#preparing-for-the-analysis-2"><i class="fa fa-check"></i><b>7.1</b> Preparing for the analysis</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#load-packages-read-in-the-data-and-the-tree-1"><i class="fa fa-check"></i><b>7.1.1</b> Load packages, read in the data and the tree</a></li>
+<li class="chapter" data-level="7.1.2" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#modify-the-tree-and-data-so-they-can-be-used-in-the-analyses.-1"><i class="fa fa-check"></i><b>7.1.2</b> Modify the tree and data so they can be used in the analyses.</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#fitting-models-of-evolution-to-discrete-data-regime-dependent-evolution"><i class="fa fa-check"></i><b>7.2</b> Fitting models of evolution to discrete data (regime dependent evolution)</a></li>
+<li class="chapter" data-level="7.3" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#models-of-discrete-trait-evolution"><i class="fa fa-check"></i><b>7.3</b> Models of discrete trait evolution</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#mk1-all-rates-equal-er"><i class="fa fa-check"></i><b>7.3.1</b> Mk1 – all rates equal (ER)</a></li>
+<li class="chapter" data-level="7.3.2" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#mk-symmetric-rates-sym"><i class="fa fa-check"></i><b>7.3.2</b> Mk – symmetric rates (SYM)</a></li>
+<li class="chapter" data-level="7.3.3" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#mk-all-rates-different-ard"><i class="fa fa-check"></i><b>7.3.3</b> Mk – All Rates Different (ARD)</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#fitting-the-models-using-fitdiscrete"><i class="fa fa-check"></i><b>7.4</b> Fitting the models using <code>fitDiscrete</code></a></li>
+<li class="chapter" data-level="7.5" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#ancestral-state-reconstructions"><i class="fa fa-check"></i><b>7.5</b> Ancestral state reconstructions</a></li>
+<li class="chapter" data-level="7.6" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#fitting-models-using-ouwie"><i class="fa fa-check"></i><b>7.6</b> Fitting models using <code>OUwie</code></a><ul>
+<li class="chapter" data-level="7.6.1" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#multi-rate-brownian-motion-bms"><i class="fa fa-check"></i><b>7.6.1</b> Multi-rate Brownian motion (BMS)</a></li>
+<li class="chapter" data-level="7.6.2" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#multi-peak-ou-models"><i class="fa fa-check"></i><b>7.6.2</b> Multi-peak OU models</a></li>
+</ul></li>
+<li class="chapter" data-level="7.7" data-path="macroevolutionary-models-in-r-part-2-discrete-traits.html"><a href="macroevolutionary-models-in-r-part-2-discrete-traits.html#references-3"><i class="fa fa-check"></i><b>7.7</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html"><i class="fa fa-check"></i><b>8</b> Geometric Morphometrics in R</a><ul>
+<li class="chapter" data-level="8.1" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#a-quick-introduction-to-geometric-morphometrics"><i class="fa fa-check"></i><b>8.1</b> A quick introduction to geometric morphometrics</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#what-is-morphometrics"><i class="fa fa-check"></i><b>8.1.1</b> What is morphometrics?</a></li>
+<li class="chapter" data-level="8.1.2" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#landmarks"><i class="fa fa-check"></i><b>8.1.2</b> Landmarks</a></li>
+<li class="chapter" data-level="8.1.3" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#collecting-data-and-adding-landmarks"><i class="fa fa-check"></i><b>8.1.3</b> Collecting data and adding landmarks</a></li>
+<li class="chapter" data-level="8.1.4" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#measurement-error"><i class="fa fa-check"></i><b>8.1.4</b> Measurement error</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#a-practical-example-using-r"><i class="fa fa-check"></i><b>8.2</b> A practical example using R</a></li>
+<li class="chapter" data-level="8.3" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#gathering-the-data"><i class="fa fa-check"></i><b>8.3</b> Gathering the data</a></li>
+<li class="chapter" data-level="8.4" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#digitising-adding-landmarks-and-curves"><i class="fa fa-check"></i><b>8.4</b> Digitising (adding landmarks and curves)</a></li>
+<li class="chapter" data-level="8.5" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#reading-in-your-data-and-plotting-it"><i class="fa fa-check"></i><b>8.5</b> Reading in your data and plotting it</a></li>
+<li class="chapter" data-level="8.6" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#generalised-procrustes-superimposition-gpa"><i class="fa fa-check"></i><b>8.6</b> Generalised Procrustes Superimposition (GPA)</a></li>
+<li class="chapter" data-level="8.7" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#principal-components-and-plotting"><i class="fa fa-check"></i><b>8.7</b> Principal components and plotting</a></li>
+<li class="chapter" data-level="8.8" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#statistical-analyses-of-geometric-morphometric-datasets"><i class="fa fa-check"></i><b>8.8</b> Statistical analyses of geometric morphometric datasets</a></li>
+<li class="chapter" data-level="8.9" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#regression"><i class="fa fa-check"></i><b>8.9</b> Regression</a></li>
+<li class="chapter" data-level="8.10" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#multivariate-regression"><i class="fa fa-check"></i><b>8.10</b> Multivariate regression</a></li>
+<li class="chapter" data-level="8.11" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#anova"><i class="fa fa-check"></i><b>8.11</b> ANOVA</a></li>
+<li class="chapter" data-level="8.12" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#manova"><i class="fa fa-check"></i><b>8.12</b> MANOVA</a></li>
+<li class="chapter" data-level="8.13" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#resources-for-learning-geometric-morphometrics"><i class="fa fa-check"></i><b>8.13</b> Resources for learning geometric morphometrics</a></li>
+<li class="chapter" data-level="8.14" data-path="geometric-morphometrics-in-r.html"><a href="geometric-morphometrics-in-r.html#references-4"><i class="fa fa-check"></i><b>8.14</b> References</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/nhcooper123/TeachingMaterials/MSc_Museum/MacroModule" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Methods in Macroecology and Macroevolution</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="macroevolutionary-models-in-r-part-2---discrete-traits" class="section level1">
+<h1><span class="header-section-number">Practical 7</span> Macroevolutionary models in R: Part 2 - discrete traits</h1>
+<p>The aims of this practical are to learn how to use R to fit macroevolutionary models in R to discrete traits.</p>
+<p>We will be using the evolution of magical creature life-history variables as an example. The data includes body mass (average adult size at rest) in kg, social status (1 = solitary, 2 = social), habitat (1 = terrestrial, 2 = aquatic, 3 = volant) and magical power (in thaum - with thanks to Terry Pratchett for the units). These data are invented, so please don’t get too upset if I’ve misclassified anything!</p>
+<p><strong>REMEMBER</strong></p>
+<ul>
+<li>Download all of the data for the practical into a folder somewhere on your computer.</li>
+<li>Set your working directory to this folder.</li>
+<li>Start a new script for this practical.</li>
+</ul>
+<p>You will also need to install the following packages:</p>
+<ul>
+<li><code>ape</code></li>
+<li><code>geiger</code></li>
+<li><code>OUwie</code></li>
+</ul>
+<p>This is Part 2 of the “Macroevolutionary models in R” practical, so you can skip through the set up if you’re just carrying on from that.</p>
+<p>This handout borrows heavily from a Linnaean Society workshop I ran with Graham Slater in 2014. Many thanks to Graham for his invaluable input.</p>
+<hr />
+<div id="preparing-for-the-analysis-2" class="section level2">
+<h2><span class="header-section-number">7.1</span> Preparing for the analysis</h2>
+<div id="load-packages-read-in-the-data-and-the-tree-1" class="section level3">
+<h3><span class="header-section-number">7.1.1</span> Load packages, read in the data and the tree</h3>
+<p>This is the same as we did in the PGLS practical, so I won’t give detailed instructions here.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load packages</span>
+<span class="kw">library</span>(ape)
+<span class="kw">library</span>(geiger)
+<span class="kw">library</span>(OUwie)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Read in data</span>
+magicaldata &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;magicalcreatures.csv&quot;</span>)
+<span class="co"># Check data is loaded correctly</span>
+<span class="kw">str</span>(magicaldata)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    30 obs. of  5 variables:
+##  $ Species     : Factor w/ 30 levels &quot;Acromantula&quot;,..: 22 24 19 5 7 16 21 25 30 29 ...
+##  $ BodySize_kg : num  1.5 50 0.5 100 8000 1 2.5 6 800 600 ...
+##  $ SocialStatus: int  2 2 2 1 1 2 2 1 1 2 ...
+##  $ Habitat     : int  1 1 2 1 3 1 1 3 3 3 ...
+##  $ Magic_thaum : num  106.3 86.7 98.6 57 131.9 ...</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Read in tree</span>
+magicaltree &lt;-<span class="st"> </span><span class="kw">read.nexus</span>(<span class="st">&quot;magicaltree.nex&quot;</span>) 
+<span class="co"># Check tree is loaded correctly</span>
+<span class="kw">str</span>(magicaltree)</code></pre></div>
+<pre><code>## List of 4
+##  $ edge       : int [1:52, 1:2] 28 29 30 31 31 30 32 33 33 34 ...
+##  $ edge.length: num [1:52] 136.86 65.69 97 2.92 2.92 ...
+##  $ Nnode      : int 26
+##  $ tip.label  : chr [1:27] &quot;Doxie&quot; &quot;Bowtruckle&quot; &quot;Hinkypuff&quot; &quot;Grindylow&quot; ...
+##  - attr(*, &quot;class&quot;)= chr &quot;phylo&quot;
+##  - attr(*, &quot;order&quot;)= chr &quot;cladewise&quot;</code></pre>
+</div>
+<div id="modify-the-tree-and-data-so-they-can-be-used-in-the-analyses.-1" class="section level3">
+<h3><span class="header-section-number">7.1.2</span> Modify the tree and data so they can be used in the analyses.</h3>
+<p>Again we did this in the PGLS practical. Please remind yourself of what these steps are needed for.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Ensure tree is fully bifurcating</span>
+magicaltree &lt;-<span class="st"> </span><span class="kw">multi2di</span>(magicaltree) 
+
+<span class="co"># Replace spaces with underscores in the species names</span>
+magicaldata$Species &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">&quot; &quot;</span>, <span class="st">&quot;_&quot;</span>, magicaldata$Species)
+
+<span class="co"># Add species names to row names</span>
+<span class="kw">row.names</span>(magicaldata) &lt;-<span class="st"> </span>magicaldata$Species</code></pre></div>
+<p>For some weird reason the <code>geiger</code> function we need (<code>treedata</code> see below) won’t work if you input a dataset with variables that are characters i.e. words or letters. Our taxonomic variable Species is a character so we need to exclude it from the data. Note for your own data you’d need to remove all character variables (or recode them as 0,12 etc.). We will do this by making a new dataset called magicaldata2.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">magicaldata2 &lt;-<span class="st"> </span>magicaldata[, <span class="dv">2</span>:<span class="dv">5</span>]</code></pre></div>
+<p>Here the [ ] tells R we want to subset the dataset. R data frames are always described by [X,Y] where X is rows and Y is columns. So [1, 1] will select the entry in the first column and the first row of the data frame. [, 2:2] selects all rows but only columns 2 to 5. These are the columns containing our numeric variables.</p>
+<p>We then need to match the species in tree to those in the dataset as in the PGLS practical. <strong>Note that we are using <code>magicaldata2</code> here.</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">match.species &lt;-<span class="st"> </span><span class="kw">treedata</span>(magicaltree, magicaldata2)
+
+mytree &lt;-<span class="st"> </span>match.species$phy
+mydata &lt;-<span class="st"> </span>match.species$data</code></pre></div>
+<hr />
+</div>
+</div>
+<div id="fitting-models-of-evolution-to-discrete-data-regime-dependent-evolution" class="section level2">
+<h2><span class="header-section-number">7.2</span> Fitting models of evolution to discrete data (regime dependent evolution)</h2>
+<p>In the previous section we saw how to fit three models of trait evolution to continuous variables. Although the evolutionary modes seem quite different, all are similar in that the evolutionary process is constant over the entire clade, i.e., all branches are evolving at the same rate (in BM), drawn to the same trait value with the same strength (OU) or decline in rate at the same time-dependent pace (EB). Often, we want to relax this assumption. Members of our clade might belong to one of a set of ecological regimes, for example dietary niches or locomotor modes, and we might hypothesize that there are different evolutionary rates or different optimal trait values for each of these regimes. In this section, we’ll look at how to fit these kinds of models using the <code>OUwie</code> package.</p>
+<p>First we will look at how to reconstruct the evolutionary history of a discrete trait. Then we will use <code>OUwie</code> to allow rates and optimal trait values for a continuously valued trait, like body size, to vary, based on that discrete trait.</p>
+<p>Here we will use the discrete variable <code>SocialStatus</code> from our magical creature dataset. Any species with a social group size of 1 is solitary (SocialStatus = 1), while any species with a group size greater than 1 is social (SocialStatus = 2).</p>
+<p>We can visualize these variables on our tree by plotting them with colors. We’ll use light blue for solitary and plum for social. Because our states are coded as “1” and “2”, we can use a little trick to get the appropriate colors by indexing a vector of “lightblue” and “plum”. We first need to make sure teh species in our data are in the same order as those in the tree.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Reorder the data so it&#39;s the same order as in the tree</span>
+mydata &lt;-<span class="st"> </span>mydata[<span class="kw">match</span>(mytree$tip.label,<span class="kw">rownames</span>(mydata)),]
+
+<span class="co"># Create a vector of two colours</span>
+social.colors &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;lightblue&quot;</span>, <span class="st">&quot;plum&quot;</span>)
+
+<span class="co"># Plot the tree, add coloured tip labels and a legend</span>
+<span class="kw">plot</span>(mytree, <span class="dt">cex =</span> <span class="fl">0.5</span>)
+<span class="kw">tiplabels</span>(<span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">col =</span> social.colors[mydata[,<span class="st">&quot;SocialStatus&quot;</span>]])
+<span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>,<span class="dt">legend=</span><span class="kw">c</span>(<span class="st">&quot;solitary&quot;</span>, <span class="st">&quot;social&quot;</span>), 
+       <span class="dt">pch =</span> <span class="dv">15</span>, <span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;lightblue&quot;</span>, <span class="st">&quot;plum&quot;</span>), <span class="dt">bty =</span> <span class="st">&quot;n&quot;</span>)</code></pre></div>
+<p><img src="macro-module_files/figure-html/unnamed-chunk-124-1.png" width="672" /></p>
+<p>You’ll see that solitary behavior seems to be more restricted in its distribution. Most solitary magicals are bird or reptile like. From the distribution on the phylogeny, we might guess that solitary behavior is the ancestral state. This is exactly what we need to know in order to test whether evolutionary modes for body size vary for solitary vs social magical creatures. But before we can infer ancestral states, we need to chose the most appropriate model of social evolution.</p>
+<p>There are several ways of mapping social status onto the tree but probably the most straightforward is to use an ancestral state estimation. We will estimate ancestral states for each node under a Markov model, pick the state with the highest marginal likelihood, and then assign that as the node state.</p>
+<p>Unfortunately, just like rates can vary for continuous traits, so they can vary for discrete traits, and this can impact our ancestral state estimation. Fortunately, it’s straightforward to test for this kind of heterogeneity using the <code>fitDiscrete</code> function in the <code>geiger</code> package.</p>
+</div>
+<div id="models-of-discrete-trait-evolution" class="section level2">
+<h2><span class="header-section-number">7.3</span> Models of discrete trait evolution</h2>
+<div id="mk1-all-rates-equal-er" class="section level3">
+<h3><span class="header-section-number">7.3.1</span> Mk1 – all rates equal (ER)</h3>
+<p>The simplest Markov model we can fit to comparative data is an Mk1 model – M for Markov, k1 for <span class="math inline">\(k = 1\)</span> or 1 parameter. The single parameter of this model is a transition rate – the rate at which states change. Because we only have one rate, transitions between any pair of states occur at the same rate and are therefore equally probable. We can visualize the <span class="math inline">\(Q\)</span> (rate) matrix for an Mk1 model like this:</p>
+<table>
+<thead>
+<tr class="header">
+<th>-</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>-</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>1</td>
+<td>-</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>1</td>
+<td>1</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p>The off-diagonals are the transition rates from state 1 to 2, 1 to 3, 2 to 1 and so on (read rows then columns). We typically designate individual transition rates in the form <span class="math inline">\(q_ij\)</span>, which means the rate of going from state <span class="math inline">\(i\)</span> to state <span class="math inline">\(j\)</span>. Here, the 1 in all off-diagonal elements represents the fact that rates are the same regardless of what state <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> are, and the direction of that change. The diagonal elements <span class="math inline">\(q_ii\)</span> give the rate of not changing and are computed as the negative sum of the non-diagonal row elements. This is so that the rows sum to zero.</p>
+<p>If you’re familiar with models of molecular evolution, you might know this model better as the <strong>Jukes-Cantor model</strong>, where transition rates = transversion rates.</p>
+</div>
+<div id="mk-symmetric-rates-sym" class="section level3">
+<h3><span class="header-section-number">7.3.2</span> Mk – symmetric rates (SYM)</h3>
+<p>We could add some complexity, and perhaps realism, by imagining that the rate of change between any pair of states is the same regardless of direction, but that the rate of change differs among states. Such a model is referred to as a symmetric model, and has a <span class="math inline">\(Q\)</span> matrix of the form:</p>
+<table>
+<thead>
+<tr class="header">
+<th>-</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>-</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>1</td>
+<td>-</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>2</td>
+<td>3</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p>Here, <span class="math inline">\(q_{12} = q_{21}\)</span> but this rate is allowed to be different from <span class="math inline">\(q_{13}/q_{31}\)</span> and from <span class="math inline">\(q_{23}/q_{32}\)</span>. The number of different rates is three for <span class="math inline">\(S = 3\)</span>. However, if we were to add a fourth state, the new number of rates would not be 4 but rather would be 6. This is because there would now be 6 distinct off-diagonal elements present in the upper or lower diagonals.</p>
+<p>If you’re more familiar with molecular models, this is how we get the 6-rate GTR (General Time Reversible) model:</p>
+<table>
+<thead>
+<tr class="header">
+<th>-</th>
+<th>A</th>
+<th>C</th>
+<th>T</th>
+<th>G</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>-</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>C</td>
+<td>1</td>
+<td>-</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr class="odd">
+<td>T</td>
+<td>2</td>
+<td>4</td>
+<td>-</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td>G</td>
+<td>3</td>
+<td>5</td>
+<td>6</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p>Obviously, a symmetric model with only 2 states becomes an equal rates (Mk1) model.</p>
+</div>
+<div id="mk-all-rates-different-ard" class="section level3">
+<h3><span class="header-section-number">7.3.3</span> Mk – All Rates Different (ARD)</h3>
+<p>Finally, we can go crazy and allow all rates to be different. For S-states, this would generate <span class="math inline">\(S^2\)</span> S rates FIXXXXXX, which might be crazy, depending on how many states you have. For completeness, the <span class="math inline">\(Q\)</span> matrix for an All Rates Different model would look like this:</p>
+<table>
+<thead>
+<tr class="header">
+<th>-</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>-</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>3</td>
+<td>-</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>5</td>
+<td>6</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<p>If you’re more familiar with molecular models, then you’ll be aware that molecular folks don’t do this because of potential over-fitting. This is a very important point to consider. However, in comparative data, there are three situations in which this model might realistically be a good fit.</p>
+<ol style="list-style-type: decimal">
+<li>An All Rates Different model might be a good fit if you have an especially large datasets that spans a variety of different states. For example, if you had a tree of all 64,000 plus vertebrates and wanted to examine transition rates among different dietary strategies, this model would be worth examining.</li>
+<li>If you have strong reasons to suppose character states are not reversible, this is worth using. For example, complex structures like eyes or teeth tend not to reappear once lost so asymmetric models might be a better fit for these kinds of characters.</li>
+<li>This model is also a good option when you only have two states but think rates back and forth might be different. In this latter situation, the All Rates Different model simply gives you two rates, which isn’t really over-fitting.</li>
+</ol>
+</div>
+</div>
+<div id="fitting-the-models-using-fitdiscrete" class="section level2">
+<h2><span class="header-section-number">7.4</span> Fitting the models using <code>fitDiscrete</code></h2>
+<p>Let’s try these models with our magical creatures dataset using <code>fitDiscrete</code>. We will investigate rates of change in social status.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">equal &lt;-<span class="st"> </span><span class="kw">fitDiscrete</span>(mytree, mydata[ , <span class="st">&quot;SocialStatus&quot;</span>], <span class="dt">model =</span> <span class="st">&quot;ER&quot;</span>)
+<span class="co">#sym &lt;- fitDiscrete(mytree, mydata[ , &quot;SocialStatus&quot;], model = &quot;SYM&quot;)</span>
+ard &lt;-<span class="st"> </span><span class="kw">fitDiscrete</span>(mytree, mydata[ , <span class="st">&quot;SocialStatus&quot;</span>], <span class="dt">model =</span> <span class="st">&quot;ARD&quot;</span>)</code></pre></div>
+<p>Before moving on, note that the commented out fitting of the symmetric model is on purpose. Why? Remember that we only have 2 states, solitary and social. A symmetric model with 2 states is just an equal rates model, so we can conveniently ignore it here. Let’s look at the output for the equal rates model:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">equal</code></pre></div>
+<pre><code>## GEIGER-fitted comparative model of discrete data
+##  fitted Q matrix:
+##                  1            2
+##     1 -0.002247321  0.002247321
+##     2  0.002247321 -0.002247321
+## 
+##  model summary:
+##  log-likelihood = -8.815776
+##  AIC = 19.631552
+##  AICc = 19.791552
+##  free parameters = 1
+## 
+## Convergence diagnostics:
+##  optimization iterations = 100
+##  failed iterations = 0
+##  frequency of best fit = 1.00
+## 
+##  object summary:
+##  &#39;lik&#39; -- likelihood function
+##  &#39;bnd&#39; -- bounds for likelihood search
+##  &#39;res&#39; -- optimization iteration summary
+##  &#39;opt&#39; -- maximum likelihood parameter estimates</code></pre>
+<p>This looks very similar to the output from <code>fitContinuous</code>. We’ve got a model summary, with log likelihoods and AIC scores, convergence diagnostics and an object summary. The only difference is the first part, which gives us a fitted <span class="math inline">\(Q\)</span> matrix, rather than a summary of model parameters (the <span class="math inline">\(Q\)</span> matrix <strong>is</strong> the model parameters). This is an equal rates model, so the two off-diagonal elements are all same, and the diagonals are the negative values of the rates (so rows sum to zero).</p>
+<p>By typing <code>ard</code>, we can look at the output for the all-rates-different model:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ard</code></pre></div>
+<pre><code>## GEIGER-fitted comparative model of discrete data
+##  fitted Q matrix:
+##                  1            2
+##     1 -0.005617678  0.005617678
+##     2  0.002368874 -0.002368874
+## 
+##  model summary:
+##  log-likelihood = -8.634626
+##  AIC = 21.269252
+##  AICc = 21.769252
+##  free parameters = 2
+## 
+## Convergence diagnostics:
+##  optimization iterations = 100
+##  failed iterations = 0
+##  frequency of best fit = 0.41
+## 
+##  object summary:
+##  &#39;lik&#39; -- likelihood function
+##  &#39;bnd&#39; -- bounds for likelihood search
+##  &#39;res&#39; -- optimization iteration summary
+##  &#39;opt&#39; -- maximum likelihood parameter estimates</code></pre>
+<p>It seems as though the rate of moving from solitary to social (<code>0.005</code>) is slightly higher than the rate of going from social to solitary (<code>0.002</code>). Based on our color-coordinated plot from earlier, we might have predicted this to be the case.</p>
+<p>Because the output of <code>equal</code> and <code>ard</code> are just like <code>fitContinuous</code>, we can pull AICc values out and use them to perform model selection:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">aic.discrete &lt;-<span class="st"> </span><span class="kw">setNames</span>(<span class="kw">c</span>(equal$opt$aic, ard$opt$aic), <span class="kw">c</span>(<span class="st">&quot;equal&quot;</span>, <span class="st">&quot;different&quot;</span>))
+weights &lt;-<span class="st"> </span><span class="kw">aicw</span>(aic.discrete)
+weights</code></pre></div>
+<pre><code>##                fit  delta         w
+## equal     19.63155 0.0000 0.6939922
+## different 21.26925 1.6377 0.3060078</code></pre>
+<p>Based on AIC weights, which model should we prefer?</p>
+<p>The all-rates-different model is less strongly supported (<code>AICcW = 0.306</code>) than the equal rates model (<code>AICcW = 0.694</code>). Now we can move forward with reconstructing ancestral states under the preferred equal rates transition rate model.</p>
+</div>
+<div id="ancestral-state-reconstructions" class="section level2">
+<h2><span class="header-section-number">7.5</span> Ancestral state reconstructions</h2>
+<p>Ancestral state reconstruction is probably one of the most over-used and uninformative methods in the phylogenetic comparative methods toolkit. There are many reasons to be highly skeptical of ancestral state estimates and interpretations of macroevolutionary patterns and process that are based on them. However, if you want to know if evolutionary tempo or mode have varied over clade history based on the state of a discrete trait, you’ll need to do it. We’ll use <code>ape</code>’s <code>ace</code> function here. There are other options out there, for example in the <code>phytools</code> package. But <code>ace</code> will work for our purposes.</p>
+<p>To perform ancestral state estimation under the all-rates-different model:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">asr &lt;-<span class="st"> </span><span class="kw">ace</span>(mydata[ , <span class="st">&quot;SocialStatus&quot;</span>], mytree, <span class="dt">type =</span> <span class="st">&quot;discrete&quot;</span>, <span class="dt">model =</span> <span class="st">&quot;ER&quot;</span>)</code></pre></div>
+<p>You might see an error message appear saying <code>NaNs produced</code>.</p>
+<p>Don’t worry about this – it happens when rates for one transition are particularly low but doesn’t really affect our node state estimates. One point to note here is that <code>ace</code> now defaults to a joint estimation procedure, where the ancestral states are optimized based on all information in the tree, not just the states at descendant tips.</p>
+<p>We can access our ancestral states by typing:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">asr$lik.anc</code></pre></div>
+<p>In this matrix, the columns correspond to nodes in the tree (the numbering is off, as we’ll see in a sec) and the two columns give the scaled likelihoods that the node is in states 1 or 2. The scaled likelihoods are like probabilities, so for the first node, we reconstruct state 1 with probability = <code>0.3</code> and state 2 with probability = <code>0.7</code> , but for node 2 the probability of state 1 = <code>0.05</code> while that of state 2 = <code>0.95</code>. Scaled likelihoods lend themselves very well to graphical display, so we can visualize these states with pie charts on the tree we plotted earlier.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(mytree, <span class="dt">cex =</span> <span class="fl">0.5</span>)
+<span class="kw">nodelabels</span>(<span class="dt">pie =</span> asr$lik.anc, <span class="dt">piecol =</span> social.colors, <span class="dt">cex =</span> <span class="fl">0.5</span>)
+<span class="kw">tiplabels</span>(<span class="dt">pch =</span> <span class="dv">16</span>, <span class="dt">col =</span> social.colors[mydata[,<span class="st">&quot;SocialStatus&quot;</span>]])
+<span class="kw">legend</span>(<span class="st">&quot;bottomleft&quot;</span>,<span class="dt">legend=</span><span class="kw">c</span>(<span class="st">&quot;solitary&quot;</span>, <span class="st">&quot;social&quot;</span>), 
+       <span class="dt">pch =</span> <span class="dv">15</span>, <span class="dt">col=</span><span class="kw">c</span>(<span class="st">&quot;lightblue&quot;</span>, <span class="st">&quot;plum&quot;</span>), <span class="dt">bty =</span> <span class="st">&quot;n&quot;</span>)</code></pre></div>
+<p><img src="macro-module_files/figure-html/unnamed-chunk-131-1.png" width="672" /></p>
+<p>We reconstruct mostly social as the ancestral state for magical creatures, but with multiple transitions to solitary behaviour. For our next analyses though, we want to be able to extract the “best” state for each node. We can do this quite easily with the data structure <code>ace</code> gives us. First, we need to assign row names to our ancestral states that actual correspond to node numbers. phylo–format trees number nodes from <code>n+1</code> onwards, where <code>n</code> is the number of taxa in the tree. So if there are 10 taxa, the root node is 11. Recall also that a fully bifurcating tree has <code>n - 1</code> nodes. We can pull out the scaled likelihoods and number the rows appropriately with two simple lines of code:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">node.states &lt;-<span class="st"> </span>asr$lik.anc
+<span class="kw">rownames</span>(node.states) &lt;-<span class="st"> </span><span class="kw">seq</span>(<span class="dv">1</span>:<span class="kw">nrow</span>(node.states)) +<span class="st"> </span><span class="kw">length</span>(mytree$tip.label)
+node.states</code></pre></div>
+<pre><code>##               1            2
+## 28 2.951598e-01 7.048402e-01
+## 29 5.176500e-02 9.482350e-01
+## 30 6.723783e-02 9.327622e-01
+## 31 2.788813e-05 9.999721e-01
+## 32 8.812542e-02 9.118746e-01
+## 33 1.121960e-03 9.988780e-01
+## 34 9.481369e-05 9.999052e-01
+## 35 1.180908e-05 9.999882e-01
+## 36 1.291077e-05 9.999871e-01
+## 37 5.096106e-07 9.999995e-01
+## 38 4.892579e-07 9.999995e-01
+## 39 9.532305e-01 4.676946e-02
+## 40 6.559008e-03 9.934410e-01
+## 41 4.773548e-03 9.952265e-01
+## 42 1.850043e-04 9.998150e-01
+## 43 4.923981e-06 9.999951e-01
+## 44 5.791449e-05 9.999421e-01
+## 45 2.257465e-03 9.977425e-01
+## 46 1.779187e-03 9.982208e-01
+## 47 4.183958e-01 5.816042e-01
+## 48 9.983242e-01 1.675751e-03
+## 49 2.750360e-01 7.249640e-01
+## 50 3.333531e-01 6.666469e-01
+## 51 9.925342e-01 7.465840e-03
+## 52 1.000000e+00 3.595570e-08
+## 53 9.999929e-01 7.068412e-06</code></pre>
+<p>Now the rownumbers correspond to node numbers. This is useful. Now we’ll use a simple trick to extract the most likely states and assign them as node values on our tree.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">best &lt;-<span class="st"> </span><span class="kw">apply</span>(node.states, <span class="dv">1</span>, which.max)
+best</code></pre></div>
+<pre><code>## 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 
+##  2  2  2  2  2  2  2  2  2  2  2  1  2  2  2  2  2  2  2  2  1  2  2  1  1 
+## 53 
+##  1</code></pre>
+<p>Now we have a named vector of “best” estimates of the node state. We can assign these to the tree using the following line of code.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mytree$node.label &lt;-<span class="st"> </span>best
+mytree</code></pre></div>
+<pre><code>## 
+## Phylogenetic tree with 27 tips and 26 internal nodes.
+## 
+## Tip labels:
+##  Doxie, Bowtruckle, Hinkypuff, Grindylow, Gnome, Pixie, ...
+## Node labels:
+##  2, 2, 2, 2, 2, 2, ...
+## 
+## Rooted; includes branch lengths.</code></pre>
+<p>Now we have node labels associated with our magical tree that specify which social regime each branch is evolving under. We’re now ready to move on to modeling state specific rate variation and adaptive optima, using OUwie.</p>
+</div>
+<div id="fitting-models-using-ouwie" class="section level2">
+<h2><span class="header-section-number">7.6</span> Fitting models using <code>OUwie</code></h2>
+<p><code>OUwie</code> (pronounced Ow-EE) is a package written by Brian O’Meara and Jeremy Beaulieu that performs maximum likelihood optimization of Brownian motion and Ornstein-Uhlenbeck models. The models implemented include the simple versions introduced earlier, but also include more complex versions that allow model parameters (rates, selection, optima) to vary among evolutionary regimes.</p>
+<p>There are three things we need to fit an <code>OUwie</code> model. 1. A phylogeny with internal nodes labeled with the ancestral selective regimes - which we just did. 2. A dataset containing column entries in the following order: i) species names, ii) current selective regime, and iii) the continuous trait of interest. 3. The model we want to fit.</p>
+<p>For the dataset all we need to do is make a dataframe with the relevant information. Let’s make it and look at the first few lines:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ouwie.data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">species =</span> <span class="kw">rownames</span>(mydata), <span class="dt">regime =</span> mydata[ , <span class="st">&quot;SocialStatus&quot;</span>],
+<span class="dt">trait =</span> <span class="kw">log</span>(mydata[ , <span class="st">&quot;BodySize_kg&quot;</span>]))
+<span class="kw">head</span>(ouwie.data)</code></pre></div>
+<pre><code>##               species regime      trait
+## Doxie           Doxie      2  0.4054651
+## Bowtruckle Bowtruckle      2 -1.0498221
+## Hinkypuff   Hinkypuff      2  0.0000000
+## Grindylow   Grindylow      2 -0.5978370
+## Gnome           Gnome      2  3.2188758
+## Pixie           Pixie      2 -0.9162907</code></pre>
+<p>Finally, we want to decide which model we’re going to fit.</p>
+<div id="multi-rate-brownian-motion-bms" class="section level3">
+<h3><span class="header-section-number">7.6.1</span> Multi-rate Brownian motion (BMS)</h3>
+<p>In <code>OUwie</code> a multi-rate BM model is coded as “BMS”.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">BMvariable &lt;-<span class="st"> </span><span class="kw">OUwie</span>(mytree, ouwie.data, <span class="dt">model =</span> <span class="st">&quot;BMS&quot;</span>)</code></pre></div>
+<pre><code>## Initializing... 
+## Finished. Begin thorough search... 
+## Finished. Summarizing results.</code></pre>
+<p>Let’s look at the results:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">BMvariable</code></pre></div>
+<pre><code>## 
+## Fit
+##        lnL      AIC     AICc model ntax
+##  -72.14716 152.2943 154.1125   BMS   27
+## 
+## Rates
+##                 1          2
+## alpha          NA         NA
+## sigma.sq 7.269257 0.09645345
+## 
+## Optima
+##                 1        2
+## estimate 18.71153 2.902904
+## se       65.09904 3.209815
+## 
+## Arrived at a reliable solution</code></pre>
+<p>The final line tells us that we arrived at a reliable solution – that is that the optimizer converged on a reliable set of parameter estimates. The rest of the output includes log likelihood (<code>LnL</code>), AIC (<code>AIC</code>) etc, the rates (including the alpha parameters), and the optima. There are three main things to notice:</p>
+<ul>
+<li>You’ll see here that there are <code>NAs</code> for alpha because this is a BM model, so there is no <span class="math inline">\(\alpha\)</span> parameter to estimate.</li>
+<li>The optima here correspond to the root state for species with state 1 (solitary) or state 2 (social). It makes sense that the root state is higher for solitary species, as we know these can be huge (basilisks, dragons etc.) For OU models, these optima would be the adaptive optimal values of body mass for each of the two states.</li>
+<li>The rates (<code>sigma.sq</code>) differ for regimes 1 and 2. Specifically, the rate for regime 1 (solitary) appears to be much higher that of regime 2 (social). So rates of body size evolution seem to be faster for solitary magical animals than for social magical animals, again this fits with our understanding of the data.</li>
+</ul>
+<p>To know whether this difference is great enough for us to prefer this model, we’d need to compare AIC scores, or something similar. We’ll come back to this in a minute.</p>
+</div>
+<div id="multi-peak-ou-models" class="section level3">
+<h3><span class="header-section-number">7.6.2</span> Multi-peak OU models</h3>
+<p>If you look at the help file for <code>?OUwie</code> you’ll see the following options are available to us.</p>
+<ol style="list-style-type: decimal">
+<li>single-rate Brownian motion (model=BM1) [equivalent to “BM” in <code>fitContinuous</code>]</li>
+<li>Brownian motion with different rate parameters for each state on a tree (model=BMS)</li>
+<li>Ornstein-Uhlenbeck model with a single optimum for all species (model=OU1) [equivalent to “OU” in <code>fitContinuous</code>]</li>
+<li>Ornstein-Uhlenbeck model with different state means and a single <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\sigma^2\)</span> acting on all selective regimes (model=OUM)</li>
+<li>Ornstein-Uhlenbeck models that assume different state means as well as either multiple <span class="math inline">\(\sigma^2\)</span> (model=OUMV), multiple <span class="math inline">\(\alpha\)</span> (model=OUMA), or multiple <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\sigma^2\)</span> for each selective regime (model=OUMVA).</li>
+</ol>
+<p>We have quite a few options when it comes to OU models; we can allow the optima to vary, the rates, the alphas and any combination of these. I’d encourage you to play around with these options with your own data, but for now, we’ll focus on the different optima models (OUM). Be aware too that these methods are very data hungry. I wouldn’t recommend fitting an OUMVA model to a tree with 50 tips – you’d need closer to 200 and ideally more to get good fits for this complex model. Of course here we only have 26 species so I wouldn’t trust these results (apart from the fact they are made up data about made up animals!).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">OUmulti &lt;-<span class="st"> </span><span class="kw">OUwie</span>(mytree, ouwie.data, <span class="dt">model =</span> <span class="st">&quot;OUM&quot;</span>)</code></pre></div>
+<pre><code>## Initializing... 
+## Finished. Begin thorough search... 
+## Finished. Summarizing results.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Look at the results</span>
+OUmulti</code></pre></div>
+<pre><code>## 
+## Fit
+##        lnL      AIC     AICc model ntax
+##  -69.75334 147.5067 149.3249   OUM   27
+## 
+## 
+## Rates
+##                  1         2
+## alpha     1.169449  1.169449
+## sigma.sq 24.617820 24.617820
+## 
+## Optima
+##                 1         2
+## estimate 4.946723 2.5550174
+## se       1.212267 0.7470149
+## 
+## Arrived at a reliable solution</code></pre>
+<p>What is different here?</p>
+<p>We now have parameter estimates for <code>alpha</code>, as well as <code>sigmasq</code>. We can use the optima to infer an optimal size for solitary magical creatures of <code>4.947</code> log(body mass) units and an optimal mass of <code>2.555</code> log(body mass) units for social magical creatures. <code>alpha</code> is greater than zero suggesting that body size of magical creatures is evolving towards these optima.</p>
+<p>To find out which model best fits our data, we’ll need to compute AIC weights again.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">aic.scores &lt;-<span class="st"> </span><span class="kw">setNames</span>(<span class="kw">c</span>(BM$opt$aicc, OU$opt$aicc, EB$opt$aicc, BMvariable$AICc, OUmulti$AICc), 
+                       <span class="kw">c</span>(<span class="st">&quot;BM&quot;</span>, <span class="st">&quot;OU&quot;</span>, <span class="st">&quot;EB&quot;</span>, <span class="st">&quot;BMvariable&quot;</span>, <span class="st">&quot;OUmulti&quot;</span>))
+<span class="kw">aicw</span>(aic.scores)</code></pre></div>
+<pre><code>##                 fit       delta            w
+## BM         201.5837 52.25885489 2.160766e-12
+## OU         149.3528  0.02789568 4.746969e-01
+## EB         204.1283 54.80340245 6.054332e-13
+## BMvariable 154.1125  4.78764935 4.393888e-02
+## OUmulti    149.3249  0.00000000 4.813643e-01</code></pre>
+<p>Which is the best model overall?</p>
+<hr />
+</div>
+</div>
+<div id="references-3" class="section level2">
+<h2><span class="header-section-number">7.7</span> References</h2>
+<ul>
+<li>Blomberg, S. P., T. Garland, and A. R. Ives. 2003. Testing for phylogenetic signal in comparative data: behavioral traits are more labile. Evolution 57:717–745.</li>
+<li>Butler, M. A. and A. A. King. 2004. Phylogenetic comparative analysis: a modeling approach for adaptive evolution. The American Naturalist 164:683–695.</li>
+<li>Cavalli-Sforza, L. L. and A. W. Edwards. 1967. Phylogenetic analysis. models and estimation procedures. American Journal of Human Genetics 19:233.</li>
+<li>Cooper, N., R. P. Freckleton, and W. Jetz. 2011. Phylogenetic conservatism of environmental niches in mammals. Proceedings of the Royal Society B: Biological Sciences 278:2384–2391.</li>
+<li>Cooper, N. and A. Purvis. 2010. Body size evolution in mammals: complexity in tempo and mode.The American Naturalist 175:727–738.</li>
+<li>Cooper, N., Thomas, G.H., Venditti, C., Meade, A. &amp; Freckleton, R.P. (2016b) A cautionary note on the use of ornstein-uhlenbeck models in macroevolutionary studies. Biological Journal of the Linnaean Society</li>
+<li>Felsenstein, J. 1973. Maximum likelihood and minimum-steps methods for estimating evolutionary trees from data on discrete characters. Systematic Biology 22:240–249.</li>
+<li>Freckleton, R. P. and P. H. Harvey. 2006. Detecting non-brownian trait evolution in adaptive radiations. PLoS Biology 4:e373.</li>
+<li>Hansen, T. F. 1997. Stabilizing selection and the comparative analysis of adaptation. Evolution Pages 1341–1351.</li>
+<li>Harmon, L. J., J. B. Losos, T. Jonathan Davies, R. G. Gillespie, J. L. Gittleman, W. Bryan Jennings, K. H. Kozak, M. A. McPeek, F. Moreno-Roark, T. J. Near, et al. 2010. Early bursts of body size and shape evolution are rare in comparative data. Evolution 64:2385–2396.</li>
+<li>Lande, R. 1976. Natural selection and random genetic drift in phenotypic evolution. Evolution 30:314–334.</li>
+<li>Slater, G. J., L. J. Harmon, and M. E. Alfaro. 2012. Integrating fossils with molecular phylogenies improves inference of trait evolution. Evolution 66:3931–3944.</li>
+<li>Slater, G. J. and M.W. Pennell. 2014. Robust regression and posterior predictive simulation increase power to detect early bursts of trait evolution. Systematic Biology 63:293–308.</li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="macroevolutionary-models-in-r-part-1-continuous-traits.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="geometric-morphometrics-in-r.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/nhcooper123/TeachingMaterials/MSc_Museum/MacroModule/edit/master/06_MacroModelsinR_Discrete.Rmd",
+"text": "Edit"
+},
+"download": ["macro-module.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

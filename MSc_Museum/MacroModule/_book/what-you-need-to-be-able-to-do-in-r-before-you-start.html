@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="what-you-need-to-be-able-to-do-in-r-before-you-start.html">
+<link rel="prev" href="index.html">
+<link rel="next" href="diversity-indices-in-r.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -242,60 +242,110 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Methods in Macroecology and Macroevolution</h1>
-<h4 class="author"><em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></h4>
-<h4 class="date"><em>February 2017</em></h4>
-</div>
-<div id="methods-in-macroecology-and-macroevolution-module-outline" class="section level1">
-<h1><span class="header-section-number">Practical 1</span> Methods in Macroecology and Macroevolution: Module outline</h1>
-<div id="module-aims" class="section level2">
-<h2><span class="header-section-number">1.1</span> Module Aims</h2>
-<p>The aim of this module is to introduce you to some of the cutting-edge methods being used in macroecology and macroevolution, with particular focus on work being done right now at the Museum. Rather than concentrating on learning theory through lectures, the module will introduce you to various ways we collect, analyse and interpret macro-scale data with a large emphasis on practical work, mostly using R.</p>
-</div>
-<div id="datasets-and-practical-handouts" class="section level2">
-<h2><span class="header-section-number">1.2</span> Datasets and practical handouts</h2>
-<p>All datasets and practical handouts are available on GitHub. It can be tricky to download data from GitHub if you don’t know what you’re doing and/or don’t want to clone the entire repository so the materials are also available at this DropBox link: []. It will save time if you download this before coming to class.</p>
-</div>
-<div id="timetable" class="section level2">
-<h2><span class="header-section-number">1.3</span> Timetable</h2>
-<p>There will be one morning and one afternoon session each day. Morning sessions will run from 10am-1pm, afternoon sessions from 2pm-5pm. Not every session will require a full three hours. Instructors for each session are below. Note that Thursday and Friday of the first week we have had to move to the Gavin de Beer room. <strong>PLEASE BRING LAPTOPS</strong>.</p>
-<p><strong>Thursday 23rd February - GAVIN DE BEER not UBR or LBR</strong></p>
+<div id="what-you-need-to-be-able-to-do-in-r-before-you-start" class="section level1">
+<h1><span class="header-section-number">Practical 2</span> What you need to be able to do in R before you start</h1>
+<p>Most people taking this module have used R a lot already, but it is possible you’re a bit rusty, or you’ve found this course on GitHub and have no R experience. This isn’t a problem, I will try and summarise what you need to be able to do to get these practicals running below. However, I’m not going to write a help guide to R here, if you can’t work out how to open it and get started etc. I strongly recommend the book <a href="http://www.r4all.org/">Getting Started With R</a> or there are lots of great tutorials online.</p>
+<p>Throughout, R code will be in shaded boxes:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ape)</code></pre></div>
+<p>R output will be preceded by ## and important comments will be in quote blocks:</p>
+<p>Note that many things in R can be done in multiple ways. You should choose the methods you feel most comfortable with, and do not panic if someone is doing the same analyses as you in a different way!</p>
+<div id="installing-r-and-rstudio" class="section level2">
+<h2><span class="header-section-number">2.1</span> Installing R (and RStudio)</h2>
 <ul>
-<li><p>Morning: What are macroecology and macroevolution? Introduction to the module, assessments, and aims. <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-<li><p>Afternoon: Macroecology I: Macroecological patterns and diversity indices in R. <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-</ul>
-<p><strong>Friday February 24th February - GAVIN DE BEER not UBR or LBR</strong></p>
-<ul>
-<li><p>Morning: Big Data I: Using Big Data in conservation with the PREDICTS project. <em>Andy Purvis (<a href="mailto:a.purvis@nhm.ac.uk">a.purvis@nhm.ac.uk</a>)</em></p></li>
-<li><p>Afternoon: Big data II: Using the paleobiology database (PBDB) to get data on fossil species for macroecological and macroevolutionary analyses. <em>Terri Cleary (<a href="mailto:t.cleary@nhm.ac.uk">t.cleary@nhm.ac.uk</a>)</em></p></li>
-</ul>
-<p><strong>Monday February 27th February - UBR/LBR </strong></p>
-<ul>
-<li><p>Morning: Comparative Biology: The comparative method, dealing with phylogenetic non-independence in comparative analyses. PGLS in R. <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-<li><p>Afternoon: Macroevolution I: Macroevolutionary patterns and models of evolution in R. <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-</ul>
-<p><strong>Tuesday 28th February - UBR/LBR</strong></p>
-<ul>
-<li><p>Morning: Big data III: Using museum specimen data in macroecological and macroevolutionary analyses. Geometric morphometrics. <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-<li><p>Afternoon: Macroevolution II: case study using Foraminifera. <em>Isabel Fenton (<a href="mailto:i.fenton@nhm.ac.uk">i.fenton@nhm.ac.uk</a>)</em></p></li>
-</ul>
-<p><strong>Wednesday 1st March - UBR/LBR</strong></p>
-<ul>
-<li><p>Morning: Macroevolution III: Diversification rates and adaptive radiations. <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-<li><p>Afternoon: Critical thinking: Do you trust your methods? <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-</ul>
-<p><strong>Thursday 2nd March AND Friday 3rd March - UBR</strong></p>
-<p><em>Richard Twitchett (<a href="mailto:r.twitchett@nhm.ac.uk">r.twitchett@nhm.ac.uk</a>)</em></p>
-<ul>
-<li>All day: Using fossil assemblages to assess the impact of mass extinction events: comparative palaeoecology of Ordovician and Silurian fossil assemblages (practical and assessment).</li>
+<li>Install R from [<a href="https://cran.r-project.org" class="uri">https://cran.r-project.org</a>]</li>
+<li>You can install RStudio from [<a href="http://www.rstudio.com/products/rstudio/download/" class="uri">http://www.rstudio.com/products/rstudio/download/</a>]. I’d recommend trying this out if you’re a beginner as it has a nicer interface.</li>
 </ul>
 </div>
-<div id="assessment" class="section level2">
-<h2><span class="header-section-number">1.4</span> Assessment</h2>
-<p>There are two assessments connected to this module.</p>
-<p>The first will be based on computer practicals early in the course. These will be done at the end of the practicals, and consist of some online multiple choice questions. No write up will be required and the assessment will be completed by the end of the week, if not the end of the practical.</p>
-<p>The second, although within this module, belongs to the Paleobiology module. Due to the large class size during that module it couldn’t happen there so we’ve moved it here. However, the techniques and concepts are highly relevant to macroecology and macroevolution. Richard Twitchett (<a href="mailto:r.twitchett@nhm.ac.uk">r.twitchett@nhm.ac.uk</a>) will provide a full explanation of the assessment during the practical on <strong>Thursday 2nd March and Friday 3rd March</strong>.</p>
+<div id="setting-the-working-directory" class="section level2">
+<h2><span class="header-section-number">2.2</span> Setting the working directory</h2>
+<p>To use the practicals you need to download all the files for each practical into a folder somewhere on your computer (I usually put mine on the Desktop). We will then tell R to look in this folder for all data etc. by <strong>setting the working directory</strong> to that folder.</p>
+<p>To set the working directory you’ll need to know what the <strong>path</strong> of the folder is. The path is really easy to find in a Windows machine, just click on the address bar of the folder and the whole path will appear. For example on my Windows machine, the path is:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">C:<span class="er">/</span>Users/Natalie/Desktop/RAnalyses</code></pre></div>
+<p>It’s a bit trickier to find the path on a Mac, so use Google if you need help. On my Mac the path is:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">~<span class="er">/</span>Desktop/RAnalyses</code></pre></div>
+<p>Note that the tilde ~ is a shorthand for /Users/Natalie.</p>
+<p>We can then set the working directory to your folder using <code>setwd</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">setwd</span>(<span class="st">&quot;~/Desktop/RAnalyses&quot;</span>)</code></pre></div>
+<p>Alternatively if using RStudio you use the menus to do this. Go to Session &gt; Set Working Directory &gt; Choose Directory.</p>
+<p>Setting the working directory tells R which folder to look for data in (and which folder you’d like it to write results to). It saves a bit of typing when reading files into R. Now I can read in a file called <code>mydata.csv</code> as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mydata &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;mydata.csv&quot;</span>)</code></pre></div>
+<p>rather than having to specify the folder too:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mydata &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;~/Desktop/RAnalyses/mydata.csv&quot;</span>)</code></pre></div>
+<blockquote>
+<p>Remember if you move the data files, or the folder itself, you’ll need to set the working directory again.</p>
+</blockquote>
+</div>
+<div id="using-a-script" class="section level2">
+<h2><span class="header-section-number">2.3</span> Using a script</h2>
+<p>Next, open a text editor. R has an inbuilt editor that works pretty well, but NotePad and TextEdit are fine too. However, I <strong>highly</strong> recommend using something that will highlight code for you. My personal favorite is Sublime Text 2, because you can also use it for any other kind of text editing like LaTeX, html etc. RStudio’s editor is also very nice.</p>
+<p>You should type (or copy and paste) your code into the text editor, edit it until you think it’ll work, and then either paste it into R’s console window, or you can highlight the bit of code you want to run and press <code>ctrl</code> or <code>cmd</code> and <code>enter</code> or <code>R</code> (different computers seem to do this differently). This will automatically send it to the console.</p>
+<p>Saving the script file lets you keep a record of the code you used, which can be a great time saver if you want to use it again, especially as you know this code will work!</p>
+<p><strong>You can cut and paste code from my handouts into your script. You don’t need to retype everything!</strong></p>
+<p>If you want to add comments to the file (i.e., notes to remind yourself what the code is doing), put a hash/pound sign (#) in front of the comment.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Comments are ignored by R but remind you what the code is doing. </span>
+<span class="co"># You need a # at the start of each line of a comment.</span>
+<span class="co"># Always make plenty of notes to help you remember what you did and why</span></code></pre></div>
+</div>
+<div id="installing-and-loading-extra-packages-in-r" class="section level2">
+<h2><span class="header-section-number">2.4</span> Installing and loading extra packages in R</h2>
+<p>To run any specialised analysis in R, you need to download one or more additional packages from the basic R installation. For these problem sets you will need to install the following packages:</p>
+<ul>
+<li><code>ape</code></li>
+<li><code>geiger</code></li>
+<li><code>picante</code></li>
+<li><code>caper</code></li>
+<li><code>BAMMtools</code></li>
+</ul>
+<p>To install the package <code>ape</code>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;ape&quot;</span>)</code></pre></div>
+<p>Pick the closest mirror to you if asked.</p>
+<p>You’ve <em>installed</em> the packages but they don’t automatically get loaded into your R session. Instead you need to tell R to load them <strong>every time</strong> you start a new R session and want to use functions from these packages. To load the package <code>ape</code> into your current R session:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ape)</code></pre></div>
+<p>You can think of <code>install.packages</code> like installing an app from the App Store on your smart phone - <em>you only do this once</em> - and <code>library</code> as being like pushing the app button on your phone - <em>you do this every time you want to use the app</em>.</p>
+</div>
+<div id="loading-and-viewing-your-data-in-r" class="section level2">
+<h2><span class="header-section-number">2.5</span> Loading and viewing your data in R</h2>
+<p>R can read files in lots of formats, including comma-delimited and tab-delimited files. Excel (and many other applications) can output files in this format (it’s an option in the <code>Save As</code> dialog box under the <code>File</code> menu). Mostly I will give you .csv or .txt files during these practicals. As an example, here is how you would read in the tab-delimited text file called <code>Primatedata.txt</code> which we are going to use in the PGLS practical. Load these data as follows, assuming you have set your working directory (see step 2 above).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">primatedata &lt;-<span class="st"> </span><span class="kw">read.delim</span>(<span class="st">&quot;Primatedata.txt&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p>You can use <code>read.delim</code> for tab delimited files or <code>read.csv</code> for comma delimited files. <code>header = TRUE</code>, indicates that the first line of the data contains column headings.</p>
+<p>This is a good point to note that unless you __tell__R you want to do something, it won’t do it automatically. So here if you successfully entered the data, R won’t give you any indication that it worked. Instead you need to specifically ask R to look at the data.</p>
+<p>We can look at the data by typing:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(primatedata)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    77 obs. of  8 variables:
+##  $ Order          : Factor w/ 1 level &quot;Primates&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ Family         : Factor w/ 15 levels &quot;Aotidae&quot;,&quot;Atelidae&quot;,..: 2 2 2 14 3 3 3 4 4 4 ...
+##  $ Binomial       : Factor w/ 77 levels &quot;Alouatta palliata&quot;,..: 5 6 7 8 9 10 11 15 16 17 ...
+##  $ AdultBodyMass_g: num  6692 7582 8697 958 558 ...
+##  $ GestationLen_d : num  138 226 228 164 154 ...
+##  $ HomeRange_km2  : num  2.28 0.73 1.36 0.02 0.32 0.02 0.00212 0.51 0.16 0.24 ...
+##  $ MaxLongevity_m : num  336 328 454 304 215 ...
+##  $ SocialGroupSize: num  14.5 42 20 2.95 6.85 ...</code></pre>
+<p><strong>Always</strong> look at your data before beginning any analysis to check it read in correctly.</p>
+<p><code>str</code> shows the structure of the data frame (this can be a really useful command when you have a big data file). It also tells you what kind of variables R thinks you have (characters, integers, numeric, factors etc.). Some R functions need the data to be certain kinds of variables so it’s useful to check this.</p>
+<p>As you can see, the data contains the following variables: Order, Family, Binomial, AdultBodyMass_g, GestationLen_d, HomeRange_km2, MaxLongevity_m, and SocialGroupSize.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(primatedata)</code></pre></div>
+<pre><code>##      Order      Family           Binomial AdultBodyMass_g GestationLen_d
+## 1 Primates    Atelidae   Ateles belzebuth         6692.42         138.20
+## 2 Primates    Atelidae   Ateles geoffroyi         7582.40         226.37
+## 3 Primates    Atelidae    Ateles paniscus         8697.25         228.18
+## 4 Primates Pitheciidae  Callicebus moloch          958.13         164.00
+## 5 Primates     Cebidae  Callimico goeldii          558.00         153.99
+## 6 Primates     Cebidae Callithrix jacchus          290.21         144.00
+##   HomeRange_km2 MaxLongevity_m SocialGroupSize
+## 1          2.28          336.0           14.50
+## 2          0.73          327.6           42.00
+## 3          1.36          453.6           20.00
+## 4          0.02          303.6            2.95
+## 5          0.32          214.8            6.85
+## 6          0.02          201.6            8.55</code></pre>
+<p>This gives you the first few rows of data along with the column headings.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(primatedata)</code></pre></div>
+<pre><code>## [1] &quot;Order&quot;           &quot;Family&quot;          &quot;Binomial&quot;        &quot;AdultBodyMass_g&quot;
+## [5] &quot;GestationLen_d&quot;  &quot;HomeRange_km2&quot;   &quot;MaxLongevity_m&quot;  &quot;SocialGroupSize&quot;</code></pre>
+<p>This gives you the names of the columns.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">primatedata</code></pre></div>
+<p>This will print out all of the data!</p>
+<p><em>This should be everything you need to know to get the practicals that follow working. Let me know if you have any problems (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>).</em></p>
 
 </div>
 </div>
@@ -304,8 +354,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-
-<a href="what-you-need-to-be-able-to-do-in-r-before-you-start.html" class="navigation navigation-next navigation-unique" aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="diversity-indices-in-r.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -333,7 +383,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/nhcooper123/TeachingMaterials/MSc_Museum/MacroModule/edit/master/index.Rmd",
+"link": "https://github.com/nhcooper123/TeachingMaterials/MSc_Museum/MacroModule/edit/master/01_NeedToKnowR.Rmd",
 "text": "Edit"
 },
 "download": ["macro-module.pdf"],

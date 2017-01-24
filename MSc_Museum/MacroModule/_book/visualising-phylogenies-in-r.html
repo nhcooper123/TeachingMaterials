@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="what-you-need-to-be-able-to-do-in-r-before-you-start.html">
+<link rel="prev" href="diversity-indices-in-r.html">
+<link rel="next" href="phylogenetic-generalised-least-squares-pgls-in-r.html">
 
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -242,60 +242,222 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Methods in Macroecology and Macroevolution</h1>
-<h4 class="author"><em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></h4>
-<h4 class="date"><em>February 2017</em></h4>
+<div id="visualising-phylogenies-in-r" class="section level1">
+<h1><span class="header-section-number">Practical 4</span> Visualising phylogenies in R</h1>
+<p>The aims of this practical are to introduce you to some of the fun ways you can visualise phylogenetic trees in R. The code and examples are based on Liam Revell’s book chapter <a href="http://faculty.umb.edu/liam.revell/pdfs/Revell_2014.MPCM-chapter.pdf">here</a>.</p>
+<p>Note that some of these plots won’t work very well in RStudio. You may need to click the zoom button to see them, or resort to using the old R GUI instead.</p>
+<p><strong>REMEMBER</strong></p>
+<ul>
+<li>Download all of the data for the practical into a folder somewhere on your computer.</li>
+<li>Set your working directory to this folder.</li>
+<li>Start a new script for this practical.</li>
+</ul>
+<p>You will also need to install the following packages:</p>
+<ul>
+<li><code>ape</code></li>
+<li><code>phytools</code></li>
+</ul>
+<hr />
+<p>First load the packages we need and the data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ape)
+<span class="kw">library</span>(phytools)</code></pre></div>
+<p>Later we will use some Greater Antillean <em>Anolis</em> lizard data to add data to a phylogeny. Before we can add data to our tree, we need to load the data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">anoledata &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;anole.data.csv&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)
+
+<span class="co"># Look at the data</span>
+<span class="kw">str</span>(anoledata)</code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    100 obs. of  23 variables:
+##  $ species               : Factor w/ 100 levels &quot;ahli&quot;,&quot;alayoni&quot;,..: 1 2 3 4 5 6 7 8 9 10 ...
+##  $ AVG.SVL               : num  4.04 3.82 3.53 4.04 4.38 ...
+##  $ AVG.hl                : num  2.88 2.7 2.38 2.9 3.36 ...
+##  $ AVG.hw                : num  2.36 1.99 1.56 2.37 2.69 ...
+##  $ AVG.hh                : num  2.13 1.75 1.39 2.05 2.32 ...
+##  $ AVG.ljl               : num  2.85 2.71 2.32 2.9 3.38 ...
+##  $ AVG.outlever          : num  2.75 2.62 2.26 2.83 3.29 ...
+##  $ AVG.jugal.to.symphysis: num  2.54 2.37 2.08 2.6 3.07 ...
+##  $ AVG.femur             : num  2.74 2.07 2.17 2.48 2.8 ...
+##  $ AVG.tibia             : num  2.69 2.02 2.09 2.34 2.69 ...
+##  $ AVG.met               : num  2.25 1.54 1.55 1.87 2.18 ...
+##  $ AVG.ltoe.IV           : num  2.55 1.88 1.73 2.26 2.53 ...
+##  $ AVG.toe.IV.lam.width  : num  0.1795 0.0488 -0.5361 0.4904 0.8441 ...
+##  $ AVG.humerus           : num  2.46 1.95 1.63 2.3 2.62 ...
+##  $ AVG.radius            : num  2.27 1.69 1.4 2.09 2.34 ...
+##  $ AVG.lfing.IV          : num  1.94 1.4 1.04 1.7 1.98 ...
+##  $ AVG.fing.IV.lam.width : num  0.0754 -0.0739 -0.755 0.3155 0.6584 ...
+##  $ AVG.pelv.ht           : num  1.99 1.51 1.19 1.87 2.1 ...
+##  $ AVG.pelv.wd           : num  1.71 1.419 0.946 1.752 2.014 ...
+##  $ Foot.Lam.num          : num  3.28 3.43 3.2 3.58 3.72 ...
+##  $ Hand.Lam.num          : num  2.87 3.08 2.73 3.16 3.24 ...
+##  $ Avg.lnSVL2            : num  3.94 3.74 3.48 3.93 4.36 ...
+##  $ Avg.ln.t1             : num  4.41 4 4.37 4.44 5.04 ...</code></pre>
+<p>Now let’s visualise some phylogenies!</p>
+<div id="loading-your-phylogeny-and-data-into-r" class="section level2">
+<h2><span class="header-section-number">4.1</span> Loading your phylogeny and data into R</h2>
+<div id="reading-in-a-phylogeny-from-a-file" class="section level3">
+<h3><span class="header-section-number">4.1.1</span> Reading in a phylogeny from a file</h3>
+<p>To load a tree you need either the function <code>read.tree</code> or <code>read.nexus</code>. <code>read.tree</code> can deal with a number of different types of data (including DNA) whereas <code>read.nexus</code> reads NEXUS files. <code>elopomorph.tre</code> is not in NEXUS format so we use <code>read.tree</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fishtree &lt;-<span class="st"> </span><span class="kw">read.tree</span>(<span class="st">&quot;elopomorph.tre&quot;</span>)</code></pre></div>
 </div>
-<div id="methods-in-macroecology-and-macroevolution-module-outline" class="section level1">
-<h1><span class="header-section-number">Practical 1</span> Methods in Macroecology and Macroevolution: Module outline</h1>
-<div id="module-aims" class="section level2">
-<h2><span class="header-section-number">1.1</span> Module Aims</h2>
-<p>The aim of this module is to introduce you to some of the cutting-edge methods being used in macroecology and macroevolution, with particular focus on work being done right now at the Museum. Rather than concentrating on learning theory through lectures, the module will introduce you to various ways we collect, analyse and interpret macro-scale data with a large emphasis on practical work, mostly using R.</p>
+<div id="reading-in-a-phylogeny-that-is-already-built-into-r" class="section level3">
+<h3><span class="header-section-number">4.1.2</span> Reading in a phylogeny that is already built into R</h3>
+<p>The bird and anole phylogenies are already built into R so we don’t need to read them in using <code>read.tree</code>. Instead we just use:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(bird.orders)
+<span class="kw">data</span>(anoletree)</code></pre></div>
 </div>
-<div id="datasets-and-practical-handouts" class="section level2">
-<h2><span class="header-section-number">1.2</span> Datasets and practical handouts</h2>
-<p>All datasets and practical handouts are available on GitHub. It can be tricky to download data from GitHub if you don’t know what you’re doing and/or don’t want to clone the entire repository so the materials are also available at this DropBox link: []. It will save time if you download this before coming to class.</p>
 </div>
-<div id="timetable" class="section level2">
-<h2><span class="header-section-number">1.3</span> Timetable</h2>
-<p>There will be one morning and one afternoon session each day. Morning sessions will run from 10am-1pm, afternoon sessions from 2pm-5pm. Not every session will require a full three hours. Instructors for each session are below. Note that Thursday and Friday of the first week we have had to move to the Gavin de Beer room. <strong>PLEASE BRING LAPTOPS</strong>.</p>
-<p><strong>Thursday 23rd February - GAVIN DE BEER not UBR or LBR</strong></p>
-<ul>
-<li><p>Morning: What are macroecology and macroevolution? Introduction to the module, assessments, and aims. <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-<li><p>Afternoon: Macroecology I: Macroecological patterns and diversity indices in R. <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-</ul>
-<p><strong>Friday February 24th February - GAVIN DE BEER not UBR or LBR</strong></p>
-<ul>
-<li><p>Morning: Big Data I: Using Big Data in conservation with the PREDICTS project. <em>Andy Purvis (<a href="mailto:a.purvis@nhm.ac.uk">a.purvis@nhm.ac.uk</a>)</em></p></li>
-<li><p>Afternoon: Big data II: Using the paleobiology database (PBDB) to get data on fossil species for macroecological and macroevolutionary analyses. <em>Terri Cleary (<a href="mailto:t.cleary@nhm.ac.uk">t.cleary@nhm.ac.uk</a>)</em></p></li>
-</ul>
-<p><strong>Monday February 27th February - UBR/LBR </strong></p>
-<ul>
-<li><p>Morning: Comparative Biology: The comparative method, dealing with phylogenetic non-independence in comparative analyses. PGLS in R. <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-<li><p>Afternoon: Macroevolution I: Macroevolutionary patterns and models of evolution in R. <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-</ul>
-<p><strong>Tuesday 28th February - UBR/LBR</strong></p>
-<ul>
-<li><p>Morning: Big data III: Using museum specimen data in macroecological and macroevolutionary analyses. Geometric morphometrics. <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-<li><p>Afternoon: Macroevolution II: case study using Foraminifera. <em>Isabel Fenton (<a href="mailto:i.fenton@nhm.ac.uk">i.fenton@nhm.ac.uk</a>)</em></p></li>
-</ul>
-<p><strong>Wednesday 1st March - UBR/LBR</strong></p>
-<ul>
-<li><p>Morning: Macroevolution III: Diversification rates and adaptive radiations. <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-<li><p>Afternoon: Critical thinking: Do you trust your methods? <em>Natalie Cooper (<a href="mailto:natalie.cooper@nhm.ac.uk">natalie.cooper@nhm.ac.uk</a>)</em></p></li>
-</ul>
-<p><strong>Thursday 2nd March AND Friday 3rd March - UBR</strong></p>
-<p><em>Richard Twitchett (<a href="mailto:r.twitchett@nhm.ac.uk">r.twitchett@nhm.ac.uk</a>)</em></p>
-<ul>
-<li>All day: Using fossil assemblages to assess the impact of mass extinction events: comparative palaeoecology of Ordovician and Silurian fossil assemblages (practical and assessment).</li>
-</ul>
+<div id="basic-tree-viewing-in-r" class="section level2">
+<h2><span class="header-section-number">4.2</span> Basic tree viewing in R</h2>
+<p>We’ll use the Elopomorpha (eels and similar fishes) tree to start as it is simple.</p>
+<p>Let’s examine the tree by typing:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fishtree</code></pre></div>
+<pre><code>## 
+## Phylogenetic tree with 62 tips and 61 internal nodes.
+## 
+## Tip labels:
+##  Moringua_edwardsi, Kaupichthys_nuchalis, Gorgasia_taiwanensis, Heteroconger_hassi, Venefica_proboscidea, Anguilla_rostrata, ...
+## 
+## Rooted; includes branch lengths.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(fishtree)</code></pre></div>
+<pre><code>## List of 4
+##  $ edge       : int [1:122, 1:2] 63 64 64 65 66 67 68 68 69 70 ...
+##  $ Nnode      : int 61
+##  $ tip.label  : chr [1:62] &quot;Moringua_edwardsi&quot; &quot;Kaupichthys_nuchalis&quot; &quot;Gorgasia_taiwanensis&quot; &quot;Heteroconger_hassi&quot; ...
+##  $ edge.length: num [1:122] 0.0105 0.0672 0.00537 0.00789 0.00157 ...
+##  - attr(*, &quot;class&quot;)= chr &quot;phylo&quot;
+##  - attr(*, &quot;order&quot;)= chr &quot;cladewise&quot;</code></pre>
+<p><code>fishtree</code> is a fully resolved tree with branch lengths. There are 62 species and 61 internal nodes. We can plot the tree by using the <code>plot.phylo</code> function of <code>ape</code>. Note that we can just use the function <code>plot</code> to do this as R knows if we ask it to plot a phylogeny to use <code>plot.phylo</code> instead!</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(fishtree, <span class="dt">cex =</span> <span class="fl">0.5</span>)</code></pre></div>
+<p><img src="macro-module_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<p><code>cex = 0.5</code> reduces the size of the tip labels so we can read them. We can also zoom into different sections of the tree that you’re interested in:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">zoom</span>(fishtree, <span class="kw">grep</span>(<span class="st">&quot;Gymnothorax&quot;</span>, fishtree$tip.label), <span class="dt">subtree =</span> <span class="ot">FALSE</span>, <span class="dt">cex =</span> <span class="fl">0.8</span>)</code></pre></div>
+<p><img src="macro-module_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<p>This just gives you the tree for <em>Micropterus</em> species but you can also see how the species fit into the rest of the tree using:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">zoom</span>(fishtree, <span class="kw">grep</span>(<span class="st">&quot;Gymnothorax&quot;</span>, fishtree$tip.label), <span class="dt">subtree =</span> <span class="ot">TRUE</span>, <span class="dt">cex =</span> <span class="fl">0.8</span>)</code></pre></div>
+<p><img src="macro-module_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<p>Note that <code>zoom</code> automatically sets the plotting window to display two plots at once. To reset this to one plot only use:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</code></pre></div>
+<p>To get further options for the plotting of phylogenies:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?plot.phylo</code></pre></div>
+<p>Note that although you can use <code>plot</code> to plot the phylogeny, you need to specify <code>plot.phylo</code> to find out the options for plotting trees. You can change the style of the tree (<code>type</code>), the color of the branches and tips (<code>edge.color</code>, <code>tip.color</code>), and the size of the tip labels (<code>cex</code>). Here’s an fun/hideous example!</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(fishtree, <span class="dt">type =</span> <span class="st">&quot;fan&quot;</span>, <span class="dt">edge.color =</span> <span class="st">&quot;deeppink&quot;</span>, <span class="dt">tip.color =</span> <span class="st">&quot;springgreen&quot;</span>, 
+     <span class="dt">cex =</span> <span class="fl">0.5</span>)</code></pre></div>
+<p><img src="macro-module_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<p>Or try</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(fishtree, <span class="dt">type =</span> <span class="st">&quot;c&quot;</span>, <span class="dt">edge.color =</span> <span class="st">&quot;darkviolet&quot;</span>, <span class="dt">tip.color =</span> <span class="st">&quot;hotpink&quot;</span>, 
+     <span class="dt">cex =</span> <span class="fl">0.5</span>)</code></pre></div>
+<p><img src="macro-module_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
 </div>
-<div id="assessment" class="section level2">
-<h2><span class="header-section-number">1.4</span> Assessment</h2>
-<p>There are two assessments connected to this module.</p>
-<p>The first will be based on computer practicals early in the course. These will be done at the end of the practicals, and consist of some online multiple choice questions. No write up will be required and the assessment will be completed by the end of the week, if not the end of the practical.</p>
-<p>The second, although within this module, belongs to the Paleobiology module. Due to the large class size during that module it couldn’t happen there so we’ve moved it here. However, the techniques and concepts are highly relevant to macroecology and macroevolution. Richard Twitchett (<a href="mailto:r.twitchett@nhm.ac.uk">r.twitchett@nhm.ac.uk</a>) will provide a full explanation of the assessment during the practical on <strong>Thursday 2nd March and Friday 3rd March</strong>.</p>
+<div id="adding-trait-data-to-trees-in-r" class="section level2">
+<h2><span class="header-section-number">4.3</span> Adding trait data to trees in R</h2>
+<p><em>Note that the theory behind this is covered in more detail in the “Macroevolutionary Models in R” practicals part 1 and 2.</em> ### Ancestral state reconstructions on discrete data We will use the bird data. Remember we already loaded the phylogeny and data as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(bird.orders)</code></pre></div>
+<p>First we will invent some data for each bird order that we can reconstruct along the tree. This creates three variables, 0, 1 and 2.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mydata &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>), <span class="kw">rep</span>(<span class="dv">1</span>, <span class="dv">13</span>), <span class="kw">rep</span>(<span class="dv">2</span>, <span class="dv">5</span>)))
+mydata</code></pre></div>
+<pre><code>##  [1] 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2
+## Levels: 0 1 2</code></pre>
+<p>We can then use the <code>ape</code> function <code>ace</code> to reconstruct ancestral characters along the nodes of the tree. <code>type = d</code> means the character to be reconstructed is discrete.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">ancestors &lt;-<span class="st"> </span><span class="kw">ace</span>(mydata, bird.orders, <span class="dt">type =</span> <span class="st">&quot;d&quot;</span>)</code></pre></div>
+<p>Now we can plot this on a phylogeny. First decide which colours we’d like. To look at a list of colours in R type in <code>colors()</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">colours &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;cornflowerblue&quot;</span>, <span class="st">&quot;cyan4&quot;</span>, <span class="st">&quot;goldenrod&quot;</span>)</code></pre></div>
+<p>Now plot the tree and add labels to the tips and the nodes using the results in <code>ancestors</code>. We use <code>label.offset = 1</code> to move the labels to the right a bit so the pie charts will fit…</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(bird.orders, <span class="dt">label.offset =</span> <span class="dv">1</span>)
+<span class="kw">tiplabels</span>(<span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> colours[<span class="kw">as.numeric</span>(mydata)], <span class="dt">cex =</span> <span class="dv">2</span>, <span class="dt">adj =</span> <span class="dv">1</span>)
+<span class="kw">nodelabels</span>(<span class="dt">pie =</span> ancestors$lik.anc, <span class="dt">piecol =</span> colours)</code></pre></div>
+<p><img src="macro-module_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+<p><code>pch = 21</code> sets the tip labels to be unfilled circles, <code>bg</code> defines the colours of the circles using the list of colours we provided, and ordering them based on what the species value was for mydata (i.e. 0, 1 or 2). <code>cex = 2</code> doubles the point size, and <code>adj = 1</code> moves the tip labels sideways so they don’t obscure the ends of the branches. <code>pie</code> makes pie charts coloured using the ancestral state reconstructions in <code>ancestors</code>, and <code>piecol</code> tells it to use the colours we have defined.</p>
+<div id="ancestral-state-reconstructions-on-continuous-data" class="section level3">
+<h3><span class="header-section-number">4.3.1</span> Ancestral state reconstructions on continuous data</h3>
+<p>We are going to use the <em>Anolis</em> data to create a phylogeny with different colours for different observed and reconstructed body sizes (snout-to-vent length, SVL). Remember we already loaded the phylogeny and data as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(anoletree)
+anoledata &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;anole.data.csv&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">row.names =</span> <span class="dv">1</span>) </code></pre></div>
+<p>Note the names in <code>anoledata</code> are the species names without the Genus. In the phylogeny the species names are <code>Anolis_species</code>. So to get the two to match we need to add <code>Anolis_</code> to each name.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rownames</span>(anoledata) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;Anolis&quot;</span>, <span class="kw">rownames</span>(anoledata), <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)</code></pre></div>
+<p><code>paste</code> just sticks together <code>Anolis</code> with the names in <code>anoles</code> already with an underscore (<code>_</code>) separating them (<code>sep = &quot;_&quot;</code>)</p>
+<p>We then need to make sure the order of the species in the data matches that of the phylogeny.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">anoledata &lt;-<span class="st"> </span>anoledata[anoletree$tip.label, ]</code></pre></div>
+<p>Next we make a matrix containing only the SVL values for each <em>Anolis</em> species:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SVL &lt;-<span class="st"> </span><span class="kw">as.matrix</span>(anoledata)[,<span class="st">&quot;AVG.SVL&quot;</span>]</code></pre></div>
+<p>This code selects only the variable <code>AVG.SVL</code> from <code>anoledata</code> (square brackets subset in R in the form [rows, columns]), and then uses <code>as.matrix</code> to make this into a matrix.</p>
+<p>Take a look at <code>SVL</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(SVL)</code></pre></div>
+<pre><code>##        Anolis_ahli     Anolis_allogus Anolis_rubribarbus 
+##           4.039125           4.040138           4.078469 
+##       Anolis_imias      Anolis_sagrei     Anolis_bremeri 
+##           4.099687           4.067162           4.113371</code></pre>
+<p>We then use the function <code>contMap</code>. <code>contMap</code> creates a tree with a mapped continuous character, i.e. where the value of the character is known at the tips, and estimated along the tree. The estimating of the character along the tree uses a Maximum Likelihood estimation procedure. Here we will tell <code>contMap</code> not to automatically plot the tree (using <code>plot = FALSE</code>) so we can make some modifications.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SVLplot &lt;-<span class="st"> </span><span class="kw">contMap</span>(anoletree, SVL, <span class="dt">plot =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p>For some reason this code breaks…</p>
+<p>Finally let’s plot the tree as a fan (<code>legend = 10</code> just spreads the legend out so it is readable).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(SVLplot, <span class="dt">type =</span> <span class="st">&quot;fan&quot;</span>, <span class="dt">legend =</span> <span class="dv">10</span>)</code></pre></div>
+<pre><code>## legend scale cannot be longer than total tree length; resetting</code></pre>
+<p><img src="macro-module_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
+</div>
+</div>
+<div id="phylomorphospace-plots-in-r" class="section level2">
+<h2><span class="header-section-number">4.4</span> Phylomorphospace plots in R</h2>
+<p>We are going to use the <em>Anolis</em> data to create a phylomorphospace plot. These plots show where species fall within a morphospace (usually based on principal components analyses of morphological variables), and then reconstructs values for the nodes of the phylogeny so the whole phylogeny can be projected into the morphospace.</p>
+<p>We already loaded the phylogeny and data as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(anoletree)
+anoledata &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;anole.data.csv&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">row.names =</span> <span class="dv">1</span>)</code></pre></div>
+<p>As we saw above, the names of <code>anoles</code> are the species names without the Genus. In the phylogeny the species names are <code>Anolis_species</code>. So to get the two to match we need to add <code>Anolis_</code> to each name.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rownames</span>(anoledata) &lt;-<span class="st"> </span><span class="kw">paste</span>(<span class="st">&quot;Anolis&quot;</span>, <span class="kw">rownames</span>(anoledata), <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>)</code></pre></div>
+<p><code>paste</code> just sticks together <code>Anolis</code> with the names in <code>anoles</code> already with an underscore (<code>_</code>) separating them (<code>sep = &quot;_&quot;</code>)</p>
+<p>Next we again need to make sure the order of the species in the data matches that of the phylogeny.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">anoledata &lt;-<span class="st"> </span>anoledata[anoletree$tip.label, ]</code></pre></div>
+<p>We can now run a phylogenetic principal components analysis on our morphological trait data and extract the PC scores for each PC axis using <code>$S</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">PC &lt;-<span class="st"> </span><span class="kw">phyl.pca</span>(anoletree, anoledata)$S</code></pre></div>
+<p>To plot the morphospace with colours, we need to define them. Here we choose six colours, and matched them with the ecomorph types listed <a href="https://en.wikipedia.org/wiki/Anolis_ecomorphs">here</a>. These were built into <code>anoletree</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">colors &lt;-<span class="st"> </span><span class="kw">setNames</span>(<span class="kw">c</span>(<span class="st">&quot;cornflowerblue&quot;</span>, <span class="st">&quot;goldenrod&quot;</span>, <span class="st">&quot;chartreuse&quot;</span>, <span class="st">&quot;hotpink&quot;</span>,
+                     <span class="st">&quot;orangered&quot;</span>, <span class="st">&quot;darkviolet&quot;</span>), 
+                     <span class="kw">sort</span>(<span class="kw">unique</span>(<span class="kw">getStates</span>(anoletree, <span class="st">&quot;tips&quot;</span>))))</code></pre></div>
+<p>Finally we can make the plot, and colour by ecomorph. <code>label = &quot;off&quot;</code> suppresses the printing of tip labels which keeps things a bit tidier.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">phylomorphospace</span>(anoletree, PC[,<span class="dv">1</span>:<span class="dv">2</span>], <span class="dt">label =</span> <span class="st">&quot;off&quot;</span>, <span class="dt">node.by.map =</span> <span class="ot">TRUE</span>, <span class="dt">colors =</span> colors)</code></pre></div>
+<p><img src="macro-module_files/figure-html/unnamed-chunk-59-1.png" width="672" /></p>
+</div>
+<div id="phylogenies-and-maps" class="section level2">
+<h2><span class="header-section-number">4.5</span> Phylogenies and maps!</h2>
+<p>We can also plot phylogenies attached to maps showing where species come from. We will use the bird orders tree again as it’s small.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(bird.orders)</code></pre></div>
+<p>We don’t know where the birds come from, so we will simulate some latitude and longitude data as follows. This uses a function that simulates traits along the phylogeny, so close relatives should end up with more similar latitude and longitude values. I’ve used high rates of evolution (<code>sig2</code>) to force the points to be spread out. Of course these values will be nonsensical for birds!</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">lat &lt;-<span class="st"> </span><span class="kw">fastBM</span>(bird.orders, <span class="dt">sig2 =</span> <span class="dv">100</span>, <span class="dt">bounds =</span> <span class="kw">c</span>(-<span class="dv">90</span>, <span class="dv">90</span>))
+long &lt;-<span class="st"> </span><span class="kw">fastBM</span>(bird.orders, <span class="dt">sig2 =</span> <span class="dv">150</span>, <span class="dt">bounds =</span> <span class="kw">c</span>(-<span class="dv">180</span>, <span class="dv">180</span>))</code></pre></div>
+<p>Then we use the function <code>phylo.to.map</code> to match the locations with the world map. This produces some output in the form <code>objective 98</code> etc. (I have suppressed it here).</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">phylomap &lt;-<span class="st"> </span><span class="kw">phylo.to.map</span>(bird.orders, <span class="kw">cbind</span>(lat,long), <span class="dt">plot =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p>We can either put the phylogeny next to the map and draw lines to the places they come from using <code>type = &quot;phylogram&quot;</code>…</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(phylomap,<span class="dt">type =</span> <span class="st">&quot;phylogram&quot;</span>, <span class="dt">asp =</span> <span class="fl">1.3</span>, <span class="dt">mar =</span> <span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">3.1</span>, <span class="fl">0.1</span>))</code></pre></div>
+<p><img src="macro-module_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
+<p>…or plot the phylogeny directly onto the map using <code>type = &quot;direct&quot;</code></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(phylomap,<span class="dt">type =</span> <span class="st">&quot;direct&quot;</span>, <span class="dt">asp =</span> <span class="fl">1.3</span>, <span class="dt">mar =</span> <span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">3.1</span>, <span class="fl">0.1</span>))</code></pre></div>
+<p><img src="macro-module_files/figure-html/unnamed-chunk-64-1.png" width="672" /></p>
+</div>
+<div id="a-new-package-for-visualising-trees-ggtree" class="section level2">
+<h2><span class="header-section-number">4.6</span> A new package for visualising trees: ggtree</h2>
+<p><code>ggtree</code> is a newly released package that works with the popular <code>ggplot</code> framework in R. <code>ggplot</code> works by adding layers of different features together. A standard <code>ggplot</code> includes a layer that assigns the x and y variables then can have lots of other layers of points, lines, shapes and now with <code>ggtree</code> phylogenies.</p>
+<p><strong>Unfortunately this is broken in the most recent version of R. I’ve left this in, just in case they fix it soon</strong></p>
+<p>To use <code>ggtree</code> you will have to install it, then load it using:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggtree)</code></pre></div>
+<p>Let’s replicate some of the stuff we did above but using <code>ggtree</code>. As always choose whichever method you prefer when you’re doing this with your own data.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggtree</span>(fishtree) +
+<span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label=</span>label), <span class="dt">size =</span> <span class="dv">1</span>)</code></pre></div>
+<p>Note that the layers here are the tree, and then the tip labels. Layers are separated by <code>+</code></p>
+<p>We can also zoom in on sections like with <code>ape</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">gzoom</span>(fishtree, <span class="kw">grep</span>(<span class="st">&quot;Gymnothorax&quot;</span>, fishtree$tip.label))</code></pre></div>
+<p>And we can have different shapes of phylogeny, different colours and even different line types.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggtree</span>(fishtree, <span class="dt">color =</span> <span class="st">&quot;steelblue&quot;</span>)
+<span class="kw">ggtree</span>(fishtree, <span class="dt">layout =</span> <span class="st">&quot;circular&quot;</span>)
+<span class="kw">ggtree</span>(fishtree, <span class="dt">linetype =</span> <span class="st">&quot;dotted&quot;</span>)</code></pre></div>
+<p><code>ggtree</code> is really great for highlighting sections of a tree. First look at the nodes on your tree and pick an interesting one…</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggtree</span>(fishtree) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> node))</code></pre></div>
+<p>Then highlight and/or annotate…</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggtree</span>(fishtree) +
+<span class="kw">geom_hilight</span>(<span class="dt">node =</span> <span class="dv">73</span>, <span class="dt">fill =</span> <span class="st">&quot;steelblue&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.6</span>) +
+<span class="kw">geom_hilight</span>(<span class="dt">node =</span> <span class="dv">97</span>, <span class="dt">fill =</span> <span class="st">&quot;darkgreen&quot;</span>, <span class="dt">alpha =</span> <span class="fl">0.6</span>)</code></pre></div>
+<p>This package has a huge amount of promise, but still a few bugs and weird features (it’s designed by geneticists who are used to dealing with short species labels, hence the issues getting our species names to actually fit on the plot). The help files are also currently a bit sparse and some of the vignette examples don’t work. But if you’re likely to need to do any of this kind of stuff I recommend checking out the vignette and the paper:</p>
+<ul>
+<li>Guangchuang Yu, David Smith, Huachen Zhu, Yi Guan, Tommy Tsan-Yuk Lam. ggtree: an R package for visualization and annotation of phylogenetic trees with their covariates and other associated data. <em>Methods in Ecology and Evolution</em> 2016, <a href="doi:10.1111/2041-210X.12628" class="uri">doi:10.1111/2041-210X.12628</a>.</li>
+</ul>
 
 </div>
 </div>
@@ -304,8 +466,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           </div>
         </div>
       </div>
-
-<a href="what-you-need-to-be-able-to-do-in-r-before-you-start.html" class="navigation navigation-next navigation-unique" aria-label="Next page""><i class="fa fa-angle-right"></i></a>
+<a href="diversity-indices-in-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="phylogenetic-generalised-least-squares-pgls-in-r.html" class="navigation navigation-next " aria-label="Next page""><i class="fa fa-angle-right"></i></a>
 
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
@@ -333,7 +495,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/nhcooper123/TeachingMaterials/MSc_Museum/MacroModule/edit/master/index.Rmd",
+"link": "https://github.com/nhcooper123/TeachingMaterials/MSc_Museum/MacroModule/edit/master/03_VisualisingPhyloinR.Rmd",
 "text": "Edit"
 },
 "download": ["macro-module.pdf"],

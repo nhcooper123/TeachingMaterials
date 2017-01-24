@@ -1,0 +1,464 @@
+---
+title: "Geometric Morphometrics in R"
+author: "Natalie Cooper (natalie.cooper@nhm.ac.uk)"
+date: "Feb 2017"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+# Geometric Morphometrics in R
+The aims of this practical are to learn how to use R to perform simple geometric morphometrics analyses.
+
+We will use a data set of ventral skull views for eight species of toothed whales (Odontoceti) taken by a previous Masters student (Dan Bell).
+Download the eight photographs, and place them into your working directory.
+
+__REMEMBER__
+
+- Download all of the data for the practical into a folder somewhere on your computer.
+- Set your working directory to this folder.
+- Start a new script for this practical.
+
+You will also need to install the following packages: 
+
+* `geomorph`
+
+***
+
+## A quick introduction to geometric morphometrics
+### What is morphometrics?
+Morphometrics is the study of shape and size and their relationships with other variables. 
+Shape is generally defined as __the property of an object invariant under scaling, rotation, or translation__. 
+
+To compare shapes, we need to define which bits of the shape to compare, for example if comparing the shapes of two cups, we might compare the width of their handles, or their diameters. 
+In biological objects, structures that are recognizable and comparable among specimens are said to be __homologous__. 
+Homologous points include things like the points that two bones join together.
+We need homologous points to compare the shapes of biological specimens.
+In morphometrics these points are referred to as __landmarks__.
+
+### Landmarks
+There are three types of landmarks (defined by Bookstein 1991)
+__Type I__ landmarks are truly homologous features that can be defined by a single point, for example where bone plates join, or small knobs on the bone.
+__Type II__ landmarks include things like maximum of curvature of a feature, such as the most extreme part of the curve of the skull.
+__Type III__ landmarks can also be referred to as __pseudolandmarks__ or __semi-landmarks__. 
+These are constructed geometrically, rather than being identifiable as unique points on the structure. 
+For example, the centre of a series of points, or the intersection of a line joining up several landmarks.
+
+Type I landmarks are generally favoured as they are easier to put in the right place and give more information about the development of the feature. 
+However, often we also use some Type II and Type III landmarks.
+Choosing landmarks carefully is really important - they need to be informative for the question you are trying to answer and capture the variation in shape that you are interested in.
+They should also be easy to identify and repeat to reduce measurement error.
+
+### Collecting data and adding landmarks
+You can collect morphometric data in lots of ways - sometimes using measurements with calipers or rulers, but more often these days by taking digital photographs or 3D scans of specimens. 
+Traditional morphometrics uses measurements, whereas __geometric morphometrics__ uses geometric coordinates (x and y for 2D; x, y and z for 3D) instead.
+Geometric morphometrics have become a really popular way to investigate morphology (size and shape), and are a particularly useful tool when using museum specimen data.
+So we'll be using geometric morphometric tools in this practical.
+
+Once you have your data (photos or scans), you need to add landmarks to them - the relationships between the landmarks will then be used in your shape analyses. 
+You can do this in lots of different programs including R (see practical example below).
+
+### Measurement error
+As with all analyses there are lots of sources of error in the collection of morphometric data. 
+Think about what some of these might be, and see if you can think of ways to test whether they are a problem with your data.
+See [Claude](http://lib.du.ac.ir/documents/10157/60743/Morphometrics+With+R.pdf) *pages 63-65* and [Fruciano 2016](http://link.springer.com/article/10.1007/s00427-016-0537-4) for some ideas.
+We will not cover this today but it is very important to consider if you use these methods in your projects.
+
+***
+
+## A practical example using R
+For this practical we are going to use the package `geomorph`. 
+You will need to __install it in R__ for this example to work.
+Load the package using `library`.
+
+```{r, message = FALSE}
+library(geomorph)
+```
+
+You will also need to __set the working directory__ before you start.
+
+## Gathering the data
+We are going to use a data set of ventral skull views for eight species of toothed whales (Odontoceti) taken by a previous Masters student (Dan Bell).
+Download the eight photographs, and place them into your working directory.
+
+We will need to make a list of the files so we can tell `geomorph` what we want to work with. 
+For this we can use the helpful R function `list.files`.
+This is better than manually typing a list as we avoid typos.
+
+```{r, eval = FALSE}
+myphotos <- list.files(pattern = ".jpg")
+# This tells R to look in your working directory for files with .jpg in their names
+
+# Look at the output
+myphotos
+```
+
+This is just so you can see what `list.files` does. 
+We will do this within the digitising function below rather than using `myphotos`.
+
+## Digitising (adding landmarks and curves)
+You'll hear people use the word __digitise__ to mean a bunch of different things (especially within museums!). 
+In geometric morphometrics we mean the process of going from photos/scans to having coordinate data we can play around with, i.e. adding landmarks to our photos/scans.
+We will use the following landmarks for this practical:
+
+![Whale landmarks example](whale.png)
+
+1. Midway point between the occipital condyles.
+2. Suture where lacrimojugal and basoccipital bones join on left hand side (indentation). 
+3. Most extreme point of the zygomatic arch on left hand side.
+4. Anterior edge of on rearmost tooth on left hand side.
+5. Tip of the rostrum.
+6. Same as 4 but right hand side.
+7. Same as 3 but right hand side.
+8. Same as 2 but right hand side.
+
+Digitizing is pretty simple to do in `geomorph`, though some people prefer to use package [ImageJ](https://imagej.nih.gov/ij/download.html) or [tpsdig](http://life.bio.sunysb.edu/morph/soft-dataacq.html) which are more user friendly. 
+Either way, you use the mouse to click on the photos at the point you want each landmark to be.
+Curves/semi-landmarks are added after the initial digitisation step.
+Today we will use `geomorph` and we won't add any curves.
+
+Remember you need to add landmarks in the __same order__ for each specimen, and don't forget to add the __scale__ before you start. 
+This step can be a time consuming process in a real analysis.
+
+__You will need to use the normal R Console, NOT RStudio for this stage to work__
+
+We are going to use the function `digitize2d` to add eight landmarks (`nlandmarks = 8`) to our list of photos (`list.files(pattern = ".jpg")`) and output these into a TPS (thin plate spline) file called `whale_landmarks.tps`. 
+The scale bars in each photo are 10cm long so we add `scale = 10`.
+
+```{r, eval = FALSE}
+digitize2d(filelist = list.files(pattern = ".jpg"),
+           nlandmarks = 8, tpsfile = "whale_landmarks.tps", scale = 10)
+```
+
+Note that if you stop this procedure and then start again you may get the following error message: `Filelist does not contain the same specimens as TPS file.`
+To fix this you just need to delete `whale_landmarks.tps` from your working directory and then start again.
+
+If you don't get an error you should find that a picture of the first specimen appears in your plotting window, and the message:
+
+`Only 1 scale measure provided. Will use scale = 10  for all specimens.
+Digitizing specimen 1 in filelist 
+Set scale = 10`
+
+To digitize proceed as follows. 
+You will need to repeat this for *each* photo.
+
+1. Set the scale by clicking on the start and end of the black scale bar.
+2. The console will then display `Keep scale (y/n)?`. 
+If you're happy press `y`, if not press `n` and try again. 
+The function will check you are happy after every landmark you place. 
+This gets a bit tedious but means you don't have to start over if you click somewhere by accident.
+3. Select landmark 1, click `y` when happy, then select landmark 2 and so on...
+4. Once you've finished one specimen, you'll be asked if you want to continue to the next specimen.
+Again you need to press `y` to continue.
+5. Continue until all eight are digitised
+
+Each specimen should end up looking something like this once the scale and landmarks have been added.
+
+![What your photos should look like post digitising](whale3.png)
+
+Don't get too worried about digitising accurately today. 
+This is just an example so you get a chance to try this out.
+You'll notice that some landmarks are a lot harder than others to place accurately each time, bringing us back to thinking about potential sources of error.
+
+If you're having trouble with this step you can use the TPS file I made earlier.
+
+## Reading in your data and plotting it
+We can now read in our TPS file to look at our landmarks using `readland.tps`. 
+I've asked it to add the specimen identities from the file names so we know which species is which by using `specID = "ID"`.
+
+```{r, warning = FALSE}
+landmarks <- readland.tps("whale_landmarks.tps", specID = "ID")
+```
+
+We can look at all the landmarks by typing:
+
+```{r, eval = FALSE}
+landmarks
+```
+
+To save printing them all out I'll just look at the landmarks for the first specimen (*Pseudorca crassidens*). 
+
+```{r}
+landmarks[, , 1]
+```
+
+These are the Y and X coordinates of each point *after scaling*.
+They are scaled in the units of your scale bar (in the case mm).
+If you look at the TPS file itself in a text editor you'll see the numbers are different and there is information on the length of the scale bars.
+
+We can plot the coordinates for the *Pseudorca* (specimen 1) and the *Tursiops truncatus* (specimen 8) specimens as follows.
+
+```{r}
+plot(landmarks[, , 1], pch = 16, xlab = "X coordinate", ylab = "Y coordinate")
+points(landmarks[, , 8], col = "red", pch = 16)
+```
+
+You can see that although both filled the screen when you were digitising, *Tursiops* (in red) is much smaller. 
+This is why this scaling step is so important.
+
+## Generalised Procrustes Superimposition (GPA)
+If you plot all the landmarks at the same time you'll notice it's a bit of a mess.
+
+```{r}
+plot(landmarks[, 2, ] ~ landmarks[, 1, ], xlab = "X coordinate", ylab = "Y coordinate")
+```
+
+The skulls vary in their placement in each photo - in some they cover the whole area, in others they are further forward or sideways, some are at a slight angle (rotation). 
+Also as we already noted, there is a difference in the *size* of the skulls. 
+Remember that we are interested in comparing shapes and shape is defined as __the property of an object invariant under scaling, rotation, or translation__.
+So if we want to compare shapes, we need to remove these differences.
+
+Luckily a number of solutions exist. 
+We are going to use Generalised Procrustes Superimposition/Analysis (GPA).
+GPA is a way to remove rotation, translation and scaling differences among specimens so they can be compared. 
+GPA translates all specimens to the origin (0,0,0), scales them to unit-centroid size, and optimally rotates them (using a least-squares criterion) until the coordinates of corresponding points align as closely as possible. 
+The resulting aligned Procrustes coordinates represent the shape of each specimen.
+
+This is hard to explain in words, but there are a number of excellent graphical explanations in the references below.
+
+Remember that you *never* do a morphometrics analysis on the raw landmarks, they must always be aligned first or the results are meaningless. 
+Also remember that you need to align __all__ the specimens you want to use in your analysis at the same time, or again your analysis will be meaningless.
+
+To do this in R we just need one line of code and the function `gpagen`.
+
+```{r, warning = FALSE}
+gpa.landmarks <- gpagen(landmarks)
+
+# Plot the Procrusted coordinates 
+plot(gpa.landmarks)
+```
+
+Note that now we have the average for each landmark as a large black point (the __centroid__ - centroid just means the centre point of a sample of points/shapes), and the aligned landmarks for each specimen scattered around these in grey.
+You can see some landmarks are very variable, while others are more constant across our specimens.
+
+`gpagen` not only outputs a nice plot of the specimens and their mean shape, but also the superimposed coordinates (`$coords`), the shape variables as principal components (`$pc.scores) and the centroid size of the specimens (`Csize`).
+
+## Principal components and plotting
+We now have superimposed coordinates we can use to further investigate shape variation among our specimens.
+But there's a bit of a problem.
+If you think back to the assumptions we make when we do statistics, we often talk about how the variables should not be correlated.
+Here our points are highly correlated, e.g. the tip of the rostrum can only be in front of the back of the tooth row, so where the tooth row is in each specimen will be closely related to where the rostrum tip is.
+It can also be a bit hard to interpret analyses with all the landmarks included - how do we interpret a result that suggests a small increase in rostrum tip and a decrease in occipital condyle?
+To solve these issues we can use principal components analysis (PCA).
+
+PCA finds the axes of greatest variation in a dataset and removes correlations among variables.
+It does this while still preserving the distances between data points - i.e. it doesn't distort variation in the data.
+The outputs of PCA are principal components scores, which we can think of as "shape variables".
+These PC scores tend to be used in any further analysis and are __independent components of shape variation__.
+Note that PCA is essentially just a rotation of the data, nothing more complicated than that. 
+Again I recommend checking out the graphical examples in the texts below to help with your understanding.
+
+Let's extract principal components scores for our cetacean dataset using `plotTangentSpace`.
+
+```{r, message = FALSE}
+pca.landmarks <- plotTangentSpace(gpa.landmarks$coords, label = TRUE)
+```
+This produces a plot of the first two principal components (PC1 and PC2), with dotted lines at the origin and each specimen represented by a point.
+Point 1 is _Pseudorca_.
+Note that what we are now looking at is called a "shape space" or "morphospace".
+__Each point represents a shape__ not an individual landmark.
+
+To help with interpretation, two grids are also plotted.
+These represent the shape at the points indicated by the arrows.
+These are called thin plate splines, because we imagine the landmarks for the average/centroid shape were engraved on a thin plate of metal, and then deformed to get to the shapes at the indicated points.
+The grid to the left shows lots of deformation, with a widening of the back of the skull, and a shortening of the rostrum.
+The grid to the right shows deformation with the tooth rows being closer together and some stretching at the front to enlarge the rostrum.
+Specimens with high PC1 scores look more like the right hand grid, specimens with low PC1 scores look more like the left hand grid.
+
+We can look at these grids individually, and for the other PC axes. 
+The code below will show us the grids for the min and max PC1 and PC2.
+Note that I have included `mag = 2` which magnifies the differences two fold to make them easier to see.
+
+```{r}
+# Make plotting window into 2 x 2 grid
+par(mfrow = c(2, 2))
+# Reduce margins around the plots
+par(mar = c(0, 0, 0, 0))
+
+# Select reference shape - the centroid of our Procrustes aligned coordinates
+ref <- mshape(gpa.landmarks$coords)
+
+# Plot each min/max PC scores in comparison to the reference shape (ref) 
+# with two fold magnification (mag = 2)
+plotRefToTarget(ref, pca.landmarks$pc.shapes$PC1min, mag = 2)
+plotRefToTarget(ref, pca.landmarks$pc.shapes$PC1max, mag = 2)
+plotRefToTarget(ref, pca.landmarks$pc.shapes$PC2min, mag = 2)
+plotRefToTarget(ref, pca.landmarks$pc.shapes$PC2max, mag = 2)
+
+# Put graphics parameters back to default settings
+par(mfrow = c(2, 2))
+par(mar = c(5, 4, 4, 2))
+```
+
+Another way of interpreting PC scores is to extract the __loadings__ for each PC using `$rotation`.
+
+```{r}
+pca.landmarks$rotation
+```
+
+This shows how each of our landmarks contributes to each PC.
+Larger numbers mean the landmark has more influence on the PC, negative numbers show a negative effect.
+These can be hard to interpret but worth looking at.
+Remember each landmark has an X and a Y coordinate, so `[1,]` is the X coordinate of the occipital condyle landmark, and `[2,]` is the Y coordinate.
+
+Here for example I'd suggest that PC1 is most heavily influenced by `[9,]`, the X coordinate of landmark 5, the tip of the rostrum. 
+It's a positive number so it means species with high values for PC1 have an elongated rostrum.
+See if you can interpret these results further. 
+It is often best to look at the loadings and the plots above to help with this.
+
+Another important output to look at is the summary of the PC axes:
+
+```{r}
+summary(pca.landmarks)
+```
+
+This shows the variance on each PC axis (eigenvalues). 
+Note that the first PC has the highest proportion of the variance (73.61%).
+PCs will always decrease in the amount of variance explained because of the way PCA works - it takes the axis that explains most variation first.
+Often people will only use PCs in their later analyses that sum up to 95% or 99% of the cumulative variance, because the later PCs are not really explaining much of the variation in shapes. 
+In this example we'd probably use PC1, PC2 and PC3.
+
+Finally, to extract the PC scores for each specimen we use `$pc.scores`.
+We'll use these for all further analysis.
+
+```{r}
+pca.landmarks$pc.scores
+```
+
+## Statistical analyses of geometric morphometric datasets
+This is the point at which geometric morphometrics gets really exciting - it's the point that you get to answer whatever question you started out with!
+It's also the point at which the number of different options becomes very large. 
+Two common analyses are regressions and multivariate ANOVA (MANOVA).
+Regressions are used when you have continuous explanatory variables, for example if you want to see if body size is correlated with shape.
+MANOVA (or ANOVA) is used when you have categorical explanatory variables, for example if you want to see if habitat type is correlated with shape.
+
+At this stage of the analysis we often add a new dataset containing our variables of interest. 
+For simplicity we will just invent some data as follows.
+
+```{r}
+# Create new dataframe with PC scores, body size and diet.
+# Body sizes from a random normal distribution with mean of 100 and sd of 25.
+# Diet assigned as squid to first two specimens and fish to others.
+mydata <- data.frame(pca.landmarks$pc.scores, 
+                     body.size = rnorm(n = 8, mean = 100, sd = 25), 
+                     diet = c(rep("squid",2), rep("fish", 6)) 
+                     )
+# Look at the data
+str(mydata)
+```
+
+## Regression
+Regressions are done in the same way as usual.
+
+```{r}
+# Fit model
+model1 <- lm(PC1 ~ body.size, data = mydata)
+
+# Assess assumptions
+par(mfrow = c(2,2))
+plot(model1)
+par(mfrow = c(1,1))
+
+# Look at overall model significance
+anova(model1)
+# Look at parameters and their significance
+summary(model1)
+
+# Plot
+plot(PC1 ~ body.size, data = mydata, pch = 16)
+abline(model1)
+```
+
+* Can you remember how to interpret these results?
+* Why will your results be different to mine?
+
+## Multivariate regression
+Multivariate regression is the same as univariate regression but is used where you have multiple response variables, i.e. if we wanted to include PC1 and PC2 in the analysis.
+It's quite easy to implement, we just use `cbind` to bind together the different variables we want to include.
+Note that assumption checking isn't possible, nor is plotting in the usual way.
+Additionally, `summary(model)` presents the parameters for each response variable separately (e.g. `PC1 ~ body.size` then `PC2 ~ body.size`) so is not particularly useful here.
+
+```{r}
+# Fit model
+model2 <- lm(cbind(mydata$PC1,mydata$PC2) ~ body.size, data = mydata)
+
+# Look at overall model significance
+anova(model2)
+```
+
+* Can you guess how to interpret these results given what you know about regression?
+
+## ANOVA
+ANOVAs are done in the same way as usual.
+
+```{r}
+# Fit model
+model3 <- lm(PC1 ~ diet, data = mydata)
+
+# Assess assumptions
+par(mfrow = c(2,2))
+plot(model3)
+par(mfrow = c(1,1))
+
+# Look at overall model significance
+anova(model3)
+# Look at parameters and their significance
+summary(model3)
+
+# Plot
+plot(PC1 ~ diet, data = mydata, col = c("lightblue", "springgreen"))
+```
+
+* Can you remember how to interpret these results?
+
+## MANOVA
+MANOVA is the same as ANOVA but is used where you have multiple response variables, i.e. if we wanted to include PC1 and PC2 in the analysis.
+It's quite easy to implement, we just use `cbind` to bind together the different variables we want to include.
+Note that assumption checking isn't possible for MANOVA in R at this time.
+
+```{r}
+# Fit model
+model4 <- manova(cbind(mydata$PC1,mydata$PC2) ~ diet, data = mydata)
+
+# Look at overall model significance
+anova(model4)
+# Look at parameters and their significance
+summary(model4)
+
+# Plot 
+plot(cbind(mydata$PC1,mydata$PC2) ~ diet, data = mydata, col = c("lightblue", "springgreen"))
+```
+
+* Can you guess how to interpret these results given what you know about ANOVA?
+
+Of course the results here are nonsensical as we made u pthe data, but hopefully this gives you an idea of how we might use geometric morphometrics data in analyses.
+Other common analyses look at disparity of groups, convergence and divergence, evolution of shape and shape space etc.
+
+***
+
+## Resources for learning geometric morphometrics
+1. I highly advise getting hold of this book ([Zelditch et al. 2012](http://store.elsevier.com/Geometric-Morphometrics-for-Biologists/Miriam-Zelditch/isbn-9780123869036/)) from the library and reading the first few chapters, plus any chapters later in the book that are relevant to the analyses you will be doing. 
+Don't panic too much about the maths or the equations, just try to get a general understanding of what each method is doing, especially GPA and PCA.
+
+1. Another useful book is [Morphometrics with R](http://lib.du.ac.ir/documents/10157/60743/Morphometrics+With+R.pdf) by Julien Claude. 
+It is a little harder to read than Zelditch, but more focused on practical analysis in R. 
+Note that I'd generally advise using the [geomorph](https://cran.r-project.org/web/packages/geomorph/geomorph.pdf) package (see links below) to do these analyses in R, but many of the principles are the same in this book which uses other methods. 
+It's available as a [PDF](http://lib.du.ac.ir/documents/10157/60743/Morphometrics+With+R.pdf).
+
+2. David Polly has an excellent [set of lectures](http://www.indiana.edu/~g562/) about all basic topics in geometric morphometrics including PCA and GPA. 
+Note that these use Mathematica not R. 
+There are also slides [here](http://www.indiana.edu/~g562/PBDB2013/) from an R based course with a basic workflow for an [analysis using geomorph](http://www.indiana.edu/~g562/PBDB2013/Day%202B%20-%20Geometric%20Morphometrics%20in%20R.pdf).
+I'd recommend starting any project with a quick flick through these [intro slides](http://www.indiana.edu/~g562/PBDB2013/Day%202A%20-%20Introduction%20to%20Geometric%20Morphometrics.pdf)
+
+3. Emma Sherratt has put together an excellent tutorial/vignette for [geomorph](http://www.public.iastate.edu/~dcadams/PDFPubs/Quick%20Guide%20to%20Geomorph%20v2.0.pdf) from inputting landmarks to complex analyses.
+
+4. The [geomorph vignette](https://cran.r-project.org/web/packages/geomorph/geomorph.pdf) may also be helpful for more complex analyses.
+
+5. For error checking, take a look at [Fruciano 2016](http://link.springer.com/article/10.1007/s00427-016-0537-4), a review of the subject in Evolution. Also take a look at [Claude](http://lib.du.ac.ir/documents/10157/60743/Morphometrics+With+R.pdf) pages 63-65 for ideas on sources of error. 
+
+## References
+
+* Zelditch, M.L., Swiderski, D.L., and Sheets, H.D.. 2012. Geometric Morphometrics for Biologists: A Primer. Academic Press.
+* Claude, Julien. Morphometrics with R. Springer Science & Business Media, 2008.
+* Fruciano, C. Measurement error in geometric morphometrics. 2016. Development genes and evolution 226:139-158.
