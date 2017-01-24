@@ -432,7 +432,7 @@ plot(cbind(mydata$PC1,mydata$PC2) ~ diet, data = mydata, col = c("lightblue", "s
 
 * Can you guess how to interpret these results given what you know about ANOVA?
 
-Of course the results here are nonsensical as we made u pthe data, but hopefully this gives you an idea of how we might use geometric morphometrics data in analyses.
+Of course the results here are nonsensical as we made up the data, but hopefully this gives you an idea of how we might use geometric morphometrics data in analyses.
 Other common analyses look at disparity of groups, convergence and divergence, evolution of shape and shape space etc.
 
 ***
