@@ -29,8 +29,8 @@ You will also need to install the following packages:
 
 ***
 
-## A quick introduction to geometric morphometrics
-### What is morphometrics?
+# A quick introduction to geometric morphometrics
+## What is morphometrics?
 Morphometrics is the study of shape and size and their relationships with other variables. 
 Shape is generally defined as __the property of an object invariant under scaling, rotation, or translation__. 
 
@@ -53,7 +53,7 @@ However, often we also use some Type II and Type III landmarks.
 Choosing landmarks carefully is really important - they need to be informative for the question you are trying to answer and capture the variation in shape that you are interested in.
 They should also be easy to identify and repeat to reduce measurement error.
 
-### Collecting data and adding landmarks
+## Collecting data and adding landmarks
 You can collect morphometric data in lots of ways - sometimes using measurements with calipers or rulers, but more often these days by taking digital photographs or 3D scans of specimens. 
 Traditional morphometrics uses measurements, whereas __geometric morphometrics__ uses geometric coordinates (x and y for 2D; x, y and z for 3D) instead.
 Geometric morphometrics have become a really popular way to investigate morphology (size and shape), and are a particularly useful tool when using museum specimen data.
@@ -68,7 +68,9 @@ Think about what some of these might be, and see if you can think of ways to tes
 See [Claude](http://lib.du.ac.ir/documents/10157/60743/Morphometrics+With+R.pdf) *pages 63-65* and [Fruciano 2016](http://link.springer.com/article/10.1007/s00427-016-0537-4) for some ideas.
 We will not cover this today but it is very important to consider if you use these methods in your projects.
 
-## A practical example using R
+***
+
+# A practical example using R
 For this practical we are going to use the package `geomorph`. 
 You will need to __install it in R__ for this example to work.
 Load the package using `library`.
@@ -79,7 +81,7 @@ library(geomorph)
 
 You will also need to __set the working directory__ before you start.
 
-### 1. Gathering the data
+# Gathering the data
 We are going to use a data set of ventral skull views for eight species of toothed whales (Odontoceti) taken by a previous Masters student (Dan Bell).
 Download the eight photographs, and place them into your working directory.
 
@@ -98,7 +100,7 @@ myphotos
 This is just so you can see what `list.files` does. 
 We will do this within the digitising function below rather than using `myphotos`.
 
-### 2. Digitising (adding landmarks and curves)
+# Digitising (adding landmarks and curves)
 You'll hear people use the word __digitise__ to mean a bunch of different things (especially within museums!). 
 In geometric morphometrics we mean the process of going from photos/scans to having coordinate data we can play around with, i.e. adding landmarks to our photos/scans.
 We will use the following landmarks for this practical:
@@ -164,7 +166,7 @@ You'll notice that some landmarks are a lot harder than others to place accurate
 
 If you're having trouble with this step you can use the TPS file I made earlier.
 
-### 2. Reading in your data and plotting it
+# Reading in your data and plotting it
 We can now read in our TPS file to look at our landmarks using `readland.tps`. 
 I've asked it to add the specimen identities from the file names so we know which species is which by using `specID = "ID"`.
 
@@ -198,7 +200,7 @@ points(landmarks[, , 8], col = "red", pch = 16)
 You can see that although both filled the screen when you were digitising, *Tursiops* (in red) is much smaller. 
 This is why this scaling step is so important.
 
-### 3. Generalised Procrustes Superimposition (GPA)
+# Generalised Procrustes Superimposition (GPA)
 If you plot all the landmarks at the same time you'll notice it's a bit of a mess.
 
 ```{r}
@@ -233,9 +235,9 @@ plot(gpa.landmarks)
 Note that now we have the average for each landmark as a large black point (the __centroid__ - centroid just means the centre point of a sample of points/shapes), and the aligned landmarks for each specimen scattered around these in grey.
 You can see some landmarks are very variable, while others are more constant across our specimens.
 
-`gpagen` not only outputs a nice plot of the specimens and their mean shape, but also the superimposed coordinates (`$coords`), the shape variables as principal components (`$pc.scores) and the centroid size of the specimens (`$Csize`). 
+`gpagen` not only outputs a nice plot of the specimens and their mean shape, but also the superimposed coordinates (`$coords`), the shape variables as principal components (`$pc.scores) and the centroid size of the specimens (`Csize`).
 
-### 4. Principal components and plotting
+# Principal components and plotting
 We now have superimposed coordinates we can use to further investigate shape variation among our specimens.
 But there's a bit of a problem.
 If you think back to the assumptions we make when we do statistics, we often talk about how the variables should not be correlated.
@@ -327,7 +329,7 @@ We'll use these for all further analysis.
 pca.landmarks$pc.scores
 ```
 
-### 5. Statistical analyses
+# Statistical analyses of geometric morphometric datasets
 This is the point at which geometric morphometrics gets really exciting - it's the point that you get to answer whatever question you started out with!
 It's also the point at which the number of different options becomes very large. 
 Two common analyses are regressions and multivariate ANOVA (MANOVA).
@@ -349,7 +351,7 @@ mydata <- data.frame(pca.landmarks$pc.scores,
 str(mydata)
 ```
 
-#### Regression
+## Regression
 Regressions are done in the same way as usual.
 
 ```{r}
@@ -374,7 +376,7 @@ abline(model1)
 * Can you remember how to intepret these results?
 * Why will your results be different to mine?
 
-#### Multivariate regression
+## Multivariate regression
 Multivariate regression is the same as univariate regression but is used where you have multiple response variables, i.e. if we wanted to include PC1 and PC2 in the analysis.
 It's quite easy to implement, we just use `cbind` to bind together the different variables we want to include.
 Note that assumption checking isn't possible, nor is plotting in the usual way.
@@ -390,7 +392,7 @@ anova(model2)
 
 * Can you guess how to intepret these results given what you know about regression?
 
-#### ANOVA
+## ANOVA
 ANOVAs are done in the same way as usual.
 
 ```{r}
@@ -413,7 +415,7 @@ plot(PC1 ~ diet, data = mydata, col = c("lightblue", "springgreen"))
 
 * Can you remember how to intepret these results?
 
-#### MANOVA
+## MANOVA
 MANOVA is the same as ANOVA but is used where you have multiple response variables, i.e. if we wanted to include PC1 and PC2 in the analysis.
 It's quite easy to implement, we just use `cbind` to bind together the different variables we want to include.
 Note that assumption checking isn't possible for MANOVA in R at this time.
@@ -436,7 +438,9 @@ plot(cbind(mydata$PC1,mydata$PC2) ~ diet, data = mydata, col = c("lightblue", "s
 Of course the results here are nonsensical as we made u pthe data, but hopefully this gives you an idea of how we might use geometric morphometrics data in analyses.
 Other common analyses look at disparity of groups, convergence and divergence, evolution of shape and shape space etc.
 
-## Resources for learning geometric morphometrics
+***
+
+# Resources for learning geometric morphometrics
 1. I highly advise getting hold of this book ([Zelditch et al. 2012](http://store.elsevier.com/Geometric-Morphometrics-for-Biologists/Miriam-Zelditch/isbn-9780123869036/)) from the library and reading the first few chapters, plus any chapters later in the book that are relevant to the analyses you will be doing. 
 Don't panic too much about the maths or the equations, just try to get a general understanding of what each method is doing, especially GPA and PCA.
 
@@ -456,9 +460,8 @@ I'd recommend starting any project with a quick flick through these [intro slide
 
 5. For error checking, take a look at [Fruciano 2016](http://link.springer.com/article/10.1007/s00427-016-0537-4), a review of the subject in Evolution. Also take a look at [Claude](http://lib.du.ac.ir/documents/10157/60743/Morphometrics+With+R.pdf) pages 63-65 for ideas on sources of error. 
 
+# References
 
-## References
-
-__Zelditch et al. 2012__
-__Claude__
-__Fruciano__
+* Zelditch, M.L., Swiderski, D.L., and Sheets, H.D.. 2012. Geometric Morphometrics for Biologists: A Primer. Academic Press.
+* Claude, Julien. Morphometrics with R. Springer Science & Business Media, 2008.
+* Fruciano, C. Measurement error in geometric morphometrics. 2016. Development genes and evolution 226:139-158.

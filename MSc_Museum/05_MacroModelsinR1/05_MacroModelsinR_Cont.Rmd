@@ -98,7 +98,7 @@ mydata <- match.species$data
 ```
 
 ***
-# Running the analysis
+# Models of continuous trait evolution
 For fitting models of evolution to continuous data we will use the `fitContinuous` function in the R package `geiger`.
 `fitContinuous` is a likelihood based method, so the output will give the maximum likelihood (ML) estimates of the parameters. 
 Bayesian methods are becoming preferred for these kinds of analyses and `fitContinuousMCMC` will perform these analyses. 
@@ -108,7 +108,6 @@ We'll fit three evolutionary models – the Brownian motion (BM) model, the Orns
 `fitContinuous` can also fit several other models. 
 For more details look at the help file by typing: `?fitContinuous`
 
-# Models of continuous trait evolution
 ## The Brownian motion (BM model)
 The Brownian motion model (Cavalli-Sforza and Edwards, 1967; Felsenstein, 1973) is assumed to be the underlying mode of evolution in the majority of phylogenetic comparative methods (though this assumption is rarely tested; Freckleton and Harvey 2006). 
 In the model, a trait $X$ evolves at random at a rate $\sigma$:
@@ -164,7 +163,7 @@ $t_{\frac{1}{2}} = \frac{log(2)}{|a|}$
 
 It can be interpreted as the time it takes for the rate of evolution of the trait to halve.
 
-## Fitting the models using `fitContinuous`
+# Fitting the models using `fitContinuous`
 First we will fit a Brownian motion (BM) model to log(body mass):
 
 ```{r}
