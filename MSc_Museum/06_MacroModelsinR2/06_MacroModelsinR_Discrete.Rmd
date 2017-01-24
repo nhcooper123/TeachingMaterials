@@ -1,0 +1,104 @@
+---
+title: "Macroevolutionary models in R - Part 2 - discrete traits"
+author: "Natalie Cooper (natalie.cooper@nhm.ac.uk)"
+date: "Feb 2017"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The aims of this practical are to learn how to use R to fit macroevolutionary models in R to discrete traits.
+
+We will be using the evolution of magical creature life-history variables as an example. 
+The data includes body mass (average adult size at rest) in kg, social status (1 = solitary, 2 = social), habitat (1 = terrestrial, 2 = aquatic, 3 = volant) and magical power (in thaum - with thanks to Terry Pratchett for the units). 
+These data are invented, so please don't get too upset if I've misclassified anything!
+
+__REMEMBER__
+
+- Download all of the data for the practical into a folder somewhere on your computer.
+- Set your working directory to this folder.
+- Start a new script for this practical.
+
+You will also need to install the following packages: 
+
+* `ape`
+* `geiger`
+* `OUwie`
+
+This is Part 2 of the "Macroevolutionary models in R" practical, so you may skip through the set up if you're just carrying on from that.
+
+This handout borrows heavily from a Linnaean Society workshop I ran with Graham Slater in 2014. 
+Many thanks to Graham for his input.
+
+***
+
+# Preparing for the analysis
+## Load packages, read in the data and the tree
+This is the same as we did in the PGLS practical, so I won't give detailed instructions here.
+
+```{r, message = FALSE}
+# Load packages
+library(ape)
+library(geiger)
+library(OUwie)
+```
+
+```{r, message = FALSE}
+# Read in data
+magicaldata <- read.csv("magicalcreatures.csv")
+# Check data is loaded correctly
+str(magicaldata)
+
+# Read in tree
+magicaltree <- read.nexus("magicaltree.nex") 
+# Check tree is loaded correctly
+str(magicaltree)
+```
+
+## 2. Modify the tree and data so they can be used in the analyses.
+Again we did this in the PGLS practical. 
+Please remind yourself of what these steps are needed for.
+
+```{r}
+# Ensure tree is fully bifurcating
+magicaltree <- multi2di(magicaltree) 
+
+# Replace spaces with underscores in the species names
+magicaldata$Species <- gsub(" ", "_", magicaldata$Species)
+
+# Add species names to row names
+row.names(magicaldata) <- magicaldata$Species
+```
+
+For some weird reason the `geiger` function we need (`treedata` see below) won't work if you input a dataset with variables that are characters i.e. words or letters. 
+Our taxonomic variable Species is a character so we need to exclude it from the data.
+Note for your own data you'd need to remove all character variables (or recode them as 0,12 etc.).
+We will do this by making a new dataset called magicaldata2.
+
+```{r}
+magicaldata2 <- magicaldata[, 2:5]
+```
+
+Here the [ ] tells R we want to subset the dataset. 
+R data frames are always described by [X,Y] where X is rows and Y is columns. 
+So [1, 1] will select the entry in the first column and the first row of the data frame. 
+[, 2:2] selects all rows but only columns 2 to 5. 
+These are the columns containing our numeric variables.
+
+We then need to match the species in tree to those in the dataset as in the PGLS practical. 
+__Note that we are using `magicaldata2` here.__
+
+```{r, warning = FALSE}
+match.species <- treedata(magicaltree, magicaldata2)
+
+mytree <- match.species$phy
+mydata <- match.species$data
+```
+
+***
+# Running the analysis

@@ -1,0 +1,292 @@
+---
+title: "Macroevolutionary models in R - Part 1 - continuous traits"
+author: "Natalie Cooper (natalie.cooper@nhm.ac.uk)"
+date: "Feb 2017"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The aims of this practical are to learn how to use R to fit macroevolutionary models in R to continuous traits.
+
+We will be using the evolution of magical creature life-history variables as an example. 
+The data includes body mass (average adult size at rest) in kg, social status (1 = solitary, 2 = social), habitat (1 = terrestrial, 2 = aquatic, 3 = volant) and magical power (in thaum - with thanks to Terry Pratchett for the units). 
+These data are invented, so please don't get too upset if I've misclassified anything!
+
+__REMEMBER__
+
+- Download all of the data for the practical into a folder somewhere on your computer.
+- Set your working directory to this folder.
+- Start a new script for this practical.
+
+You will also need to install the following packages: 
+
+* `ape`
+* `geiger`
+* `OUwie`
+
+This practical is in two parts, Part 2 deals with discrete traits.
+
+***
+
+# Preparing for the analysis
+## Load packages, read in the data and the tree
+This is the same as we did in the PGLS practical, so I won't give detailed instructions here.
+
+```{r, message = FALSE}
+# Load packages
+library(ape)
+library(geiger)
+library(OUwie)
+```
+
+```{r, message = FALSE}
+# Read in data
+magicaldata <- read.csv("magicalcreatures.csv")
+# Check data is loaded correctly
+str(magicaldata)
+
+# Read in tree
+magicaltree <- read.nexus("magicaltree.nex") 
+# Check tree is loaded correctly
+str(magicaltree)
+```
+
+## Modify the tree and data so they can be used in the analyses.
+Again we did this in the PGLS practical. 
+Please remind yourself of what these steps are needed for.
+
+```{r}
+# Ensure tree is fully bifurcating
+magicaltree <- multi2di(magicaltree) 
+
+# Replace spaces with underscores in the species names
+magicaldata$Species <- gsub(" ", "_", magicaldata$Species)
+
+# Add species names to row names
+row.names(magicaldata) <- magicaldata$Species
+```
+
+For some weird reason the `geiger` function we need (`treedata` see below) won't work if you input a dataset with variables that are characters i.e. words or letters. 
+Our taxonomic variable Species is a character so we need to exclude it from the data.
+Note for your own data you'd need to remove all character variables (or recode them as 0,12 etc.).
+We will do this by making a new dataset called magicaldata2.
+
+```{r}
+magicaldata2 <- magicaldata[, 2:5]
+```
+
+Here the [ ] tells R we want to subset the dataset. 
+R data frames are always described by [X,Y] where X is rows and Y is columns. 
+So [1, 1] will select the entry in the first column and the first row of the data frame. 
+[, 2:2] selects all rows but only columns 2 to 5. 
+These are the columns containing our numeric variables.
+
+We then need to match the species in tree to those in the dataset as in the PGLS practical. 
+__Note that we are using `magicaldata2` here.__
+
+```{r, warning = FALSE}
+match.species <- treedata(magicaltree, magicaldata2)
+
+mytree <- match.species$phy
+mydata <- match.species$data
+```
+
+***
+# Running the analysis
+For fitting models of evolution to continuous data we will use the `fitContinuous` function in the R package `geiger`.
+`fitContinuous` is a likelihood based method, so the output will give the maximum likelihood (ML) estimates of the parameters. 
+Bayesian methods are becoming preferred for these kinds of analyses and `fitContinuousMCMC` will perform these analyses. 
+However, due to time constraints we will not cover this function.
+As an example, let's look at the evolution of `log(body size)` in magical creatures. 
+We'll fit three evolutionary models – the Brownian motion (BM) model, the Ornstein-Uhlenbeck (OU) model and the Early Burst (EB) model. 
+`fitContinuous` can also fit several other models. 
+For more details look at the help file by typing: `?fitContinuous`
+
+# Models of continuous trait evolution
+## The Brownian motion (BM model)
+The Brownian motion model (Cavalli-Sforza and Edwards, 1967; Felsenstein, 1973) is assumed to be the underlying mode of evolution in the majority of phylogenetic comparative methods (though this assumption is rarely tested; Freckleton and Harvey 2006). 
+In the model, a trait $X$ evolves at random at a rate $\sigma$:
+
+$dX(t) = \sigma dW(t)$
+
+where $W(t)$ is a white noise function and is a random variate drawn from a normal distribution with mean 0 and variance $\sigma^2$. This model assumes that there is no overall drift in the direction of evolution (hence the expectation of $W(t)$ is zero) and that the rate of evolution is constant.
+Because the direction of change in trait values at each step is random, Brownian motion is often described as a “random walk” (note that you can also fit models where $W(t)$ is not zero and there is drift in the direction of evolution. 
+This is known as the drift model, or Brownian motion with a trend. We will not cover this here).
+
+The model assumes the correlation structure among trait values is proportional to the extent of shared ancestry for pairs of species. 
+This means that close relatives will be more similar in their trait values than more distant relatives. 
+It also means that variance in the trait will increase (linearly) in proportion to time.
+The model has two parameters, the Brownian rate parameter, $\sigma^2$ and the state of the root at time zero, $X(0)$. 
+`fitContinuous` estimates $\sigma^2$ and $X(0)$. 
+Note that $\sigma^2$ can be used as a measure of the rate of trait evolution (Cooper and Purvis, 2010; Cooper et al., 2011).
+
+## The Ornstein-Uhlenbeck (OU) model
+The Ornstein-Uhlenbeck (OU) model (Hansen, 1997; Butler and King, 2004) is a random walk where trait values are pulled back towards some “optimal” value with an attraction strength proportional to the parameter $\alpha$. 
+The model has the following form:
+
+$dX(t) = -\alpha(X(t) - \mu) + \sigma dW(t)$
+
+Note that this model has two parameters in addition to those of the Brownian model, $\alpha$ and $\mu$.
+The parameter m is a long-term mean, and it is assumed that species evolve around this value. 
+$\alpha$ is the strength of evolutionary force that returns traits back towards the long-term mean if they evolve away from it. 
+$\alpha$ is sometimes referred to as the “rubber band” parameter because of the way it forces traits back towards $\mu$.
+The OU model was introduced to population genetics by Lande (1976) to model stabilizing selection in which the mean was recast as a fitness optimum on an adaptive landscape. 
+The process operating in comparative data is analogous, although clearly is not stabilizing selection (despite being sometimes referred to as such).
+The model has four parameters, the Brownian rate parameter, $\sigma^2$, the state of the root at time zero, $X(0)$, the attraction strength or “rubber band” parameter, $\alpha$, and the long-term mean, $\mu$.
+`fitContinuous` estimates $\sigma^2$, $X(0)$, and $\alpha$. 
+It does not estimate $\mu$ but in this implementation of the model, $\mu$ is equivalent to $X(0)$. 
+Note that if $\alpha$ is close to zero then evolution is approximately Brownian.
+
+## The Early Burst (EB) model
+The Early Burst (EB) model (Harmon et al. 2010, also called the ACDC model; Blomberg et al. 2003) is a Brownian motion/random walk model where the rate of evolution decreases exponentially through time under the model:
+
+$r(t) = \sigma^2e(at)$
+
+Where $r(t)$ is the rate of evolution at time $t$, $\sigma^2$ is the initial value of the Brownian rate parameter, i.e. the initial rate of evolution, $a$ is the rate change parameter, and $t$ is time. 
+The value of $a$ is generally less than or equal to 0 (note that you can force $a$ to be greater than zero by changing the bounds - see section 3.4 - however, this will only work if you have fossil species in your data; Slater et al. 2012). 
+When a is negative, rates of evolution decrease through time. 
+The model fits traits where diversification occurs most rapidly early in a lineage and slows as the
+lineage approaches the present, so that subclades tend to retain their differences through time. 
+This is consistent with a clade radiating adaptively into a fixed set of niches and has been used as evidence of niche-filling modes of evolution (Harmon et al., 2010; Cooper and Purvis, 2010).
+The model has three parameters, the Brownian rate parameter, $\sigma^2$, the state of the root at time zero, $X(0)$, and the rate of change parameter, $a$. 
+`fitContinuous` estimates $\sigma^2$, $X(0)$ and $a$. 
+Note that if $a$ is close to zero then evolution is approximately Brownian.
+Note that although many people report a values when reporting the results of fitting an Early Burst model, it is often more intuitive to report the rate half-life, $t_{\frac{1}{2}}$ (Slater and Pennell, 2014). 
+This is calculated as:
+
+$t_{\frac{1}{2}} = \frac{log(2)}{|a|}$
+
+It can be interpreted as the time it takes for the rate of evolution of the trait to halve.
+
+## Fitting the models using `fitContinuous`
+First we will fit a Brownian motion (BM) model to log(body mass):
+
+```{r}
+BM <- fitContinuous(mytree, log(mydata[,"BodySize_kg"]), model = c("BM"))
+```
+
+To look at the output type:
+
+```{r}
+BM
+```
+
+The maximum likelihood estimates (`lnL`) of the model parameters are found near the top of the output. 
+In a Brownian motion (BM) model we estimate the Brownian rate parameter, $\sigma^2$ or `sigsq` in the output above, which is `2.208` and the value of the trait at the root of the tree, $X(0)$ or `z0` in the output above, which is `4.304`.
+Other useful things in the output are the maximum-likelihood estimate (`lnL`) of the model (log-likelihood), the Akaike Information Criterion (`AIC`), sample-size corrected AIC (`AICc`) and the number of model parameters (free parameters) also known as $k$ in the literature. 
+We will return to the AIC values below.
+
+To fit an Ornstein-Uhlenbeck model to log(body mass) we only need to change the model in the formula we used above:
+
+```{r, message = FALSE}
+OU <- fitContinuous(mytree, log(mydata[,"BodySize_kg"]), model = c("OU"))
+```
+
+To look at the output type:
+
+```{r}
+OU
+```
+
+As above, the maximum likelihood estimates (`lnL`) of the model parameters are found near the top of the output. 
+In an Ornstein-Uhlenbeck (OU) model we estimate the Brownian rate parameter, $\sigma^2$ or `sigsq` in the output above, the value of the trait at the root of the tree, $X(0)$ or `z0` in the output above, and the selection strength parameter, $\alpha$ or `alpha` in the output above. 
+As `alpha = 2.718` here, it suggests that there is evolution towards a body mass optimum.
+
+Finally, to fit an Early Burst (EB) model to log(body mass):
+
+```{r}
+EB <- fitContinuous(mytree, log(mydata[,"BodySize_kg"]), model = c("EB"))
+```
+
+To look at the output type:
+
+```{r}
+EB
+```
+
+As above, the maximum likelihood estimates (`lnL`) of the model parameters are found near the
+top of the output. In an Early Burst (EB) model we estimate the Brownian rate parameter, $\sigma^2$ or
+`sigsq` in the output above, the value of the trait at the root of the tree, $X(0)$ or `z0` in the output
+above, and the rate of change parameter, $a$. Here `a` is very close to 0 indicating that the rate of log(body
+mass) evolution in magical creatures has not decreased through time.
+
+We can also extract the rate half-life, $t_{\frac{1}{2}}$, for this model as follows:
+
+```{r}
+log(2)/abs(EB$opt$a)
+```
+For these data, the rate half-life is almost 700,000 time units, much greater than the total time represented on the tree!
+This means over the course of magical creature evolution, body size rate has not halved (yet). 
+
+## Comparing models of evolution
+Often we want to know which of the models fits our variable best. 
+We can use `fitContinuous` to fit the models we are interested in and can then compare them using AIC. 
+We can extract the AICs from the models we fitted above as follows:
+
+```{r}
+BM$opt$aic
+```
+
+```{r}
+OU$opt$aic
+```
+
+```{r}
+EB$opt$aic
+```
+
+The “best” model is the one with the smallest AIC, in this case the OU model. 
+There is much debate about how big of a difference in AIC values can be classed as substantial improvement to a model fit (it usually ranges from 2-10 AIC units). 
+Generally we use 4 units, so EB probably doesn't fit substantially better than BM, but OU is substantially better than BM and EB.
+
+Alternatively we can use $\Delta$AIC or AIC weights to compare our models using the following code and the `geiger` function `aicw`:
+
+```{r}
+aic.scores <- setNames(c(BM$opt$aic, OU$opt$aic, EB$opt$aic), c("BM","OU","EB"))
+aicw(aic.scores)
+```
+
+`aicw` outputs the AIC (`fit`), $\Delta$AIC (`delta`) and AIC weights (`w`) for each of the models we fitted.
+The best model is the model with $\Delta$AIC = 0 or with AICw closest to 1. 
+Using $\Delta$AIC we can conclude that the OU model is the best fit to the data.
+
+## Problems with convergence and bounds
+Above we have mentioned the default bounds on each parameter. 
+Sometimes these need to be changed because the model will not converge. 
+This happens when the likelihood surface has long flat ridges that cause the likelihood search to get “stuck” (this is particularly common under the OU model). 
+You can change bounds with the bounds argument in `fitContinuous`. 
+Several bounds can be given at a time e.g. `bounds = list(sigsq = c(0, 0.1), alpha = c(0, 1))` would constrain both
+the $\sigma^2$ and $\alpha$ parameters.
+
+For example, if an OU model keeps getting stuck you could try changing the lower bound on $\alpha$:
+
+```{r, message = FALSE}
+OU <- fitContinuous(phy = mytree, dat = log(mydata[,"BodySize_kg"]), model = c("OU"), 
+                    bounds = list(alpha = c(0.01, 1)))
+```
+
+This example gives a warning message because `alpha` is over 1, so when we make the upper bound smaller the method ends up giving us this value instead because it's as close to 1 as we are allowing the model to go.
+
+***
+
+# References
+
+* Blomberg, S. P., T. Garland, and A. R. Ives. 2003. Testing for phylogenetic signal in comparative data: behavioral traits are more labile. Evolution 57:717–745.
+* Butler, M. A. and A. A. King. 2004. Phylogenetic comparative analysis: a modeling approach for adaptive evolution. The American Naturalist 164:683–695.
+* Cavalli-Sforza, L. L. and A. W. Edwards. 1967. Phylogenetic analysis. models and estimation procedures. American Journal of Human Genetics 19:233.
+* Cooper, N., R. P. Freckleton, and W. Jetz. 2011. Phylogenetic conservatism of environmental niches in mammals. Proceedings of the Royal Society B: Biological Sciences 278:2384–2391.
+* Cooper, N. and A. Purvis. 2010. Body size evolution in mammals: complexity in tempo and mode.The American Naturalist 175:727–738.
+* Cooper, N., Thomas, G.H., Venditti, C., Meade, A. & Freckleton, R.P. (2016b) A cautionary note on the use of ornstein-uhlenbeck models in macroevolutionary studies. Biological Journal of the Linnaean Society
+* Felsenstein, J. 1973. Maximum likelihood and minimum-steps methods for estimating evolutionary trees from data on discrete characters. Systematic Biology 22:240–249.
+* Freckleton, R. P. and P. H. Harvey. 2006. Detecting non-brownian trait evolution in adaptive radiations. PLoS Biology 4:e373.
+* Hansen, T. F. 1997. Stabilizing selection and the comparative analysis of adaptation. Evolution Pages 1341–1351.
+* Harmon, L. J., J. B. Losos, T. Jonathan Davies, R. G. Gillespie, J. L. Gittleman, W. Bryan Jennings, K. H. Kozak, M. A. McPeek, F. Moreno-Roark, T. J. Near, et al. 2010. Early bursts of body size and shape evolution are rare in comparative data. Evolution 64:2385–2396.
+* Lande, R. 1976. Natural selection and random genetic drift in phenotypic evolution. Evolution 30:314–334.
+* Slater, G. J., L. J. Harmon, and M. E. Alfaro. 2012. Integrating fossils with molecular phylogenies improves inference of trait evolution. Evolution 66:3931–3944.
+* Slater, G. J. and M.W. Pennell. 2014. Robust regression and posterior predictive simulation increase power to detect early bursts of trait evolution. Systematic Biology 63:293–308.
