@@ -85,9 +85,8 @@ Remember that BAMM is a Bayesian method, so rather than giving the one most like
 
 ### Distinct shift configurations and how to summarise them
 For each MCMC run (in our BAMM analysis we ran the models 10^9 times!), BAMM simulates speciation and extinction along the tree, extracts the number of rate shifts (increase or decrease in speciation rate), and then works out the probability of that particular combination of rate shifts occurring.
-The results BAMM outputs (to the `marsupial_` file) are a sample of all possible combinations across all 10^9 models, in proportion to their posterior probability. 
-The posterior, or distribution of results, from BAMM will thus contain lots of different combinations of rates and rate shifts, but will have those that occur more often across the 
-10^9 models appearing more often, than those that occur rarely appearing less often.
+The results BAMM outputs (to the `marsupial_event_data.txt` file) are a sample of all possible combinations across all 10^9 models, in proportion to their posterior probability. 
+The posterior, or distribution of results, from BAMM will thus contain lots of different combinations of rates and rate shifts, but will have those that occur more often across the 10^9 models appearing more often, than those that occur rarely appearing less often.
 
 In the posterior, we call each of these possible combinations __distinct shift configurations__.
 These are the most probable configuration of shifts from __one model__ from the posterior. 
@@ -161,7 +160,7 @@ burnstart <- floor(0.1 * nrow(mcmc))
 postburn <- mcmc[burnstart:nrow(mcmc), ]
 ```
 
-We can also use the `coda` library to check the effective sample sizes (ESS) of the log-likelihood and the number of shift events present in each sample. 
+We can also use the `coda` library to check the effective sample sizes (ESS) of the log-likelihood and the number of shift events present in each sample.
 
 ```{r}
 effectiveSize(postburn$N_shifts)
@@ -192,14 +191,15 @@ The message this produces tells you how many samples were read and how many excl
 The first thing we might like to know is how many rate shifts occur in our tree?
 We can do this using our event data (`edata`) to look at the posterior probabilities of models sampled by BAMM.
 
-```{r}
-summary(edata)
+```{r, eval = FALSE}
+shifts <- summary(edata)
+shifts
 ```
 
-This shows the posterior probabilities of each number of rate shifts observed during simulation of the posterior.
+This should show the posterior probabilities of each number of rate shifts observed during simulation of the posterior.
 This doesn't tell us *where* they occur on the tree, just how many there are, and what their probability was.
 
-Here it looks like XX shifts occurred most often, but with a range in number of shifts from 0 to 9.
+Here it looks like 4 shifts occurred most often, but with a range in number of shifts from 0 to 11.
 
 ## Mean phylorate plot
 Next we might want to visualise these results on our tree. 
@@ -207,15 +207,16 @@ Mean phylorate plots are a way of visualizing the mean, model-averaged diversifi
 We can plot one using `plot.bammdata`.
 
 ```{r}
-plot.bammdata(edata, lwd = 2, legend = TRUE, labels = TRUE, cex = 0.5)
+plot.bammdata(edata, lwd = 2, legend = TRUE, cex = 0.5)
 ```
 
 High rates are in red or yellow, and the low rates in blue.
-The tip labels are hard to read so you might need to look at `plot(tree, cex = 0.5, type = "fan")` to see which species are involved here. 
+You can add the option `labels = TRUE` to get tip labels, but they're really  hard to read so you might need to look at a normal tree plot `plot(tree, cex = 0.5)` to see which species are involved here. 
+I've provided a large PDF version of the tree in the folder.
 Also check out [https://en.wikipedia.org/wiki/Marsupial] to learn more about marsupials!
 
-In our data we see low rates in the monotremes (the three species in dark blue at the bottom) which is hardly surprising given their separation from the rest of the tree and very long branches.
-The two clades that appear to evolve more quickly are the Dasyuromorphia, the marsupial carnivores (including quolls and Tasmanian devils), and the Macropodidae, the kangaroos and wallabies.
+In our data we see low rates in the monotremes (the three species in dark blue at the bottom) which is not surprising given their separation from the rest of the tree and very long branches.
+The two clades that appear to evolve more quickly are the Dasyuromorphia, the marsupial carnivores (including quolls and Tasmanian devils - though these are missing from this phylogeny), and the Macropodidae, the kangaroos and wallabies.
 Again this makes sense as these groups are very species rich.
 American possums, and other Australasian marsupials have much lower rates of evolution. 
 
@@ -230,7 +231,7 @@ plot.bammdata(edata, lwd = 2, pal = plasma(4))
 ## Best single distinct shift configuration
 To extract the overall best distinct shift configuration, we use the maximum a posteriori (MAP) probability shift configuration, i.e. the one that appeared the most often in the posterior, as follows. 
 
-```{r}
+```{r, warning = FALSE}
 best <- getBestShiftConfiguration(edata, expectedNumberOfShifts = 1)
 ```
 
@@ -241,7 +242,7 @@ plot.bammdata(best, lwd = 2, pal = plasma(4))
 addBAMMshifts(best, cex = 1.5, bg = "white")
 ```
 
-It appears there is a rate shift on the branch leading to the marsupials, perhaps unsurprising given the low rates at the root with monotremes, and another two at the clades we already identified as having high rates. 
+The best single distinct shift configuration consists of three shifts. One on the branch leading to the marsupials, perhaps unsurprising given the low rates at the root with monotremes, and another two at the clades we already identified as having high rates. 
 
 ## Credible sets of shifts
 Using just one answer is not very desirable, so let's look at the shifts from across the posterior.
@@ -257,10 +258,10 @@ css <- credibleShiftSet(edata, expectedNumberOfShifts = 1, threshold = 5, set.li
 summary(css)
 ```
 
-Here we see that there are XX distinct shift configurations in our posterior. 
+Here we see that there are 113 distinct shift configurations in our posterior. 
 This highlights why using BAMM is a good idea - we can incorporate the distribution of results rather than giving just one best answer.
 
-We also see that even though there are XX distinct configurations in the 95% credible set, nine of these account for most of the probability of the data. 
+We also see that even though there are 113 distinct configurations in the 95% credible set, 9 of these account for most of the probability of the data. 
 
 We can generate phylorate plots for each of these shift configurations using `plot.credibleshiftset`
 
@@ -283,15 +284,16 @@ par(mfrow = c(1,1))
 We might also be interested in seeing if particular clades have different rates of speciation or extinction. 
 This can be done in `BAMMtools` using the function `getCladeRates`, which computes the average rate for the chosen clade. 
 
-Here XXX
+Here we might be interested in seeing how different the rates are in our fastest clade, the macropodids, compared to the rest of our species. 
+
+First we can look at the average rate across the whole tree using `getCladeRates`.
 
 ```{r}
 allrates <- getCladeRates(edata)
 ```
 
-`allrates` is a list with speciation and extinction rates, with the mean rate across all whales for each sample in the posterior. 
-
-We can extract the mean speciation rate for marsupials and monotremes and estimate the 90% highest posterior density (HPD) as follows.
+`allrates` is a list with speciation and extinction rates, with the mean rate across all marsupials for each sample in the posterior. 
+We can extract the mean speciation rate for our tree and estimate the 90% highest posterior density (HPD) as follows.
 
 ```{r}
 mean(allrates$lambda)
@@ -300,67 +302,73 @@ quantile(allrates$lambda, c(0.05, 0.95))
 
 To get the rates for a specific clade, we just specify the node leading to that clade.
 
-In the whales example, node 140 is the node number of the dolphin clade (you can find identify node numbers using plot.phylo and nodelabels from the ape package). We can estimate the mean of the marginal density of speciation rates for dolphins as follows:
+In the our marsupial/monotreme example, node 301 is the node number of the macropodid clade (you can find identify node numbers using `plot.phylo` and `nodelabels` from the `ape` package). 
+We can estimate the mean speciation rates for macropodids as follows:
 
 ```{r}
-xxxrates <- getCladeRates(edata, node = 355)
-mean(xxxrates$lambda)
-quantile(allrates$lambda, c(0.05, 0.95))
+kangaroorates <- getCladeRates(edata, node = 301)
+mean(kangaroorates$lambda)
+quantile(kangaroorates$lambda, c(0.05, 0.95))
 ```
+
+To get the rates for everything but the macropodids, we do the same thing, but add the argument `nodetype = "exclude"`
 
 ```{r}
-xxxrates <- getCladeRates(edata, node = 301)
-mean(xxxrates$lambda)
-quantile(allrates$lambda, c(0.05, 0.95))
+nonkangaroorate <- getCladeRates(edata, node = 301, nodetype = "exclude")
+mean(nonkangaroorate$lambda)
+quantile(nonkangaroorate$lambda, c(0.05, 0.95))
 ```
-
-To get the rates for everything but the XXX, we do the same thing, but add the argument `nodetype = "exclude"`
-
-- how to do for multiple nodes?
-
-```{r}
-nondolphinrate <- getCladeRates(edata, node = c(301, 355), 
-								nodetype = c("exclude", "exclude"))
-mean(nondolphinrate$lambda)
-quantile(nondolphinrate$lambda, c(0.05, 0.95))
-```
-
-As you can see XXXX
 
 Note that these are *mean time-averaged clade-specific rates*. 
 If diversification rates have changed dramatically through the history of a particular clade, a single overall mean rate might not be particularly informative.
 
 ## Rate-through-time analysis
-Plotting a rate-through-time curve (example here) is trivial. BAMM’s built-in function plotRateThroughTime makes it easy to generate plots of rates through time:
+We may also want to visualise how rates of speciation change through time on our tree.
+We can do this by plotting a **rate-through-time curve**  using 
+the `plotRateThroughTime` function. 
 
 ```{r}
 # This may take some time...
 plotRateThroughTime(edata, ratetype = "speciation")
 ```
 
-should produce a plot with density shading on confidence regions for your speciation-through-time curve. 
+The red line is the average speciation rate, with density shading showing the confidence intervals. 
 
-You can also use plotRateThroughTime to plot speciation through time curves for just a portion of your phylogeny. We can do this by feeding a node number in to plotRateThroughTime, and the function will just compute and plot the rates for this subtree. To find a particular node number for your tree, you can plot the tree (using ape), and then plot your node numbers directly on the tree, like this:
+You can also use `plotRateThroughTime` to plot speciation through time curves for just a portion of your phylogeny. 
+Here we can just look at the macropodids (node 301):
 
 ```{r}
-plotRateThroughTime(edata, node = 300, nodetype="include", ylim=c(0,0.7))
-And we can also plot the entire rate through time curve after we exclude this clade (as in: just plot the background rates, without the focal clade):
-
-plotRateThroughTime(edata, node = mrca, nodetype="exclude", ylim=c(0,0.7))
+plotRateThroughTime(edata, node = 301, nodetype="include")
 ```
 
+And compare these to the phylogeny minus the macropodids:
 
+```{r}
+plotRateThroughTime(edata, node = 301, nodetype="exclude")
+```
 
 ## Macroevolutionary cohort analysis
-A final nice feature of BAMM (there are others too) is the ability to easily perform a macroevolutionary cohort analysis (Rabosky et al 2014b).
-These are a good way of summarising whcih species/clades share correlated macroevolutionary dynamics i.e. rates of speciation etc. 
+A final nice feature of `BAMMtools` that we'll play with today (there are others too) is the ability to easily perform a macroevolutionary cohort analysis (Rabosky et al 2014b).
+These are a good way of summarising which species/clades share correlated macroevolutionary dynamics i.e. similar rates of speciation etc. 
 The basic idea is to visualize the pairwise probabilities that any two species share a common macroevolutionary rate regime. 
-The first step is to generate a cohort matrix, which contains the pairwise probabilities of shared macroevolutionary dynamics. This is then passed to the cohorts function, which generates the plot:
+
+First we generate a cohort matrix, which contains the pairwise probabilities of shared macroevolutionary dynamics. 
+We then pass thsi to the `cohorts` function, which generates the plot.
 
 ```{r}
 cmat <- getCohortMatrix(edata)
 cohorts(cmat, edata)
 ```
+
+Each cell of the cohort matrix corresponds to a pair of tip taxa from the phylogeny.
+You read these plots by drawing an imaginary line between any two tips of the tree - the color of the matrix at their intersection is the probability that those taxa share a common rate dynamic. 
+Species pairs that share a common rate dynamic are red, species with different macroevolutionary dynamics are blue. 
+
+Here there appear to be a very complicated set of macroevolutionary dynamics (again I wonder why I decided to use a completely untested real example for this practical!). 
+Dasyurids and macropodids appear to be similar, as do the American possums and the Australasian possums. 
+There are also small pockets of similarity across the other marsupial groups, for example bettongs have a similarly slow rate to the possums.
+
+Check out this [example with whales](http://bamm-project.org/bammgraph.html#whales-cohort) for an easier to interpret plot! 
 
 ## Assumptions and issues with BAMM
 Like all methods, BAMM has a number of important assumptions and issues.
@@ -375,11 +383,13 @@ To solve this BAMM estimates marginal odds ratios, scaling each marginal shift p
 You can (and should) check for this problem using the code below.
   
 ```{r}
-postfile <- "marsupial.txt_post_mcmc_out.txt"
+postfile <- "marsupial_mcmc_out.txt"
 bfmat <- computeBayesFactors(postfile, expectedNumberOfShifts = 1, burnin=0.1)
 
 plotPrior(mcmc, expectedNumberOfShifts = 1)
 ```
+
+There is some overlap, but it's clear that the prior is different to the posterior, so this issue is not affecting our analyses.
 
 Additionally, there has been a quite a lot of debate about the validity of BAMM in the literature recently. Moore et al. 2016 proposed several serious issues with BAMM, which basically boil down to two main points:
 
