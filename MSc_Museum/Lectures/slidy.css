@@ -1,0 +1,120 @@
+body
+{
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+  width: 100%;
+  height: 100%;
+  color: white;
+  background-color: #031634;
+  font-family: "Gill Sans MT", "Gill Sans", GillSans, sans-serif;
+  font-size: 500%;
+}
+
+h1 {
+    text-align: center;
+    color: #4ECDC4;
+    width: 100%;
+    font-size: 500%;
+}
+
+h2 {
+    color: #C7F464;
+}
+
+p.lime {
+    color: #C7F464;
+}
+
+p.blue {
+    color: #4ECDC4;
+}
+
+p.pink {
+    color: #FF6B6B;
+}
+
+a:link {
+    color: #F8CA00; 
+}
+
+blockquote { font-style: italic }
+
+img { background-color: transparent }
+
+p.copyright { font-size: smaller }
+
+.center { text-align: center }
+.footnote { font-size: smaller; margin-left: 2em; }
+
+div.slide.cover {
+  font-size: 100%;
+  margin: 0;
+  padding: 0;
+  /*background-color: #90A7D0;*/
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+div.slide.cover div.header
+{
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: auto;
+  height: auto;
+  margin: 0;
+  width: 100%;
+  z-index: 20;
+  /*padding: 0.5em 2.5em 1em 0.5em;*/
+  color: #FFFFFF;
+  border-width: 0;
+  border-style: solid;
+  background-color: #005A9C;
+  border-bottom-width: thick;
+  border-bottom-color: #95ABD0;
+}
+
+div.slide.cover h1
+{
+  font-size: 130%;
+  margin-left: 0;
+  margin-bottom: 0;
+  /*background-color: #005A9C;*/
+}
+
+div.slide.cover h2
+{
+  position: absolute;
+  bottom:4em;
+  top: auto;
+  line-height: 150%;
+  font-size: 100%;
+  color: white;
+  background: transparent;
+}
+
+div.slide.cover img.cover
+{
+  float: left;
+  /*margin-top: 3em;*/
+  height: 100%;
+  width: 100%;
+  overflow:hidden;
+}
+
+div.slide.cover p
+{
+  margin-top: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+div.slide.cover h1
+{
+  padding-top: 0;
+  padding-bottom: 0;
+}
+

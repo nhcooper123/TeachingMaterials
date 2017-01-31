@@ -1,0 +1,142 @@
+---
+title: "Macro Methods Module"
+author: "Natalie Cooper (natalie.cooper@nhm.ac.uk)"
+date: "Feb 2017"
+output:
+  slidy_presentation:
+    css: slidy.css
+  beamer_presentation: default
+font-import: http://fonts.googleapis.com/css?family=Fjalla+One
+font-family: Fjalla One
+autosize: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Module aims
+
+- The aim of this module is to introduce you to some of the cutting-edge methods being used in macroecology and macroevolution
+- The module will introduce you to various ways we collect, analyse and interpret macro-scale data with a large emphasis on practical work, mostly using R. 
+
+# Module outline
+
+- Macroecology and macroevolution
+- Big data – databases, specimens
+- Patterns, methods etc.
+    - Diversity indices
+    - Geometric morphometrics
+    - PGLS
+    - Diversification rates
+
+# {.build}
+
+<p class="pink">Thursday 23rd February (NC)</p>
+What are macroecology and macroevolution? Introduction to the module, assessments, and aims.
+
+Macroecology I: Macroecological patterns and diversity indices in R.
+
+<p class="pink">Friday February 24th February (AP, TC)</p>
+Big Data I: Using Big Data in conservation with the PREDICTS project.
+
+Big data II: Using the paleobiology database (PBDB).
+
+<p class="pink">Monday February 27th February (NC)</p>
+Comparative Biology: PGLS in R.
+
+Macroevolution I: Macroevolutionary patterns and models of evolution in R.
+
+<p class="pink">Tuesday 28th February (NC, IF)</p>
+Big data III: Using museum specimen data. Geometric morphometrics.
+
+Macroevolution II: case study using Foraminifera.
+
+<p class="pink">Wednesday 1st March (NC, IF)</p>
+Macroevolution III: Diversification rates and adaptive radiations.
+
+Critical thinking: Do you trust your methods?
+
+# Assessment I
+
+- At the end of every practical there will be some practice questions. 
+- <p class="lime"> Save your answers and R CODE </p>
+- Assessment will be MCQ test where the answers come from the practice questions or the code you used to answer them. 
+- <p class="pink"> I’ll send a link on Tuesday 28th</p>
+- You’ll have a week to do this.
+- Shouldn’t take more than 20 mins…
+
+# Assessment II
+
+- Technically not part of this module (part of the Palaeobiology module).
+- Short report which requires some data collection, a bit of R (you’ll learn how to do this today), and a bit of write up.
+- You’ll have two days timetabled for this.
+
+<p class="pink">Richard Twitchett will give all instructions on Thursday 2nd March</p>
+
+# How is this module going to work?
+
+- Focus on reading and doing, rather than sitting through lectures.
+- Lectures = short, main points
+- Practicals = longer with lots of associated notes. 
+- Lots of chance to ask questions, discuss with neighbours, actively learn.
+- Practicals with all notes and run R code available for reference.
+
+# Practical handouts
+
+- Download the whole folder to your computer.
+- Handouts available in three different versions
+    - R Notebooks
+    - Online book
+    - PDF book
+
+# Why so many versions?
+
+- Reference for projects
+- Reduces note taking
+- Easy to share beyond this course
+- People learn in different ways and prefer different media 
+- Online book is nicer to read with better formatting.
+- RNotebook keeps outputs a surprise 
+- Computer issues/internet access
+
+# Why so many versions?
+
+<center><img src="guineapig.png" width = 250 height = 250 align = "middle" ></center>
+
+# R Notebooks
+
+- Navigate to the folder for today’s practical
+- Open the .Rmd file in RStudio
+- Maximise the script window (you won’t need the console or other windows often)
+- Read the notes and run code when you get to it…
+- Outputs appear as you run the code.
+
+# {.cover}
+
+<img class="cover" src="rnotebook1.png">
+
+# {.cover}
+
+<img class="cover" src="rnotebook2.png">
+
+# Online book
+
+- Navigate to: https://goo.gl/WJ0D2R
+- Work your way through, copy pasting code into an R script.
+- Remember to set the working directory to the correct folder.
+- Outputs are visible.
+- Need internet connection.
+
+# PDF book
+- In the folder.
+- Work your way through, copy pasting code into an R script.
+- Remember to set the working directory to the correct folder.
+- Outputs are visible.
+- Don't need internet.
+
+# Today
+- What is macroecology?
+- Diversity indices in R.
+- What is macroevolution?
+- Visualising phylogenies in R.
