@@ -150,15 +150,21 @@ knitr::opts_chunk$set(echo = FALSE)
 
 - Speciation
 
-# {.cover}
+<center><img src="images/rates.png" width = 500 height = 250></center>
 
-<img class="cover" src="images/leebeck.png">
+- Mass extinctions
 
-[//]: # 
+<center><img src="images/rates.png" width = 500 height = 250></center>
 
-# {.cover}
+- Diversification (*Wednesday*)
 
-<img class="cover" src="images/bervprum.png">
+- Adaptive radiations
+
+<center><img src="images/rates.png" width = 500 height = 250></center>
+
+- Tempo and mode of trait evolution
+
+<center><img src="images/rates.png" width = 500 height = 250></center>
 
 [//]: #
 
