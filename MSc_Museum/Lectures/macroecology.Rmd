@@ -1,0 +1,220 @@
+---
+title: "What is macroecology?"
+author: "Natalie Cooper (natalie.cooper@nhm.ac.uk)"
+date: "Feb 2017"
+output:
+  slidy_presentation:
+    css: slidy.css
+  ioslides_presentation: default
+  beamer_presentation: default
+font-import: http://fonts.googleapis.com/css?family=Fjalla+One
+font-family: Fjalla One
+autosize: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# What is macroecology?
+
+### Macroecology is ecology at large spatial scales
+
+# What is macroecology?
+
+<center><img src="images/macrolinks.png" width = 500 height = 300></center>
+
+[//]: #
+
+# What is macroecology?
+
+### Ecology at large scales
+
+- large spatial scale (explicit) 
+<img src="images/world.png" width = 250 height = 250 align = "right">
+- large temporal scale (implicit)
+- large numbers of species (broad taxonomic scale)
+- no clear definition of what scale defines macro vs. not macro
+
+[//]: #
+
+# Why did macroecology emerge?
+
+- First use of the term is Brown and Maurer 1989 Science
+<img src="images/brown.png" width = 200 height = 300 align = "right">
+
+[//]: #
+
+# {.cover}
+
+<img class="cover" src="images/wallace.png">
+
+[//]: #
+
+# Why did macroecology emerge?
+
+- First use of the term is Brown & Maurer 1989 Science
+<img src="images/brown.png" width = 200 height = 300 align = "right">
+- Experiments have limits
+- Scaling from local to global patterns is hard.
+- Ecological processes act at various scales.
+- "Seeing the forest for the trees" - Gaston & Blackburn 2000
+- Data availability (and analysis tools)
+
+[//]: #
+
+# What do we study in macroecology?
+
+- Broad scale ecological patterns and the processes that underlie them
+    + geographic range size
+    + body size
+    + abundance
+    + diversity (species richness, functional diversity, phylogenetic diversity)
+        
+[//]: #
+
+# Species area-relationships
+
+- More area = more species (*Willis 1922*)
+<img src="images/spparearaw.png" width = 250 height = 200 align = "right">
+- $S = cA^z$ (*Arrhenius 1921*)
+
+[//]: #
+
+# Species area-relationships
+
+- More area = more species (*Willis 1922*)
+<img src="images/spparea.png" width = 250 height = 200 align = "right">
+- $S = cA^z$ (*Arrhenius 1921*)
+- $log(S) = z* log(A) + c$
+
+
+[//]: #
+
+# Species area-relationships
+
+- More area = more species (*Willis 1922*)
+<img src="images/spparea.png" width = 250 height = 200 align = "right">
+- $S = cA^z$ (*Arrhenius 1921*)
+- $log(S) = z* log(A) + c$
+- $z$ is usually small (0.1-0.5)
+- $z$ may depend on many factors
+    + type of species involved
+    + climate
+    + altitude
+    + latitude 
+    + species interactions
+
+[//]: #
+
+# Body-size diversity relationships
+
+- Right skew at large scales (*Brown & Nicoletto 1991*)
+<img src="images/bodydiv.png" width = 250 height = 250 align = "right">
+- Normal distribution at small scales
+- Mechanisms varied
+    + speciation and extinction rates
+    + dispersal abilities
+    + competition
+    + energetic constraints
+- *Hutchinson & MacArthur 1959*
+
+[//]: #
+
+# Abundance body-size relationships
+
+- Negative correlation (*Damuth 1981*)
+<img src="images/damuth.png" width = 250 height = 250 align = "right">
+- Large animals have lower abundance
+- Mechanisms include species energy hypotheses
+
+[//]: #
+
+# Macroecological "rules"
+
+- Bergmann's rule (*Bergmann 1847*, see reference list)
+<img src="images/bergman.png" width = 250 height = 250 align = "right">
+    + warm-blooded vertebrate species from cooler climates tend to be larger than congeners from warmer climates
+    + mechanisms include SA:Volume, energy requirements etc.
+    + true for about 70% mammals, 60% birds (*Meiri & Dayan 2003*)
+
+[//]: #
+
+# Macroecological "rules"
+
+- Allen’s "rule" (*Allen 1877*)
+    + species have smaller extremities at high absolute latitudes. 
+- Rapoport’s "rule" (*Rapoport 1982; Stevens 1989*)
+    + species have larger ranges at higher absolute latitudes.
+- Gloger’s "rule" (*Gloger 1833*)
+    + species are darker coloured nearer the equator.
+
+[//]: #
+
+# Hotspots of biodiversity
+
+- Grenyer et al. 2006
+
+<center><img src="images/grenyer.png" width = 500 height = 250></center>   
+
+[//]: #
+
+# Latitudinal diversity gradients
+
+- More species in the tropics than temperate zones.
+- True for most species (exceptions include marine mammals, bumblebees, turtles…)
+- Mechanism is still unclear...there are hundreds of hypotheses!
+
+[//]: #
+
+# Why are there more species in the tropics?
+
+- Higher diversification rates (high speciation, low extinction)
+- Geographical area
+- Mid domain effect
+- Time for speciation
+- Historical perturbation
+- Climatic stability
+- Species-energy
+- Species interactions
+- Biases in counting species
+
+# Why is diverification higher in the tropics?
+
+- *Weir & Schluter 2007, Jablonksi et al. 2006, Mittelbach et al. 2007, Schemske 2009*
+
+<center><img src="images/divrates.png" width = 450 height = 250 style="background-color:white;" /></center>   
+# Bias in counting species
+
+- Small species may be missed
+<img src="images/brookesia.png" width = 250 height = 180 align = "right">
+- Species in complex habitats may be missed
+- Uncharismatic species may be missed (taxonomic bias) (*Isaacs et al. 2004*)
+
+# How do we study macroecology?
+
+- maps
+-
+-
+- increasingly field work
+
+
+# Modern macroecology
+
+- Big data, big analyses, complex methods
+- More applied topics
+    + disease macrecology
+    + anthropogenic change
+    + invasive species
+    + climate change
+    + land use change
+- More focus on mechanisms and models
+- Citizen Science
+- Data availability, charing, reproducibility
+
+# Interested in learning more?
+
+- Twitter: @BESMacroecol
+- Conference @ NHM 5-7th July
+- Macro ecology/evolution, paleo and living data
+

@@ -5,6 +5,7 @@ date: "Feb 2017"
 output:
   slidy_presentation:
     css: slidy.css
+  ioslides_presentation: default
   beamer_presentation: default
 font-import: http://fonts.googleapis.com/css?family=Fjalla+One
 font-family: Fjalla One
@@ -17,75 +18,121 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # What is microevolution?
 
-Microevolution is evolution within a population of one species
+### Evolution within a population of one species
+
+[//]: #
 
 # What is microevolution?
 
-Microevolution is evolution within a population of one species
+### Evolution within a population of one species
+<img src="images/microevo.png" width = 250 height = 250 align = "right">
+
 - Mutation
 - Natural selection
 - Gene Flow
 - Genetic drift
 
-<img src="images/microevo.png" width = 250 height = 250 align = "right">
+[//]: #
 
 # What is macroevolution?
 
-Macroevolution is evolution at the species-level and above
+### Evolution at the species-level and above
+
+[//]: #
 
 # What is macroevolution?
 
-Macroevolution is evolution at the species-level and above
+### Evolution at the species-level and above
 
 - Speciation
 - Extinction (including mass extinctions)
-- Diversification (= Speciation – Extinction)
-- Patterns in biodiversity through time (Talks later today)
-- Adaptive radiations
-- Convergent and divergent evolution
-- Tempo and mode of trait evolution
+- Diversification (Speciation – Extinction)
+- Changes in biodiversity through time
+- Palaeontology and Neontology
+
+[//]: #
 
 # What is macroevolution?
 
-Macroevolution is evolution at large temporal scale (deep-time)
-- like macroecology no-one is sure what scale = macro vs. micro
+### Evolution at large scales
+
+- large temporal scale (deep-time)
+- large numbers of species (broad taxonomic scale)
+- large spatial scale (often)
+- no clear definition of what scale defines macro vs. micro
+
+[//]: #
+
+# Links between micro- and macro-evolution
+
+- Still being debated by biologists
+- Therefore it is often brought up by creationists to prove that evolution is nonsense.
+- There are two main schools of thought...
+
+[//]: #
 
 # Links between micro and macro evolution
 
-- This is a fun debate topic.
-- Often brought up by creationists!
-- Two schools of thought...
-- Like macroecology, pattern and process vary with scale.
+### Macroevolution is repeated rounds of microevolution
 
-# Links between micro and macro evolution
-
-1. Macroevolution = repeated rounds of microevolution
 - The only major difference is SCALE 
-        - i.e. number of species time scales
+        - i.e. number of species, time scales
 - Basic evolutionary mechanisms (mutation, migration, genetic drift and natural selection) can produce major evolutionary changes given enough time.
 - For example, just two selective deaths per million individuals can cause evolution by natural selection (Lande 1976). 
 
+[//]: #
+
 # Links between micro and macro evolution
 
-2. Macroevolution = more than microevolution
+### Macroevolution is more than microevolution
+
+- Patterns/processes appear to be scale dependent
 - Other drivers are involved 
-        - climate change
-        - plate tectonics
-        - Earth axial rotation shifts etc.
-- Some argue these things affect micro-processes
-- Others argue that fundamentally different processes act at higher levels
-- Like macroecology, processes are scale dependent
-- Species selection (a dirty word in Europe!)
+    + climate change
+    + plate tectonics
+    + Earth axial rotation shifts etc.
+        
+- Some argue these affect micro-processes
+- Others argue that **fundamentally different processes** act at different scales
+- Do **species** under go selection?
+
+[//]: #
 
 # Links between micro and macro evolution
 
 - rates of evolution definitely differ...
 
-<center><img src="images/rates.png" width = 250 height = 250 align = "right"></center>
+<center><img src="images/rates.png" width = 500 height = 250></center>
+
+[//]: #
+
+# How do we study macroevolution?
+
+- Using fossils (*Paul Barratt*, *Adrian Lister*)
+    + extinct species mainly, but some subfossil work
+- Using phylogenies (*many people in the Museum*)
+    + extant species mainly
+    + fossils used to date trees
+    + Total Evidence phylogenies slowly becoming more popular
+- Other evidence
+    + Development (*Arkhat Azbanhov*)
+    + Genes, genomes etc. (*Jeff Streicher*)
+    + Ancient DNA (*Ian Barnes*)
+    + Biogeography (*Dave Gower*)
+
+[//]: #
+
+# How do we study macroevolution?
+
+- Fieldwork to collect fossils
+- Databases of fossil occurence, e.g. PBDB (*Terri*)
+- Phylogenetic comparative methods (*Monday, Wednesday*)
+- Geometric morphometrics (*Tuesday*)
+- Models, simulations etc.
+
+[//]: #
 
 # What do we study in macroevolution?
-
-So much stuff!!!
 
 - Speciation
 - Extinction (including mass extinctions)
@@ -94,14 +141,26 @@ So much stuff!!!
 - Adaptive radiations
 - Convergent and divergent evolution
 - Tempo and mode of trait evolution
+- Developmental controls on evolution
+- Genome evolution
 
-# How do we study macroevolution?
+[//]: #
 
-- Geometric morphometrics
-- Phylogenetic comparative methods
-- Biogeographic models
-- Fossils, fieldwork etc.
+# What do we study in macroevolution?
 
+- Speciation
+
+# {.cover}
+
+<img class="cover" src="images/leebeck.png">
+
+[//]: # 
+
+# {.cover}
+
+<img class="cover" src="images/bervprum.png">
+
+[//]: #
 
 # Modern macroevolution
 
@@ -110,14 +169,20 @@ So much stuff!!!
 - Museums are *the* place to be for this kind of work
 - Total Evidence Phylogenies 
 
-
-# {.cover}
-
-<img class="cover" src="images/leebeck.png">
-
-# {.cover}
-
-<img class="cover" src="images/bervprum.png">
+[//]: #
 
 # Links with macroecology
 
+<center><img src="images/macrolinks.png" width = 500 height = 250></center>
+
+# Links with macroecology
+
+- often hard to tell the difference
+- same processes, different patterns (?)
+- similar methods and challenges
+
+# Interested in learning more?
+
+- Twitter: @BESMacroecol
+- Conference @ NHM 5-7th July
+- Macro ecology/evolution, paleo and living data

@@ -1,3 +1,11 @@
+ul { list-style-type: disc; }
+ul ul { list-style-type: circle; }
+ul ul ul { list-style-type: circle; }
+ul ul ul ul { list-style-type: disc; }
+li { margin-left: 0.5em; margin-top: 0.5em; text-align: left;}
+li li { font-size: 85%; font-style: italic }
+li li li { font-size: 85%; font-style: normal }
+
 body
 {
   margin: 0 0 0 0;
@@ -18,8 +26,15 @@ h1 {
 }
 
 h2 {
+    text-align: center;
     color: #C7F464;
 }
+
+h3 {
+    text-align: center;
+    color: #FF6B6B;
+}
+
 
 p.lime {
     color: #C7F464;
