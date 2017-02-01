@@ -15,79 +15,46 @@ description: "Practical notes for macro module"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Methods in Macroecology and Macroevolution: Module outline
+# Methods in Macroecology and Macroevolution
+
+These practicals were designed for a module on the MSc Taxonomy and Biodiversity run by Natural History Museum and Imperial College London.
+Please feel free to use and share.
 
 ## Module Aims
 The aim of this module is to introduce you to some of the cutting-edge methods being used in macroecology and macroevolution, with particular focus on work being done right now at the Museum. 
 Rather than concentrating on learning theory through lectures, the module will introduce you to various ways we collect, analyse and interpret macro-scale data with a large emphasis on practical work, mostly using R. 
 
 ## Datasets and practical handouts
-All datasets and practical handouts are available on GitHub.
+All datasets and practical handouts are available on GitHub at [https://github.com/nhcooper123/TeachingMaterials/tree/master/MSc_Museum].
 It can be tricky to download data from GitHub if you don't know what you're doing and/or don't want to clone the entire repository so the materials are also available at this DropBox link: [].
-It will save time if you download this before coming to class.
 
-## Timetable
-There will be one morning and one afternoon session each day. 
-Morning sessions will run from 10am-1pm, afternoon sessions from 2pm-5pm. 
-Not every session will require a full three hours. 
-Instructors for each session are below.
-Note that Thursday and Friday of the first week we have had to move to the Gavin de Beer room. __PLEASE BRING LAPTOPS__.
+## How to use these materials
+It is possible to use these materials in a number of ways.
 
-__Thursday 23rd February - GAVIN DE BEER not UBR or LBR__
+1. Follow this book, copy pasting code into an R script and then running it in the R console.
+2. Open the .Rmd file for each practical in RStudio and use it as an RNotebook. 
+This allows you to run chunks of code in the script and for the results to appear below the code. 
+This is a good way to learn/teach these materials.
+See [here](http://rmarkdown.rstudio.com/r_notebooks.html) for more details.
 
-* Morning: What are macroecology and macroevolution? 
-Introduction to the module, assessments, and aims.
-*Natalie Cooper (natalie.cooper@nhm.ac.uk)*
+Some knowledge of R is required, but this is mostly covered in the first chapter of this book.
 
-* Afternoon: Macroecology I: Macroecological patterns and diversity indices in R.
-*Natalie Cooper (natalie.cooper@nhm.ac.uk)*
+## Module outline
+These practicals fit into a broader module as follows.
 
-__Friday February 24th February - GAVIN DE BEER not UBR or LBR__
+* What are macroecology and macroevolution? 
+* Diversity indices in R. [practical]
+* Visualising phylogenies in R. [practical]
+* Using Big Data in conservation with the PREDICTS project. (Andy Purvis)
+* Using the paleobiology database (PBDB) to get data on fossil species for macroecological and macroevolutionary analyses. (Terri Cleary)
+* The comparative method, dealing with phylogenetic non-independence in comparative analyses.* PGLS in R. [practical]
+* Macroevolutionary patterns.
+* Models of evolution in R. [practical]
+* Using museum specimen data in macroecological and macroevolutionary analyses. 
+* Geometric morphometrics. [practical] 
+* Case study using Foraminifera. (Isabel Fenton)
+* Diversification rates and adaptive radiations.
+* BAMM [practical]
+* Critical thinking: Do you trust your methods?
 
-* Morning: Big Data I: Using Big Data in conservation with the PREDICTS project. 
-*Andy Purvis (a.purvis@nhm.ac.uk)*
-
-* Afternoon: Big data II: Using the paleobiology database (PBDB) to get data on fossil species for macroecological and macroevolutionary analyses. 
-*Terri Cleary (t.cleary@nhm.ac.uk)*
-
-__Monday February 27th February - UBR/LBR __
-
-* Morning: Comparative Biology: The comparative method, dealing with phylogenetic non-independence in comparative analyses. PGLS in R.
-*Natalie Cooper (natalie.cooper@nhm.ac.uk)*
-
-* Afternoon: Macroevolution I: Macroevolutionary patterns and models of evolution in R.
-*Natalie Cooper (natalie.cooper@nhm.ac.uk)*
-
-__Tuesday 28th February - UBR/LBR__
-
-* Morning: Big data III: Using museum specimen data in macroecological and macroevolutionary analyses. Geometric morphometrics. 
-*Natalie Cooper (natalie.cooper@nhm.ac.uk)*
-
-* Afternoon: Macroevolution II: case study using Foraminifera. 
-*Isabel Fenton (i.fenton@nhm.ac.uk)*
-
-__Wednesday 1st March - UBR/LBR__
-
-* Morning: Macroevolution III: Diversification rates and adaptive radiations.
-*Natalie Cooper (natalie.cooper@nhm.ac.uk)*
-
-* Afternoon: Critical thinking: Do you trust your methods?
-*Natalie Cooper (natalie.cooper@nhm.ac.uk)*
-
-__Thursday 2nd March AND Friday 3rd March - UBR__
-
-*Richard Twitchett (r.twitchett@nhm.ac.uk)*
-
-* All day: Using fossil assemblages to assess the impact of mass extinction events: comparative palaeoecology of Ordovician and Silurian fossil assemblages (practical and assessment).
-
-## Assessment
-There are two assessments connected to this module.
-
-The first will be based on computer practicals early in the course. 
-These will be done at the end of the practicals, and consist of some online multiple choice questions. 
-No write up will be required and the assessment will be completed by the end of the week, if not the end of the practical. 
-
-The second, although within this module, belongs to the Paleobiology module. 
-Due to the large class size during that module it couldn't happen there so we've moved it here.
-However, the techniques and concepts are highly relevant to macroecology and macroevolution.
-Richard Twitchett (r.twitchett@nhm.ac.uk) will provide a full explanation of the assessment during the practical on __Thursday 2nd March and Friday 3rd March__. 
+Some of the lectures are also available on GitHub [https://github.com/nhcooper123/TeachingMaterials/tree/master/MSc_Museum].
