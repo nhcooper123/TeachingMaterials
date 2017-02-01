@@ -7,10 +7,9 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# What is macroecology
+# What is macroecology?
 
 ## General
-
 * Brown. 1995. Macroecology. University of Chicago Press.
 * Gaston & Blackburn. 2000. Pattern and process in macroecology. Blackwell Science.
 * MacArthur and Wilson.  1967. The theory of island biogeography. Princeton University Press.
@@ -23,17 +22,15 @@ knitr::opts_chunk$set(echo = TRUE)
 * Wallace.1863. On the physical geography of the Malay Archipelago. Journal of the Royal Geographical Society London, 33: 217-234.
 * Brown & Maurer. 1989. Macroecology: the division of food and space among species on continents. Science, 243: 1145-1150.
 
-## Species-area relationships
+## Classic Macroecological Patterns
 
 * Arrhenius. 1921. Species and area. Journal of Ecology, 9: 95-99.
 * Willis.1922. Age and Area. Cambridge University Press.
-
-
-Brown and Nicoletto. 1991. Spatial scaling of the species composition - body masses of North-American land mammals.  The American Naturalist, 138:1478-1512.
-Hutchinson and MacArthur. 1959. A theoretical ecological model of size distributions among species of animals. The American Naturalist, 93:117-125.
-Damuth. 1981.  Population density and body size in mammals. Nature, 290: 699-700.
-Brown. 1984. On the relationship between abundance and distribution of species. The American Naturalist, 124:255-279.
-Meiri & Dayan. 2003. On the validity of Bergmann’s rule. Journal of Biogeography, 30: 331-351. *
+* Brown and Nicoletto. 1991. Spatial scaling of the species composition - body masses of North-American land mammals. The American Naturalist, 138:1478-1512.
+* Hutchinson and MacArthur. 1959. A theoretical ecological model of size distributions among species of animals. The American Naturalist, 93:117-125.
+* Damuth. 1981.  Population density and body size in mammals. Nature, 290: 699-700.
+* Brown. 1984. On the relationship between abundance and distribution of species. The American Naturalist, 124:255-279.
+* Meiri & Dayan. 2003. On the validity of Bergmann’s rule. Journal of Biogeography, 30: 331-351. *
 
 ## Macroecological "rules"
 * Bergmann. 1847. Ueber die verhältnisse der wärmeökonomie der thiere zu ihrer grösse. Gottinger studien. 3:595-708.
@@ -46,9 +43,8 @@ Meiri & Dayan. 2003. On the validity of Bergmann’s rule. Journal of Biogeograp
 * Stevens. 1989. The latitudinal gradient in geographical range: how so many species coexist in the tropics. American Naturalist, 133:240-256.
 * Gloger. 1833. Das Aba¨ndern der Vo¨gel durch Einfluss des Klimas. August Schulz, Breslau, Germany.
 
-Grenyer et al. 2006. Global distribution and conservation of rare and threatened vertebrates. Nature, 444:93-96.
-
-## Latitudinal diversity gradients
+## Latitudinal diversity gradients and hotspots
+* Grenyer et al. 2006. Global distribution and conservation of rare and threatened vertebrates. Nature, 444:93-96.
 * Willig et al. 2003. Latitudinal gradients of biodiversity: pattern, process, scale, and synthesis.  Annual Reviews in Ecology Evolution and Systematics, 34: 273-309.
 * Rohde. 1992. Latitudinal gradients in species diversity: the search for the primary cause. Oikos, 65: 514-527.
 * Weir and Schluter. 2007. The latitudinal gradient in recent speciation and extinction rates of birds and mammals. Science, 315: 1574-1576.
@@ -60,15 +56,12 @@ Grenyer et al. 2006. Global distribution and conservation of rare and threatened
 * Glaw et al. 2012. Rivaling the world's smallest reptiles: discovery of miniaturized and microendemic new species of leaf chameleons (Brookesia) from northern Madagascar. PLoS ONE, 7: e31314. 
 * Isaac et al. 2004. Taxonomic inflation: its influence on macroecology and conservation. TREE, 19:464-469.
 
-
-
+## Modern Macroecology
 Han et al. 2016. Global patterns of zoonotic disease in mammals. Trends in Parasitology, 32:565-577.  
 Stephens et al. 2016. The macroecology of infectious diseases: a new perspective on global-scale drivers of pathogen distributions and impacts. Ecology Letters, 19:1159-1171.*
 Newbold et al. 2016. Has land use pushed terrestrial biodiversity beyond the planetary boundary? A global assessment. Science, 353:288-291. 
 Newbold et al. 2015. Global effects of land use on local terrestrial biodiversity. Nature, 520:45–50.
 Harfoot et al. 2014. Emergent global patterns of ecosystem structure and function from a mechanistic general ecosystem model. PLoS Biology, 12:e1001841.
 
-
-
-# What is macroevolution
+# What is macroevolution?
 
