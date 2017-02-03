@@ -204,14 +204,14 @@ knitr::opts_chunk$set(echo = FALSE)
 
 - Big data, big analyses, complex methods
 - More applied topics
-    + disease macrecology
-    + anthropogenic change
+    + disease macrecology (*Me sometimes*)
+    + anthropogenic change (*Friday*, *Andy Purvis*)
     + invasive species
-    + climate change
-    + land use change
+    + climate change 
+    + land use change (*Friday*, *Andy Purvis*)
 - More focus on mechanisms and models
-- Citizen Science
-- Data availability, charing, reproducibility
+- Citizen Science (*Angela Marmot Centre*)
+- Data availability, sharing, reproducibility
 
 # Interested in learning more?
 

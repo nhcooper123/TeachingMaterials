@@ -125,7 +125,7 @@ knitr::opts_chunk$set(echo = FALSE)
 # How do we study macroevolution?
 
 - Fieldwork to collect fossils
-- Databases of fossil occurence, e.g. PBDB (*Terri*)
+- Databases of fossil occurence, e.g. PBDB (*Friday*)
 - Phylogenetic comparative methods (*Monday, Wednesday*)
 - Geometric morphometrics (*Tuesday*)
 - Models, simulations etc.
@@ -134,8 +134,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # What do we study in macroevolution?
 
-- Speciation
-- Extinction (including mass extinctions)
+- Speciation & Extinction (including mass extinctions)
 - Diversification (= Speciation – Extinction)
 - Patterns in biodiversity through time
 - Adaptive radiations
@@ -148,23 +147,33 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # What do we study in macroevolution?
 
-- Speciation
+- Mass extinctions & biodiversity through time (*Friday*, *Raup 1982 and Sepkoski*)
 
-<center><img src="images/rates.png" width = 500 height = 250></center>
+<center><img src="images/sepkoski.gif" width = 500 height = 350></center>
 
-- Mass extinctions
+[//]: #
 
-<center><img src="images/rates.png" width = 500 height = 250></center>
+# What do we study in macroevolution?
 
-- Diversification (*Wednesday*)
+- Diversification (*Wednesday*, *Givnish et al 2015*)
 
-- Adaptive radiations
+<center><img src="images/orchid.jpg" width = 200 height = 400></center>
 
-<center><img src="images/rates.png" width = 500 height = 250></center>
+[//]: #
 
-- Tempo and mode of trait evolution
+# What do we study in macroevolution?
 
-<center><img src="images/rates.png" width = 500 height = 250></center>
+- Tempo and mode of trait evolution (*Tueday*, *Benson et al. 2014*)
+
+<center><img src="images/dinosaur.jpg" width = 500 height = 250></center>
+
+[//]: #
+
+# What do we study in macroevolution?
+
+- Morphological (size and shape) evolution (*Tuesday*, *Cooney et al. 2017*)
+
+<center><img src="images/birdpca.jpg" width = 500 height = 350></center>
 
 [//]: #
 
@@ -172,8 +181,8 @@ knitr::opts_chunk$set(echo = FALSE)
 
 - Big data, big analyses, complex methods
 - Links between palaeo and living data/researchers
-- Museums are *the* place to be for this kind of work
 - Total Evidence Phylogenies 
+- Museums are *the* place to be for this kind of work
 
 [//]: #
 
@@ -186,6 +195,7 @@ knitr::opts_chunk$set(echo = FALSE)
 - often hard to tell the difference
 - same processes, different patterns (?)
 - similar methods and challenges
+- both benefit from using living and fossil data
 
 # Interested in learning more?
 
