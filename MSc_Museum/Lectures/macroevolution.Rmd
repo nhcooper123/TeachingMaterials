@@ -78,13 +78,13 @@ knitr::opts_chunk$set(echo = FALSE)
 - The only major difference is SCALE 
         - i.e. number of species, time scales
 - Basic evolutionary mechanisms (mutation, migration, genetic drift and natural selection) can produce major evolutionary changes given enough time.
-- For example, just two selective deaths per million individuals can cause evolution by natural selection (Lande 1976). 
+- For example, just two selective deaths per million individuals can cause evolution by natural selection (*Lande 1976*). 
 
 [//]: #
 
 # Links between micro and macro evolution
 
-### Macroevolution is more than microevolution
+### Macroevolution is more than microevolution (*Erwin 2000*)
 
 - Patterns/processes appear to be scale dependent
 - Other drivers are involved 
@@ -94,13 +94,13 @@ knitr::opts_chunk$set(echo = FALSE)
         
 - Some argue these affect micro-processes
 - Others argue that **fundamentally different processes** act at different scales
-- Do **species** under go selection?
+- Do **species** under go selection? (*Jablonksi 2008; Okasha 2006*)
 
 [//]: #
 
 # Links between micro and macro evolution
 
-- rates of evolution definitely differ...
+- rates of evolution definitely differ... (*Jones et al 2012*; *Haldane 1949*)
 
 <center><img src="images/rates.png" width = 500 height = 250></center>
 
@@ -147,7 +147,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # What do we study in macroevolution?
 
-- Mass extinctions & biodiversity through time (*Friday*, *Raup 1982 and Sepkoski*)
+- Mass extinctions & biodiversity through time (*Friday*; *Raup 1982 and Sepkoski*)
 
 <center><img src="images/sepkoski.gif" width = 500 height = 350></center>
 
@@ -155,15 +155,15 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # What do we study in macroevolution?
 
-- Diversification (*Wednesday*, *Givnish et al 2015*)
+- Diversification (*Wednesday*; *Givnish et al 2015*)
 
-<center><img src="images/orchid.jpg" width = 200 height = 400></center>
+<center><img src="images/orchid.jpg" width = 200 height = 350></center>
 
 [//]: #
 
 # What do we study in macroevolution?
 
-- Tempo and mode of trait evolution (*Tueday*, *Benson et al. 2014*)
+- Tempo and mode of trait evolution (*Monday*; *Benson et al. 2014*)
 
 <center><img src="images/dinosaur.jpg" width = 500 height = 250></center>
 
@@ -171,16 +171,16 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # What do we study in macroevolution?
 
-- Morphological (size and shape) evolution (*Tuesday*, *Cooney et al. 2017*)
+- Morphological (size and shape) evolution (*Tuesday*; *Cooney et al. 2017*)
 
-<center><img src="images/birdpca.jpg" width = 500 height = 350></center>
+<center><img src="images/birdpca.jpg" width = 450 height = 350></center>
 
 [//]: #
 
 # Modern macroevolution
 
 - Big data, big analyses, complex methods
-- Links between palaeo and living data/researchers
+- Links between palaeo and living data/researchers (*Fritz et al 2013*)
 - Total Evidence Phylogenies 
 - Museums are *the* place to be for this kind of work
 

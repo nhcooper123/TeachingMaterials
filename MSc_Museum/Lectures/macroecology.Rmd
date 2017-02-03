@@ -193,12 +193,12 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # How do we study macroecology?
 
-- Mapping species distributions (*SDMs*)
+- Mapping species distributions
 - Biodiversity indices (*Today*)
-- Phylogenetic comparative methods (*Monday*)
-- Large databases e.g. PREDICTS (*Andy*)
+- Phylogenetic comparative methods (*Monday*, *Tuesday*)
+- Large databases e.g. PREDICTS, PBDB (*Friday*)
 - Models, simulations etc.
-- Increasingly field work (*Nate Sanders, Sally Keith*)
+- Increasingly field work
 
 # Modern macroecology
 
