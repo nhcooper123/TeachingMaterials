@@ -53,7 +53,7 @@ These practicals fit into a broader module as follows.
 * Using museum specimen data in macroecological and macroevolutionary analyses. 
 * Geometric morphometrics. [practical] 
 * Case study using Foraminifera. (Isabel Fenton)
-* Diversification rates and adaptive radiations.
+* Diversification rates.
 * BAMM [practical]
 * Critical thinking: Do you trust your methods?
 
