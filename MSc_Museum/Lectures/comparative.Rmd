@@ -148,13 +148,27 @@ segments(femur.length, height, femur.length, pre, col="red")
 
 # A quick revision of OLS
 
-Residual errors should have a multivariate normal distribution with variance-covariance matrix Σ
+Residual errors should have a __multivariate normal distribution__ with __variance-covariance matrix__ $\Sigma$
 
 # A quick revision of OLS
 
+Normal distribution (univariate)
+- defined by mean ($\mu$) and variance ($\sigma^2$) 
+
+<center><img src="images/normaldist.png" width = 500 height = 250></center>
+
 # A quick revision of OLS
 
+Multivariate normal distribution
+- defined by mean vector ($\mu$) and variance-covariance matrix ($\Sigma$)
+- variance-covariance because with multiple variables you need to know how they are correlated (covariance)
 
+<center><img src="images/multinormal.png" width = 500 height = 250></center>
+
+
+# A quick revision of OLS
+
+Slide 46 
 # A quick revision of OLS
 
 
