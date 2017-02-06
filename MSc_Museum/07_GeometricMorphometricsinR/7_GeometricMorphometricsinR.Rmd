@@ -17,8 +17,8 @@ Download the eight photographs, and place them into your working directory.
 __REMEMBER__
 
 - Download all of the data for the practical into a folder somewhere on your computer.
-- Set your working directory to this folder.
-- Start a new script for this practical.
+- Set your working directory to this folder (if using `.Rmd` this will happen automatically).
+- Start a new script for this practical, or edit the `.Rmd` file after saving it with a new name.
 
 You will also need to install the following packages: 
 
@@ -128,11 +128,11 @@ The scale bars in each photo are 10cm long so we add `scale = 10`.
 
 ```{r, eval = FALSE}
 digitize2d(filelist = list.files(pattern = ".jpg"),
-           nlandmarks = 8, tpsfile = "whale_landmarks.tps", scale = 10)
+           nlandmarks = 8, tpsfile = "whale_landmarks_new.tps", scale = 10)
 ```
 
 Note that if you stop this procedure and then start again you may get the following error message: `Filelist does not contain the same specimens as TPS file.`
-To fix this you just need to delete `whale_landmarks.tps` from your working directory and then start again.
+To fix this you just need to delete `whale_landmarks_new.tps` from your working directory and then start again.
 
 If you don't get an error you should find that a picture of the first specimen appears in your plotting window, and the message:
 
@@ -161,7 +161,9 @@ Don't get too worried about digitising accurately today.
 This is just an example so you get a chance to try this out.
 You'll notice that some landmarks are a lot harder than others to place accurately each time, bringing us back to thinking about potential sources of error.
 
-If you're having trouble with this step you can use the TPS file I made earlier.
+If you're having trouble with this step you can use the TPS file I made earlier (`whale_landmarks.tps`).
+
+__You can go back to using RStudio now__
 
 ## Reading in your data and plotting it
 We can now read in our TPS file to look at our landmarks using `readland.tps`. 
@@ -403,9 +405,14 @@ par(mfrow = c(1,1))
 
 # Look at overall model significance
 anova(model3)
+```
+
+```{r}
 # Look at parameters and their significance
 summary(model3)
+```
 
+```{r}
 # Plot
 plot(PC1 ~ diet, data = mydata, col = c("lightblue", "springgreen"))
 ```
@@ -423,9 +430,14 @@ model4 <- manova(cbind(mydata$PC1,mydata$PC2) ~ diet, data = mydata)
 
 # Look at overall model significance
 anova(model4)
+```
+
+```{r}
 # Look at parameters and their significance
 summary(model4)
+```
 
+```{r}
 # Plot 
 plot(cbind(mydata$PC1,mydata$PC2) ~ diet, data = mydata, col = c("lightblue", "springgreen"))
 ```
@@ -434,6 +446,23 @@ plot(cbind(mydata$PC1,mydata$PC2) ~ diet, data = mydata, col = c("lightblue", "s
 
 Of course the results here are nonsensical as we made up the data, but hopefully this gives you an idea of how we might use geometric morphometrics data in analyses.
 Other common analyses look at disparity of groups, convergence and divergence, evolution of shape and shape space etc.
+
+
+***
+
+## Practice Questions
+
+__Remember to save your code and answers for the assessment__
+
+1. Plot the min/max for PC3 scores in comparison to the reference shape with three fold magnification.
+
+2. In one plotting window, plot PC1 against PC2, PC2 against PC3, and PC1 against PC3 (clue `par(mfrow = ???)`). With the help of `pca.landmarks$rotation` and the whale photgraphs, can you interpret the plots in relation to the morphology of the species?
+
+3. Perform a multivariate regression using PC1, PC2 and PC3 as response variables, and body size as the explanatory variable.
+
+4. Perform a MANOVA using PC1, PC2 and PC3 as response variables, and diet as the explanatory variable.
+
+5. Invent your own variable to add to the dataset and fit a regression or MANOVA to it as appropriate.
 
 ***
 

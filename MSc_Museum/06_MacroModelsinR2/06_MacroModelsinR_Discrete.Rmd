@@ -18,8 +18,8 @@ These data are invented, so please don't get too upset if I've misclassified any
 __REMEMBER__
 
 - Download all of the data for the practical into a folder somewhere on your computer.
-- Set your working directory to this folder.
-- Start a new script for this practical.
+- Set your working directory to this folder (if using `.Rmd` this will happen automatically).
+- Start a new script for this practical, or edit the `.Rmd` file after saving it with a new name.
 
 You will also need to install the following packages: 
 
@@ -50,7 +50,9 @@ library(OUwie)
 magicaldata <- read.csv("magicalcreatures.csv")
 # Check data is loaded correctly
 str(magicaldata)
+```
 
+```{r}
 # Read in tree
 magicaltree <- read.nexus("magicaltree.nex") 
 # Check tree is loaded correctly
@@ -124,6 +126,7 @@ mydata <- mydata[match(mytree$tip.label,rownames(mydata)),]
 social.colors <- c("lightblue", "plum")
 
 # Plot the tree, add coloured tip labels and a legend
+par(mar = c(0,0,0,0))
 plot(mytree, cex = 0.5)
 tiplabels(pch = 16, col = social.colors[mydata[,"SocialStatus"]])
 legend("bottomleft",legend=c("solitary", "social"), 
@@ -131,7 +134,7 @@ legend("bottomleft",legend=c("solitary", "social"),
 ```
 
 You'll see that solitary behavior seems to be more restricted in its distribution. 
-Most solitary magicals are bird or reptile like. 
+Most solitary magical creatures are bird or reptile like. 
 From the distribution on the phylogeny, we might guess that solitary behavior is the ancestral state. 
 This is exactly what we need to know in order to test whether evolutionary modes for body size vary for solitary vs social magical creatures. 
 But before we can infer ancestral states, we need to chose the most appropriate model of social evolution.
@@ -290,6 +293,7 @@ The scaled likelihoods are like probabilities, so for the first node, we reconst
 Scaled likelihoods lend themselves very well to graphical display, so we can visualize these states with pie charts on the tree we plotted earlier.
 
 ```{r}
+par(mar = c(0,0,0,0))
 plot(mytree, cex = 0.5)
 nodelabels(pie = asr$lik.anc, piecol = social.colors, cex = 0.5)
 tiplabels(pch = 16, col = social.colors[mydata[,"SocialStatus"]])
@@ -347,6 +351,7 @@ Let's make it and look at the first few lines:
 ```{r}
 ouwie.data <- data.frame(species = rownames(mydata), regime = mydata[ , "SocialStatus"],
 trait = log(mydata[ , "BodySize_kg"]))
+# Look at the data
 head(ouwie.data)
 ```
 
@@ -414,6 +419,26 @@ aicw(aic.scores)
 ```
 
 Which is the best model overall?
+
+***
+
+## Practice Questions
+
+__Remember to save your code and answers for the assessment__
+
+1. Fit Brownian, OU and Early burst models to the magical power variable.
+Which model fits best according to AIC weights? How could you interpret this result biologically?
+
+2. Fit equal rates, symmetric rates and all rates different models to the habitat variable.
+Which model fits best according to AIC weights? How could you interpret this result biologically?
+
+3. Reconstruct ancestral states for habitat on the phylogeny and plot the result (with node and tip labels) using colours of your choice.
+
+4. Fit a multi-rate Brownian motion model using `OUwie`, with habitat types as regimes, and body size as the evolving trait. 
+What would be your next step in trying to find the best fitting model for these variables?
+How would you interpret the results?
+
+5. Invent your own variable to add to the dataset and fit models of evolution (continuous or discrete) to it as appropriate.
 
 ***
 

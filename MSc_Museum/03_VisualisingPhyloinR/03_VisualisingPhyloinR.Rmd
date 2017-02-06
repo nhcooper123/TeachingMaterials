@@ -20,6 +20,7 @@ __REMEMBER__
 - Download all of the data for the practical into a folder somewhere on your computer.
 - Set your working directory to this folder.
 - Start a new script for this practical.
+- Note that this will work better in the R console than RStudio
 
 You will also need to install the following packages: 
 
@@ -70,7 +71,6 @@ We'll use the Elopomorpha (eels and similar fishes) tree to start as it is simpl
 Let's examine the tree by typing:
 
 ```{r}
-fishtree
 str(fishtree)
 ```
 
@@ -80,6 +80,8 @@ We can plot the tree by using the `plot.phylo` function of `ape`.
 Note that we can just use the function `plot` to do this as R knows if we ask it to plot a phylogeny to use `plot.phylo` instead!
 
 ```{r}
+# Set the margins to make the tree visible
+par(mar = c(0,0,0,0))
 plot(fishtree, cex = 0.5)
 ```
 
@@ -87,12 +89,14 @@ plot(fishtree, cex = 0.5)
 We can also zoom into different sections of the tree that you're interested in:
 
 ```{r}
+par(mar = c(0,0,0,0))
 zoom(fishtree, grep("Gymnothorax", fishtree$tip.label), subtree = FALSE, cex = 0.8)
 ```
 
 This just gives you the tree for *Micropterus* species but you can also see how the species fit into the rest of the tree using:
 
 ```{r}
+par(mar = c(0,0,0,0))
 zoom(fishtree, grep("Gymnothorax", fishtree$tip.label), subtree = TRUE, cex = 0.8)
 ```
 
@@ -113,6 +117,7 @@ Note that although you can use `plot` to plot the phylogeny, you need to specify
 Here's an fun/hideous example! 
 
 ```{r}
+par(mar = c(0,0,0,0))
 plot(fishtree, type = "fan", edge.color = "deeppink", tip.color = "springgreen", 
 	 cex = 0.5)
 ```
@@ -120,6 +125,7 @@ plot(fishtree, type = "fan", edge.color = "deeppink", tip.color = "springgreen",
 Or try
 
 ```{r}
+par(mar = c(0,0,0,0))
 plot(fishtree, type = "c", edge.color = "darkviolet", tip.color = "hotpink", 
 	 cex = 0.5)
 ```
@@ -149,6 +155,7 @@ We can then use the `ape` function `ace` to reconstruct ancestral characters alo
 ancestors <- ace(mydata, bird.orders, type = "d")
 ```
 
+Don't worry about the NAs produced here.
 Now we can plot this on a phylogeny. 
 First decide which colours we'd like.
 To look at a list of colours in R type in `colors()`.
@@ -161,6 +168,7 @@ Now plot the tree and add labels to the tips and the nodes using the results in 
 We use `label.offset = 1` to move the labels to the right a bit so the pie charts will fit...
 
 ```{r}
+par(mar = c(0,0,0,0))
 plot(bird.orders, label.offset = 1)
 tiplabels(pch = 21, bg = colours[as.numeric(mydata)], cex = 2, adj = 1)
 nodelabels(pie = ancestors$lik.anc, piecol = colours)
@@ -221,6 +229,7 @@ SVLplot <- contMap(anoletree, SVL, plot = FALSE)
 Finally let's plot the tree as a fan (`legend = 10` just spreads the legend out so it is readable).
 
 ```{r}
+par(mar = c(0,0,0,0))
 plot(SVLplot, type = "fan", legend = 10)
 ```
 
@@ -302,6 +311,7 @@ phylomap <- phylo.to.map(bird.orders, cbind(lat,long), plot = FALSE)
 We can either put the phylogeny next to the map and draw lines to the places they come from using `type = "phylogram"`...
 
 ```{r}
+par(mar = c(0,0,0,0))
 plot(phylomap,type = "phylogram", asp = 1.3, mar = c(0.1, 0.5, 3.1, 0.1))
 ```
 

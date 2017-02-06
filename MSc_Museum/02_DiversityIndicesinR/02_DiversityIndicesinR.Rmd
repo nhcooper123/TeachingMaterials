@@ -17,8 +17,8 @@ We will be using some made up data about Pokemon sightings within the Museum.
 __REMEMBER__
 
 - Download all of the data for the practical into a folder somewhere on your computer.
-- Set your working directory to this folder.
-- Start a new script for this practical.
+- Set your working directory to this folder (if using `.Rmd` this will happen automatically).
+- Start a new script for this practical, or edit the `.Rmd` file after saving it with a new name.
 
 You will also need to install the following packages: 
 
@@ -97,7 +97,9 @@ Simpson's and Shannon's diversity indices can be estimated using the function `d
 ```{r}
 # Simpson's index
 diversity(pokemon.matrix, index = "simpson")
+```
 
+```{r}
 # Shannon's index
 diversity(pokemon.matrix, index = "shannon")
 ```
@@ -117,8 +119,10 @@ Two commonly used similarity indices are Jaccard's index and Sorenson's index wh
 ```{r}
 # Jaccard's index
 betadiver(pokemon.matrix, method = "j")
+```
 
-# Shannon's index
+```{r}
+# Sorenson's index
 betadiver(pokemon.matrix, method = "sor")
 ```
 
@@ -135,7 +139,9 @@ We can very simply calculate this in R using the following code:
 
 ```{r}
 length(unique(pokemon$Species))
+```
 
+```{r}
 # To view unique species
 unique(pokemon$Species)
 ```
@@ -198,7 +204,9 @@ pokemon.curve <- specaccum(pokemon.matrix, method = "random", permutations = 100
 
 # Look at the results
 pokemon.curve
+```
 
+```{r}
 # Plot the curve
 plot(pokemon.curve, ci.type = "poly", col = "blue", ci.col = "lightblue", 
      lwd = 2, ci.lty = 0, xlab = "number of sites", 
@@ -234,6 +242,22 @@ specpool(pokemon.matrix)
 
 Estimates range from 10.9 $\pm$ 0.75 (bootstrap) to 11.8 $\pm$ 3.39 (Chao2). 
 So we can be fairly confident there are between 10 and 15 Pokemon in the Museum.
+
+***
+
+## Practice Questions
+
+__Remember to save your code and answers for the assessment__
+
+1. Using `?diversity` find out how to calculate **inverse Simpson's index**, then calculate it for the Pokemon dataset. What is the inverse Simpson's index for site 10? 
+
+
+2. Try out three other betadiversity indices with the pokemon data. Do they all agree? How would you interpret the results from the betadiversity analyses?
+
+
+3. Create a new dataset of Pokemon sightings (or anything else you like) in Excel, and save as a `.csv` file.
+Calculate species richness, Simpson's index, Jaccard's index, Chao2 estimate, and plot a species accumulation curve in colours of your choice.
+
 
 ***
 

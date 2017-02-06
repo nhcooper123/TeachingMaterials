@@ -164,6 +164,9 @@ We can also use the `coda` library to check the effective sample sizes (ESS) of 
 
 ```{r}
 effectiveSize(postburn$N_shifts)
+```
+
+```{r}
 effectiveSize(postburn$logLik)
 ```
 
@@ -297,6 +300,9 @@ We can extract the mean speciation rate for our tree and estimate the 90% highes
 
 ```{r}
 mean(allrates$lambda)
+```
+
+```{r}
 quantile(allrates$lambda, c(0.05, 0.95))
 ```
 
@@ -308,6 +314,9 @@ We can estimate the mean speciation rates for macropodids as follows:
 ```{r}
 kangaroorates <- getCladeRates(edata, node = 301)
 mean(kangaroorates$lambda)
+```
+
+```{r}
 quantile(kangaroorates$lambda, c(0.05, 0.95))
 ```
 
@@ -316,6 +325,9 @@ To get the rates for everything but the macropodids, we do the same thing, but a
 ```{r}
 nonkangaroorate <- getCladeRates(edata, node = 301, nodetype = "exclude")
 mean(nonkangaroorate$lambda)
+```
+
+```{r}
 quantile(nonkangaroorate$lambda, c(0.05, 0.95))
 ```
 

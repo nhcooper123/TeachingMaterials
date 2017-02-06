@@ -19,8 +19,8 @@ These data are invented, so please don't get too upset if I've misclassified any
 __REMEMBER__
 
 - Download all of the data for the practical into a folder somewhere on your computer.
-- Set your working directory to this folder.
-- Start a new script for this practical.
+- Set your working directory to this folder (if using `.Rmd` this will happen automatically).
+- Start a new script for this practical, or edit the `.Rmd` file after saving it with a new name.
 
 You will also need to install the following packages: 
 
@@ -48,7 +48,9 @@ library(OUwie)
 magicaldata <- read.csv("magicalcreatures.csv")
 # Check data is loaded correctly
 str(magicaldata)
+```
 
+```{r}
 # Read in tree
 magicaltree <- read.nexus("magicaltree.nex") 
 # Check tree is loaded correctly
@@ -269,6 +271,14 @@ OU <- fitContinuous(phy = mytree, dat = log(mydata[,"BodySize_kg"]), model = c("
 ```
 
 This example gives a warning message because `alpha` is over 1, so when we make the upper bound smaller the method ends up giving us this value instead because it's as close to 1 as we are allowing the model to go.
+
+***
+
+## Practice Questions
+
+__Remember to save your code and answers for the assessment__
+
+See part 2 of the practical.
 
 ***
 

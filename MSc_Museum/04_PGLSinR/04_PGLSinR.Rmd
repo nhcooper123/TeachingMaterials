@@ -18,8 +18,8 @@ Note that this is an old version of 10kTrees, so if you want to use it in your r
 __REMEMBER__
 
 - Download all of the data for the practical into a folder somewhere on your computer.
-- Set your working directory to this folder.
-- Start a new script for this practical.
+- Set your working directory to this folder (if using `.Rmd` this will happen automatically).
+- Start a new script for this practical, or edit the `.Rmd` file after saving it with a new name.
 
 You will also need to install the following packages: 
 
@@ -70,9 +70,19 @@ Let's examine the tree by typing:
 
 ```{r}
 primatetree
+```
+
+```{r}
 str(primatetree)
+```
+
+```{r}
 # It's usually a good idea to quickly plot the tree too
+# Increase the margins so the plot looks better
+par(mar = c(0,0,0,0))
 plot(primatetree, cex = 0.2, typ = "fan")
+# Put the margins back to something sensible for graphs
+par(mar = c(4,4,2,2))
 ```
 
 `primatetree` is a fully resolved tree with branch lengths. 
@@ -89,6 +99,9 @@ is.binary.tree(primatetree) # We want this to be TRUE
 
 ```{r}
 primatetree <- multi2di(primatetree)
+
+# Check this is now TRUE
+is.binary.tree(primatetree)
 ```
 
 Most functions also require the tree to be rooted, i.e., to have one taxon designated as the outgroup. 
@@ -97,7 +110,9 @@ Note that here I've just chosen a random species *Saimiri sciureus* to be the ro
 
 ```{r}
 primatetree.reroot <- root(primatetree, "Saimiri_sciureus")
+par(mar = c(0,0,0,0))
 plot(primatetree.reroot, cex = 0.2)
+par(mar = c(4,4,2,2))
 ```
 
 ### Manipulating your data and phylogeny in R
@@ -161,6 +176,9 @@ In the first instance you can just use `str` to make sure you have the expected 
 
 ```{r}
 str(primatedata)
+```
+
+```{r}
 str(primatetree)
 ```
 
@@ -176,12 +194,12 @@ And for fun let's make everything rainbow colored!
 par(mfrow = c(2,2)) # So we can see 4 plots at once
 
 # Raw data
-hist(primatedata$AdultBodyMass_g, col = rainbow(8))
-hist(primatedata$GestationLen_d, col = rainbow(8))
+hist(primatedata$AdultBodyMass_g, col = rainbow(8), main = "")
+hist(primatedata$GestationLen_d, col = rainbow(8), main = "")
 
 # Log transformed
-hist(log(primatedata$AdultBodyMass_g), col = rainbow(8))
-hist(log(primatedata$GestationLen_d), col = rainbow(8))
+hist(log(primatedata$AdultBodyMass_g), col = rainbow(8), main = "")
+hist(log(primatedata$GestationLen_d), col = rainbow(8), main = "")
 
 par(mfrow = c(1,1)) # So we can go back to 1 plot
 ```
@@ -241,6 +259,7 @@ primate$dropped$unmatched.rows
 ```
 
 **Always** make sure you check the list of dropped species is what you expected, it often reveals typos in your species names, or mismatches in taxonomies used etc.
+Here of course we already fixed this problem, so nothing is listed.
 
 The function for PGLS analyses in `caper` is `pgls`. 
 To fit a model which uses the Maximum Likelihood (ML) estimate of $\lambda$ we use the following code:
@@ -308,6 +327,7 @@ The method for this in PGLS is the same for OLS, independent contrasts and PGLS 
 To get model diagnostic plots for PGLS:
 
 ```{r}
+par(mar = c(4,4,2,0))
 par(mfrow = c(2, 2))
 plot(model.pgls)
 par(mfrow = c(1, 1))
@@ -373,10 +393,31 @@ This is repeated 1000 times (if `reps = 1000`) and the observed value of K is th
 phylosignal(lngest[primatetree$tip.label], primatetree, reps = 1000)
 ```
 
-In this case the observed K is significantly higher than the random values of K (`PIC.variance.P` < 0.001). 
+In this case the observed K is significantly higher than the random values of K (`PIC.variance.P` < 0.001). (Click on the little black arrows to scroll left along the table).
 
 *Note this is a randomization test so your output here will not be identical to mine.*
 
+
+***
+
+## Practice Questions
+
+__Remember to save your code and answers for the assessment__
+
+1. What is $\lambda$ for primate social group size?
+
+2. Make a plot of social group size against home range size. 
+
+3. Does home range size differ significantly among the different primate genera?
+
+4. What is Blomberg's K for adult body mass?
+
+5. Run a PGLS analysis to determine the relationship between ln(longevity) (Y variable) and ln(body mass) (X variable). 
+		a. How does this differ from the result obtained with an OLS regression? 
+		b. Plot the result.
+		c. Plot the lambda profile
+		d. Look at the confidence intervals on the estimate of $\lambda$. How would you interpret these?
+		
 ***
 
 ## References
