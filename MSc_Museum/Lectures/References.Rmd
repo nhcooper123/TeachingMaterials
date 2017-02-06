@@ -67,7 +67,6 @@ knitr::opts_chunk$set(echo = TRUE)
 Simpson 1944. Tempo and Mode in Evolution. [book]
 Stanley. 1979. Macroevolution, Pattern and Process.  [book]
 
-
 ## Cited in the lecture
 * Benson, R.B.J., et al. 2014. Rates of dinosaur body mass evolution indicate 170 million years of sustained ecological innovation on the Avian stem lineage. PLoS Biology, 12.
 * Cooney,	C. et al 2017. Mega-evolutionary dynamics of the adaptive radiation of birds. Nature. online. doi:10.1038/nature21074.
@@ -79,9 +78,3 @@ Stanley. 1979. Macroevolution, Pattern and Process.  [book]
 * Jones, F.C. et al. 2012. The genomic basis of adaptive evolution in threespine sticklebacks. Nature 484, 55–61.
 * Okasha, S. 2006. Evolution and the Levels of Selection. [book]
 * Raup, D.M., & Sepkoski, J.J. 1982. Mass Extinctions in the Marine Fossil Record. Science, 215: 1501-1503.
-
-
-
-
-
-
