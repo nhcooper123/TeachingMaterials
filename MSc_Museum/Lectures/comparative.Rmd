@@ -29,7 +29,7 @@ Are large animals more likely to become extinct than small animals?
 
 Are large animals more likely to become extinct than small animals?
 
-2. Invesigate multiple species and look for correlations among their extinction risk, and their traits.
+2. Investigate multiple species and look for correlations among their extinction risk and their traits.
     + broadly applicable answer
     + BUT lacks detail, ignores outliers
 
@@ -60,12 +60,7 @@ This is the classical way people studied biodiversity - e.g. Darwin, Wallace etc
 - Phylogenetic niche conservatism
 - Zoonotic disease transmission
 - Setting conservation priorities
-- Phylogenetic non-independence
-
-# Phylogenetic non-independence/pseudoreplication
-
-- probably the most commonly used PCM
-- deals with the fact that species are __not independent data points__ in comparative analyses.
+- __Account for phylogenetic non-independence__
 
 # Phylogenetic non-independence/pseudoreplication
 
@@ -76,19 +71,21 @@ This is the classical way people studied biodiversity - e.g. Darwin, Wallace etc
 
 When you fit a linear regression you assume your data points are independent...
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, fig.width = 6, fig.height = 2.5}
 femur.length <- rnorm(50, mean = 100, sd = 25)
 height <- femur.length + rnorm(50, mean = 100, sd = 25)
 model <- lm(height ~ femur.length)
+par(mar = c(4,4,1,1))
 plot(height ~ femur.length)
 abline(model)
 ```
 
 # Phylogenetic non-independence/pseudoreplication
 
-But if your points are species they are not... instead you find close relatives often cluster together.
+But if your points are species they are not...instead you find close relatives often cluster together.
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, fig.width = 6, fig.height = 2.5}
+par(mar = c(4,4,1,1))
 plot(height ~ femur.length)
 points(height[femur.length < 60] ~ femur.length[femur.length < 60], col = "deeppink", pch = 16)
 points(height[femur.length > 140] ~ femur.length[femur.length > 140], col = "cornflowerblue", pch = 16)
@@ -97,10 +94,10 @@ abline(model)
 
 # Phylogenetic non-independence/pseudoreplication
 
-- e.g. chimps and gorillas are similar because they share a common ancestot
+- e.g. chimps and gorillas are similar because they share a common ancestor
 - these similarities did not evolve independentally
 
-<center><img src="images/apes.png" width = 500 height = 250></center>
+<center><img src="images/apes.png" width = 400 height = 250></center>
 
 # Phylogenetic non-independence/pseudoreplication
 - This is a form of pseudoreplication
@@ -112,13 +109,14 @@ abline(model)
 
 If you treat gorillas and chimps as independent, you count all the evolution which occurred on the red branch twice etc.
 
-<center><img src="images/pseudotree.png" width = 500 height = 250></center>
+<center><img src="images/pseudotree.png" width = 400 height = 300></center>
 
 # How do we deal with this problem?
 
-2 main methods
-- Independent contrasts (Felsenstein 1985)
-- Phylogenetic Generalised Least Sqaures (PGLS)
+Two main methods
+
+- Independent contrasts (*Felsenstein 1985*)
+- Phylogenetic Generalised Least Squares (PGLS)
 - Independent constrasts is just a special case of PGLS where $\lambda$ is equal to 1.
 
 # A quick revision of OLS
@@ -126,8 +124,9 @@ If you treat gorillas and chimps as independent, you count all the evolution whi
 - remember residuals?
 - OLS minimises these to fit the line (least squares)
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, fig.width = 6, fig.height = 2.5}
 model <- lm(height ~ femur.length)
+par(mar = c(4,4,1,1))
 plot(height ~ femur.length)
 abline(model)
 res <- signif(residuals(model), 5)
@@ -148,27 +147,158 @@ segments(femur.length, height, femur.length, pre, col="red")
 
 # A quick revision of OLS
 
-Residual errors should have a __multivariate normal distribution__ with __variance-covariance matrix__ $\Sigma$
+Residual errors should have:
+
+- multivariate normal distribution 
+- with variance-covariance matrix $\Sigma$
 
 # A quick revision of OLS
 
 Normal distribution (univariate)
+
 - defined by mean ($\mu$) and variance ($\sigma^2$) 
 
-<center><img src="images/normaldist.png" width = 500 height = 250></center>
+<center><img src="images/normaldist.png" width = 500 height = 250 style="background-color:white;"></center>
 
 # A quick revision of OLS
 
 Multivariate normal distribution
+
 - defined by mean vector ($\mu$) and variance-covariance matrix ($\Sigma$)
-- variance-covariance because with multiple variables you need to know how they are correlated (covariance)
 
-<center><img src="images/multinormal.png" width = 500 height = 250></center>
+<center><img src="images/multinormal.png" width = 400 height = 250></center>
 
 
 # A quick revision of OLS
 
-Slide 46 
-# A quick revision of OLS
+- The identity matrix (I) assumes human, chimpanzee and gorilla traits are __independent__
+- We know they aren't, so we need to use something other than OLS
 
+<center><img src="images/identity.png" width = 350 height = 200></center>
+
+# Generalised Least Squares (GLS)
+
+- generalised version of OLS
+- i.e. for when identity matrix cannot be used
+- same as GLM vs LM
+- Can incorporate lots of different types of errors (phylogenetic, spatial etc.)
+
+# Variance-covariance matrices in PGLS
+
+<center><img src="images/vcv1.png" width = 500 height = 250 style="background-color:white;"></center>
+
+# Variance-covariance matrices in PGLS
+
+- this vcv in PGLS is equivalent to independent contrasts
+- independent contrasts is just a special case of PGLS
+- assumes differences evolve at equal rates across the tree...
+
+<center><img src="images/vcv2.png" width = 500 height = 250 style="background-color:white;"></center>
+
+# Tree transforms
+
+- we can transform the tree to make it fit the data better
+- PGLS usually uses Pagel's $\lambda$ (*Pagel 1999*)
+
+<center><img src="images/transform.png" width = 400 height = 250 style="background-color:white;"></center>
+
+# Pagel's $\lambda$ 
+
+$\lambda$ transforms the tree by multiplying the off-diagonal elements (internal/shared branches) of the vcv matrix by $\lambda$ 
+
+<center><img src="images/lambda.png" width = 500 height = 250 style="background-color:white;"></center>
+
+# Pagel's $\lambda$ = 1
+
+Tree remains the same = trait is evolving under Brownian motion (BM)
+
+__This is the same as independent contrasts__
+
+<center><img src="images/lambda1.png" width = 500 height = 250 style="background-color:white;"></center>
+
+# Pagel's $\lambda$ = 0
+Tree collapses to a star phylogeny = trait is not related to phylogeny
+
+__This is the same as an OLS model__
+
+<center><img src="images/lambda0.png" width = 500 height = 250 style="background-color:white;"></center>
+
+# Pagel's $\lambda$ = 0.5
+Internal branches get shorter = there is phylogenetic signal in the trait but not as much as under BM.
+
+<center><img src="images/lambda05.png" width = 500 height = 250 style="background-color:white;"></center>
+
+# Pagel's $\lambda$ summary
+
+- Multiplies all branches (except those leading to the tips) by $\lambda$
+- Shortens the internal branches relative to the tips
+- $\lambda$ = 0: no relationship between trait and phylogeny = star phylogeny
+- $\lambda$ = 1: trait values are as expected under Brownian motion = phylogeny is unchanged
+- Measure of __phylogenetic signal__
+
+# Phylogenetic signal 
+
+Pattern where related species resemble each other more than more distant relatives
+
+Note this is a pattern not a process (*Kamilar & Cooper 2013*; *Losos 2011*)
+
+# Phylogenetic signal 
+
+Two most used methods are:
+
+1. Pagel's $\lambda$ (*Pagel 1997/99*)
+2. Blomberg's *K* (K not kappa) (*Blomberg et al 2003*)
+
+# Blomberg's *K*
+
+<center><img src="images/blomberg.png" width = 500 height = 100 style="background-color:white;"></center>
+
+- MSE is the mean squared error 
+- i.e. the variance in the trait (put very simply)
+
+# Blomberg's *K*
+
+<center><img src="images/blomberg1.png" width = 400 height = 250 style="background-color:white;"></center>
+
+# Blomberg's *K*
+
+<center><img src="images/blomberg2.png" width = 400 height = 250 style="background-color:white;"></center>
+
+# Blomberg's *K*
+
+- $\frac{MSE_0}{MSE}$ is different for every tree as it depends on tree size and shape
+
+- Therefore we divide this by the expected value under Brownian motion so we can compare trees.
+
+<center><img src="images/blomberg.png" width = 500 height = 100 style="background-color:white;"></center>
+
+# Blomberg's *K*
+
+- $K = 1$ trait values are as expected under BM ($\lambda = 1$)
+- $K > 1$ trait values more similar than expected under BM
+- $K = 0$ no relationship between phylogeny and trait ($\lambda = 0$)
+- Maximum *K* depends on the trait
+
+# Blomberg's *K* summary 
+
+- Ratio of variance in trait relative to phylogenetic mean and variance in trait relative to phylogeny
+- $K = 1$ trait values are as expected under BM ($\lambda = 1$)
+- $K > 1$ trait values more similar than expected under BM
+- $K = 0$ no relationship between phylogeny and trait ($\lambda = 0$)
+
+# Pagel's $\lambda$ versus  Blomberg's *K*
+
+- $\lambda$ ranges from 0 to just over 1 (R forces it to be maximum of 1)
+- *K* is more flexible and can be greater than 1, better for showing trait conservatism
+- $\lambda$ is good for using in PGLS models
+- *K* is perhaps better for measuring phylogenetic signal in individual traits?
+- Just use both! 
+
+# Brief caveat!!! 
+
+- We may be interested in the phylogenetic signal in a trait
+- e.g. body size (almost always high)
+- But high signal in the individual traits doesn't mean we need to account for phylogeny
+- it's not the traits, it's the __residuals__ we need to worry about (*Revell 2010*)
+- Same as in LM vs GLM, we want normally distributed __residuals__, don't care about the variables themselves...
 
