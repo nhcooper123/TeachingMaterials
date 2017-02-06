@@ -1,0 +1,27 @@
+---
+title: "Diversification"
+author: "Natalie Cooper (natalie.cooper@nhm.ac.uk)"
+date: "Feb 2017"
+output:
+  slidy_presentation:
+    css: slidy.css
+  ioslides_presentation: default
+  beamer_presentation: default
+font-import: http://fonts.googleapis.com/css?family=Fjalla+One
+font-family: Fjalla One
+autosize: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# What is diversification?
+
+# Practical - Diversification in R
+
+- make sure to read the notes carefully
+- feel free to discuss with colleagues
+- ask if you get stuck or have questions
+- take breaks when you like
+- Remember to answer the practice questions and SAVE YOUR RESULTS AND CODE.

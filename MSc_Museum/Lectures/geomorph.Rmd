@@ -1,0 +1,68 @@
+---
+title: "Using specimen data in macroecology and macroevolution"
+author: "Natalie Cooper (natalie.cooper@nhm.ac.uk)"
+date: "Feb 2017"
+output:
+  slidy_presentation:
+    css: slidy.css
+  ioslides_presentation: default
+  beamer_presentation: default
+font-import: http://fonts.googleapis.com/css?family=Fjalla+One
+font-family: Fjalla One
+autosize: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Why use specimens?
+
+- historical record of biodiversity
+- hard to study so many in the field
+- preserve info for future generations
+- only way to understand extinct species 
+- really cool!!!
+
+# What can you do with specimens?
+
+- almost everyone at the museum does specimen based research
+- taxonomy and systematics
+- morphological evolution (tempo & mode)
+- development of key features 
+- ancient DNA
+- biodiversity changes through time (spatial, morphology)
+
+# Problems with using museum specimens
+
+- colours fade
+- skins shrink and deform
+- DNA degrades (ancient DNA techniques help)
+- rely on label accuracy
+    + species ID (need to check taxonomy)
+    + locality (need to georeference)
+- metadata are often missing
+
+# Problems with using museum specimens
+
+- how well do specimens represent reality?
+    + taxonomic bias
+    + geographic sampling bias
+    + age bias
+    + sex bias
+    + abherrant individuals bias
+- public (and funders) perspectives on "collecting"
+
+# Morphometrics
+
+- study of size and shape
+
+    
+# Practical - Geometric Morphometrics in R
+
+- Need to use R console for the digitising
+- make sure to read the notes carefully
+- feel free to discuss with colleagues
+- ask if you get stuck or have questions
+- take breaks when you like
+- Remember to answer the practice questions and SAVE YOUR RESULTS AND CODE.
