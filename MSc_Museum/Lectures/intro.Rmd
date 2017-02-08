@@ -102,7 +102,7 @@ Critical thinking: Do you trust your methods?
 
 # Why so many versions?
 
-<center><img src="guineapig.png" width = 250 height = 250 align = "middle" ></center>
+<center><img src="images/guineapig.png" width = 250 height = 250 align = "middle" ></center>
 
 # R Notebooks
 
@@ -115,11 +115,11 @@ Critical thinking: Do you trust your methods?
 
 # {.cover}
 
-<img class="cover" src="rnotebook1.png">
+<img class="cover" src="images/rnotebook1.png">
 
 # {.cover}
 
-<img class="cover" src="rnotebook2.png">
+<img class="cover" src="images/rnotebook2.png">
 
 # Online book
 
