@@ -71,7 +71,7 @@ This is the classical way people studied biodiversity - e.g. Darwin, Wallace etc
 
 When you fit a linear regression you assume your data points are independent...
 
-```{r, echo = FALSE, fig.width = 6, fig.height = 2.5}
+```{r, echo = FALSE, fig.width = 6, fig.height = 2.5, fig.align='center'}
 femur.length <- rnorm(50, mean = 100, sd = 25)
 height <- femur.length + rnorm(50, mean = 100, sd = 25)
 model <- lm(height ~ femur.length)
@@ -84,7 +84,7 @@ abline(model)
 
 But if your points are species they are not...instead you find close relatives often cluster together.
 
-```{r, echo = FALSE, fig.width = 6, fig.height = 2.5}
+```{r, echo = FALSE, fig.width = 6, fig.height = 2.5, fig.align='center'}
 par(mar = c(4,4,1,1))
 plot(height ~ femur.length)
 points(height[femur.length < 60] ~ femur.length[femur.length < 60], col = "deeppink", pch = 16)
@@ -124,7 +124,7 @@ Two main methods
 - remember residuals?
 - OLS minimises these to fit the line (least squares)
 
-```{r, echo = FALSE, fig.width = 6, fig.height = 2.5}
+```{r, echo = FALSE, fig.width = 6, fig.height = 2.5, fig.align='center'}
 model <- lm(height ~ femur.length)
 par(mar = c(4,4,1,1))
 plot(height ~ femur.length)
@@ -230,10 +230,10 @@ Internal branches get shorter = there is phylogenetic signal in the trait but no
 
 # Pagel's $\lambda$ summary
 
-- Multiplies all branches (except those leading to the tips) by $\lambda$
+- Multiplies all branches (except those leading to the tips) by $\lambda$
 - Shortens the internal branches relative to the tips
-- $\lambda$ = 0: no relationship between trait and phylogeny = star phylogeny
-- $\lambda$ = 1: trait values are as expected under Brownian motion = phylogeny is unchanged
+- $\lambda$ = 0: no relationship between trait and phylogeny = star phylogeny
+- $\lambda$ = 1: trait values are as expected under Brownian motion = phylogeny is unchanged
 - Measure of __phylogenetic signal__
 
 # Phylogenetic signal 
