@@ -7,14 +7,14 @@ I have however also come across some issues that I haven't had time to find good
 I also recognise that as students you don't necessarily want new stuff, you want the old familiar tools of PDFs and PowerPoints.
 Apologies for making your lives a tiny bit harder! 
 
-My lecture slides are available online:
+My lecture slides are available online (I will put the other contributors slides into the DropBox asap):
 
-[Introduction](https://rawgit.com/nhcooper123/TeachingMaterials/master/MSc_Museum/Lectures/intro.html)
-[What is macroecology?](https://rawgit.com/nhcooper123/TeachingMaterials/master/MSc_Museum/Lectures/macroecology.html)
-[What is macroevolution?](https://rawgit.com/nhcooper123/TeachingMaterials/master/MSc_Museum/Lectures/macroevolution.html)
-[Diversity indices (introduction)](https://rawgit.com/nhcooper123/TeachingMaterials/master/MSc_Museum/Lectures/diversity.html)
-[The comparative method and PGLS](https://rawgit.com/nhcooper123/TeachingMaterials/master/MSc_Museum/Lectures/macromodels.html)
-[Macroevolutionary models (introduction)](https://rawgit.com/nhcooper123/TeachingMaterials/master/MSc_Museum/Lectures/macromodels.html)
+* [Introduction](https://rawgit.com/nhcooper123/TeachingMaterials/master/MSc_Museum/Lectures/intro.html)
+* [What is macroecology?](https://rawgit.com/nhcooper123/TeachingMaterials/master/MSc_Museum/Lectures/macroecology.html)
+* [What is macroevolution?](https://rawgit.com/nhcooper123/TeachingMaterials/master/MSc_Museum/Lectures/macroevolution.html)
+* [Diversity indices (introduction)](https://rawgit.com/nhcooper123/TeachingMaterials/master/MSc_Museum/Lectures/diversity.html)
+* [The comparative method and PGLS](https://rawgit.com/nhcooper123/TeachingMaterials/master/MSc_Museum/Lectures/macromodels.html)
+* [Macroevolutionary models (introduction)](https://rawgit.com/nhcooper123/TeachingMaterials/master/MSc_Museum/Lectures/macromodels.html)
 
 https://rawgit.com/nhcooper123/TeachingMaterials/master/MSc_Museum/Lectures/comparative.html
 
@@ -34,9 +34,9 @@ I haven't found a good way of doing this yet, however, for now your best bet is 
 These are slightly messy, but all the notes and figures will appear.
 When you try and save the HTML versions above to PDF the pagination is off leadign to half the slides being split across pages.
 
-[Introduction](https://github.com/nhcooper123/TeachingMaterials/blob/master/MSc_Museum/Lectures/intro.Rmd)
-[What is macroecology?](https://github.com/nhcooper123/TeachingMaterials/blob/master/MSc_Museum/Lectures/macroecology.Rmd)
-[What is macroevolution?](https://github.com/nhcooper123/TeachingMaterials/blob/master/MSc_Museum/Lectures/macroevolution.Rmd)
-[Diversity indices (introduction)](https://github.com/nhcooper123/TeachingMaterials/blob/master/MSc_Museum/Lectures/diversity.Rmd)
-[The comparative method and PGLS](https://github.com/nhcooper123/TeachingMaterials/blob/master/MSc_Museum/Lectures/comparative.Rmd)
-[Macroevolutionary models (introduction)](https://github.com/nhcooper123/TeachingMaterials/blob/master/MSc_Museum/Lectures/macromodels.Rmd)
+* [Introduction](https://github.com/nhcooper123/TeachingMaterials/blob/master/MSc_Museum/Lectures/intro.Rmd)
+* [What is macroecology?](https://github.com/nhcooper123/TeachingMaterials/blob/master/MSc_Museum/Lectures/macroecology.Rmd)
+* [What is macroevolution?](https://github.com/nhcooper123/TeachingMaterials/blob/master/MSc_Museum/Lectures/macroevolution.Rmd)
+* [Diversity indices (introduction)](https://github.com/nhcooper123/TeachingMaterials/blob/master/MSc_Museum/Lectures/diversity.Rmd)
+* [The comparative method and PGLS](https://github.com/nhcooper123/TeachingMaterials/blob/master/MSc_Museum/Lectures/comparative.Rmd)
+* [Macroevolutionary models (introduction)](https://github.com/nhcooper123/TeachingMaterials/blob/master/MSc_Museum/Lectures/macromodels.Rmd)
