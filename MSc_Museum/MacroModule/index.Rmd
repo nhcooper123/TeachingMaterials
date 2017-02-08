@@ -57,4 +57,4 @@ These practicals fit into a broader module as follows.
 * BAMM [practical]
 * Critical thinking: Do you trust your methods?
 
-Some of the lectures are also available on GitHub [https://github.com/nhcooper123/TeachingMaterials/tree/master/MSc_Museum].
+Links to some of the lectures are also available [here](https://github.com/nhcooper123/TeachingMaterials/blob/master/MSc_Museum/Lectures/Lectures_README.md).
