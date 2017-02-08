@@ -107,7 +107,7 @@ $r(t) = \sigma^2e(at)$
 
 # Models of discrete trait evolution
 
-```{r, echo = FALSE, message = FALSE, fig.width=6, fig.height=3}
+```{r, echo = FALSE, message = FALSE, fig.width=6, fig.height=3, fig.align = 'center'}
 library(ape)
 data(bird.orders)
 x <- factor(c(rep(0, 5), rep(1, 18)))
