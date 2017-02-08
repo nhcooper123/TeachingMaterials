@@ -16,7 +16,7 @@ My lecture slides are available online (I will put the other contributors slides
 * [The comparative method and PGLS](https://rawgit.com/nhcooper123/TeachingMaterials/master/MSc_Museum/Lectures/macromodels.html)
 * [Macroevolutionary models (introduction)](https://rawgit.com/nhcooper123/TeachingMaterials/master/MSc_Museum/Lectures/macromodels.html)
 
-https://rawgit.com/nhcooper123/TeachingMaterials/master/MSc_Museum/Lectures/comparative.html
+__They may take a while to load, and may also need the text adjusting immediately (see below for instructions).__
 
 ## Slide Navigation
 
