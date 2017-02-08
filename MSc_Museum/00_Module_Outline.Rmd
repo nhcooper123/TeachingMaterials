@@ -29,11 +29,15 @@ Not every session will require a full three hours.
 Instructors for each session are below.
 
 ### Thursday 23rd February
+**All day:** 
 
-**Morning:** What are macroecology and macroevolution? 
 Introduction to the module, assessments, and aims.
 
-**Afternoon:** Macroecology I: Macroecological patterns and diversity indices in R.
+What are macroecology and macroevolution? 
+
+Macroecology I: Diversity indices in R.
+
+Macroevolution I: Visualising phylogenies in R.
 
 *Natalie Cooper (natalie.cooper@nhm.ac.uk)*
 
@@ -52,7 +56,7 @@ Introduction to the module, assessments, and aims.
 **Morning:** Comparative Biology: The comparative method, dealing with phylogenetic non-independence in comparative analyses. 
 PGLS in R.
 
-**Afternoon:** Macroevolution I: Macroevolutionary patterns and models of evolution in R.
+**Afternoon:** Macroevolution II: Macroevolutionary patterns and models of evolution in R.
 
 *Natalie Cooper (natalie.cooper@nhm.ac.uk)*
 
@@ -69,7 +73,9 @@ Geometric morphometrics.
 
 ### Wednesday 1st March
 
-**Morning:** Macroevolution II: Diversification.
+**Morning:** Macroevolution III: Diversification and BAMM.
+
+*Susy Echeverria-Londono (S.Echeverria-londono@nhm.ac.uk)*
 
 **Afternoon:** Critical thinking: Do you trust your methods?
 
@@ -87,7 +93,7 @@ There are two assessments connected to this module.
 At the end of every practical there will be some practice questions. 
 Save your answers and __R CODE__
 The assessment will be an online MCQ test where the answers come from the practice questions or the code you used to answer them. 
-I'll send a link on Tuesday 28th and you'll have a week to do this.
+I'll send a link on Tuesday 28th and you'll have until __midnight Weds 1st March__ to do this.
 It shouldn't take more than 20 mins...
 No write up will be required and the assessment will be completed by the end of the week, if not the end of the practical. 
 

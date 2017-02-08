@@ -62,15 +62,15 @@ Critical thinking: Do you trust your methods?
 - At the end of every practical there will be some practice questions. 
 - <p class="lime"> Save your answers and R CODE </p>
 - Assessment will be MCQ test where the answers come from the practice questions or the code you used to answer them. 
-- <p class="pink"> I’ll send a link on Tuesday 28th</p>
-- You’ll have a week to do this.
-- Shouldn’t take more than 20 mins…
+- <p class="pink"> I'll send a link on Tuesday 28th</p>
+- You’ll have til midnight Wednesday 1st March to do this.
+- Shouldn't take more than 20 mins...
 
 # Assessment II
 
 - Technically not part of this module (part of the Palaeobiology module).
-- Short report which requires some data collection, a bit of R (you’ll learn how to do this today), and a bit of write up.
-- You’ll have two days timetabled for this.
+- Short report which requires some data collection, a bit of R (you'll learn how to do this today), and a bit of write up.
+- You'll have two days timetabled for this.
 
 <p class="pink">Richard Twitchett will give all instructions on Thursday 2nd March</p>
 
@@ -106,11 +106,12 @@ Critical thinking: Do you trust your methods?
 
 # R Notebooks
 
-- Navigate to the folder for today’s practical
+- Navigate to the folder for today's practical
 - Open the .Rmd file in RStudio
-- Maximise the script window (you won’t need the console or other windows often)
-- Read the notes and run code when you get to it…
+- Maximise the script window (you won't need the console or other windows often)
+- Read the notes and run code when you get to it...
 - Outputs appear as you run the code.
+- Bit harder to read text.
 
 # {.cover}
 
@@ -127,6 +128,7 @@ Critical thinking: Do you trust your methods?
 - Remember to set the working directory to the correct folder.
 - Outputs are visible.
 - Need internet connection.
+- Nicer formatting (easier to read)
 
 # PDF book
 - In the folder.
