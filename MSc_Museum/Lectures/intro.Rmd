@@ -35,8 +35,6 @@ knitr::opts_chunk$set(echo = FALSE)
 <p class="pink">Thursday 23rd February (NC)</p>
 What are macroecology and macroevolution? Introduction to the module, assessments, and aims.
 
-Macroecology I: Macroecological patterns and diversity indices in R.
-
 <p class="pink">Friday February 24th February (AP, TC)</p>
 Big Data I: Using Big Data in conservation with the PREDICTS project.
 
@@ -50,12 +48,21 @@ Macroevolution I: Macroevolutionary patterns and models of evolution in R.
 <p class="pink">Tuesday 28th February (NC, IF)</p>
 Big data III: Using museum specimen data. Geometric morphometrics.
 
-Macroevolution II: case study using Foraminifera.
+Macroecology II: case study using Foraminifera.
 
-<p class="pink">Wednesday 1st March (NC, IF)</p>
+<p class="pink">Wednesday 1st March (NC, SEL)</p>
 Macroevolution III: Diversification rates and adaptive radiations.
 
 Critical thinking: Do you trust your methods?
+
+# Critical thinking
+
+Papers are in the DropBox
+
+1 = Davis et al
+2 = Dunhill and Wills
+3 = Burbrink et al
+4 = 
 
 # Assessment I
 
@@ -81,6 +88,8 @@ Critical thinking: Do you trust your methods?
 - Practicals = longer with lots of associated notes. 
 - Lots of chance to ask questions, discuss with neighbours, actively learn.
 - Practicals with all notes and run R code available for reference.
+
+# Flipped classroom?
 
 # Practical handouts
 
