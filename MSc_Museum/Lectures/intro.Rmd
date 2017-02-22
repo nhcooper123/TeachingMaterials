@@ -26,9 +26,9 @@ knitr::opts_chunk$set(echo = FALSE)
 - Big data – databases, specimens
 - Patterns, methods etc.
     - Diversity indices
-    - Geometric morphometrics
     - PGLS
     - Diversification rates
+    - Geometric morphometrics (modified!)
 
 # {.build}
 
@@ -46,14 +46,14 @@ Comparative Biology: PGLS in R.
 Macroevolution I: Macroevolutionary patterns and models of evolution in R.
 
 <p class="pink">Tuesday 28th February (NC, IF)</p>
-Big data III: Using museum specimen data. Geometric morphometrics.
+Big data III: Using museum specimen data. Geometric morphometrics. - now free session
 
 Macroecology II: case study using Foraminifera.
 
 <p class="pink">Wednesday 1st March (NC, SEL)</p>
 Macroevolution III: Diversification rates and adaptive radiations.
 
-Critical thinking: Do you trust your methods?
+Critical thinking: Do you trust your methods? - see next slide
 
 # Critical thinking
 
