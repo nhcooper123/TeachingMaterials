@@ -194,9 +194,7 @@ Obviously, a symmetric model with only 2 states becomes an equal rates (Mk1) mod
 
 ### Mk – All Rates Different (ARD)
 Finally, we can go crazy and allow all rates to be different. 
-For S-states, this would generate $S^2$    S rates 
-FIXXXXXX, 
-which might be crazy, depending on how many states you have. 
+For S-states, this would generate $S^2 - S$ rates which might be crazy, depending on how many states you have. 
 For completeness, the $Q$ matrix for an All Rates Different model would look like this:
 
 -|1|2|3
