@@ -489,7 +489,7 @@ social.colors &lt;-<span class="st"> </span><span class="kw">c</span>(<span clas
 </div>
 <div id="mk-all-rates-different-ard" class="section level3">
 <h3><span class="header-section-number">7.3.3</span> Mk – All Rates Different (ARD)</h3>
-<p>Finally, we can go crazy and allow all rates to be different. For S-states, this would generate <span class="math inline">\(S^2\)</span> S rates FIXXXXXX, which might be crazy, depending on how many states you have. For completeness, the <span class="math inline">\(Q\)</span> matrix for an All Rates Different model would look like this:</p>
+<p>Finally, we can go crazy and allow all rates to be different. For S-states, this would generate <span class="math inline">\(S^2 - S\)</span> rates which might be crazy, depending on how many states you have. For completeness, the <span class="math inline">\(Q\)</span> matrix for an All Rates Different model would look like this:</p>
 <table>
 <thead>
 <tr class="header">
@@ -576,7 +576,7 @@ ard &lt;-<span class="st"> </span><span class="kw">fitDiscrete</span>(mytree, my
 ## Convergence diagnostics:
 ##  optimization iterations = 100
 ##  failed iterations = 0
-##  frequency of best fit = 0.37
+##  frequency of best fit = 0.39
 ## 
 ##  object summary:
 ##  &#39;lik&#39; -- likelihood function
@@ -754,7 +754,7 @@ OUmulti</code></pre></div>
 <pre><code>##                 fit       delta            w
 ## BM         201.5837 52.25885489 2.160766e-12
 ## OU         149.3528  0.02789568 4.746969e-01
-## EB         204.1283 54.80340246 6.054332e-13
+## EB         204.1283 54.80340245 6.054332e-13
 ## BMvariable 154.1125  4.78764935 4.393888e-02
 ## OUmulti    149.3249  0.00000000 4.813643e-01</code></pre>
 <p>Which is the best model overall?</p>

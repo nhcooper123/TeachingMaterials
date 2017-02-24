@@ -420,7 +420,7 @@ mydata &lt;-<span class="st"> </span>match.species$data</code></pre></div>
 ## Convergence diagnostics:
 ##  optimization iterations = 100
 ##  failed iterations = 0
-##  frequency of best fit = 0.05
+##  frequency of best fit = 0.02
 ## 
 ##  object summary:
 ##  &#39;lik&#39; -- likelihood function
@@ -435,7 +435,7 @@ mydata &lt;-<span class="st"> </span>match.species$data</code></pre></div>
 <pre><code>## GEIGER-fitted comparative model of continuous data
 ##  fitted &#39;EB&#39; model parameters:
 ##  a = -0.000001
-##  sigsq = 2.208224
+##  sigsq = 2.208154
 ##  z0 = 4.304129
 ## 
 ##  model summary:
@@ -447,7 +447,7 @@ mydata &lt;-<span class="st"> </span>match.species$data</code></pre></div>
 ## Convergence diagnostics:
 ##  optimization iterations = 100
 ##  failed iterations = 0
-##  frequency of best fit = 0.58
+##  frequency of best fit = 0.54
 ## 
 ##  object summary:
 ##  &#39;lik&#39; -- likelihood function
@@ -457,7 +457,7 @@ mydata &lt;-<span class="st"> </span>match.species$data</code></pre></div>
 <p>As above, the maximum likelihood estimates (<code>lnL</code>) of the model parameters are found near the top of the output. In an Early Burst (EB) model we estimate the Brownian rate parameter, <span class="math inline">\(\sigma^2\)</span> or <code>sigsq</code> in the output above, the value of the trait at the root of the tree, <span class="math inline">\(X(0)\)</span> or <code>z0</code> in the output above, and the rate of change parameter, <span class="math inline">\(a\)</span>. Here <code>a</code> is very close to 0 indicating that the rate of log(body mass) evolution in magical creatures has not decreased through time.</p>
 <p>We can also extract the rate half-life, <span class="math inline">\(t_{\frac{1}{2}}\)</span>, for this model as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">log</span>(<span class="dv">2</span>)/<span class="kw">abs</span>(EB$opt$a)</code></pre></div>
-<pre><code>## [1] 693147</code></pre>
+<pre><code>## [1] 693146.4</code></pre>
 <p>For these data, the rate half-life is almost 700,000 time units, much greater than the total time represented on the tree! This means over the course of magical creature evolution, body size rate has not halved (yet).</p>
 <div id="comparing-models-of-evolution" class="section level3">
 <h3><span class="header-section-number">6.3.1</span> Comparing models of evolution</h3>

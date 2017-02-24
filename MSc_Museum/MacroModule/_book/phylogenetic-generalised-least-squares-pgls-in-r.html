@@ -582,9 +582,9 @@ primatedata &lt;-<span class="st"> </span><span class="kw">subset</span>(primate
 <p>K for log gestation length is 0.7758. As with <span class="math inline">\(\lambda\)</span> above, we’re interested in whether the value of K is significantly different from what we’d expect by chance. We can do this using the function <code>phylosignal</code>. This function randomly assigns the trait values to the species and then calculates K. This is repeated 1000 times (if <code>reps = 1000</code>) and the observed value of K is then compared to the randomized values to determine its significance.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">phylosignal</span>(lngest[primatetree$tip.label], primatetree, <span class="dt">reps =</span> <span class="dv">1000</span>)</code></pre></div>
 <pre><code>##           K PIC.variance.obs PIC.variance.rnd.mean PIC.variance.P
-## 1 0.7757771      0.001660764            0.01190768    0.000999001
+## 1 0.7757771      0.001660764             0.0120351    0.000999001
 ##   PIC.variance.Z
-## 1       -2.22375</code></pre>
+## 1      -2.250957</code></pre>
 <p>In this case the observed K is significantly higher than the random values of K (<code>PIC.variance.P</code> &lt; 0.001).</p>
 <p><em>Note this is a randomization test so your output here will not be identical to mine.</em></p>
 <hr />

@@ -216,7 +216,6 @@ Here we will tell `contMap` not to automatically plot the tree (using `plot = FA
 ```{r}
 SVLplot <- contMap(anoletree, SVL, plot = FALSE)
 ```
- For some reason this code breaks...
 
 Finally let's plot the tree as a fan (`legend = 10` just spreads the legend out so it is readable).
 

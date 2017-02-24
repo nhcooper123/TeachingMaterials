@@ -422,7 +422,6 @@ anoledata &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span c
 ##           4.099687           4.067162           4.113371</code></pre>
 <p>We then use the function <code>contMap</code>. <code>contMap</code> creates a tree with a mapped continuous character, i.e. where the value of the character is known at the tips, and estimated along the tree. The estimating of the character along the tree uses a Maximum Likelihood estimation procedure. Here we will tell <code>contMap</code> not to automatically plot the tree (using <code>plot = FALSE</code>) so we can make some modifications.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">SVLplot &lt;-<span class="st"> </span><span class="kw">contMap</span>(anoletree, SVL, <span class="dt">plot =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<p>For some reason this code breaks…</p>
 <p>Finally let’s plot the tree as a fan (<code>legend = 10</code> just spreads the legend out so it is readable).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(SVLplot, <span class="dt">type =</span> <span class="st">&quot;fan&quot;</span>, <span class="dt">legend =</span> <span class="dv">10</span>)</code></pre></div>
 <pre><code>## legend scale cannot be longer than total tree length; resetting</code></pre>

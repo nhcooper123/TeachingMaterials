@@ -538,12 +538,13 @@ bfmat &lt;-<span class="st"> </span><span class="kw">computeBayesFactors</span>(
 <span class="kw">plotPrior</span>(mcmc, <span class="dt">expectedNumberOfShifts =</span> <span class="dv">1</span>)</code></pre></div>
 <p><img src="macro-module_files/figure-html/unnamed-chunk-181-1.png" width="672" /></p>
 <p>There is some overlap, but it’s clear that the prior is different to the posterior, so this issue is not affecting our analyses.</p>
+<p>Thirdly, BAMM (and all other similar methods) gives inaccurate results for phylogenies with incomplete sampling, i.e. where you don’t have every species in your phylogeny. This may be quite likely if you’re working with invertebrates or plants or pretty much anything other than mammals and birds! If the sampling is non random, for example, you’re missing a whole clade, the results will be even weirder. BAMM has ways of dealing with this, but it’s best to try and avoid the problem in the first place by only using BAMM where you’ve got a fairly complete phylogeny, or at least one where the missing species are missing at random. Rabosky and colleagues recommend that if &lt;10% of the species are in your phylogeny, you should add them in yourself. See [<a href="http://bamm-project.org/advanced.html#incompsampling" class="uri">http://bamm-project.org/advanced.html#incompsampling</a>] for more help with this.</p>
 <p>Additionally, there has been a quite a lot of debate about the validity of BAMM in the literature recently. Moore et al. 2016 proposed several serious issues with BAMM, which basically boil down to two main points:</p>
 <ul>
 <li>BAMM outputs are highly sensitive the priors</li>
 <li>The likelihood function BAMM uses is wrong</li>
 </ul>
-<p>Rabosky and colleagues have refuted these criticisms here: [<a href="http://bamm-project.org/prior.html" class="uri">http://bamm-project.org/prior.html</a>], [<a href="http://bamm-project.org/replication.html" class="uri">http://bamm-project.org/replication.html</a>], [<a href="http://bamm-project.org/developertoggle.html" class="uri">http://bamm-project.org/developertoggle.html</a>] and [<a href="http://bamm-project.org/mea_likelihood.html" class="uri">http://bamm-project.org/mea_likelihood.html</a>]. There’s no consensus just yet as to whether BAMM is usable or not. I would say use with caution, but be prepared to defend your choice!</p>
+<p>Rabosky and colleagues have refuted these criticisms here: [<a href="http://bamm-project.org/prior.html" class="uri">http://bamm-project.org/prior.html</a>], [<a href="http://bamm-project.org/replication.html" class="uri">http://bamm-project.org/replication.html</a>], [<a href="http://bamm-project.org/developertoggle.html" class="uri">http://bamm-project.org/developertoggle.html</a>], [<a href="http://bamm-project.org/mea_likelihood.html" class="uri">http://bamm-project.org/mea_likelihood.html</a>], and [<a href="http://ift.tt/2m7qv6T" class="uri">http://ift.tt/2m7qv6T</a>]. There’s no consensus just yet as to whether BAMM is usable or not. I would say use with caution, but be prepared to defend your choice!</p>
 <hr />
 </div>
 <div id="references-5" class="section level2">
@@ -554,6 +555,7 @@ bfmat &lt;-<span class="st"> </span><span class="kw">computeBayesFactors</span>(
 <li>Rabosky, 2014. Automatic Detection of Key Innovations, Rate Shifts, and Diversity-Dependence on Phylogenetic Trees. PLoS ONE. [<a href="http://dx.doi.org/10.1371/journal.pone.0089543" class="uri">http://dx.doi.org/10.1371/journal.pone.0089543</a>]</li>
 <li>Rabosky et al. 2014a. BAMMtools: an R package for the analysis of evolutionary dynamics on phylogenetic trees. Methods Ecol Evol, 5: 701-707 [10.1111/2041-210X.12199].</li>
 <li>Raboksy et al. 2014b. Analysis and Visualization of Complex Macroevolutionary Dynamics: An Example from Australian Scincid Lizards. Syst Biol (2014) 63 (4): 610-627. [<a href="https://doi.org/10.1093/sysbio/syu025" class="uri">https://doi.org/10.1093/sysbio/syu025</a>].</li>
+<li>Rabosky et al 2017. Is BAMM flawed? Theoretical and practical concerns in the analysis of multi-rate diversification models. Syst Biol [<a href="http://ift.tt/2m7qv6T" class="uri">http://ift.tt/2m7qv6T</a>]</li>
 <li>Shi &amp; Rabosky 2015. Speciation dynamics during the global radiation of extant bats. Evolution, 69: 1528-1545 [10.1111/evo.12681].</li>
 </ul>
 
