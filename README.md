@@ -8,7 +8,8 @@ Feel free to use and share!
 * 2017. 
 Methods in Macroecology and Macroevolution module. 
 Imperial and NHM MSc module. 
-The link to the [course book is here](https://rawgit.com/nhcooper123/TeachingMaterials/master/MSc_Museum/MacroModule/_book/index.html).
+The link to the online course book is [here](https://rawgit.com/nhcooper123/macro-methods-module/master/MacroModule/_book/index.html).
+The materials for the course book can be found in this repo [https://github.com/nhcooper123/macro-methods-module].
 * 2016. 
 GLMs in R workshop. 
 BES Aquatic SIG (with David Orme). 
