@@ -430,6 +430,3 @@ I would say use with caution, but be prepared to defend your choice!
 * Raboksy et al. 2014b. Analysis and Visualization of Complex Macroevolutionary Dynamics: An Example from Australian Scincid Lizards. Syst Biol (2014) 63 (4): 610-627. [https://doi.org/10.1093/sysbio/syu025].
 * Rabosky et al 2017. Is BAMM flawed? Theoretical and practical concerns in the analysis of multi-rate diversification models. Syst Biol [http://ift.tt/2m7qv6T].
 * Shi & Rabosky 2015. Speciation dynamics during the global radiation of extant bats. Evolution, 69: 1528-1545 [10.1111/evo.12681].
-
-
-
