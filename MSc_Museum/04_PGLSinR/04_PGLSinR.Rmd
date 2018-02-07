@@ -404,11 +404,11 @@ In this case the observed K is significantly higher than the random values of K 
 
 __Remember to save your code and answers for the assessment__
 
-1. What is $\lambda$ for primate social group size?
+1. What is $\lambda$ for Primate social group size?
 
 2. Make a plot of social group size against home range size. 
 
-3. Does home range size differ significantly among the different primate genera?
+3. Does home range size differ significantly among the different Primate families?
 
 4. What is Blomberg's K for adult body mass?
 

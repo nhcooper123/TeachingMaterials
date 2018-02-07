@@ -428,5 +428,5 @@ I would say use with caution, but be prepared to defend your choice!
 * Rabosky, 2014. Automatic Detection of Key Innovations, Rate Shifts, and Diversity-Dependence on Phylogenetic Trees. PLoS ONE. [http://dx.doi.org/10.1371/journal.pone.0089543]
 * Rabosky et al. 2014a. BAMMtools: an R package for the analysis of evolutionary dynamics on phylogenetic trees. Methods Ecol Evol, 5: 701-707 [10.1111/2041-210X.12199].
 * Raboksy et al. 2014b. Analysis and Visualization of Complex Macroevolutionary Dynamics: An Example from Australian Scincid Lizards. Syst Biol (2014) 63 (4): 610-627. [https://doi.org/10.1093/sysbio/syu025].
-* Rabosky et al 2017. Is BAMM flawed? Theoretical and practical concerns in the analysis of multi-rate diversification models. Syst Biol [http://ift.tt/2m7qv6T]
+* Rabosky et al 2017. Is BAMM flawed? Theoretical and practical concerns in the analysis of multi-rate diversification models. Syst Biol [http://ift.tt/2m7qv6T].
 * Shi & Rabosky 2015. Speciation dynamics during the global radiation of extant bats. Evolution, 69: 1528-1545 [10.1111/evo.12681].

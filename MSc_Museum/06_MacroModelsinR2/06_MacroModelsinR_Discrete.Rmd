@@ -409,6 +409,18 @@ We can use the optima to infer an optimal size for solitary magical creatures of
 `alpha` is greater than zero suggesting that body size of magical creatures is evolving towards these optima.
 
 To find out which model best fits our data, we'll need to compute AIC weights again. 
+Let's compare the multirate Brownian and multi-peak OU models to the models (BM, OU and EB) we fit in the previous exercise on models of continuous trait evoution.
+Biologically, we're trying to see whether the evolution of body size is best fit as a single process (BM, OU or EB) across the whole tree, or if social and solitary magical creatures show different modes of body size evolution.
+
+If you've started a new session since the previous practical, we need to fit the three simpler models again as follows:
+
+```{r}
+BM <- fitContinuous(mytree, log(mydata[,"BodySize_kg"]), model = c("BM"))
+OU <- fitContinuous(mytree, log(mydata[,"BodySize_kg"]), model = c("OU"))
+EB <- fitContinuous(mytree, log(mydata[,"BodySize_kg"]), model = c("EB"))
+```
+
+Now we can compute AIC weights.
 
 ```{r}
 aic.scores <- setNames(c(BM$opt$aicc, OU$opt$aicc, EB$opt$aicc, BMvariable$AICc, OUmulti$AICc), 
