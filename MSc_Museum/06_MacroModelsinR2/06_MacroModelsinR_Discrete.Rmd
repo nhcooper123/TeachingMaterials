@@ -1,7 +1,7 @@
 ---
 title: "Macroevolutionary models in R - Part 2 - discrete traits"
 author: "Natalie Cooper (natalie.cooper@nhm.ac.uk)"
-date: "Feb 2017"
+date: "`r Sys.Date()`"
 output:
   pdf_document: default
   html_document: default

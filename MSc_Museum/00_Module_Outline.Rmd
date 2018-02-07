@@ -1,7 +1,7 @@
 ---
 title: "Methods in Macroecology and Macroevolution"
 author: "Natalie Cooper (natalie.cooper@nhm.ac.uk)"
-date: "Feb 2017"
+date: "`r Sys.Date()`"
 output:
   pdf_document: default
   html_document: default
@@ -28,7 +28,7 @@ Morning sessions will run from 10am-1pm, afternoon sessions from 2pm-5pm.
 Not every session will require a full three hours. 
 Instructors for each session are below.
 
-### Thursday 23rd February
+### Wednesday 21st February
 **All day:** 
 
 Introduction to the module, assessments, and aims.
@@ -41,17 +41,27 @@ Macroevolution I: Visualising phylogenies in R.
 
 *Natalie Cooper (natalie.cooper@nhm.ac.uk)*
 
-### Friday February 24th February
+### Thursday 22nd & Friday 23rd February
+**All day**
+Practical: Using fossil assemblages to assess the impact of mass extinction events: comparative palaeoecology of Ordovician and Silurian fossil assemblages.
 
-**Morning:** Big Data I: Using Big Data in conservation with the PREDICTS project.
+*Richard Twitchett (r.twitchett@nhm.ac.uk)*
 
-*Andy Purvis (a.purvis@nhm.ac.uk)*
+### Monday February 26th February
 
-**Afternoon:** Big data II: Using the paleobiology database (PBDB) to get data on fossil species for macroecological and macroevolutionary analyses.
+Time to write up practical
+
+### Tuesday February 27th February
+
+**Morning:** Diversification rates with BAMM 
+
+*Natalie Cooper (natalie.cooper@nhm.ac.uk)*
+
+**Afternoon:** Using the paleobiology database (PBDB) to get data on fossil species for macroecological and macroevolutionary analyses.
 
 *Terri Cleary (t.cleary@nhm.ac.uk)*
 
-### Monday February 27th February
+### Wednesday February 28th February
 
 **Morning:** Comparative Biology: The comparative method, dealing with phylogenetic non-independence in comparative analyses. 
 PGLS in R.
@@ -60,32 +70,16 @@ PGLS in R.
 
 *Natalie Cooper (natalie.cooper@nhm.ac.uk)*
 
-### Tuesday 28th February
+### Thursday 1st March
+Free day
 
-**Morning:** Big data III: Using museum specimen data in macroecological and macroevolutionary analyses. 
-Geometric morphometrics.
+### Friday 2nd March
 
-*Natalie Cooper (natalie.cooper@nhm.ac.uk)*
-
-**Afternoon:** Macroecology II: case study using Foraminifera.
-
-*Isabel Fenton (i.fenton@nhm.ac.uk)*
-
-### Wednesday 1st March
-
-**Morning:** Macroevolution III: Diversification and BAMM.
-
-*Susy Echeverria-Londono (S.Echeverria-londono@nhm.ac.uk)*
-
-**Afternoon:** Critical thinking: Do you trust your methods?
+**Morning:** Critical thinking: Do you trust your methods?
 
 *Natalie Cooper (natalie.cooper@nhm.ac.uk)*
 
-### Thursday 2nd March AND Friday 3rd March
-**All day:** 
-Practical: Using fossil assemblages to assess the impact of mass extinction events: comparative palaeoecology of Ordovician and Silurian fossil assemblages.
-
-*Richard Twitchett (r.twitchett@nhm.ac.uk)*
+**Afternoon** MCQ assessment
 
 ## Assessment
 There are two assessments connected to this module.
@@ -93,11 +87,11 @@ There are two assessments connected to this module.
 At the end of every practical there will be some practice questions. 
 Save your answers and __R CODE__
 The assessment will be an online MCQ test where the answers come from the practice questions or the code you used to answer them. 
-I'll send a link on Tuesday 28th and you'll have until __midnight Weds 1st March__ to do this.
+I'll send a link on Friday afternoon and you'll have until __midnight Friday 2nd March__ to do this.
 It shouldn't take more than 20 mins...
 No write up will be required and the assessment will be completed by the end of the week, if not the end of the practical. 
 
 The second assessment, although within this module, belongs to the Paleobiology module. 
 Due to the large class size during that module it couldn't happen there so we've moved it here.
  However, the techniques and concepts are highly relevant to macroecology and macroevolution.
- Richard Twitchett (r.twitchett@nhm.ac.uk) will provide a full explanation of the assessment during the practical on Thursday 2nd March and Friday 3rd March. 
+ Richard Twitchett (r.twitchett@nhm.ac.uk) will provide a full explanation of the assessment during the practical. 

@@ -1,7 +1,7 @@
 ---
 title: "Comparative biology and PGLS"
 author: "Natalie Cooper (natalie.cooper@nhm.ac.uk)"
-date: "Feb 2017"
+date: "`r Sys.Date()`"
 output:
   slidy_presentation:
     css: slidy.css
@@ -142,7 +142,7 @@ segments(femur.length, height, femur.length, pre, col="red")
 
 - $\beta$ = parameters (slope, intercept)
 - $\epsilon$ = residual error in the model
-    + i.e. variation in heightnot explained by femur length.
+    + i.e. variation in height not explained by femur length.
     + measurement error, missing variables etc.
 
 # A quick revision of OLS

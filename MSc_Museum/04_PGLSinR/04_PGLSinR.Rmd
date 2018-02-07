@@ -1,7 +1,7 @@
 ---
 title: "Phylogenetic Generalised Least Squares (PGLS) in R"
 author: "Natalie Cooper (natalie.cooper@nhm.ac.uk)"
-date: "Feb 2017"
+date: "`r Sys.Date()`"
 output:
   pdf_document: default
   html_document: default

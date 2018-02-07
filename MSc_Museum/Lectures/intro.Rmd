@@ -1,7 +1,7 @@
 ---
 title: "Macro Methods Module"
 author: "Natalie Cooper (natalie.cooper@nhm.ac.uk)"
-date: "Feb 2017"
+date: "`r Sys.Date()`"
 output:
   slidy_presentation:
     css: slidy.css
@@ -32,36 +32,40 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # {.build}
 
-<p class="pink">Thursday 23rd February (NC)</p>
+<p class="pink">Today (NC)</p>
 What are macroecology and macroevolution? Introduction to the module, assessments, and aims.
 
-<p class="pink">Friday February 24th February (AP, TC)</p>
-Big Data I: Using Big Data in conservation with the PREDICTS project.
+<p class="pink">Thursday and Friday and Monday (RT)</p>
+Assessment with Richard Twitchett
 
-Big data II: Using the paleobiology database (PBDB).
+<p class="pink">Tuesday February 27th February (NC, TC)</p>
 
-<p class="pink">Monday February 27th February (NC)</p>
+Diversification and adaptive radiations
+
+Using the paleobiology database (PBDB). (Terri Cleary)
+
+<p class="pink">Wednesday 28th February (NC)</p>
+
 Comparative Biology: PGLS in R.
 
 Macroevolution I: Macroevolutionary patterns and models of evolution in R.
 
-<p class="pink">Tuesday 28th February (NC, IF)</p>
-Big data III: Using museum specimen data. Geometric morphometrics. - now free session
+<p class="pink">Thursday 1st March (NC)</p>
+Free day
 
-Macroecology II: case study using Foraminifera.
-
-<p class="pink">Wednesday 1st March (NC, SEL)</p>
-Macroevolution III: Diversification rates and adaptive radiations.
+<p class="pink">Friday 2nd March (NC, TC, EC)</p>
 
 Critical thinking: Do you trust your methods? - see next slide
+
+Assessment II
 
 # Critical thinking
 
 Papers are in the DropBox
 
-1 = Davis et al
-2 = Dunhill and Wills
-3 = Burbrink et al
+1 = 
+2 = 
+3 = 
 4 = 
 
 # Assessment I
@@ -69,17 +73,17 @@ Papers are in the DropBox
 - At the end of every practical there will be some practice questions. 
 - <p class="lime"> Save your answers and R CODE </p>
 - Assessment will be MCQ test where the answers come from the practice questions or the code you used to answer them. 
-- <p class="pink"> I'll send a link on Tuesday 28th</p>
-- You’ll have til midnight Wednesday 1st March to do this.
-- Shouldn't take more than 20 mins...
+- <p class="pink"> I'll share a link on Friday afternoon</p>
+- You’ll have til midnight Friday 2nd March to do this.
+- Shouldn't take more than 30 mins...
 
 # Assessment II
 
 - Technically not part of this module (part of the Palaeobiology module).
 - Short report which requires some data collection, a bit of R (you'll learn how to do this today), and a bit of write up.
-- You'll have two days timetabled for this.
+- You'll have two days timetabled for this, plus Monday to write up.
 
-<p class="pink">Richard Twitchett will give all instructions on Thursday 2nd March</p>
+<p class="pink">Richard Twitchett will give all instructions tomorrow</p>
 
 # How is this module going to work?
 

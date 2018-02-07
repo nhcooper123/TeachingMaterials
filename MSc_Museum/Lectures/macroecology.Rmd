@@ -1,7 +1,7 @@
 ---
 title: "What is macroecology?"
 author: "Natalie Cooper (natalie.cooper@nhm.ac.uk)"
-date: "Feb 2017"
+date: "`r Sys.Date()`"
 output:
   slidy_presentation:
     css: slidy.css
