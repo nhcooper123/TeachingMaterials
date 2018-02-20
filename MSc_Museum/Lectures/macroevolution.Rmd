@@ -125,9 +125,9 @@ knitr::opts_chunk$set(echo = FALSE)
 # How do we study macroevolution?
 
 - Fieldwork to collect fossils
-- Databases of fossil occurence, e.g. PBDB (*Friday*)
-- Phylogenetic comparative methods (*Monday, Wednesday*)
-- Geometric morphometrics (*Tuesday*)
+- Databases of fossil occurence, e.g. PBDB (*Terri Cleary*)
+- Phylogenetic comparative methods (*me*)
+- Geometric morphometrics (*Arkhat*)
 - Models, simulations etc.
 
 [//]: #
@@ -147,7 +147,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # What do we study in macroevolution?
 
-- Mass extinctions & biodiversity through time (*Friday*; *Raup 1982 and Sepkoski*)
+- Mass extinctions & biodiversity through time (*Raup 1982 and Sepkoski*)
 
 <center><img src="images/sepkoski.gif" width = 500 height = 350></center>
 
@@ -155,7 +155,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # What do we study in macroevolution?
 
-- Diversification (*Wednesday*; *Givnish et al 2015*)
+- Diversification (*Givnish et al 2015*)
 
 <center><img src="images/orchid.jpg" width = 200 height = 350></center>
 
@@ -163,7 +163,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # What do we study in macroevolution?
 
-- Tempo and mode of trait evolution (*Monday*; *Benson et al. 2014*)
+- Tempo and mode of trait evolution (*Benson et al. 2014*)
 
 <center><img src="images/dinosaur.jpg" width = 500 height = 250></center>
 
@@ -171,7 +171,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 # What do we study in macroevolution?
 
-- Morphological (size and shape) evolution (*Tuesday*; *Cooney et al. 2017*)
+- Morphological (size and shape) evolution (*Cooney et al. 2017*)
 
 <center><img src="images/birdpca.jpg" width = 450 height = 350></center>
 
@@ -196,9 +196,3 @@ knitr::opts_chunk$set(echo = FALSE)
 - same processes, different patterns (?)
 - similar methods and challenges
 - both benefit from using living and fossil data
-
-# Interested in learning more?
-
-- Twitter: @BESMacroecol
-- Conference @ NHM 5-7th July
-- Macro ecology/evolution, paleo and living data

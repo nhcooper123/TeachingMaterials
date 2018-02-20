@@ -204,11 +204,11 @@ knitr::opts_chunk$set(echo = FALSE)
 
 - Big data, big analyses, complex methods
 - More applied topics
-    + disease macrecology (*Me sometimes*)
-    + anthropogenic change (*Friday*, *Andy Purvis*)
+    + disease macrecology
+    + anthropogenic change
     + invasive species
     + climate change 
-    + land use change (*Friday*, *Andy Purvis*)
+    + land use change
 - More focus on mechanisms and models
 - Citizen Science (*Angela Marmot Centre*)
 - Data availability, sharing, reproducibility
@@ -216,6 +216,6 @@ knitr::opts_chunk$set(echo = FALSE)
 # Interested in learning more?
 
 - Twitter: @BESMacroecol
-- Conference @ NHM 5-7th July
-- Macro ecology/evolution, paleo and living data
+- Conference @ St Andrews 10-11th July
+- Macro ecology/evolution, paleo and living data (CPEG 30th Aug @ Leeds Uni)
 
