@@ -1,4 +1,6 @@
-# Teaching Materials
+# Teaching Materials - archived as legacy document
+
+More up to date versions of most of these materials exist from 2020.
 
 This repository contains my course materials for various workshops on phylogenetic comparative methods, R etc.
 
